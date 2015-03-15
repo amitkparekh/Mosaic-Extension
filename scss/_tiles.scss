@@ -1,0 +1,123 @@
+.container {
+    position: relative;
+    float: left;
+    transition: top .3s, left .3s;
+    max-height: 100%;
+    left: 0;
+}
+
+.tile-group {
+    height: 0px;
+    max-height: 100%;
+    position: relative;
+    transition: left .5s ease-out;
+    float: left;
+    
+    &.placeholder:not(.active) {
+        height: 100%;
+        width: 50px;
+        margin: 0 20px;
+        background: #000;
+        opacity: 0.4;
+    }
+    
+    h2 {
+        position: relative;
+        top: -2em;
+        height: 0px;
+        margin: 0;
+        color: #eee;
+        font-weight: normal;
+        text-align: left;
+    }
+}
+
+.tile {
+    box-sizing: border-box;
+    position: absolute;
+    overflow: hidden;
+    -webkit-transition: top .3s, left .3s, width .3s, height .3s, transform .2s;
+    border: 0px solid;
+    z-index: 1;
+    
+    &:hover {
+        opacity: .9 !important;
+    }
+    
+    &:active {
+        opacity: 1;
+        z-index: 2;
+        @include prefix((transform: scale(1.03)), webkit);
+    }
+    
+    &.dragging {
+        z-index: 2;
+        @include prefix((transition: none), webkit);
+    }
+    
+    &.placeholder {
+        background: none;
+        opacity: .3;
+        border: 2px dashed #eee;
+    }
+    
+    &.preview {
+        position: relative;
+        margin: 0 auto;
+        width: 240px;
+        height: 119px;
+    }
+    
+    &.selected {
+        border: 5px solid #dddddd;
+    }
+    
+    .tile-background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: background-image 1.5s;
+    }
+    
+    .tile-content {
+        width: 100%;
+        height: 100%;
+        
+        &.sm {
+            > div {
+                @include size(100%);
+                text-align: center;
+            }
+        }
+        
+        &.lg {
+            @include size(100%,200%);
+            
+            > div {
+                text-align: center;
+                @include size(100%,50%);
+            }
+        }
+        
+        > div {
+            > img {
+                margin: auto;
+                position: absolute;
+                top: 0; left: 0; bottom: 0; right: 0;
+            }
+            
+            > label {
+                color: white;
+                font-size: 1.7em;
+                font-weight: 400;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                @include prefix((transform: translate(-50%, -50%)), webkit);
+            }
+        }
+    }
+}
