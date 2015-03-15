@@ -1,0 +1,36 @@
+{
+    "name": "Modern New Tab Page 2 ALPHA",
+    "description": "The most beautiful new tab page extension evah!",
+    "version": "2015.3.13",
+    "incognito": "split",
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+    "chrome_url_overrides": {
+        "newtab": "Default.html"
+    },
+    "permissions": [
+        "http://*/*",
+        "https://*/*",
+        "chrome://favicon/",
+        "unlimitedStorage",
+        "management",
+        "history",
+        "bookmarks",
+        "identity",
+        "tabs",
+        "storage"
+    ],
+    "background": {
+        "scripts": [
+            "js/util.js",
+            "js/background/backgroundutils.js",
+            "js/background/config.js",
+            "js/background/idb.js",
+            "js/background/webService.js"
+        ]
+    },
+    "manifest_version": 2
+}
