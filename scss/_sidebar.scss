@@ -1,0 +1,448 @@
+// Sidebar variables
+// -------------------------------
+
+$zindex-sidebar-fixed: 1035;
+
+$sidebar-desktop-width: 280px;
+$sidebar-width: 240px;
+
+$sidebar-padding: 16px;
+$sidebar-divider: $sidebar-padding / 2;
+
+$sidebar-nav-height: 48px;
+
+$sidebar-icon-width: 40px;
+$sidebar-icon-size: 20px;
+
+$sidebar-badge-size: $sidebar-nav-height / 2;
+$sidebar-badge-font-size: 10px;
+
+$sidebar-brand-color: black(.54);
+$sidebar-icon-color: black(.54);
+$sidebar-menu-color: black(.87);
+
+$sidebar-font-weight: 500;
+
+// Sidebar mixins
+// -------------------------------
+
+.caret {
+    display: inline-block;
+    @include size(0);
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px solid;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+
+.top-bar {
+    height: 25px;
+    background: black(0.1);
+}
+
+.dropdown-menu {
+    display: none;
+}
+
+.sidebar-block {
+    display: block;
+    height: $sidebar-nav-height;
+    line-height: $sidebar-nav-height;
+    padding: 0;
+    padding-left: $sidebar-padding;
+    padding-right: ($sidebar-padding + $sidebar-badge-size) + $sidebar-padding;
+    text-decoration: none;
+    clear: both;
+    font-weight: $sidebar-font-weight;
+    @extend .text-overflow;
+    @include transition(all .2s ease-in-out);
+    
+    &:hover, &:focus {
+        @include box-shadow(none);
+        outline: none;
+    }
+}
+
+// Sidebar template
+@mixin sidebar-template(
+    $color,
+    $bg,
+    $header-bg,
+    $brand-color,
+    $brand-bg,
+    $brand-hover-color,
+    $brand-hover-bg,
+    $divider,
+    $badge-color,
+    $badge-bg,
+    $icon-color,
+    $icon-hover-color,
+    $link-color,
+    $link-bg,
+    $link-hover-color,
+    $link-hover-bg,
+    $link-active-color,
+    $link-active-bg,
+    $link-disabled-color,
+    $link-disabled-bg ) {
+        
+        background-color: $bg;
+
+        .sidebar-header {
+            background-color: $header-bg;
+        }
+
+        .sidebar-toggle {
+            color: $brand-hover-color;
+            background-color:transparent;
+        }
+
+        .sidebar-brand {
+            color: $brand-color;
+            background-color: $brand-bg;
+            
+            &:hover, &:focus {
+                color: $brand-hover-color;
+                background-color: $brand-hover-bg;
+            }
+        }
+        
+        .sidebar-badge {
+            color: $badge-color;
+            background-color: $badge-bg;
+        }
+        
+        .sidebar-divider, .sidebar-nav .divider {
+            background-color: $divider;
+        }
+        
+        .sidebar-text {
+            color: $color;
+        }
+        
+        .sidebar-nav {
+            li > a {
+                color: $link-color;
+                background-color: $link-bg;
+                
+                i {
+                    color: $icon-color;
+                }
+            }
+            
+            li:hover > a, li > a:hover {
+                color: $link-hover-color;
+                background-color: $link-hover-bg;
+                
+                i {
+                    color: $icon-hover-color;
+                }
+            }
+            
+            li:focus > a, li > a:focus {
+                color: $link-color;
+                background-color: $link-bg;
+                
+                i {
+                    color: $icon-hover-color;
+                }
+            }
+            
+            > .open > a {
+                &, &:hover, &:focus {
+                    color: $link-hover-color;
+                    background-color: $link-hover-bg;
+                }
+            }
+            
+            > .active > a {
+                &, &:hover, &:focus {
+                    color: $link-disabled-color;
+                    background-color: $link-disabled-bg;
+                }
+            }
+            
+            > li > .ink {
+//                background: #80d8ff;
+//                opacity: 0.5;
+            }
+            
+            // Dropdown menu items
+            > .dropdown {
+                // Remove bg-color from open dropdown
+                > .dropdown-menu {
+                    background-color: $link-hover-bg;
+                    
+                    > li > a {
+                        &:focus {
+                            background-color: $link-hover-bg;
+                            color: $link-hover-color;
+                        }
+                        
+                        &:hover {
+                            background-color: darken($link-hover-bg, 7%);
+                            color: $link-hover-color;
+                        }
+                    }
+                    
+                    > .active > a {
+                        &, &:hover, &:focus {
+                            color: $link-active-color;
+                            background-color: $link-active-bg;
+                        }
+                    }
+                }
+            }
+        }
+}
+
+
+// Sidebar - Defaults
+// -------------------------------
+
+.sidebar {
+    position: relative;
+    display: block;
+    min-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: none;
+    @include transition(all 0.5s cubic-bezier(0.55, 0, 0.1, 1));
+    
+    @extend .clearfix;
+    
+    &::-webkit-scrollbar-track {
+        border-radius: 2px;
+    }
+    
+    &::-webkit-scrollbar {
+        width: 5px;
+        background-color: #f7f7f7;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px black(0.3);
+        background-color: #bfbfbf;
+    }
+    
+    .caret {
+        position: absolute;
+        right: $sidebar-padding + $sidebar-badge-size/2 - 4px;
+        top: $sidebar-nav-height /2;
+    }
+    
+    .sidebar-badge {
+        position: absolute;
+        right: $sidebar-padding;
+        top: ($sidebar-nav-height - $sidebar-badge-size)/2;
+    }
+    
+    // Sidebar elements
+    // ----------------
+    
+    //** Sidebar heading
+    .sidebar-header {
+        position: relative;
+        height: $sidebar-desktop-width * 9/16; // 16:9 header dimension
+        margin-bottom: $sidebar-divider;
+        @include transition(all .2s ease-in-out);
+    
+    
+        // Brand/project cover
+        &.header-cover {
+            background-repeat: no-repeat;
+            background-position: center center;
+            @include background-size(cover);
+        }
+
+        &:hover {
+            .sidebar-toggle {
+                opacity: 1;
+            }
+        }
+    }
+    
+    //** Sidebar toggle
+    .sidebar-toggle {
+        position: relative;
+        float: right;
+        margin: $sidebar-padding;
+        padding: 0;
+        background-image: none;
+        border: none;
+        @include size($sidebar-icon-width);
+        font-size: $sidebar-icon-size;
+        opacity: 0.7;
+        @include transition(all .2s ease-in-out);
+        @extend .clearfix;
+    }
+    
+    //** Sidebar arrow
+    .icon-material-sidebar-arrow:before {
+        @extend .mdi-action-assignment:before;
+    }
+    
+    //** Brand/project image
+    .sidebar-image {
+        img {
+            @include size($sidebar-desktop-width/4 - $sidebar-padding);
+            margin: $sidebar-padding;
+            @include border-radius(50%);
+            @include transition(all .2s ease-in-out);
+        }
+    }
+    
+    //** Brand/project name
+    .sidebar-brand {
+        position:absolute;
+        bottom: 0; left: 0; right: 0;
+        @extend .sidebar-block;
+        
+        &:hover, &:focus {
+            text-decoration: none;
+        }
+    }
+    
+    //** Sidebar badge
+    .sidebar-badge {
+        display:inline-block;
+        min-width: $sidebar-badge-size;
+        height: $sidebar-badge-size;
+        line-height: $sidebar-badge-size;
+        padding: 0 3px;
+        font-size: $sidebar-badge-font-size;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        
+        &.badge-circle {
+            @include border-radius(50%);
+        }
+    }
+    
+    //** Sidebar divider 
+    .sidebar-divider, .sidebar-nav .divider {
+        position: relative;
+        display: block;
+        height: 1px;
+        margin: $sidebar-divider 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    
+    //** Sidebar text
+    .sidebar-text {
+        @extend .sidebar-block;
+    }
+    
+    //** Sidebar icons
+    .sidebar-icon {
+        display: inline-block;
+        margin-right: $sidebar-padding;
+        min-width: $sidebar-icon-width;
+        width: $sidebar-icon-width;
+        text-align: left;
+        font-size: $sidebar-icon-size;
+        
+        &:before, &:after {
+            vertical-align: middle;
+        }
+    }
+    
+    // Sidebar navigation class
+    // ------------------------
+    .sidebar-nav {
+        margin: 0;
+        padding: 0;
+        
+        //** Links 
+        li {
+            position: relative;
+            list-style-type: none;
+            
+            a {
+                position: relative;
+                cursor: pointer;
+                @include prefix((user-select: none), webkit moz ms);
+                @extend .sidebar-block;
+                
+                &:hover {
+                    background: transparent;
+                }
+                
+            }
+        }
+        
+        //** Dropdown menu
+        .dropdown-menu {
+            position: relative;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            border: none;
+            @include border-radius(0);
+            @include box-shadow(none);
+        }
+    }
+}
+
+// Positioning layout: default 
+/*.sidebar, .wrapper {
+    display: table-cell;
+    vertical-align: top;
+}*/
+
+// Positioning layout: stacked
+.sidebar-stacked {
+    &.open + .wrapper .contructor {
+        margin-left: $sidebar-desktop-width;
+    }
+}
+
+// Sidebar Default Theme
+.sidebar-default {
+    @include sidebar-template(
+        $color: $clr-grey-900,
+        $bg: white(1.0),
+        $header-bg: $clr-blue-grey-50,
+        $brand-color: $clr-grey-600,
+        $brand-bg: transparent,
+        $brand-hover-color: $clr-grey-900,
+        $brand-hover-bg: black(.1),
+        $divider: $clr-grey-400,
+        $badge-color: white(1.0),
+        $badge-bg: $clr-grey-400,
+        $icon-color: $clr-grey-600,
+        $icon-hover-color: $clr-grey-600,
+        $link-color: $clr-grey-900,
+        $link-bg: transparent,
+        $link-hover-color: $clr-grey-900,
+        $link-hover-bg: $clr-grey-300,
+        $link-active-color: $clr-grey-900,
+        $link-active-bg: $clr-grey-300,
+        $link-disabled-color: $clr-grey-300,
+        $link-disabled-bg: transparent
+        );
+}
+
+// Sidebar toggling
+.sidebar {
+    width: 0;
+    @include translate3d(-$sidebar-desktop-width, 0, 0);
+    
+    &.open {
+        min-width: $sidebar-desktop-width;
+        width: $sidebar-desktop-width;
+        @include translate3d(0,0,0);
+    }
+}
+
+.sidebar-stacked {
+    position: fixed;
+    top: 0; bottom: 0;
+    z-index: $zindex-sidebar-fixed;
+    
+    left: 0;
+}
