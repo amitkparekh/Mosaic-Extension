@@ -9,7 +9,7 @@
         "128": "icon128.png"
     },
     "chrome_url_overrides": {
-        "newtab": "Default.html"
+        "newtab": "index.html"
     },
     "permissions": [
         "http://*/*",
