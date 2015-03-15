@@ -1,0 +1,71 @@
+@mixin prefix($map, $vendors: webkit moz ms o) {
+  @each $prop, $value in $map {
+        @if $vendors {
+          @each $vendor in $vendors {
+            #{"-" + $vendor + "-" + $prop}: #{$value};
+          }
+        }
+        // Dump regular property anyway
+        #{$prop}: #{$value};
+  }
+}
+
+@mixin box-shadow($box-shadow) {
+  -webkit-box-shadow: $box-shadow;
+     -moz-box-shadow: $box-shadow;
+      -ms-box-shadow: $box-shadow;
+          box-shadow: $box-shadow;
+    /*    box-shadow: x: 0, y: 1px, blur: 2px, spread: 0, alpha: 0.25 */
+}
+
+@mixin border-radius($radius) {
+    @include prefix((border-radius: $radius), webkit moz ms o);
+}
+
+@mixin box-sizing($boxType) {
+    -o-box-sizing:$boxType;
+    -ms-box-sizing:$boxType;
+    -moz-box-sizing:$boxType;
+    -webkit-box-sizing:$boxType;
+    box-sizing:$boxType;
+}
+
+@mixin transition($transition) {
+    @include prefix((transition: $transition), webkit moz ms o);
+}
+
+@mixin animation-delay($delay) {
+    -o-animation-delay: $delay;
+    -ms-animation-delay: $delay;
+    -moz-animation-delay: $delay;
+    -webkit-animation-delay: $delay;
+    animation-delay: $delay;
+}
+
+@mixin animation-duration($duration) {
+    -o-animation-duration: $duration;
+    -ms-animation-duration: $duration;
+    -moz-animation-duration: $duration;
+    -webkit-animation-duration: $duration;
+    animation-duration: $duration;
+}
+
+@mixin translate3d($x, $y, $z) {
+    @include prefix((transform: translate3d($x, $y, $z)), webkit moz ms o);
+}
+
+@mixin background-size($size) {
+    @include prefix((background-size: $size), webkit moz ms o)
+}
+
+@function black($opacity){
+    @return rgba(0,0,0,$opacity);
+}
+@function white($opacity){
+    @return rgba(255,255,255,$opacity);
+}
+
+@mixin size($width, $height: $width) {
+      width: $width;
+      height: $height;
+}
