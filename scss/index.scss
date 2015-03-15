@@ -8,7 +8,7 @@
 @import 'bootstrap';
 
 // Adds Material Design
-@import 'material-design';
+//@import 'material-design';
 
 @import 'mixins';
 
@@ -34,7 +34,7 @@ html, body {
 }
 
 body {
-    background: $clr-grey-400;
+//    background: $clr-grey-400;
     overflow: hidden;
     
 //    font-family: "Roboto", "Segoe UI", "Segoe UI Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -75,6 +75,6 @@ a {
 
 
 //@import 'sidebar';
-@import 'bookmark-bar';
-@import 'tiles';
-@import 'news';
+//@import 'bookmark-bar';
+//@import 'tiles';
+//@import 'news';
