@@ -1,34 +1,133 @@
+// Base variables
+// --------------------------------------------------
+$screen-tablet: 768px;
+$gray-darker: $clr-grey-900; // #212121 - text
+$gray-dark: $clr-grey-600; // #757575 - secondary text, icons
+$gray: $clr-grey-400; // #bdbdbd - hint text
+$gray-light: $clr-grey-300; // #e0e0e0 - divider
+$gray-lighter: $clr-grey-100; // #f5f5f5 - background
+
 // Sidebar variables
-// -------------------------------
-
+// --------------------------------------------------
 $zindex-sidebar-fixed: 1035;
-
 $sidebar-desktop-width: 280px;
 $sidebar-width: 240px;
-
 $sidebar-padding: 16px;
-$sidebar-divider: $sidebar-padding / 2;
-
+$sidebar-divider: $sidebar-padding/2;
 $sidebar-nav-height: 48px;
-
 $sidebar-icon-width: 40px;
 $sidebar-icon-size: 20px;
-
-$sidebar-badge-size: $sidebar-nav-height / 2;
+$sidebar-badge-size: $sidebar-nav-height/2;
 $sidebar-badge-font-size: 10px;
-
-$sidebar-brand-color: black(.54);
-$sidebar-icon-color: black(.54);
-$sidebar-menu-color: black(.87);
-
+$sidebar-brand-color: $gray-dark;
+$sidebar-icon-color: $gray-dark;
+$sidebar-menu-color: $gray-darker;
 $sidebar-font-weight: 500;
 
-// Sidebar mixins
-// -------------------------------
+[class^="md-"],
+[class*=" md-"] {
+    display: inline-block;
+    font: normal normal normal 14px/1 'Material Design Iconic Font';
+    font-size: inherit;
+    speak: none;
+    text-rendering: auto;
+    // Better Font Rendering
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.md {
+    line-height: inherit;
+    vertical-align: bottom;
+}
+
+/* -- You can use this sidebar in Bootstrap (v3) projects. HTML-markup like Navbar bootstrap component will make your work easier. -- */
+
+// @import "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css";
+/* -- Box model ------------------------------- */
+
+*,
+*:after,
+*:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+/* -- Demo style ------------------------------- */
+
+html,
+body {
+    position: relative;
+    min-height: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #212121;
+    background-color: #f5f5f5;
+    // Font Rendering
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.sidebar-overlay {
+    visibility: hidden;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0;
+    background: black(1);
+    z-index: $zindex-sidebar-fixed - 1;
+    -webkit-transition: visibility 0 linear .4s, opacity .4s cubic-bezier(.4, 0, .2, 1);
+    -moz-transition: visibility 0 linear .4s, opacity .4s cubic-bezier(.4, 0, .2, 1);
+    transition: visibility 0 linear .4s, opacity .4s cubic-bezier(.4, 0, .2, 1);
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+.sidebar-overlay.active {
+    opacity: 0.5;
+    visibility: visible;
+    @include prefix((transition-delay: 0), webkit moz);
+}
+
+.top-bar {
+    height: 25px;
+    background: black(0.1);
+}
+/* -- Google typography ------------------------------- */
+
+.headline {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1.1;
+    color: $clr-grey-900;
+    text-transform: inherit;
+    letter-spacing: inherit;
+}
+
+.subhead {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.1;
+    color: $clr-grey-900;
+    text-transform: inherit;
+    letter-spacing: inherit;
+}
+/* -- Bootstrap-like style ------------------------------- */
 
 .caret {
     display: inline-block;
-    @include size(0);
+    width: 0;
+    height: 0;
     margin-left: 2px;
     vertical-align: middle;
     border-top: 4px solid;
@@ -36,15 +135,63 @@ $sidebar-font-weight: 500;
     border-left: 4px solid transparent;
 }
 
-.top-bar {
-    height: 25px;
-    background: black(0.1);
-}
-
 .dropdown-menu {
     display: none;
 }
+/* -- Constructor style ------------------------------- */
 
+.constructor {
+    position: relative;
+    margin: 0;
+    padding: 0 50px;
+    @include transition(all 0.5s cubic-bezier(0.55, 0, 0.1, 1));
+}
+
+// Positioning layout: default
+.sidebar,
+.wrapper {
+    display: table-cell;
+    vertical-align: top;
+}
+
+// Positioning layout: stacked
+.sidebar-stacked.open + .wrapper .constructor {
+    margin-left: $sidebar-desktop-width;
+}
+
+@media (max-width: $screen-tablet) {
+    .sidebar-stacked.open + .wrapper .constructor {
+        margin-left: $sidebar-width;
+    }
+}
+
+// Base mixins
+// --------------------------------------------------
+.clearfix {
+    &:before, &:after {
+        content: " "; // 1
+        display: table; // 2
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+.text-overflow {
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* -- Sidebar style ------------------------------- */
+
+
+// Sidebar mixins
+// --------------------------------------------------
+// Sidebar horizontal block
+//
+// This settings will extended by .sidebar-text, .sidebar-brand and .sidebar-nav>li>a
 .sidebar-block {
     display: block;
     height: $sidebar-nav-height;
@@ -57,150 +204,153 @@ $sidebar-font-weight: 500;
     font-weight: $sidebar-font-weight;
     @extend .text-overflow;
     @include transition(all .2s ease-in-out);
-    
     &:hover, &:focus {
         @include box-shadow(none);
         outline: none;
     }
+    // positioning caret in sidebar block
+    .caret {
+        position: absolute;
+        right: $sidebar-padding + $sidebar-badge-size/2 - 4px; // caret centered by badge position; 4px - caret width
+        top: $sidebar-nav-height/2;
+    }
+    // positioning badge in sidebar block
+    .sidebar-badge {
+        position: absolute;
+        right: $sidebar-padding;
+        top: ($sidebar-nav-height - $sidebar-badge-size)/2;
+    }
 }
 
-// Sidebar template
-@mixin sidebar-template(
-    $color,
-    $bg,
-    $header-bg,
-    $brand-color,
-    $brand-bg,
-    $brand-hover-color,
-    $brand-hover-bg,
-    $divider,
-    $badge-color,
-    $badge-bg,
-    $icon-color,
-    $icon-hover-color,
-    $link-color,
-    $link-bg,
-    $link-hover-color,
-    $link-hover-bg,
-    $link-active-color,
-    $link-active-bg,
-    $link-disabled-color,
-    $link-disabled-bg ) {
-        
-        background-color: $bg;
-
-        .sidebar-header {
-            background-color: $header-bg;
-        }
-
-        .sidebar-toggle {
+// Sidebar design template
+//
+// You can make own sidebar style with this template
+@mixin sidebar-template( $color,
+$bg,
+$header-bg,
+$brand-color,
+$brand-bg,
+$brand-hover-color,
+$brand-hover-bg,
+$divider,
+$badge-color,
+$badge-bg,
+$icon-color,
+$icon-hover-color,
+$link-color,
+$link-bg,
+$link-hover-color,
+$link-hover-bg,
+$link-active-color,
+$link-active-bg,
+$link-disabled-color,
+$link-disabled-bg) {
+    background-color: $bg;
+    .sidebar-header {
+        background-color: $header-bg;
+    }
+    .sidebar-toggle {
+        color: $brand-hover-color;
+        background-color: transparent;
+    }
+    .sidebar-brand {
+        color: $brand-color;
+        background-color: $brand-bg;
+        &:hover, &:focus {
             color: $brand-hover-color;
-            background-color:transparent;
+            background-color: $brand-hover-bg;
         }
-
-        .sidebar-brand {
-            color: $brand-color;
-            background-color: $brand-bg;
-            
-            &:hover, &:focus {
-                color: $brand-hover-color;
-                background-color: $brand-hover-bg;
+    }
+    .sidebar-badge {
+        color: $badge-color;
+        background-color: $badge-bg;
+    }
+    .sidebar-divider,
+    .sidebar-nav .divider {
+        background-color: $divider;
+    }
+    .sidebar-text {
+        color: $gray-dark;
+    }
+    .sidebar-nav {
+        li > a {
+            color: $link-color;
+            background-color: $link-bg;
+            i {
+                color: $icon-color;
+            }
+        }
+        li:hover > a,
+        li > a:hover {
+            color: $link-hover-color;
+            background-color: $link-hover-bg;
+            i {
+                color: $icon-hover-color;
+            }
+        }
+        li:focus > a,
+        li > a:focus {
+            color: $link-color;
+            background-color: $link-bg;
+            i {
+                color: $icon-hover-color;
             }
         }
         
-        .sidebar-badge {
-            color: $badge-color;
-            background-color: $badge-bg;
-        }
-        
-        .sidebar-divider, .sidebar-nav .divider {
-            background-color: $divider;
-        }
-        
-        .sidebar-text {
-            color: $color;
-        }
-        
-        .sidebar-nav {
-            li > a {
-                color: $link-color;
-                background-color: $link-bg;
-                
-                i {
-                    color: $icon-color;
-                }
-            }
-            
-            li:hover > a, li > a:hover {
+        > .open > a {
+            &, &:hover, &:focus {
                 color: $link-hover-color;
                 background-color: $link-hover-bg;
-                
-                i {
-                    color: $icon-hover-color;
-                }
             }
-            
-            li:focus > a, li > a:focus {
-                color: $link-color;
-                background-color: $link-bg;
-                
-                i {
-                    color: $icon-hover-color;
-                }
+        }
+        > .active > a {
+            &, &:hover, &:focus {
+                color: $link-active-color;
+                background-color: $link-active-bg;
             }
-            
-            > .open > a {
-                &, &:hover, &:focus {
-                    color: $link-hover-color;
-                    background-color: $link-hover-bg;
-                }
+        }
+        > .disabled > a {
+            &, &:hover, &:focus {
+                color: $link-disabled-color;
+                background-color: $link-disabled-bg;
             }
-            
-            > .active > a {
-                &, &:hover, &:focus {
-                    color: $link-disabled-color;
-                    background-color: $link-disabled-bg;
-                }
-            }
-            
-            > li > .ink {
-//                background: #80d8ff;
-//                opacity: 0.5;
-            }
-            
-            // Dropdown menu items
-            > .dropdown {
-                // Remove bg-color from open dropdown
-                > .dropdown-menu {
-                    background-color: $link-hover-bg;
-                    
-                    > li > a {
-                        &:focus {
-                            background-color: $link-hover-bg;
-                            color: $link-hover-color;
-                        }
-                        
-                        &:hover {
-                            background-color: darken($link-hover-bg, 7%);
-                            color: $link-hover-color;
-                        }
+        }
+        > li > .ink {
+            //background: #80d8ff;
+            //opacity: 0.5;
+        }
+        // Dropdown menu items
+        > .dropdown {
+            // Remove background color from open dropdown
+            > .dropdown-menu {
+                background-color: $link-hover-bg;
+                > li > a {
+                    &:focus {
+                        background-color: $link-hover-bg;
+                        color: $link-hover-color;
                     }
-                    
-                    > .active > a {
-                        &, &:hover, &:focus {
-                            color: $link-active-color;
-                            background-color: $link-active-bg;
-                        }
+                    &:hover {
+                        background-color: darken($link-hover-bg, 7%);
+                        color: $link-hover-color;
+                    }
+                }
+                > .active > a {
+                    &, &:hover, &:focus {
+                        color: $link-active-color;
+                        background-color: $link-active-bg;
                     }
                 }
             }
         }
+    }
 }
 
-
-// Sidebar - Defaults
-// -------------------------------
-
+//
+// Sidebars
+// --------------------------------------------------
+// Wrapper and base class
+//
+// Provide a static sidebar from which we expand to create other sidebar variations.
 .sidebar {
     position: relative;
     display: block;
@@ -209,105 +359,99 @@ $sidebar-font-weight: 500;
     overflow-x: hidden;
     border: none;
     @include transition(all 0.5s cubic-bezier(0.55, 0, 0.1, 1));
-    
+    // Prevent floats from breaking the sidebar
+    // &:extend(.clearfix all);
     @extend .clearfix;
-    
+    // Scrollbar style for webkit browsers
     &::-webkit-scrollbar-track {
         border-radius: 2px;
     }
-    
     &::-webkit-scrollbar {
         width: 5px;
-        background-color: #f7f7f7;
+        background-color: #F7F7F7;
     }
-    
     &::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px black(0.3);
-        background-color: #bfbfbf;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        background-color: #BFBFBF;
     }
-    
-    .caret {
-        position: absolute;
-        right: $sidebar-padding + $sidebar-badge-size/2 - 4px;
-        top: $sidebar-nav-height /2;
-    }
-    
-    .sidebar-badge {
-        position: absolute;
-        right: $sidebar-padding;
-        top: ($sidebar-nav-height - $sidebar-badge-size)/2;
-    }
-    
-    // Sidebar elements
-    // ----------------
-    
+}
+
+// Sidebar Elements
+//
+// Basic style of sidebar elements
+.sidebar {
     //** Sidebar heading
+    //----------------
     .sidebar-header {
         position: relative;
         height: $sidebar-desktop-width * 9/16; // 16:9 header dimension
         margin-bottom: $sidebar-divider;
         @include transition(all .2s ease-in-out);
-    
-    
         // Brand/project cover
+        // Addition class for sidebar header
         &.header-cover {
             background-repeat: no-repeat;
             background-position: center center;
             @include background-size(cover);
         }
-
         &:hover {
             .sidebar-toggle {
                 opacity: 1;
             }
         }
     }
-    
     //** Sidebar toggle
+    //
+    // You can bind click on this button and toggle sidebar via javascript
     .sidebar-toggle {
         position: relative;
         float: right;
         margin: $sidebar-padding;
         padding: 0;
-        background-image: none;
+        background-image: none; // Reset unusual Firefox-on-Android default style;
         border: none;
-        @include size($sidebar-icon-width);
+        height: $sidebar-icon-width;
+        width: $sidebar-icon-width;
         font-size: $sidebar-icon-size;
         opacity: 0.7;
         @include transition(all .2s ease-in-out);
         @extend .clearfix;
     }
-    
     //** Sidebar arrow
+    //----------------
     .icon-material-sidebar-arrow:before {
-        @extend .mdi-action-assignment:before;
+        content: "\e610"; // icon-material-arrow-back
     }
-    
     //** Brand/project image
+    //
+    // In google guideline used for user profile image
     .sidebar-image {
         img {
-            @include size($sidebar-desktop-width/4 - $sidebar-padding);
+            width: $sidebar-desktop-width/4 - $sidebar-padding;
+            height: $sidebar-desktop-width/4 - $sidebar-padding;
             margin: $sidebar-padding;
             @include border-radius(50%);
             @include transition(all .2s ease-in-out);
         }
     }
-    
     //** Brand/project name
+    //
+    // In google guideline used for email dropdown
     .sidebar-brand {
-        position:absolute;
-        bottom: 0; left: 0; right: 0;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
         @extend .sidebar-block;
-        
         &:hover, &:focus {
             text-decoration: none;
         }
     }
-    
     //** Sidebar badge
+    //----------------
     .sidebar-badge {
-        display:inline-block;
+        display: inline-block;
         min-width: $sidebar-badge-size;
         height: $sidebar-badge-size;
         line-height: $sidebar-badge-size;
@@ -316,14 +460,14 @@ $sidebar-font-weight: 500;
         text-align: center;
         white-space: nowrap;
         vertical-align: baseline;
-        
         &.badge-circle {
             @include border-radius(50%);
         }
     }
-    
-    //** Sidebar divider 
-    .sidebar-divider, .sidebar-nav .divider {
+    //** Sidebar divider
+    //----------------
+    .sidebar-divider,
+    .sidebar-nav .divider {
         position: relative;
         display: block;
         height: 1px;
@@ -331,13 +475,13 @@ $sidebar-font-weight: 500;
         padding: 0;
         overflow: hidden;
     }
-    
     //** Sidebar text
+    //----------------
     .sidebar-text {
         @extend .sidebar-block;
     }
-    
     //** Sidebar icons
+    //----------------
     .sidebar-icon {
         display: inline-block;
         margin-right: $sidebar-padding;
@@ -345,104 +489,209 @@ $sidebar-font-weight: 500;
         width: $sidebar-icon-width;
         text-align: left;
         font-size: $sidebar-icon-size;
-        
         &:before, &:after {
             vertical-align: middle;
         }
     }
-    
-    // Sidebar navigation class
-    // ------------------------
-    .sidebar-nav {
-        margin: 0;
-        padding: 0;
-        
-        //** Links 
-        li {
+}
+
+// Sidebar navigation class
+// ------------------------
+.sidebar .sidebar-nav {
+    margin: 0;
+    padding: 0;
+    //** Links
+    //----------------
+    li {
+        position: relative;
+        list-style-type: none;
+        a {
             position: relative;
-            list-style-type: none;
+            cursor: pointer;
+            user-select: none;
+            @extend .sidebar-block;
+            &:hover {
+                background: transparent;
+            }
+        }
+        p {
+            position: relative;
+            cursor: default;
+            user-select: none;
+            @extend .sidebar-block;
             
-            a {
-                position: relative;
-                cursor: pointer;
-                @include prefix((user-select: none), webkit moz ms);
-                @extend .sidebar-block;
-                
-                &:hover {
-                    background: transparent;
-                }
+            &:hover, &:focus {
                 
             }
         }
-        
-        //** Dropdown menu
-        .dropdown-menu {
-            position: relative;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            border: none;
-            @include border-radius(0);
-            @include box-shadow(none);
+    }
+    //** Dropdown menu
+    //----------------
+    .dropdown-menu {
+        position: relative;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        @include box-shadow(none);
+    }
+}
+
+// Sidebar color theme variations
+//
+// ------------------------
+.sidebar-default {
+    @include sidebar-template( 
+        $color: $gray-darker, 
+        $bg: #fff, 
+        $header-bg: #eceff1, 
+        $brand-color: $gray-dark, 
+        $brand-bg: transparent, 
+        $brand-hover-color: $gray-darker, 
+        $brand-hover-bg: black(0.1), 
+        $divider: $gray, 
+        $badge-color: #fff, 
+        $badge-bg: $gray, 
+        $icon-color: $gray-dark, 
+        $icon-hover-color: $gray-dark, 
+        $link-color: $gray-darker,
+        $link-bg: transparent, 
+        $link-hover-color: $gray-darker, 
+        $link-hover-bg: $gray-light,
+        $link-active-color: $gray-darker, 
+        $link-active-bg: $gray-light,
+        $link-disabled-color: $gray-light, 
+        $link-disabled-bg: transparent);
+}
+
+// Sidebar toggling
+//
+// Hide sidebar
+.sidebar {
+    width: 0;
+    @include translate3d(-$sidebar-desktop-width, 0, 0);
+    &.open {
+        min-width: $sidebar-desktop-width;
+        width: $sidebar-desktop-width;
+        @include translate3d(0, 0, 0);
+    }
+}
+
+// Sidebar positions: fix the left/right sidebars
+.sidebar-stacked {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: $zindex-sidebar-fixed;
+
+    left: 0;
+}
+
+
+// Sidebar size
+//
+// Change size of sidebar and sidebar elements on small screens
+@media (max-width: $screen-tablet) {
+    .sidebar.open {
+        min-width: $sidebar-width;
+        width: $sidebar-width;
+    }
+    .sidebar .sidebar-header {
+        height: $sidebar-width * 9/16; // 16:9 header dimension
+    }
+    .sidebar .sidebar-image {
+        img {
+            width: $sidebar-width/4 - $sidebar-padding;
+            height: $sidebar-width/4 - $sidebar-padding;
         }
     }
 }
 
-// Positioning layout: default 
-/*.sidebar, .wrapper {
-    display: table-cell;
-    vertical-align: top;
-}*/
-
-// Positioning layout: stacked
-.sidebar-stacked {
-    &.open + .wrapper .contructor {
-        margin-left: $sidebar-desktop-width;
-    }
-}
-
-// Sidebar Default Theme
-.sidebar-default {
-    @include sidebar-template(
-        $color: $clr-grey-900,
-        $bg: white(1.0),
-        $header-bg: $clr-blue-grey-50,
-        $brand-color: $clr-grey-600,
-        $brand-bg: transparent,
-        $brand-hover-color: $clr-grey-900,
-        $brand-hover-bg: black(.1),
-        $divider: $clr-grey-400,
-        $badge-color: white(1.0),
-        $badge-bg: $clr-grey-400,
-        $icon-color: $clr-grey-600,
-        $icon-hover-color: $clr-grey-600,
-        $link-color: $clr-grey-900,
-        $link-bg: transparent,
-        $link-hover-color: $clr-grey-900,
-        $link-hover-bg: $clr-grey-300,
-        $link-active-color: $clr-grey-900,
-        $link-active-bg: $clr-grey-300,
-        $link-disabled-color: $clr-grey-300,
-        $link-disabled-bg: transparent
-        );
-}
-
-// Sidebar toggling
-.sidebar {
-    width: 0;
-    @include translate3d(-$sidebar-desktop-width, 0, 0);
+// Menu Button
+.menu-button {
     
-    &.open {
-        min-width: $sidebar-desktop-width;
-        width: $sidebar-desktop-width;
-        @include translate3d(0,0,0);
-    }
-}
-
-.sidebar-stacked {
+    $menu-toggle-width: 24px;
+    $menu-toggle-height: 18px;
+    $menu-toggle-layer-thickness: 4px;
+    $menu-gradient-stop-1: $menu-toggle-height/2 - $menu-toggle-layer-thickness/2;
+    $menu-gradient-stop-2: $menu-gradient-stop-1 + $menu-toggle-layer-thickness;
+    
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    background: none;
+    border: none;
+    border-radius: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    
     position: fixed;
-    top: 0; bottom: 0;
-    z-index: $zindex-sidebar-fixed;
+    top: 20px; left: 20px;
+    z-index: $zindex-sidebar-fixed *2;
+    width: $menu-toggle-width;
+    height: $menu-toggle-height;
+    background: linear-gradient(
+        0deg, 
+        rgba($gray-darker, 0),
+        rgba($gray-darker, 0) $menu-gradient-stop-1,
+        $gray-darker $menu-gradient-stop-1,
+        $gray-darker $menu-gradient-stop-2,
+        rgba($gray-darker, 0) $menu-gradient-stop-2,
+        rgba($gray-darker, 0) $menu-toggle-height
+    );
+    font-size: 0;
+    text-indent: -9999px;
     
-    left: 0;
+    opacity: 0.75;
+    
+    &:hover {
+        opacity: 1;
+    }
+    
+    &::before, &::after {
+        display: block;
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: $menu-toggle-layer-thickness;
+        background-color: $clr-grey-900;
+        content: "";
+    }
+    
+    &::before {
+        top: 0;
+        transform-origin: bottom left;
+    }
+    
+    &::after {
+        bottom: 0;
+        transform-origin: top left;
+    }
+    
+    &, &::before, &::after {
+        @include transition(all 0.5s);
+    }
+    
+    &.active {
+        transform: rotate(360deg);
+        
+        &::before, &::after {
+            width: 75%;
+        }
+        
+        &::before {
+            transform: translateY(7px) rotate(-45deg);
+        }
+        
+        &::after {
+            transform: translateY(-7px) rotate(45deg);
+        }
+    }
 }
