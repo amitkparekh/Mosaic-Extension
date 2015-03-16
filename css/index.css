@@ -4363,9 +4363,9 @@ body {
   top: 20px;
   left: 20px;
   z-index: 2070;
-  width: 24px;
-  height: 18px;
-  background: linear-gradient(0deg, rgba(33, 33, 33, 0), rgba(33, 33, 33, 0) 7px, #212121 7px, #212121 11px, rgba(33, 33, 33, 0) 11px, rgba(33, 33, 33, 0) 18px);
+  width: 20px;
+  height: 12px;
+  background: linear-gradient(0deg, rgba(33, 33, 33, 0), rgba(33, 33, 33, 0) 5px, #212121 5px, #212121 7px, rgba(33, 33, 33, 0) 7px, rgba(33, 33, 33, 0) 12px);
   font-size: 0;
   text-indent: -9999px;
   opacity: 0.75; }
@@ -4376,7 +4376,7 @@ body {
     position: absolute;
     left: 0;
     width: 100%;
-    height: 4px;
+    height: 2px;
     background-color: #212121;
     content: ""; }
   .menu-button::before {
@@ -4396,9 +4396,9 @@ body {
     .menu-button.active::before, .menu-button.active::after {
       width: 75%; }
     .menu-button.active::before {
-      transform: translateY(7px) rotate(-45deg); }
+      transform: translateY(5px) rotate(-45deg); }
     .menu-button.active::after {
-      transform: translateY(-7px) rotate(45deg); }
+      transform: translateY(-5px) rotate(45deg); }
 
 .container {
   position: relative;

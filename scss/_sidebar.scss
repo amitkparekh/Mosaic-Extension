@@ -611,9 +611,9 @@ $link-disabled-bg) {
 // Menu Button
 .menu-button {
     
-    $menu-toggle-width: 24px;
-    $menu-toggle-height: 18px;
-    $menu-toggle-layer-thickness: 4px;
+    $menu-toggle-width: 20px;
+    $menu-toggle-height: 12px;
+    $menu-toggle-layer-thickness: 2px;
     $menu-gradient-stop-1: $menu-toggle-height/2 - $menu-toggle-layer-thickness/2;
     $menu-gradient-stop-2: $menu-gradient-stop-1 + $menu-toggle-layer-thickness;
     
@@ -677,6 +677,7 @@ $link-disabled-bg) {
     
     &, &::before, &::after {
         @include transition(all 0.5s);
+//        @include border-radius(25%);
     }
     
     &.active {
@@ -687,11 +688,11 @@ $link-disabled-bg) {
         }
         
         &::before {
-            transform: translateY(7px) rotate(-45deg);
+            transform: translateY(5px) rotate(-45deg);
         }
         
         &::after {
-            transform: translateY(-7px) rotate(45deg);
+            transform: translateY(-5px) rotate(45deg);
         }
     }
 }
