@@ -30,10 +30,16 @@
         </div>
 
         <!-- Sidebar navigation -->
-        <ul class="nav sidebar-nav">
-            <li>
+        <ul id="nav-main" class="sidebar-nav open">
+            <li id="nav-new-tile-button">
                 <a href="#">
                     <i class="sidebar-icon md-add"></i> Add new tile
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    Edit mode
+                    <span class="sidebar-badge">2</span>
                 </a>
             </li>
 
@@ -49,7 +55,7 @@
 
             <li class="divider"></li>
 
-            <li>
+            <li id="nav-settings-button">
                 <a href="#">
                     <i class="sidebar-icon md-settings"></i> Settings
                 </a>
@@ -65,6 +71,45 @@
                 </a>
             </li>
         </ul>
+        <!-- Add new tile -->
+        <ul id="nav-new-tile-menu" class="sidebar-nav">
+            <div class="sidebar-text">
+                <span>Add new tile</span>
+                <a id="nav-new-tile-close" href="#">
+                    <div class="sidebar-badge sidebar-icon-right md-close"></div>
+                </a>
+            </div>
+        </ul>
+        
+        <!-- Settings Menu -->
+        <ul id="nav-settings-menu" class="sidebar-nav">
+            <div class="sidebar-text">
+                <span>Settings</span>
+                <a id="nav-settings-close" href="#">
+                    <div class="sidebar-badge sidebar-icon-right md-close"></div>
+                </a>
+            </div>
+            
+            <li>
+                <a href="#">
+                    <i class="sidebar-icon md-color-lens"></i> Customise theme
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="sidebar-icon md-view-module"></i> Customise tiles
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="#">
+                    <i class="sidebar-icon mdi mdi-rss"></i> Customise RSS Feed
+                </a>
+            </li>
+        </ul>
+        
+        
+        
     </aside>
 
     <div class="wrapper">
