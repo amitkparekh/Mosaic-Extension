@@ -42,6 +42,10 @@
     animation-delay: $delay;
 }
 
+@mixin transition-delay($delay) {
+    @include prefix((transition-delay: $delay), webkit moz ms o);
+}
+
 @mixin animation-duration($duration) {
     -o-animation-duration: $duration;
     -ms-animation-duration: $duration;
