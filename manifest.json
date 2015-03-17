@@ -20,6 +20,7 @@
         "history",
         "bookmarks",
         "identity",
+        "identity.email",
         "tabs",
         "storage"
     ],
