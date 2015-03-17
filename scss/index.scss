@@ -6,6 +6,8 @@
 
 @import 'mixins';
 
+@import 'fonts';
+
 // Adds Bootstrap3
 //@import 'bootstrap';
 
@@ -29,27 +31,32 @@
 }
 
 html, body {
+    position: relative;
+    min-height: 100%;
+    height: 100%;
     height: 100vh;
 }
 
 body {
 //    background: $clr-grey-400;
     overflow: hidden;
-    
-//    font-family: "Roboto", "Segoe UI", "Segoe UI Web Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-family: "Roboto";
+    font-family: "RobotoDraft", "Segoe UI", Helvetica, Arial, sans-serif;
     
     min-height: 100vh;
     margin: 0;
     
+    font-style: normal;
+    font-weight: 300;
     font-size: 14px;
     line-height: 1.4;
+    color: #212121;
+    background-color: #f5f5f5;
     
     // Font Rendering
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    @include prefix((font-feature-settings: "kern" 1), webkit moz);
+//    @include prefix((font-feature-settings: "kern" 1), webkit moz);
 }
 
 p,label,span,li,h1,h2,h3,h4,h5,h6 {
