@@ -63,3 +63,45 @@ navSettingsClose.addEventListener("click", subMenuClose);
 navNewTileButton.addEventListener("click", newTileOpen);
 navNewTileClose.addEventListener("click", subMenuClose);
 
+// Form Elements
+//
+// -------------------
+
+// Add new tile
+$(document).ready(function () {
+
+    // URL
+    $("#new-tile-URL").focusin(function () {
+        $(this).focusout(function () {
+            
+            /*if (  ) {
+                // if false
+                console.log("not url")
+                $(".bar", this).addClass("error");
+                $("label", this).addClass("error");
+            } else {
+                // if true
+                console.log("url")
+                $(".bar", this).removeClass("error");
+                $("label", this).removeClass("error");
+            }; */
+
+        });
+    });
+
+    // Text
+    $("#new-tile-name").focusin(function () {
+        $(this).focusout(function () {
+            if ($("input", this).val() == '') {
+                // if false
+                $(".bar", this).addClass("error");
+                $("label", this).addClass("error");
+            } else {
+                // if true
+                $(".bar", this).removeClass("error");
+                $("label", this).removeClass("error");
+            };
+        });
+    });
+
+});
