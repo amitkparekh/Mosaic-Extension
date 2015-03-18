@@ -28,7 +28,7 @@ menuButton.addEventListener("click", sidebarToggle);
 // Open sub menus
 //
 // -------------------
-var animaDelay = 300;
+var animaDelay = 375;
 
 var navOverview = document.getElementById("sidebar");
 var navMain = document.getElementById("nav-main");
