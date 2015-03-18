@@ -12,9 +12,14 @@ var sidebarToggle = function () {
     };
 
     if (menuButton.className.match(/(?:^|\s)active(?!\S)/)) {
-        menuButton.className = menuButton.className.replace(/(?:^|\s)active(?!\S)/g, '')
+        menuButton.className = menuButton.className.replace(/(?:^|\s)active(?!\S)/g, '');
+        subMenuClose();
+        setTimeout(function () {
+            navMain.className = navMain.className.replace(/(?:^|\s)open(?!\S)/g, '');;
+        }, animaDelay);
     } else {
         menuButton.className += " active";
+        navMainOpen();
     }
 };
 
@@ -44,6 +49,10 @@ var extSidebarClose = function () {
     navOverview.className = navOverview.className.replace(/(?:^|\s)ext(?!\S)/g, '');
 }
 
+var navMainOpen = function() {
+    navMain.className += " open";
+}
+
 var settingsOpen = function () {
     navMain.className = navMain.className.replace(/(?:^|\s)open(?!\S)/g, '');
     setTimeout(function () {
@@ -68,8 +77,7 @@ var subMenuClose = function () {
     navSettingsMenu.className = navSettingsMenu.className.replace(/(?:^|\s)ext(?!\S)/g, '');
     extSidebarClose();
     setTimeout(function () {
-        navMain.className += " open";
-
+        navMainOpen();
     }, animaDelay);
 }
 
