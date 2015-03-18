@@ -25,6 +25,7 @@ menuButton.addEventListener("click", sidebarToggle);
 // -------------------
 var animaDelay = 300;
 
+var navOverview = document.getElementById("sidebar");
 var navMain = document.getElementById("nav-main");
 
 var navSettingsButton = document.getElementById("nav-settings-button");
@@ -35,10 +36,19 @@ var navNewTileButton = document.getElementById("nav-new-tile-button");
 var navNewTileMenu = document.getElementById("nav-new-tile-menu");
 var navNewTileClose = document.getElementById("nav-new-tile-close");
 
+var extSidebarOpen = function () {
+    navOverview.className += " ext";
+}
+
+var extSidebarClose = function () {
+    navOverview.className = navOverview.className.replace(/(?:^|\s)ext(?!\S)/g, '');
+}
+
 var settingsOpen = function () {
     navMain.className = navMain.className.replace(/(?:^|\s)open(?!\S)/g, '');
     setTimeout(function () {
         navSettingsMenu.className += " open";
+        extSidebarOpen();
     }, animaDelay);
 }
 
@@ -46,14 +56,20 @@ var newTileOpen = function () {
     navMain.className = navMain.className.replace(/(?:^|\s)open(?!\S)/g, '');
     setTimeout(function () {
         navNewTileMenu.className += " open";
+        navNewTileMenu.className += " ext";
+        navOverview.className += " ext";
     }, animaDelay);
 }
 
 var subMenuClose = function () {
     navNewTileMenu.className = navNewTileMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
+    navNewTileMenu.className = navNewTileMenu.className.replace(/(?:^|\s)ext(?!\S)/g, '');
     navSettingsMenu.className = navSettingsMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
+    navSettingsMenu.className = navSettingsMenu.className.replace(/(?:^|\s)ext(?!\S)/g, '');
+    extSidebarClose();
     setTimeout(function () {
         navMain.className += " open";
+
     }, animaDelay);
 }
 
@@ -73,7 +89,7 @@ $(document).ready(function () {
     // URL
     $("#new-tile-URL").focusin(function () {
         $(this).focusout(function () {
-            
+
             var url = $("input", this).val();
 
             if (/^(http:\/\/www\.|https:\/\/www\.)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(url)) {
