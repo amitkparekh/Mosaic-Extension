@@ -28,7 +28,7 @@ menuButton.addEventListener("click", sidebarToggle);
 // Open sub menus
 //
 // -------------------
-var animaDelay = 375;
+var animaDelay = 510;
 
 var navOverview = document.getElementById("sidebar");
 var navMain = document.getElementById("nav-main");
@@ -49,7 +49,7 @@ var extSidebarClose = function () {
     navOverview.className = navOverview.className.replace(/(?:^|\s)ext(?!\S)/g, '');
 }
 
-var navMainOpen = function() {
+var navMainOpen = function () {
     navMain.className += " open";
 }
 
@@ -57,7 +57,8 @@ var settingsOpen = function () {
     navMain.className = navMain.className.replace(/(?:^|\s)open(?!\S)/g, '');
     setTimeout(function () {
         navSettingsMenu.className += " open";
-        extSidebarOpen();
+        //        navSettingsMenu.className += " ext";
+        //        extSidebarOpen();
     }, animaDelay);
 }
 
@@ -66,7 +67,7 @@ var newTileOpen = function () {
     setTimeout(function () {
         navNewTileMenu.className += " open";
         navNewTileMenu.className += " ext";
-        navOverview.className += " ext";
+        extSidebarOpen();
     }, animaDelay);
 }
 
@@ -106,7 +107,7 @@ $(document).ready(function () {
             } else {
                 console.log("not url");
                 $(".bar", this).addClass("error");
-                $("label", this).addClass("error");
+                $("label", this).addClass("error").addClass("valid");
             }
 
         });
@@ -122,9 +123,26 @@ $(document).ready(function () {
             } else {
                 // if true
                 $(".bar", this).removeClass("error");
-                $("label", this).removeClass("error");
+                $("label", this).removeClass("error").addClass("valid");
             };
         });
     });
 
+    // RSS
+    $("#new-tile-RSS").focusin(function () {
+        $(this).focusout(function () {
+            if ($("input", this).val() == '') {
+                // if false
+                $("label", this).removeClass("valid");
+            } else {
+                // if true
+                $(".bar", this).removeClass("error");
+                $("label", this).removeClass("error").addClass("valid");
+            };
+        });
+    });
+    
+    // Customise tile color
+    
+    
 });
