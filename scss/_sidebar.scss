@@ -773,6 +773,44 @@ $text-link-color) {
             }
         }
     }
+    
+    .text-chunk {
+        @extend .sidebar-block;
+        white-space: initial;
+        height: auto;
+        padding: $sidebar-padding;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        
+        h3, p, ul, li {
+            font-weight: 400;
+            color: $clr-grey-900;
+            line-height: 1.6;
+            margin: 15px 0;
+            
+            span {
+                font-weight: 600;
+            
+                &.italic {
+                    font-weight: 400;
+                }
+            }
+        }
+        
+        h3 {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        h3:first-of-type {
+            margin-top: 0;
+        }
+        
+        li {
+            list-style-type: circle;
+        }
+    }
+    
 }
 
 .text-field-group {
