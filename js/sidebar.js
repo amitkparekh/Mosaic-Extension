@@ -66,8 +66,12 @@ var navMainOpen = function () {
     navMain.className += " open";
 }
 
-var settingsOpen = function () {
+var navMainClose = function() {
     navMain.className = navMain.className.replace(/(?:^|\s)open(?!\S)/g, '');
+}
+
+var settingsOpen = function () {
+    navMainClose();
     setTimeout(function () {
         navSettingsMenu.className += " open";
         //        navSettingsMenu.className += " ext";
@@ -76,7 +80,7 @@ var settingsOpen = function () {
 }
 
 var newTileOpen = function () {
-    navMain.className = navMain.className.replace(/(?:^|\s)open(?!\S)/g, '');
+    navMainClose();
     setTimeout(function () {
         navNewTileMenu.className += " open";
         navNewTileMenu.className += " ext";
