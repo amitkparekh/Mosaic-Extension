@@ -141,11 +141,14 @@ body {
     margin-left: $sidebar-desktop-width;
 }
 
-@media (max-width: $screen-tablet) {
-    .sidebar-stacked.open + .wrapper .constructor {
-        margin-left: $sidebar-width;
-    }
+.sidebar-stacked.open.ext + .wrapper .constructor {
+    margin-left: $sidebar-desktop-width-ext;
 }
+
+.sidebar-stacked.open.ext2 + .wrapper .constructor {
+    margin-left: $sidebar-desktop-width-ext2;
+}
+
 
 // Base mixins
 // --------------------------------------------------
