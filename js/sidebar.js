@@ -117,6 +117,12 @@ navSettingsClose.addEventListener("click", subMenuClose);
 navNewTileButton.addEventListener("click", newTileOpen);
 navNewTileClose.addEventListener("click", subMenuClose);
 
+navDonateButton.addEventListener("click", donateOpen);
+navDonateClose.addEventListener("click", subMenuClose);
+
+navBugButton.addEventListener("click", bugOpen);
+navBugClose.addEventListener("click", subMenuClose);
+
 // Form Elements
 //
 // -------------------
