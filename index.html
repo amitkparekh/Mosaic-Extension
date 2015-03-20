@@ -20,7 +20,7 @@
     <button id="menu-button" class="menu-button active">Toggle Menu</button>
 
     <!-- Material sidebar -->
-    <aside id="sidebar" class="sidebar sidebar-default sidebar-stacked open ext" role="navigation">
+    <aside id="sidebar" class="sidebar sidebar-default sidebar-stacked open" role="navigation">
         <!-- Sidebar header -->
         <div id="sidebar-header" class="sidebar-header header-cover" style="background-image: url(http://2.bp.blogspot.com/-2RewSLZUzRg/U-9o6SD4M6I/AAAAAAAADIE/voax99AbRx0/s1600/14%2B-%2B1%2B%281%29.jpg);">
             <!-- Sidebar brand name 
@@ -31,7 +31,7 @@
         </div>
 
         <!-- Sidebar navigation -->
-        <ul id="nav-main" class="sidebar-nav">
+        <ul id="nav-main" class="sidebar-nav open">
             <li id="nav-new-tile-button">
                 <a href="#">
                     <i class="sidebar-icon md-add"></i> Add new tile
@@ -102,7 +102,7 @@
             </li>
         </ul>
         <!-- Add new tile -->
-        <ul id="nav-new-tile-menu" class="sidebar-nav open ext">
+        <ul id="nav-new-tile-menu" class="sidebar-nav">
             <div class="sidebar-text">
                 <span>Add new tile</span>
                 <a id="nav-new-tile-close" href="#">
@@ -122,7 +122,7 @@
                     <label>Site URL</label>
                 </div>
             </form>
-            <form>
+            <form class="">
                 <div class="text-field-group" id="new-tile-name">
                     <input type="text" required>
                     <!--                    <span class="highlight"></span>-->
@@ -130,16 +130,16 @@
                     <label>Site Name</label>
                 </div>
             </form>
-            <form>
+            <form class="">
                 <div class="text-field-group" id="new-tile-RSS">
                     <input type="text">
                     <span class="bar"></span>
                     <label>Site RSS (optional)</label>
                 </div>
             </form>
-            <li class="divider"></li>
-            <form class="sidebar-text">
-                <span>Customise tile color</span>
+            <li class="divider "></li>
+            <form class="sidebar-text ">
+                <span id="new-tile-customise-title">Customise tile color</span>
                 <div class="switch sidebar-badge sidebar-icon-right">
                     <label>
                         <input type="checkbox">
@@ -147,12 +147,9 @@
                     </label>
                 </div>
             </form>
-            <form>
+            <li class="divider "></li>
 
-            </form>
-            <li class="divider"></li>
-
-            <div class="sidebar-text">
+            <div class="sidebar-text ">
                 <span>Tile image</span>
             </div>
 
