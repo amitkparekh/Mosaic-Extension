@@ -227,7 +227,8 @@ $link-hover-bg,
 $link-active-color,
 $link-active-bg,
 $link-disabled-color,
-$link-disabled-bg) {
+$link-disabled-bg,
+$text-link-color) {
     background-color: $bg;
     .sidebar-header {
         background-color: $header-bg;
@@ -249,8 +250,13 @@ $link-disabled-bg) {
         background-color: $badge-bg;
     }
     .sidebar-icon-right {
-        color: $icon-color;
+        color: darken($icon-color, 20%);
         background-color: transparent;
+        opacity: .7;
+        
+        &:hover {
+            opacity: 1;
+        }
     }
     .sidebar-divider,
     .sidebar-nav .divider {
@@ -342,6 +348,18 @@ $link-disabled-bg) {
                 }
             }
         }
+        
+        .text-chunk {
+            a {
+                color: $text-link-color;
+                background: transparent;
+                @include transition(0.2s ease all);
+                
+                &:hover {
+                    border-bottom: 1px solid $text-link-color;
+                }
+            }
+        }
     }
 }
 
@@ -372,7 +390,7 @@ $link-disabled-bg) {
     }
     &::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        -webkit-box-shadow: inset 0 0 6px black(.3);
         background-color: #BFBFBF;
     }
 }
@@ -552,7 +570,7 @@ $link-disabled-bg) {
 //
 // ------------------------
 .sidebar-default {
-    @include sidebar-template( $color: $gray-darker, $bg: #fff, $header-bg: #eceff1, $brand-color: $gray-dark, $brand-bg: transparent, $brand-hover-color: $gray-darker, $brand-hover-bg: black(0.1), $divider: $gray, $badge-color: #fff, $badge-bg: $gray, $icon-color: $gray-dark, $icon-hover-color: $gray-dark, $link-color: $gray-darker, $link-bg: transparent, $link-hover-color: $gray-darker, $link-hover-bg: $gray-light, $link-active-color: $gray-darker, $link-active-bg: $gray-light, $link-disabled-color: $gray-light, $link-disabled-bg: transparent);
+    @include sidebar-template( $color: $gray-darker, $bg: #fff, $header-bg: #eceff1, $brand-color: $gray-dark, $brand-bg: transparent, $brand-hover-color: $gray-darker, $brand-hover-bg: black(0.1), $divider: $gray, $badge-color: #fff, $badge-bg: $gray, $icon-color: $gray-dark, $icon-hover-color: $gray-dark, $link-color: $gray-darker, $link-bg: transparent, $link-hover-color: $gray-darker, $link-hover-bg: $gray-light, $link-active-color: $gray-darker, $link-active-bg: $gray-light, $link-disabled-color: $gray-light, $link-disabled-bg: transparent, $text-link-color: $clr-light-blue);
 }
 
 // Sidebar toggling
@@ -626,7 +644,7 @@ $link-disabled-bg) {
     background: linear-gradient( 0deg, rgba($gray-darker, 0), rgba($gray-darker, 0) $menu-gradient-stop-1, $gray-darker $menu-gradient-stop-1, $gray-darker $menu-gradient-stop-2, rgba($gray-darker, 0) $menu-gradient-stop-2, rgba($gray-darker, 0) $menu-toggle-height);
     font-size: 0;
     text-indent: -9999px;
-    opacity: 0.75;
+    opacity: 0.65;
     
     @include transition(all 0.5s);
     
