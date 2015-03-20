@@ -140,7 +140,6 @@ $(document).ready(function () {
                 $(".bar", this).removeClass("error");
                 $("label", this).removeClass("error");
             } else {
-                console.log("not url");
                 $(".bar", this).addClass("error");
                 $("label", this).addClass("error").addClass("valid");
             }
@@ -165,7 +164,9 @@ $(document).ready(function () {
 
     // RSS
     $("#new-tile-RSS").focusin(function () {
+
         $(this).focusout(function () {
+
             if ($("input", this).val() == '') {
                 // if false
                 $("label", this).removeClass("valid");
@@ -176,8 +177,8 @@ $(document).ready(function () {
             };
         });
     });
-    
+
     // Customise tile color
-    
-    
+
+
 });
