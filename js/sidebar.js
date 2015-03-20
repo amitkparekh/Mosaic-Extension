@@ -53,8 +53,13 @@ var extSidebarOpen = function () {
     navOverview.className += " ext";
 }
 
+var extSidebarOpen2 = function () {
+    navOverview.className += " ext2";
+}
+
 var extSidebarClose = function () {
     navOverview.className = navOverview.className.replace(/(?:^|\s)ext(?!\S)/g, '');
+    navOverview.className = navOverview.className.replace(/(?:^|\s)ext2(?!\S)/g, '');
 }
 
 var navMainOpen = function () {
