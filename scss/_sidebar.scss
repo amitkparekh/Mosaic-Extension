@@ -683,12 +683,22 @@ $link-disabled-bg) {
             width: $sidebar-desktop-width-ext;
         }
     }
+    
+    &.ext2 {
+        width: $sidebar-desktop-width-ext2;
+    }
+    
+    .sidebar-nav {
+        &.ext2 {
+            width: $sidebar-desktop-width-ext2;
+        }
+    }
 }
 
 .sidebar {
     
     .sidebar-nav {
-        &.ext {
+        &.ext, &.ext2 {
             form {
                 &.sidebar-text {
                     > span {
