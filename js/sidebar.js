@@ -41,6 +41,14 @@ var navNewTileButton = document.getElementById("nav-new-tile-button");
 var navNewTileMenu = document.getElementById("nav-new-tile-menu");
 var navNewTileClose = document.getElementById("nav-new-tile-close");
 
+var navDonateButton = document.getElementById("nav-donate-button");
+var navDonateMenu = document.getElementById("nav-donate-menu");
+var navDonateClose = document.getElementById("nav-donate-close");
+
+var navBugButton = document.getElementById("nav-bug-button");
+var navBugMenu = document.getElementById("nav-bug-menu");
+var navBugClose = document.getElementById("nav-bug-close");
+
 var extSidebarOpen = function () {
     navOverview.className += " ext";
 }
@@ -71,11 +79,32 @@ var newTileOpen = function () {
     }, animaDelay);
 }
 
+var bugOpen = function() {
+    navMainClose();
+    setTimeout(function() {
+        navBugMenu.className += " open";
+        navBugMenu.className += " ext2";
+        extSidebarOpen2();
+    }, animaDelay);
+}
+
+var donateOpen = function() {
+    navMainClose();
+    setTimeout(function() {
+        navDonateMenu.className += " open";
+        navDonateMenu.className += " ext2";
+        extSidebarOpen2();
+    }, animaDelay);
+}
+
 var subMenuClose = function () {
     navNewTileMenu.className = navNewTileMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
     navNewTileMenu.className = navNewTileMenu.className.replace(/(?:^|\s)ext(?!\S)/g, '');
     navSettingsMenu.className = navSettingsMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
-    navSettingsMenu.className = navSettingsMenu.className.replace(/(?:^|\s)ext(?!\S)/g, '');
+    navSettingsMenu.className = navSettingsMenu.className.replace(/(?:^|\s)ext(?!\S)/g, '');    navDonateMenu.className = navDonateMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
+    navDonateMenu.className = navDonateMenu.className.replace(/(?:^|\s)ext2(?!\S)/g, '');
+    navBugMenu.className = navBugMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
+    navBugMenu.className = navBugMenu.className.replace(/(?:^|\s)ext2(?!\S)/g, '');
     extSidebarClose();
     setTimeout(function () {
         navMainOpen();
