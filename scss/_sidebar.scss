@@ -103,25 +103,7 @@ body {
     height: 25px;
     background: black(0.1);
 }
-/* -- Google typography ------------------------------- */
 
-.headline {
-    font-size: 24px;
-    font-weight: 300;
-    line-height: 1.1;
-    color: $clr-grey-900;
-    text-transform: inherit;
-    letter-spacing: inherit;
-}
-
-.subhead {
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 1.1;
-    color: $clr-grey-900;
-    text-transform: inherit;
-    letter-spacing: inherit;
-}
 /* -- Bootstrap-like style ------------------------------- */
 
 .caret {
