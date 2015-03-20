@@ -139,8 +139,29 @@ navBugClose.addEventListener("click", subMenuClose);
 // Add new tile
 $(document).ready(function () {
 
+    // Remove hidden
+    $.fn.removeHidden = function () {
+        this.parent().removeClass("hidden");
+    }
+
+    // Reset menu 
+    $.fn.resetNewTile = function() {
+        this.children(".bar").removeClass("error");
+        this.children("label").removeClass("error").removeClass("valid");
+        this.parent().addClass("hidden");
+    }
+    
+    var resetNewTileMenu = function () {
+        $("#new-tile-URL").resetNewTile().removeClass("hidden");
+        $("#new-tile-name").resetNewTile();
+        $("#new-tile-RSS").resetNewTile();
+    }
+
     // URL
     $("#new-tile-URL").focusin(function () {
+
+        $("#new-tile-name").removeHidden();
+
         $(this).focusout(function () {
 
             var url = $("input", this).val();
@@ -158,7 +179,11 @@ $(document).ready(function () {
 
     // Text
     $("#new-tile-name").focusin(function () {
+
+        $("#new-tile-RSS").removeHidden();
+
         $(this).focusout(function () {
+
             if ($("input", this).val() == '') {
                 // if false
                 $(".bar", this).addClass("error");
