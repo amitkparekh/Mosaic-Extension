@@ -23,11 +23,12 @@
     <aside id="sidebar" class="sidebar sidebar-default sidebar-stacked open" role="navigation">
         <!-- Sidebar header -->
         <div id="sidebar-header" class="sidebar-header header-cover" style="background-image: url(http://2.bp.blogspot.com/-2RewSLZUzRg/U-9o6SD4M6I/AAAAAAAADIE/voax99AbRx0/s1600/14%2B-%2B1%2B%281%29.jpg);">
-            <!-- Sidebar brand name 
+<!--
             <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
             test@gmail.com
                 <b class="caret"></b>
-            </a>-->
+            </a>
+-->
         </div>
 
         <!-- Sidebar navigation -->
@@ -117,28 +118,26 @@
             <form>
                 <div class="text-field-group" id="new-tile-URL">
                     <input type="text" required>
-                    <!--                    <span class="highlight"></span>-->
                     <span class="bar"></span>
                     <label>Site URL</label>
                 </div>
             </form>
-            <form class="">
+            <form class="hidden">
                 <div class="text-field-group" id="new-tile-name">
                     <input type="text" required>
-                    <!--                    <span class="highlight"></span>-->
                     <span class="bar"></span>
                     <label>Site Name</label>
                 </div>
             </form>
-            <form class="">
+            <form class="hidden">
                 <div class="text-field-group" id="new-tile-RSS">
                     <input type="text">
                     <span class="bar"></span>
                     <label>Site RSS (optional)</label>
                 </div>
             </form>
-            <li class="divider "></li>
-            <form class="sidebar-text ">
+            <li id="new-tile-divider-2" class="divider hidden"></li>
+            <form class="sidebar-text hidden" id="customise-tile-color-switch">
                 <span id="new-tile-customise-title">Customise tile color</span>
                 <div class="switch sidebar-badge sidebar-icon-right">
                     <label>
@@ -147,19 +146,62 @@
                     </label>
                 </div>
             </form>
-            <li class="divider "></li>
+            <form id="new-tile-customise-color" class="tile-choice hidden">
+                <span>tile color</span>
+                <div>
+                    <a href="#" class="waves-effect btn color-preview"></a>
+                </div>
+            </form>
+            <form id="new-tile-customise-font-color" class="tile-choice hidden">
+                <span>font color</span>
+                <div>
+                    <a href="#" class="waves-effect btn color-preview"></a>
+                </div>
+            </form>
+            
+            <li id="new-tile-divider-3" class="divider hidden"></li>
 
-            <div class="sidebar-text ">
+            <div id="new-tile-choice-title" class="sidebar-text tile-choice-title hidden">
                 <span>Tile image</span>
             </div>
+            <form class="tile-choice hidden" id="new-tile-select-logo">
+                <span>Select from our database</span>
+                <div>
+                    <a href="#" class="waves-effect btn btn-inverse">SELECT</a>
+                </div>
+            </form>
+            <form class="tile-choice hidden" id="new-tile-add-url">
+                <span>Add from URL</span>
+                <div>
+                    <a href="#" class="waves-effect btn btn-inverse">add Url</a>
+                </div>
+            </form>
+            <form class="hidden" id="new-tile-add-url-text">
+                <div class="text-field-group" id="tile-image-URL">
+                    <input type="text">
+                    <span class="bar"></span>
+                    <label>Add URL</label>
+                </div>
+            </form>
+            <form class="tile-choice hidden" id="new-tile-upload-logo">
+                <span>Upload from computer</span>
+                <div>
+                    <a href="#" class="waves-effect btn btn-inverse">Upload</a>
+                </div>
+            </form>
+            <form class="tile-choice hidden" id="new-tile-remove-image">
+                <span>remove image</span>
+                <div>
+                    <a href="#" class="waves-effect waves-light btn btn-red">remove</a>
+                </div>
+            </form>
 
-            <li class="divider"></li>
-            <form class="btn-container">
+            <li id="new-tile-divider-4" class="divider hidden"></li>
+            <form class="btn-container hidden" id="new-tile-submit-container">
                 <div id="new-tile-submit">
                     <a href="#" class="waves-effect waves-light btn">ADD NEW TILE</a>
                 </div>
             </form>
-
         </ul>
 
         <!-- Settings Menu -->
@@ -171,14 +213,14 @@
                 </a>
             </div>
 
-            <li>
+            <li id="nav-settings-tiles-button">
                 <a href="#">
-                    <i class="sidebar-icon md-color-lens"></i> Customise theme
+                    <i class="sidebar-icon md-view-module"></i> Customise tiles
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <i class="sidebar-icon md-view-module"></i> Customise tiles
+                    <i class="sidebar-icon md-color-lens"></i> Customise theme
                 </a>
             </li>
             <li class="divider"></li>
@@ -187,6 +229,22 @@
                     <i class="sidebar-icon mdi mdi-rss"></i> Customise RSS Feed
                 </a>
             </li>
+            <li class="divider"></li>
+            <li>
+                <a href="#">
+                    <i class="sidebar-icon md-person"></i>Profile Settings
+                </a>
+            </li>
+        </ul>
+        
+        <!-- Customise Tiles -->
+        <ul id="nav-settings-tiles-menu" class="sidebar-nav">
+            <div class="sidebar-text">
+                <span>Customise Tiles</span>
+                <a id="nav-settings-tiles-close" href="#">
+                    <div class="sidebar-badge sidebar-icon-right md-close"></div>
+                </a>
+            </div>
         </ul>
         
         <!-- Report a bug -->
@@ -220,12 +278,12 @@
             </div>
             <div class="text-chunk">
                 <h3>Thank you very much for using Mosaic!</h3>
-                <p>Thank you for using Mosaic. Although we are still in alpha, there are more than 700 users! To each and every one of you, thank you for supporting us!</p>
+                <p>Thank you for using Mosaic. Although we are still in alpha, there are more than 600 users! To each and every one of you, thank you for supporting us!</p>
                 <p>If you would like to, you can donate to us to help us continue developing. </p>
                 <h3>Why should I donate?</h3>
                 <p>Although we are in alpha, we are planning for the future. We are adding cloud support and other features to the extension that involves using servers and this costs money. As the extension grows, the cost of using servers will grow with it.</p>
                 <h3>How is the money used?</h3>
-                <p>Together, we have agreed that <span>ALL</span> proceeds donated from users will go towards upkeep of the servers and ensuring the extension runs smoothly. We <span>will not</span> be taking a cut of the money at all.</p>
+                <p>Together, we have agreed that <span>ALL</span> proceeds donated will go towards upkeep of the servers and ensuring the extension runs smoothly. We <span>will not</span> be taking a cut of the money at all.</p>
                 <h3>How much should I donate?</h3>
                 <p>We greatly appreciate any amount. We are doing this for free and because we use and love Mosaic too. Please donate however much you are able to.</p>
                 <h3>I can't donate, but I want to help still!</h3>
@@ -233,7 +291,7 @@
                 
                 <p>You can donate through PayPal by clicking the button below.</p>
                 <p>Kindest of regards,<br>
-                Amit Parekh &amp; Alysson Silva</p>
+                Amit Parekh &amp; Alysson Silva.</p>
             </div>
             
             <li class="divider"></li>

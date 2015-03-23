@@ -252,12 +252,15 @@ $text-link-color) {
     .sidebar-icon-right {
         color: darken($icon-color, 20%);
         background-color: transparent;
+        
+    }
+    .md-close {
         opacity: .7;
         
         &:hover {
             opacity: 1;
         }
-    }
+    }    
     .sidebar-divider,
     .sidebar-nav .divider {
         background-color: $divider;
@@ -265,6 +268,48 @@ $text-link-color) {
     .sidebar-text {
         color: $gray-dark;
     }
+    
+    .btn {
+        background-color: $text-link-color;
+        color: darken($bg, 8%);
+        
+        &:hover {
+            color: $bg;
+        }
+    }
+    
+    .btn-flat {
+        color: $text-link-color;
+    }
+    
+    .btn-inverse {
+        background-color: $bg;
+        color: $text-link-color;
+    }
+    
+    .btn-red {
+        color: darken($bg, 8%);
+        
+        &:hover {
+            color: $bg;
+        }
+        
+    }
+    
+    .switch {
+        label {
+            input[type=checkbox] {
+                &:checked + .lever {
+                    background-color: lighten($text-link-color, 30%);
+                    
+                    &:after {
+                        background-color: lighten($text-link-color, 5%);
+                    }
+                }
+            }
+        }
+    }
+    
     .sidebar-nav {
         transform-origin: center right;
         position: absolute;
@@ -497,6 +542,12 @@ $text-link-color) {
     //----------------
     .sidebar-text {
         @extend .sidebar-block;
+        
+        &.tile-choice-title {
+            height: 40px;
+            line-height: 40px;
+        }
+        
     }
     //** Sidebar icons
     //----------------
@@ -770,6 +821,72 @@ $text-link-color) {
                  > a {
                      text-transform: uppercase;
                  }
+            }
+        }
+        
+        .btn-flat {
+            margin: 0;
+        }
+        
+        .btn-red {
+            background-color: $clr-red;
+        }
+        
+        &.tile-color-choice {
+            > span {
+                
+            }
+            
+            > div {
+                
+            }
+        }
+        
+        &.tile-choice, &.tile-color-choice {
+            height: 45px;
+            line-height: 45px;
+            
+            > span {
+                display: inline-block;
+                width: 205px;
+                text-transform:capitalize;
+            }
+            
+            > div {
+                display: inline-block;
+                float: right;
+                position: absolute;
+                right:0;
+                margin-right: 12px;
+                
+                > .btn {
+                    height: 32px;
+                    line-height: 32px;
+                    margin: 0;
+                    padding: 0 1rem;
+                    width: 90px;
+                    
+                    > a {
+                        text-transform: uppercase;
+                    }
+                    
+                    &.color-preview {
+                        background-color: $clr-pink-300;
+                        
+                        &:hover {
+//                            @extend .z-depth-1-half;
+                            background-color: lighten($clr-pink-300, 5%);
+                        }
+                    }
+                }
+                
+                > .btn-inverse {
+                    color: $clr-grey-600;
+                    
+                    &:hover {
+                        color: $clr-grey-900;
+                    }
+                }
             }
         }
     }
