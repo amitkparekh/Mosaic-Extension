@@ -45,6 +45,10 @@ var navSettingsTilesButton = document.getElementById("nav-settings-tiles-button"
 var navSettingsTilesMenu = document.getElementById("nav-settings-tiles-menu");
 var navSettingsTilesClose = document.getElementById("nav-settings-tiles-close");
 
+var navSettingsBackupRestoreButton = document.getElementById("nav-settings-backup-restore-button");
+var navSettingsBackupRestoreMenu = document.getElementById("nav-settings-backup-restore-menu");
+var navSettingsBackupRestoreClose = document.getElementById("nav-settings-backup-restore-close");
+
 var navBugButton = document.getElementById("nav-bug-button");
 var navBugMenu = document.getElementById("nav-bug-menu");
 var navBugClose = document.getElementById("nav-bug-close");
@@ -110,6 +114,18 @@ var settingsTilesClose = function () {
     settingsOpen();
 }
 
+var settingsBackupRestoreOpen = function () {
+    settingsClose();
+    setTimeout(function () {
+        navSettingsBackupRestoreMenu.className += " open";
+    }, animaDelay);
+}
+
+var settingsBackupRestoreClose = function () {
+    navSettingsBackupRestoreMenu.className = navSettingsBackupRestoreMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
+    settingsOpen();
+}
+
 var bugOpen = function () {
     settingsClose();
     setTimeout(function () {
@@ -145,6 +161,9 @@ var changelogClose = function () {
 navSettingsTilesButton.addEventListener("click", settingsTilesOpen);
 navSettingsTilesClose.addEventListener("click", settingsTilesClose);
 
+navSettingsBackupRestoreButton.addEventListener("click", settingsBackupRestoreOpen);
+navSettingsBackupRestoreClose.addEventListener("click", settingsBackupRestoreClose);
+
 navBugButton.addEventListener("click", bugOpen);
 navBugClose.addEventListener("click", bugClose);
 
@@ -178,7 +197,10 @@ var donateOpen = function () {
 var subMenuClose = function () {
     navNewTileMenu.className = navNewTileMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
     navNewTileMenu.className = navNewTileMenu.className.replace(/(?:^|\s)ext(?!\S)/g, '');
+    newTileReset();
     settingsClose();
+    settingsTilesClose();
+    settingsBackupRestoreClose();
     bugClose();
     changelogClose();
     navDonateMenu.className = navDonateMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
