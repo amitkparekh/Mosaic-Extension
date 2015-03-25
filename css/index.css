@@ -13018,7 +13018,7 @@ Copyright (c) 2015 Daniel Eden
   display: none !important;
   visibility: hidden !important; }
 
-.visible, .sidebar form.tile-choice > div > .btn > div.selected:last-of-type, .sidebar form.tile-choice > div > .btn-large > div.selected:last-of-type {
+.visible {
   visibility: visible !important; }
 
 .clearer {
@@ -13673,8 +13673,7 @@ body {
     line-height: 45px; }
     .sidebar form.tile-choice > span {
       display: inline-block;
-      width: 205px;
-      text-transform: capitalize; }
+      width: 205px; }
     .sidebar form.tile-choice > div {
       display: inline-block;
       float: right;
@@ -13693,19 +13692,6 @@ body {
           background-color: #f06292; }
           .sidebar form.tile-choice > div > .btn.color-preview:hover, .sidebar form.tile-choice > div > .color-preview.btn-large:hover {
             background-color: #f279a2; }
-        .sidebar form.tile-choice > div > .btn.selected, .sidebar form.tile-choice > div > .selected.btn-large {
-          width: 98px; }
-        .sidebar form.tile-choice > div > .btn > div, .sidebar form.tile-choice > div > .btn-large > div {
-          display: inline-block; }
-          .sidebar form.tile-choice > div > .btn > div:last-of-type, .sidebar form.tile-choice > div > .btn-large > div:last-of-type {
-            width: 25px;
-            background: #f44336;
-            color: white;
-            text-align: center;
-            margin-left: 5px;
-            display: none; }
-            .sidebar form.tile-choice > div > .btn > div:last-of-type.selected, .sidebar form.tile-choice > div > .btn-large > div:last-of-type.selected {
-              display: inline-block !important; }
 .sidebar .text-chunk {
   white-space: initial;
   height: auto;
