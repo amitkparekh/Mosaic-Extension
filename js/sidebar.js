@@ -78,6 +78,7 @@ var extSidebarClose = function () {
 
 var navMainOpen = function () {
     navMain.className += " open";
+    socialLinksFix();
 }
 
 var navMainClose = function () {
@@ -193,6 +194,13 @@ var donateOpen = function () {
         extSidebarOpen2();
     }, animaDelay);
 }
+
+var socialLinksFix = function() {
+    $("#nav-social-icons").css({"height": "65px"});
+    setTimeout(function() {
+        $("#nav-social-icons").css({"height": "auto"});
+    }, 200);
+};
 
 var subMenuClose = function () {
     navNewTileMenu.className = navNewTileMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');

@@ -54,6 +54,14 @@ $grey-1: #dddddd;
     font-style: italic;
 }
 
+
+.fixed-bottom {
+//    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin-top: 330px;
+}
+
 /*
 ::-webkit-scrollbar,
 ::-webkit-scrollbar-button:start:increment,
