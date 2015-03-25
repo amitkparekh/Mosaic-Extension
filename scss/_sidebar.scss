@@ -826,28 +826,6 @@ $tile-choice-height: 45px;
                             background-color: lighten($clr-pink-300, 5%);
                         }
                     }
-                    
-                    &.selected {
-                        width: 98px;
-                    }
-                    
-                    > div {
-                        display: inline-block;
-                        
-                        &:last-of-type {
-                            width:25px;
-                            background: $clr-red;
-                            color: white;
-                            text-align: center;
-                            margin-left: 5px;
-                            display: none;
-                            
-                            &.selected {
-                                @extend .visible;
-                                display: inline-block !important;
-                            }
-                        }
-                    }
                 }
             }
         }
