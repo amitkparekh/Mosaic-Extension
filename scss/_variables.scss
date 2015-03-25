@@ -8,6 +8,15 @@ $grey-1: #dddddd;
     @include prefix((transition: none), webkit moz ms);
 }
 
+.hidden {
+    display: none !important ;
+    visibility: hidden !important ;
+}
+
+.visible {
+    visibility: visible !important;
+}
+
 .clearer {
     clear: both;
 }
@@ -32,6 +41,18 @@ $grey-1: #dddddd;
     display: none;
 }
 
+.vertical-center {
+    min-height: 100%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction:column;
+}
+
+.italic {
+    font-style: italic;
+}
 
 /*
 ::-webkit-scrollbar,

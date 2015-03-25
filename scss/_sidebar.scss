@@ -22,6 +22,8 @@ $sidebar-brand-color: $gray-dark;
 $sidebar-icon-color: $gray-dark;
 $sidebar-menu-color: $gray-darker;
 $sidebar-font-weight: 500;
+$sidebar-desktop-width-ext: 320px;
+$sidebar-desktop-width-ext2: 400px;
 [class^="md-"],
 [class*=" md-"] {
     display: inline-block;
@@ -37,6 +39,22 @@ $sidebar-font-weight: 500;
 .md {
     line-height: inherit;
     vertical-align: bottom;
+}
+
+*,
+*:after,
+*:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+/* -- Demo style ------------------------------- */
+
+html,
+body {
+    position: relative;
+    min-height: 100%;
+    height: 100%;
 }
 
 .sidebar-overlay {
@@ -66,27 +84,7 @@ $sidebar-font-weight: 500;
 }
 
 .top-bar {
-    height: 25px;
-    background: black(0.1);
-}
-/* -- Google typography ------------------------------- */
-
-.headline {
-    font-size: 24px;
-    font-weight: 300;
-    line-height: 1.1;
-    color: $clr-grey-900;
-    text-transform: inherit;
-    letter-spacing: inherit;
-}
-
-.subhead {
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 1.1;
-    color: $clr-grey-900;
-    text-transform: inherit;
-    letter-spacing: inherit;
+    height: 25px * 2;
 }
 /* -- Bootstrap-like style ------------------------------- */
 
@@ -125,10 +123,12 @@ $sidebar-font-weight: 500;
     margin-left: $sidebar-desktop-width;
 }
 
-@media (max-width: $screen-tablet) {
-    .sidebar-stacked.open + .wrapper .constructor {
-        margin-left: $sidebar-width;
-    }
+.sidebar-stacked.open.ext + .wrapper .constructor {
+    margin-left: $sidebar-desktop-width-ext;
+}
+
+.sidebar-stacked.open.ext2 + .wrapper .constructor {
+    margin-left: $sidebar-desktop-width-ext2;
 }
 
 // Base mixins
@@ -208,10 +208,11 @@ $link-hover-bg,
 $link-active-color,
 $link-active-bg,
 $link-disabled-color,
-$link-disabled-bg) {
+$link-disabled-bg,
+$text-link-color) {
     background-color: $bg;
     .sidebar-header {
-        background-color: $header-bg;
+        background-color: $bg;
     }
     .sidebar-toggle {
         color: $brand-hover-color;
@@ -230,8 +231,14 @@ $link-disabled-bg) {
         background-color: $badge-bg;
     }
     .sidebar-icon-right {
-        color: $icon-color;
+        color: darken($icon-color, 20%);
         background-color: transparent;
+    }
+    .md-close {
+        opacity: .7;
+        &:hover {
+            opacity: 1;
+        }
     }
     .sidebar-divider,
     .sidebar-nav .divider {
@@ -240,21 +247,50 @@ $link-disabled-bg) {
     .sidebar-text {
         color: $gray-dark;
     }
+    .btn {
+        background-color: $text-link-color;
+        color: darken($bg, 8%);
+        &:hover {
+            color: $bg;
+        }
+    }
+    .btn-flat {
+        color: $text-link-color;
+    }
+    .btn-inverse {
+        background-color: $bg;
+        color: $text-link-color;
+    }
+    .btn-red {
+        color: darken($bg, 8%);
+        &:hover {
+            color: $bg;
+        }
+    }
+    .switch {
+        label {
+            input[type=checkbox] {
+                &:checked + .lever {
+                    background-color: lighten($text-link-color, 30%);
+                    &:after {
+                        background-color: lighten($text-link-color, 5%);
+                    }
+                }
+            }
+        }
+    }
     .sidebar-nav {
         transform-origin: center right;
         position: absolute;
         left: -$sidebar-desktop-width;
         width: $sidebar-desktop-width;
-        
         @include transition(0.5s);
-        
         &.open {
             position: relative;
             left: 0;
-//            @include transition(0.5s);
-//            @include transition-delay(0.5s);
+            //            @include transition(0.5s);
+            //            @include transition-delay(0.5s);
         }
-        
         li > a {
             color: $link-color;
             background-color: $link-bg;
@@ -323,6 +359,16 @@ $link-disabled-bg) {
                 }
             }
         }
+        .text-chunk {
+            a {
+                color: $text-link-color;
+                background: transparent;
+                @include transition(0.2s ease all);
+                &:hover {
+                    border-bottom: 1px solid $text-link-color;
+                }
+            }
+        }
     }
 }
 
@@ -353,7 +399,7 @@ $link-disabled-bg) {
     }
     &::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        -webkit-box-shadow: inset 0 0 6px black(.3);
         background-color: #BFBFBF;
     }
 }
@@ -460,6 +506,10 @@ $link-disabled-bg) {
     //----------------
     .sidebar-text {
         @extend .sidebar-block;
+        &.tile-choice-title {
+            height: 40px;
+            line-height: 40px;
+        }
     }
     //** Sidebar icons
     //----------------
@@ -478,14 +528,11 @@ $link-disabled-bg) {
         font-size: $sidebar-icon-size;
         top: 0;
         line-height: 16px;
-        
         @include transition(0.5s);
         &:before, &:after {
             vertical-align: middle;
         }
-        &:hover {
-        }
-        
+        &:hover {}
     }
 }
 
@@ -533,7 +580,7 @@ $link-disabled-bg) {
 //
 // ------------------------
 .sidebar-default {
-    @include sidebar-template( $color: $gray-darker, $bg: #fff, $header-bg: #eceff1, $brand-color: $gray-dark, $brand-bg: transparent, $brand-hover-color: $gray-darker, $brand-hover-bg: black(0.1), $divider: $gray, $badge-color: #fff, $badge-bg: $gray, $icon-color: $gray-dark, $icon-hover-color: $gray-dark, $link-color: $gray-darker, $link-bg: transparent, $link-hover-color: $gray-darker, $link-hover-bg: $gray-light, $link-active-color: $gray-darker, $link-active-bg: $gray-light, $link-disabled-color: $gray-light, $link-disabled-bg: transparent);
+    @include sidebar-template( $color: $gray-darker, $bg: #fff, $header-bg: #eceff1, $brand-color: $gray-dark, $brand-bg: transparent, $brand-hover-color: $gray-darker, $brand-hover-bg: black(0.1), $divider: $gray, $badge-color: #fff, $badge-bg: $gray, $icon-color: $gray-dark, $icon-hover-color: $gray-dark, $link-color: $gray-darker, $link-bg: transparent, $link-hover-color: $gray-darker, $link-hover-bg: $gray-light, $link-active-color: $gray-darker, $link-active-bg: $gray-light, $link-disabled-color: $gray-light, $link-disabled-bg: transparent, $text-link-color: $clr-light-blue);
 }
 
 // Sidebar toggling
@@ -567,7 +614,8 @@ $link-disabled-bg) {
         width: $sidebar-width;
     }
     .sidebar .sidebar-header {
-        height: $sidebar-width * 9/16; // 16:9 header dimension
+        //height: $sidebar-width * 9/16; // 16:9 header dimension
+        height: 100px;
     }
     .sidebar .sidebar-image {
         img {
@@ -607,14 +655,11 @@ $link-disabled-bg) {
     background: linear-gradient( 0deg, rgba($gray-darker, 0), rgba($gray-darker, 0) $menu-gradient-stop-1, $gray-darker $menu-gradient-stop-1, $gray-darker $menu-gradient-stop-2, rgba($gray-darker, 0) $menu-gradient-stop-2, rgba($gray-darker, 0) $menu-toggle-height);
     font-size: 0;
     text-indent: -9999px;
-    opacity: 0.75;
-    
+    opacity: 0.65;
     @include transition(all 0.5s);
-    
     &:hover {
         opacity: 1;
     }
-    
     &::before,
     &::after {
         display: block;
@@ -641,11 +686,9 @@ $link-disabled-bg) {
     }
     &.active {
         transform: rotate(360deg);
-        
         &::before, &::after {
             width: 75%;
         }
-        
         &::before {
             transform: translateY(5px) rotate(-45deg);
         }
@@ -653,4 +696,373 @@ $link-disabled-bg) {
             transform: translateY(-5px) rotate(45deg);
         }
     }
+}
+
+// Form elements
+.sidebar {
+    &.ext {
+        width: $sidebar-desktop-width-ext;
+    }
+    .sidebar-nav {
+        &.ext {
+            width: $sidebar-desktop-width-ext;
+        }
+    }
+    &.ext2 {
+        width: $sidebar-desktop-width-ext2;
+    }
+    .sidebar-nav {
+        &.ext2 {
+            width: $sidebar-desktop-width-ext2;
+        }
+    }
+}
+
+$tile-choice-height: 45px;
+
+.sidebar {
+    .sidebar-nav {
+        &.ext, &.ext2 {
+            form {
+                &.sidebar-text {
+                    > span {
+                        width: 190px + ($sidebar-desktop-width-ext - $sidebar-desktop-width);
+                    }
+                }
+            }
+        }
+    }
+    form {
+        @extend .sidebar-block;
+        padding-right: $sidebar-padding;
+        height: 55px;
+        &.tile-preview {
+            height: ($sidebar-desktop-width + 20)/2;
+            margin-top: 10px;
+            > div {
+                width: 100%;
+                height: $sidebar-desktop-width / 2;
+                background: $gray-darker;
+            }
+        }
+        &.sidebar-text {
+            //            height: 55px;
+            //            line-height: 55px;
+            color: $clr-grey-900;
+            > span {
+                display: inline-block;
+                width: 190px;
+            }
+        }
+        .btn-primary {
+            padding: 10px 20px;
+        }
+        &.btn-container {
+            margin-top: 15px;
+            > div {
+                text-align: center;
+                display: inline-block;
+                
+                &:first-of-type {
+                    float: left;
+                }
+                
+                &:last-of-type {
+                    float: right;
+                }
+                
+                > a {
+                    text-transform: uppercase;
+                }
+            }
+            
+            .btn-inverse {
+                &:hover {
+                    color: $clr-red;
+                }
+            }
+            
+        }
+        .btn-flat {
+            margin: 0;
+        }
+        .btn-red {
+            background-color: $clr-red;
+        }
+        .btn-inverse {
+            color: $clr-grey-600;
+            &:hover {
+                color: $clr-grey-900;
+            }
+        }
+        &.tile-choice {
+            height: $tile-choice-height;
+            line-height: $tile-choice-height;
+            > span {
+                display: inline-block;
+                width: 205px;
+                text-transform: capitalize;
+            }
+            > div {
+                display: inline-block;
+                float: right;
+                position: absolute;
+                right: 0;
+                margin-right: 12px;
+                > .btn {
+                    height: 32px;
+                    line-height: 32px;
+                    margin: 0;
+                    padding: 0 1rem;
+                    width: 90px;
+                    
+                    > a {
+                        text-transform: uppercase;
+                    }
+                    
+                    &.color-preview {
+                        background-color: $clr-pink-300;
+                        &:hover {
+                            background-color: lighten($clr-pink-300, 5%);
+                        }
+                    }
+                    
+                    &.selected {
+                        width: 98px;
+                    }
+                    
+                    > div {
+                        display: inline-block;
+                        
+                        &:last-of-type {
+                            width:25px;
+                            background: $clr-red;
+                            color: white;
+                            text-align: center;
+                            margin-left: 5px;
+                            display: none;
+                            
+                            &.selected {
+                                @extend .visible;
+                                display: inline-block !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .text-chunk {
+        @extend .sidebar-block;
+        white-space: initial;
+        height: auto;
+        padding: $sidebar-padding;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        h3, p, ul, li, h4 {
+            font-weight: 400;
+            color: $clr-grey-900;
+            line-height: 1.6;
+            margin: 15px 0;
+            span {
+                font-weight: 600;
+                &.italic {
+                    font-weight: 400;
+                }
+            }
+        }
+        h3 {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        h3:first-of-type {
+            margin: 0;
+        }
+        li {
+            list-style-type: circle;
+        }
+        h4 {
+            font-size: 14px;
+            line-height: 14px;
+            margin: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: $clr-grey-500;
+            font-weight: 500;
+            font-style: italic;
+        }
+    }
+}
+
+.text-field-group {
+    position: relative;
+    //    margin-bottom: 45px;
+    //    height: 60px;
+    padding-top: 13px;
+    input {
+        padding: 10px 10px 10px 0px;
+        display: block;
+        width: $sidebar-desktop-width-ext - ($sidebar-padding*2);
+        border: none;
+        border-bottom: 1px solid $clr-grey-400;
+        @include prefix((box-sizing: border-box), webkit moz);
+        &:focus {
+            outline: none;
+        }
+    }
+    input[type=text] {
+        height: 30px;
+    }
+    label {
+        color: $clr-grey-500;
+        //        font-size: 18px;
+        font-size: 14px;
+        font-weight: 400;
+        position: absolute;
+        pointer-events: none;
+        top: 0px;
+        @include transition(0.2s ease all);
+    }
+    /* input:valid ~ label {
+        top: -17px;
+        font-size: 12px;
+    } */
+    
+    label {
+        &.valid {
+            top: -17px;
+            font-size: 12px;
+        }
+    }
+    input:focus ~ label {
+        top: -17px;
+        font-size: 12px;
+        color: $clr-light-blue;
+    }
+    label.error,
+    input:focus ~ label.error {
+        top: -17px;
+        font-size: 12px;
+        color: $clr-red;
+    }
+    input:invalid ~ label {
+        //        color: $clr-red;
+    }
+    input:focus {
+        & ~ .bar {
+            &:before, &:after {
+                width: 50%;
+            }
+        }
+    }
+    .bar {
+        position: relative;
+        display: block;
+        width: $sidebar-desktop-width-ext - ($sidebar-padding *2);
+        &:before, &:after {
+            content: "";
+            height: 2px;
+            width: 0;
+            bottom: 1px;
+            position: absolute;
+            background: $clr-light-blue;
+            @include transition(0.2s ease all);
+        }
+        &:before {
+            left: 50%;
+        }
+        &:after {
+            right: 50%;
+        }
+        &.error {
+            &:before, &:after {
+                background: $clr-red;
+                width: 50%;
+            }
+        }
+    }
+}
+
+.switch.sidebar-badge.sidebar-icon-right {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin-left: 0px;
+}
+
+.sidebar .sidebar-header {
+    border: 0;
+    border-bottom: $clr-grey-400 1px solid;
+    margin-bottom: 8px;
+    height: 121px;
+    
+    > div {
+        @extend .vertical-center;
+        
+    }
+    
+    p {
+        font-size: 28px;
+        color: $clr-grey-900;
+        font-weight: 500;
+        margin: 0;
+        
+        @include transition(0.5s);
+        
+        &:hover {
+            color: $clr-grey-900;
+        }
+    }
+    
+    img {
+        width: 115px;
+        height: auto;
+    }
+}
+
+div {
+    &.divider {
+        position: relative;
+        display: block;
+        height: 1px;
+        margin: 8px 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: $clr-grey-400;
+    }
+}
+
+.sidebar {
+    form.btn-container, form#new-tile-add-url-text {
+        @include transition(transform 0.4s ease-in-out);
+    }
+}
+
+.tile-divider-move--2 {
+    @include transition(transform 0.4s ease-in-out);
+    transform: translateY($tile-choice-height *2);
+}
+
+.tile-divider-move--1 {
+    @include transition(transform 0.4s ease-in-out);
+    transform: translateY($tile-choice-height );
+}
+
+.tile-divider-move-1 {
+    @include transition(transform 0.4s ease-in-out);
+    transform: translateY(-$tile-choice-height );
+}
+
+.tile-divider-move-2 {
+    @include transition(transform 0.4s ease-in-out);
+    transform: translateY(-$tile-choice-height *2);
+}
+
+.tile-divider-move-3 {
+    @include transition(transform 0.4s ease-in-out);
+    transform: translateY(-$tile-choice-height *3);
+}
+
+.fadeOutLeft, .fadeInLeft {
+    @include prefix((animation-duration: 0.4s), webkit);
 }
