@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 
@@ -30,9 +30,7 @@
         </div>-->
 
         <div id="sidebar-header" class="sidebar-header header-cover">
-            <!--            <div class="top-bar"></div>-->
             <div>
-                <!--                <p>Mosaic</p>-->
                 <img src="imgs/mosaic_logo.png">
             </div>
         </div>
@@ -41,7 +39,7 @@
             <!-- Sidebar navigation -->
             <ul id="nav-main" class="sidebar-nav open">
                 <li id="nav-new-tile-button">
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-add"></i> Add new tile
                     </a>
                 </li>
@@ -89,17 +87,17 @@
                 <li class="divider"></li>
 
                 <li id="nav-settings-button">
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-settings"></i> Settings
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-help"></i> Help
                     </a>
                 </li>
                 <li id="nav-donate-button">
-                    <a href="#">
+                    <a >
                         <i class="sidebar-icon md-attach-money"></i> Donate
                     </a>
                 </li>
@@ -114,7 +112,7 @@
             <ul id="nav-new-tile-menu" class="sidebar-nav">
                 <div class="sidebar-text">
                     <span>Add new tile</span>
-                    <a id="nav-new-tile-close" href="#">
+                    <a id="nav-new-tile-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
@@ -157,13 +155,13 @@
                 <form id="new-tile-customise-color" class="tile-choice hidden">
                     <span>tile color</span>
                     <div>
-                        <a href="#" class="waves-effect btn color-preview"></a>
+                        <a class="waves-effect btn color-preview"></a>
                     </div>
                 </form>
                 <form id="new-tile-customise-font-color" class="tile-choice hidden">
                     <span>font color</span>
                     <div>
-                        <a href="#" class="waves-effect btn color-preview"></a>
+                        <a class="waves-effect btn color-preview"></a>
                     </div>
                 </form>
 
@@ -177,13 +175,13 @@
                     <form class="tile-choice hidden" id="new-tile-select-logo">
                         <span>Select from our database</span>
                         <div>
-                            <a href="#" class="waves-effect btn btn-inverse">Select</a>
+                            <a class="waves-effect btn btn-inverse">Select</a>
                         </div>
                     </form>
                     <form class="tile-choice hidden" id="new-tile-add-url">
                         <span>Add from URL</span>
                         <div>
-                            <a href="#" class="waves-effect btn btn-inverse">add Url</a>
+                            <a class="waves-effect btn btn-inverse">add Url</a>
                         </div>
                     </form>
                     <form class="hidden" id="new-tile-add-url-text">
@@ -196,13 +194,13 @@
                     <form class="tile-choice hidden" id="new-tile-upload-logo">
                         <span>Upload from computer</span>
                         <div>
-                            <a href="#" class="waves-effect btn btn-inverse">Upload</a>
+                            <a class="waves-effect btn btn-inverse">Upload</a>
                         </div>
                     </form>
                     <form class="tile-choice hidden" id="new-tile-remove-image">
                         <span>remove image</span>
                         <div>
-                            <a href="#" class="waves-effect waves-light btn btn-red">remove</a>
+                            <a class="waves-effect waves-light btn btn-red">remove</a>
                         </div>
                     </form>
                     <div id="new-tile-btn-divider">
@@ -210,10 +208,10 @@
 
                         <form class="btn-container hidden" id="new-tile-submit-container">
                             <div id="new-tile-reset">
-                                <a href="#" class="waves-effect btn btn-inverse">reset</a>
+                                <a class="waves-effect btn btn-inverse">reset</a>
                             </div>
                             <div id="new-tile-submit">
-                                <a href="#" class="waves-effect waves-light btn">ADD NEW TILE</a>
+                                <a class="waves-effect waves-light btn">ADD NEW TILE</a>
                             </div>
                         </form>
                     </div>
@@ -224,47 +222,52 @@
             <ul id="nav-settings-menu" class="sidebar-nav">
                 <div class="sidebar-text">
                     <span>Settings</span>
-                    <a id="nav-settings-close" href="#">
+                    <a id="nav-settings-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
 
                 <li id="nav-settings-tiles-button">
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-view-module"></i> Customise tiles
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-color-lens"></i> Customise theme
                     </a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="#">
-                        <i class="sidebar-icon mdi mdi-rss"></i> Customise RSS Feed
+                    <a >
+                        <i class="sidebar-icon mdi mdi-rss"></i> Customise RSS feed
                     </a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="#">
-                        <i class="sidebar-icon md-person"></i> Profile Settings
+                    <a>
+                        <i class="sidebar-icon md-person"></i> Profile settings
+                    </a>
+                </li>
+                <li id="nav-settings-backup-restore-button">
+                    <a>
+                        <i class="sidebar-icon md-settings-backup-restore"></i> Backup/Restore settings
                     </a>
                 </li>
                 <li class="divider"></li>
                 <li id="nav-bug-button">
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-bug-report"></i> Report a bug
                     </a>
                 </li>
                 <li id="nav-changelog-button">
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-list"></i> Changelog
                     </a>
                 </li>
             </ul>
 
-            <!-- Customise Tiles -->
+            <!-- Customise Tiles menu -->
             <ul id="nav-settings-tiles-menu" class="sidebar-nav">
                 <div class="sidebar-text">
                     <span>Customise Tiles</span>
@@ -273,12 +276,26 @@
                     </a>
                 </div>
             </ul>
-
-            <!-- Report a bug -->
+            
+            <!-- Customise theme menu -->
+            
+            
+            
+            <!-- Customise RSS feed menu -->
+            
+            
+            
+            <!-- Profile menu -->
+            
+            
+            
+            
+            
+            <!-- Report a bug menu -->
             <ul id="nav-bug-menu" class="sidebar-nav">
                 <div class="sidebar-text">
                     <span>Report a bug</span>
-                    <a id="nav-bug-close" href="#">
+                    <a id="nav-bug-close" >
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
@@ -297,11 +314,11 @@
                 </div>
             </ul>
 
-            <!-- Changelog -->
+            <!-- Changelog menu -->
             <ul id="nav-changelog-menu" class="sidebar-nav">
                 <div class="sidebar-text">
                     <span>Changelog</span>
-                    <a id="nav-changelog-close" href="#">
+                    <a id="nav-changelog-close" >
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
@@ -335,11 +352,11 @@
                 </div>
             </ul>
 
-            <!-- Donate -->
+            <!-- Donate menu -->
             <ul id="nav-donate-menu" class="sidebar-nav">
                 <div class="sidebar-text">
                     <span>Donate</span>
-                    <a id="nav-donate-close" href="#">
+                    <a id="nav-donate-close" >
                         <i class="sidebar-badge sidebar-icon-right md-close"></i>
                     </a>
                 </div>
