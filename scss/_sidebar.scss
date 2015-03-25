@@ -22,10 +22,8 @@ $sidebar-brand-color: $gray-dark;
 $sidebar-icon-color: $gray-dark;
 $sidebar-menu-color: $gray-darker;
 $sidebar-font-weight: 500;
-
 $sidebar-desktop-width-ext: 320px;
 $sidebar-desktop-width-ext2: 400px;
-
 [class^="md-"],
 [class*=" md-"] {
     display: inline-block;
@@ -59,20 +57,6 @@ body {
     height: 100%;
 }
 
-body {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 14px;
-    line-height: 1.4;
-    color: #212121;
-    background-color: #f5f5f5;
-    // Font Rendering
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-}
-
 .sidebar-overlay {
     visibility: hidden;
     position: fixed;
@@ -100,10 +84,8 @@ body {
 }
 
 .top-bar {
-    height: 25px;
-    background: black(0.1);
+    height: 25px * 2;
 }
-
 /* -- Bootstrap-like style ------------------------------- */
 
 .caret {
@@ -148,7 +130,6 @@ body {
 .sidebar-stacked.open.ext2 + .wrapper .constructor {
     margin-left: $sidebar-desktop-width-ext2;
 }
-
 
 // Base mixins
 // --------------------------------------------------
@@ -231,7 +212,7 @@ $link-disabled-bg,
 $text-link-color) {
     background-color: $bg;
     .sidebar-header {
-        background-color: $header-bg;
+        background-color: $bg;
     }
     .sidebar-toggle {
         color: $brand-hover-color;
@@ -252,15 +233,13 @@ $text-link-color) {
     .sidebar-icon-right {
         color: darken($icon-color, 20%);
         background-color: transparent;
-        
     }
     .md-close {
         opacity: .7;
-        
         &:hover {
             opacity: 1;
         }
-    }    
+    }
     .sidebar-divider,
     .sidebar-nav .divider {
         background-color: $divider;
@@ -268,40 +247,31 @@ $text-link-color) {
     .sidebar-text {
         color: $gray-dark;
     }
-    
     .btn {
         background-color: $text-link-color;
         color: darken($bg, 8%);
-        
         &:hover {
             color: $bg;
         }
     }
-    
     .btn-flat {
         color: $text-link-color;
     }
-    
     .btn-inverse {
         background-color: $bg;
         color: $text-link-color;
     }
-    
     .btn-red {
         color: darken($bg, 8%);
-        
         &:hover {
             color: $bg;
         }
-        
     }
-    
     .switch {
         label {
             input[type=checkbox] {
                 &:checked + .lever {
                     background-color: lighten($text-link-color, 30%);
-                    
                     &:after {
                         background-color: lighten($text-link-color, 5%);
                     }
@@ -309,22 +279,18 @@ $text-link-color) {
             }
         }
     }
-    
     .sidebar-nav {
         transform-origin: center right;
         position: absolute;
         left: -$sidebar-desktop-width;
         width: $sidebar-desktop-width;
-        
         @include transition(0.5s);
-        
         &.open {
             position: relative;
             left: 0;
-//            @include transition(0.5s);
-//            @include transition-delay(0.5s);
+            //            @include transition(0.5s);
+            //            @include transition-delay(0.5s);
         }
-        
         li > a {
             color: $link-color;
             background-color: $link-bg;
@@ -393,13 +359,11 @@ $text-link-color) {
                 }
             }
         }
-        
         .text-chunk {
             a {
                 color: $text-link-color;
                 background: transparent;
                 @include transition(0.2s ease all);
-                
                 &:hover {
                     border-bottom: 1px solid $text-link-color;
                 }
@@ -542,12 +506,10 @@ $text-link-color) {
     //----------------
     .sidebar-text {
         @extend .sidebar-block;
-        
         &.tile-choice-title {
             height: 40px;
             line-height: 40px;
         }
-        
     }
     //** Sidebar icons
     //----------------
@@ -566,14 +528,11 @@ $text-link-color) {
         font-size: $sidebar-icon-size;
         top: 0;
         line-height: 16px;
-        
         @include transition(0.5s);
         &:before, &:after {
             vertical-align: middle;
         }
-        &:hover {
-        }
-        
+        &:hover {}
     }
 }
 
@@ -655,7 +614,8 @@ $text-link-color) {
         width: $sidebar-width;
     }
     .sidebar .sidebar-header {
-        height: $sidebar-width * 9/16; // 16:9 header dimension
+        //height: $sidebar-width * 9/16; // 16:9 header dimension
+        height: 100px;
     }
     .sidebar .sidebar-image {
         img {
@@ -696,13 +656,10 @@ $text-link-color) {
     font-size: 0;
     text-indent: -9999px;
     opacity: 0.65;
-    
     @include transition(all 0.5s);
-    
     &:hover {
         opacity: 1;
     }
-    
     &::before,
     &::after {
         display: block;
@@ -729,11 +686,9 @@ $text-link-color) {
     }
     &.active {
         transform: rotate(360deg);
-        
         &::before, &::after {
             width: 75%;
         }
-        
         &::before {
             transform: translateY(5px) rotate(-45deg);
         }
@@ -744,22 +699,18 @@ $text-link-color) {
 }
 
 // Form elements
-
 .sidebar {
     &.ext {
         width: $sidebar-desktop-width-ext;
     }
-    
     .sidebar-nav {
         &.ext {
             width: $sidebar-desktop-width-ext;
         }
     }
-    
     &.ext2 {
         width: $sidebar-desktop-width-ext2;
     }
-    
     .sidebar-nav {
         &.ext2 {
             width: $sidebar-desktop-width-ext2;
@@ -767,8 +718,9 @@ $text-link-color) {
     }
 }
 
+$tile-choice-height: 45px;
+
 .sidebar {
-    
     .sidebar-nav {
         &.ext, &.ext2 {
             form {
@@ -780,85 +732,83 @@ $text-link-color) {
             }
         }
     }
-    
     form {
         @extend .sidebar-block;
         padding-right: $sidebar-padding;
         height: 55px;
-        
         &.tile-preview {
             height: ($sidebar-desktop-width + 20)/2;
             margin-top: 10px;
-    
             > div {
                 width: 100%;
                 height: $sidebar-desktop-width / 2;
                 background: $gray-darker;
             }
         }
-        
         &.sidebar-text {
-//            height: 55px;
-//            line-height: 55px;
+            //            height: 55px;
+            //            line-height: 55px;
             color: $clr-grey-900;
-            
             > span {
                 display: inline-block;
                 width: 190px;
             }
         }
-        
         .btn-primary {
             padding: 10px 20px;
         }
-        
         &.btn-container {
             margin-top: 15px;
-            
             > div {
                 text-align: center;
+                display: inline-block;
                 
-                 > a {
-                     text-transform: uppercase;
-                 }
+                &:first-of-type {
+                    float: left;
+                }
+                
+                &:last-of-type {
+                    float: right;
+                }
+                
+                > a {
+                    text-transform: uppercase;
+                }
             }
+            
+            .btn-inverse {
+                &:hover {
+                    color: $clr-red;
+                }
+            }
+            
         }
-        
         .btn-flat {
             margin: 0;
         }
-        
         .btn-red {
             background-color: $clr-red;
         }
-        
-        &.tile-color-choice {
-            > span {
-                
-            }
-            
-            > div {
-                
+        .btn-inverse {
+            color: $clr-grey-600;
+            &:hover {
+                color: $clr-grey-900;
             }
         }
-        
-        &.tile-choice, &.tile-color-choice {
-            height: 45px;
-            line-height: 45px;
-            
+        &.tile-choice {
+            height: $tile-choice-height;
+            line-height: $tile-choice-height;
             > span {
                 display: inline-block;
                 width: 205px;
-                text-transform:capitalize;
+                text-transform: capitalize;
             }
-            
             > div {
                 display: inline-block;
                 float: right;
                 position: absolute;
-                right:0;
+                right: 0;
                 margin-right: 12px;
-                
                 > .btn {
                     height: 32px;
                     line-height: 32px;
@@ -872,25 +822,36 @@ $text-link-color) {
                     
                     &.color-preview {
                         background-color: $clr-pink-300;
-                        
                         &:hover {
-//                            @extend .z-depth-1-half;
                             background-color: lighten($clr-pink-300, 5%);
                         }
                     }
-                }
-                
-                > .btn-inverse {
-                    color: $clr-grey-600;
                     
-                    &:hover {
-                        color: $clr-grey-900;
+                    &.selected {
+                        width: 98px;
+                    }
+                    
+                    > div {
+                        display: inline-block;
+                        
+                        &:last-of-type {
+                            width:25px;
+                            background: $clr-red;
+                            color: white;
+                            text-align: center;
+                            margin-left: 5px;
+                            display: none;
+                            
+                            &.selected {
+                                @extend .visible;
+                                display: inline-block !important;
+                            }
+                        }
                     }
                 }
             }
         }
     }
-    
     .text-chunk {
         @extend .sidebar-block;
         white-space: initial;
@@ -898,66 +859,63 @@ $text-link-color) {
         padding: $sidebar-padding;
         padding-top: 5px;
         padding-bottom: 5px;
-        
-        h3, p, ul, li {
+        h3, p, ul, li, h4 {
             font-weight: 400;
             color: $clr-grey-900;
             line-height: 1.6;
             margin: 15px 0;
-            
             span {
                 font-weight: 600;
-            
                 &.italic {
                     font-weight: 400;
                 }
             }
         }
-        
         h3 {
             font-weight: 600;
             font-size: 16px;
         }
-        
         h3:first-of-type {
-            margin-top: 0;
+            margin: 0;
         }
-        
         li {
             list-style-type: circle;
         }
+        h4 {
+            font-size: 14px;
+            line-height: 14px;
+            margin: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: $clr-grey-500;
+            font-weight: 500;
+            font-style: italic;
+        }
     }
-    
 }
 
 .text-field-group {
     position: relative;
-//    margin-bottom: 45px;
-//    height: 60px;
+    //    margin-bottom: 45px;
+    //    height: 60px;
     padding-top: 13px;
-    
     input {
-//        font-size: 18px;
-        font-size: 14px;
         padding: 10px 10px 10px 0px;
         display: block;
         width: $sidebar-desktop-width-ext - ($sidebar-padding*2);
         border: none;
         border-bottom: 1px solid $clr-grey-400;
         @include prefix((box-sizing: border-box), webkit moz);
-        
         &:focus {
             outline: none;
         }
     }
-    
     input[type=text] {
         height: 30px;
     }
-    
     label {
         color: $clr-grey-500;
-//        font-size: 18px;
+        //        font-size: 18px;
         font-size: 14px;
         font-weight: 400;
         position: absolute;
@@ -965,8 +923,7 @@ $text-link-color) {
         top: 0px;
         @include transition(0.2s ease all);
     }
-    
-   /* input:valid ~ label {
+    /* input:valid ~ label {
         top: -17px;
         font-size: 12px;
     } */
@@ -977,36 +934,31 @@ $text-link-color) {
             font-size: 12px;
         }
     }
-    
     input:focus ~ label {
         top: -17px;
         font-size: 12px;
         color: $clr-light-blue;
     }
-    
-    label.error, input:focus ~ label.error {
+    label.error,
+    input:focus ~ label.error {
         top: -17px;
         font-size: 12px;
         color: $clr-red;
     }
-    
     input:invalid ~ label {
-//        color: $clr-red;
+        //        color: $clr-red;
     }
-    
     input:focus {
         & ~ .bar {
             &:before, &:after {
-                width:50%;
+                width: 50%;
             }
         }
     }
-    
     .bar {
         position: relative;
         display: block;
         width: $sidebar-desktop-width-ext - ($sidebar-padding *2);
-        
         &:before, &:after {
             content: "";
             height: 2px;
@@ -1016,19 +968,16 @@ $text-link-color) {
             background: $clr-light-blue;
             @include transition(0.2s ease all);
         }
-        
         &:before {
             left: 50%;
         }
-        
         &:after {
             right: 50%;
         }
-        
-        &.error {            
+        &.error {
             &:before, &:after {
                 background: $clr-red;
-                width:50%;
+                width: 50%;
             }
         }
     }
@@ -1039,4 +988,81 @@ $text-link-color) {
     top: 0;
     right: 0;
     margin-left: 0px;
+}
+
+.sidebar .sidebar-header {
+    border: 0;
+    border-bottom: $clr-grey-400 1px solid;
+    margin-bottom: 8px;
+    height: 121px;
+    
+    > div {
+        @extend .vertical-center;
+        
+    }
+    
+    p {
+        font-size: 28px;
+        color: $clr-grey-900;
+        font-weight: 500;
+        margin: 0;
+        
+        @include transition(0.5s);
+        
+        &:hover {
+            color: $clr-grey-900;
+        }
+    }
+    
+    img {
+        width: 115px;
+        height: auto;
+    }
+}
+
+div {
+    &.divider {
+        position: relative;
+        display: block;
+        height: 1px;
+        margin: 8px 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: $clr-grey-400;
+    }
+}
+
+.sidebar {
+    form.btn-container, form#new-tile-add-url-text {
+        @include transition(transform 0.4s ease-in-out);
+    }
+}
+
+.tile-divider-move--2 {
+    @include transition(transform 0.4s ease-in-out);
+    transform: translateY($tile-choice-height *2);
+}
+
+.tile-divider-move--1 {
+    @include transition(transform 0.4s ease-in-out);
+    transform: translateY($tile-choice-height );
+}
+
+.tile-divider-move-1 {
+    @include transition(transform 0.4s ease-in-out);
+    transform: translateY(-$tile-choice-height );
+}
+
+.tile-divider-move-2 {
+    @include transition(transform 0.4s ease-in-out);
+    transform: translateY(-$tile-choice-height *2);
+}
+
+.tile-divider-move-3 {
+    @include transition(transform 0.4s ease-in-out);
+    transform: translateY(-$tile-choice-height *3);
+}
+
+.fadeOutLeft, .fadeInLeft {
+    @include prefix((animation-duration: 0.4s), webkit);
 }

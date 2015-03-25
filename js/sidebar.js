@@ -49,6 +49,10 @@ var navBugButton = document.getElementById("nav-bug-button");
 var navBugMenu = document.getElementById("nav-bug-menu");
 var navBugClose = document.getElementById("nav-bug-close");
 
+var navChangelogButton = document.getElementById("nav-changelog-button");
+var navChangelogMenu = document.getElementById("nav-changelog-menu");
+var navChangelogClose = document.getElementById("nav-changelog-close");
+
 var navDonateButton = document.getElementById("nav-donate-button");
 var navDonateMenu = document.getElementById("nav-donate-menu");
 var navDonateClose = document.getElementById("nav-donate-close");
@@ -183,27 +187,25 @@ $(document).ready(function () {
     }
 
     // Reset menu 
-    $.fn.resetNewTile = function() {
+    $.fn.resetNewTile = function () {
         this.children(".bar").removeClass("error");
         this.children("label").removeClass("error").removeClass("valid");
         this.parent().addClass("hidden");
     }
-    
-    $.fn.fadeInFromHidden = function() {
+
+    $.fn.fadeInFromHidden = function () {
         this.removeClass("hidden").addClass("animated fadeIn");
     }
-    
-    var resetNewTileMenu = function () {
-        $("#new-tile-URL").resetNewTile().removeClass("hidden");
-        $("#new-tile-name").resetNewTile();
-        $("#new-tile-RSS").resetNewTile();
+
+    $.fn.removeFadeIn = function () {
+        this.removeClass("animated fadeIn");
     }
 
     // URL
-    $("#new-tile-URL").focusin(function () {
+    $("#new-tile-url").focusin(function () {
 
         $("#new-tile-name").parent().fadeInFromHidden();
-        
+
         $(this).focusout(function () {
 
             var url = $("input", this).val();
@@ -222,7 +224,7 @@ $(document).ready(function () {
     // Text    
     $("#new-tile-name").focusin(function () {
 
-        $("#new-tile-RSS").parent().fadeInFromHidden();
+        $("#new-tile-rss").parent().fadeInFromHidden();
         $("#new-tile-divider-2").fadeInFromHidden();
         $("#new-tile-divider-3").fadeInFromHidden();
         $("#new-tile-divider-4").fadeInFromHidden();
@@ -249,7 +251,7 @@ $(document).ready(function () {
     });
 
     // RSS
-    $("#new-tile-RSS").focusin(function () {
+    $("#new-tile-rss").focusin(function () {
 
         $(this).focusout(function () {
 
@@ -265,18 +267,169 @@ $(document).ready(function () {
     });
 
     // Customise tile color
-    $("#customise-tile-color-switch input").click(function(){
-        if($(this).hasClass("active")) {
-            $(this).removeClass("active");
-            $("#new-tile-customise-color").addClass("hidden fadeOut").removeClass("animated fadeIn");
-            $("#new-tile-customise-font-color").addClass("hidden fadeOut").removeClass("animated fadeIn");
+    $("#customise-tile-color-switch input").click(function () {
+        if ($(this).hasClass("active")) {
+            
+            $("#customise-tile-color-switch input").removeClass("active");
+            
+            $("#new-tile-customise-color, #new-tile-customise-font-color").addClass("fadeOutLeft").removeClass("fadeInLeft");
+            
+            setTimeout(function() {
+                $("#new-tile-customise-tile-divider").addClass("tile-divider-move-2");
+            }, 350);
+            
+            setTimeout(function() {
+                $("#new-tile-customise-color, #new-tile-customise-font-color").addClass("hidden").removeClass("animated fadeOutLeft");
+                $("#new-tile-customise-tile-divider").removeClass("tile-divider-move-2");
+            }, 700);
+            
         } else {
-            $(this).addClass("active");
-            $("#new-tile-customise-color").removeClass("fadeOut").fadeInFromHidden();
-            $("#new-tile-customise-font-color").removeClass("fadeOut").fadeInFromHidden();
+            
+            $("#new-tile-customise-tile-divider").removeClass("tile-divider-move-2").addClass("tile-divider-move--2");
+            
+            setTimeout(function() {
+                $("#customise-tile-color-switch input").addClass("active");
+                $("#new-tile-customise-color, #new-tile-customise-font-color").removeClass("fadeOutLeft hidden").addClass("animated fadeInLeft");
+                $("#new-tile-customise-tile-divider").removeClass("tile-divider-move--2");
+            }, 350);
         }
     });
-    
-    // Tile Logo Add URL
 
+    // Tile Logo - Select from database
+    $("#new-tile-select-logo").click(function () {
+        $("#new-tile-add-url").addClass("fadeOutLeft");
+        setTimeout(function () {
+            $("#new-tile-upload-logo").addClass("fadeOutLeft");
+        }, 100);
+        setTimeout(function () {
+            $("#new-tile-remove-image").addClass("fadeOutLeft");
+            $("#new-tile-btn-divider").addClass("tile-divider-move-3");
+        }, 200);
+    });
+
+    // Tile Logo - Add URL
+    $("#new-tile-add-url").click(function () {
+        $("#new-tile-select-logo").addClass("fadeOutLeft");
+        setTimeout(function () {
+            $("#new-tile-add-url").addClass("tile-divider-move-1");
+            $("#new-tile-upload-logo").addClass("fadeOutLeft");
+            $("#new-tile-add-url-text").removeClass("hidden").addClass("fadeInLeft animated");
+        }, 100);
+        setTimeout(function () {
+            $("#new-tile-add-url-text").removeClass("animated").addClass("tile-divider-move-1");
+        }, 400);
+        setTimeout(function () {
+            $("#new-tile-remove-image").addClass("fadeOutLeft");
+            $("#new-tile-btn-divider").addClass("tile-divider-move-3");
+        }, 200);
+    });
+
+    // Tile Logo - Add URL validation
+    $("#new-tile-add-url-text").focusin(function () {
+        $(this).focusout(function () {
+
+            var url = $("input", this).val();
+
+            if (/^(http:\/\/www\.|https:\/\/www\.)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(url)) {
+                $(".bar", this).removeClass("error");
+                $("label", this).removeClass("error");
+            } else {
+                $(".bar", this).addClass("error");
+                $("label", this).addClass("error").addClass("valid");
+            }
+        });
+    });
+
+
+    // Tile Logo - Upload
+    $("#new-tile-upload-logo").click(function () {
+
+        $("#new-tile-select-logo").addClass("fadeOutLeft");
+
+        setTimeout(function () {
+            $("#new-tile-add-url").addClass("fadeOutLeft");
+            $("#new-tile-upload-logo").addClass("tile-divider-move-2");
+        }, 100);
+
+        setTimeout(function () {
+            $("#new-tile-remove-image").addClass("fadeOutLeft");
+            $("#new-tile-btn-divider").addClass("tile-divider-move-3");
+        }, 200);
+    });
+
+    $.fn.removeInput = function () {
+        this.val('');
+    }
+
+    $.fn.makeHidden = function () {
+        this.addClass("hidden");
+    }
+
+    // Reset Entire Menu
+    
+    var newTileReset = function() {
+
+        $("#new-tile-url .bar, #new-tile-url label, #new-tile-name .bar, #new-tile-name label, #new-tile-rss .bar, #new-tile-rss label").removeClass("error");
+        $("#new-tile-url label, #new-tile-name label, #new-tile-rss label").removeClass("valid");
+
+        $("#new-tile-url input").removeInput();
+
+        $("#new-tile-name").parent().makeHidden();
+        $("#new-tile-name").parent().removeFadeIn();
+        $("#new-tile-name input").removeInput();
+
+        $("#new-tile-rss").parent().makeHidden();
+        $("#new-tile-rss").parent().removeFadeIn();
+        $("#new-tile-rss input").removeInput();
+
+        $("#customise-tile-color-switch").makeHidden();
+        $("#customise-tile-color-switch").removeFadeIn();
+        $("#customise-tile-color-switch input").removeClass("active").attr('checked', false);
+
+        $("#new-tile-customise-color").addClass("hidden fadeOut").removeFadeIn();
+        $("#new-tile-customise-font-color").addClass("hidden fadeOut").removeFadeIn();
+        setTimeout(function () {
+            $("#new-tile-customise-color").removeClass("animated fadeOut");
+            $("#new-tile-customise-font-color").removeClass("animated fadeOut");
+        }, 400);
+
+        $("#new-tile-choice-title").makeHidden();
+        $("#new-tile-choice-title").removeFadeIn();
+
+        $("#new-tile-select-logo").makeHidden();
+        $("#new-tile-select-logo").removeFadeIn();
+        $("#new-tile-select-logo").removeClass("fadeOutLeft");
+
+        $("#new-tile-add-url").makeHidden();
+        $("#new-tile-add-url").removeFadeIn();
+        $("#new-tile-add-url").removeClass("fadeOutLeft tile-divider-move-1");
+        
+        if ($("#new-tile-add-url-text").hasClass("hidden")) {
+            jQuery.noop();
+        } else {
+            $("#new-tile-add-url-text").removeInput();
+            $("#new-tile-add-url-text").removeClass("tile-divider-move-1 fadeInLeft").addClass("hidden");
+        }
+
+        $("#new-tile-upload-logo").makeHidden();
+        $("#new-tile-upload-logo").removeFadeIn();
+        $("#new-tile-upload-logo").removeClass("fadeOutLeft tile-divider-move-2");
+
+        $("#new-tile-remove-image").makeHidden();
+        $("#new-tile-remove-image").removeFadeIn();
+        $("#new-tile-remove-image").removeClass("fadeOutLeft");
+
+        $("#new-tile-submit-container").makeHidden();
+        $("#new-tile-submit-container").removeFadeIn();
+        
+        $("#new-tile-btn-divider").removeClass("tile-divider-move-2, tile-divider-move-3");
+
+        $("#new-tile-divider-2, #new-tile-divider-3, #new-tile-divider-4").removeFadeIn();
+        $("#new-tile-divider-2, #new-tile-divider-3, #new-tile-divider-4").makeHidden();
+    };
+    
+    $("#new-tile-reset, #nav-new-tile-close > div").click(function() {
+        newTileReset();
+    })
+    
 });
