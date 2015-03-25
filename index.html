@@ -57,7 +57,7 @@
 
                 <div class="sidebar-text">Show/Hide sections</div>
                 <form class="sidebar-text">
-                    <span>Show Apps</span>
+                    <span>Show 'Apps'</span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
                             <input type="checkbox">
@@ -66,7 +66,7 @@
                     </div>
                 </form>
                 <form class="sidebar-text">
-                    <span>Show Bookmarks Bar</span>
+                    <span>Show 'Bookmarks Bar'</span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
                             <input type="checkbox">
@@ -75,7 +75,7 @@
                     </div>
                 </form>
                 <form class="sidebar-text">
-                    <span>Show Recently Closed Tabs</span>
+                    <span>Show 'Recently Closed Tabs'</span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
                             <input type="checkbox">
@@ -132,7 +132,7 @@
                     <div class="text-field-group" id="new-tile-name">
                         <input type="text" required>
                         <span class="bar"></span>
-                        <label>Site Name</label>
+                        <label>Site name</label>
                     </div>
                 </form>
                 <form class="hidden">
@@ -153,13 +153,13 @@
                     </div>
                 </form>
                 <form id="new-tile-customise-color" class="tile-choice hidden">
-                    <span>tile color</span>
+                    <span>Tile color</span>
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
                 </form>
                 <form id="new-tile-customise-font-color" class="tile-choice hidden">
-                    <span>font color</span>
+                    <span>Font color</span>
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
@@ -181,7 +181,7 @@
                     <form class="tile-choice hidden" id="new-tile-add-url">
                         <span>Add from URL</span>
                         <div>
-                            <a class="waves-effect btn btn-inverse">add Url</a>
+                            <a class="waves-effect btn btn-inverse">ADD URL</a>
                         </div>
                     </form>
                     <form class="hidden" id="new-tile-add-url-text">
@@ -194,13 +194,13 @@
                     <form class="tile-choice hidden" id="new-tile-upload-logo">
                         <span>Upload from computer</span>
                         <div>
-                            <a class="waves-effect btn btn-inverse">Upload</a>
+                            <a class="waves-effect btn btn-inverse">UPLOAD</a>
                         </div>
                     </form>
                     <form class="tile-choice hidden" id="new-tile-remove-image">
-                        <span>remove image</span>
+                        <span>Remove image</span>
                         <div>
-                            <a class="waves-effect waves-light btn btn-red">remove</a>
+                            <a class="waves-effect waves-light btn btn-red">REMOVE</a>
                         </div>
                     </form>
                     <div id="new-tile-btn-divider">
@@ -208,7 +208,7 @@
 
                         <form class="btn-container hidden" id="new-tile-submit-container">
                             <div id="new-tile-reset">
-                                <a class="waves-effect btn btn-inverse">reset</a>
+                                <a class="waves-effect btn btn-inverse">RESET</a>
                             </div>
                             <div id="new-tile-submit">
                                 <a class="waves-effect waves-light btn">ADD NEW TILE</a>
@@ -270,7 +270,7 @@
             <!-- Customise Tiles menu -->
             <ul id="nav-settings-tiles-menu" class="sidebar-nav">
                 <div class="sidebar-text">
-                    <span>Customise Tiles</span>
+                    <span>Customise tiles</span>
                     <a id="nav-settings-tiles-close" >
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
@@ -283,6 +283,12 @@
                             <span class="lever"></span>
                         </label>
                     </div>
+                </form>
+                <form>
+                    <span></span>
+                    <p class="range-field">
+                        <input type="range" id="animation-amt" min="0" max="100">
+                    </p>
                 </form>
                 <li class="divider"></li>
             </ul>
@@ -308,15 +314,21 @@
                     </a>
                 </div>
                 <form class="tile-choice" id="settings-import">
-                    <span>import settings</span>
+                    <span>Import settings</span>
                     <div>
                         <a class="waves-effect btn btn-inverse">import</a>
                     </div>
                 </form>
                 <form class="tile-choice" id="settings-export">
-                    <span>export settings</span>
+                    <span>Export settings</span>
                     <div>
                         <a class="waves-effect btn btn-inverse">export</a>
+                    </div>
+                </form>
+                <form class="tile-choice" id="settings-reset">
+                    <span>Reset settings</span>
+                    <div>
+                        <a class="waves-effect waves-light btn btn-red">RESET</a>
                     </div>
                 </form>
             </ul>

@@ -13673,8 +13673,7 @@ body {
     line-height: 45px; }
     .sidebar form.tile-choice > span {
       display: inline-block;
-      width: 205px;
-      text-transform: capitalize; }
+      width: 205px; }
     .sidebar form.tile-choice > div {
       display: inline-block;
       float: right;
