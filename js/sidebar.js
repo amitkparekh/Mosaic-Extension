@@ -231,26 +231,6 @@ navDonateClose.addEventListener("click", subMenuClose);
 // Add new tile
 $(document).ready(function () {
 
-    // Remove hidden
-    $.fn.removeHidden = function () {
-        this.parent().removeClass("hidden");
-    }
-
-    // Reset menu 
-    $.fn.resetNewTile = function () {
-        this.children(".bar").removeClass("error");
-        this.children("label").removeClass("error").removeClass("valid");
-        this.parent().addClass("hidden");
-    }
-
-    $.fn.fadeInFromHidden = function () {
-        this.removeClass("hidden").addClass("animated fadeIn");
-    }
-
-    $.fn.removeFadeIn = function () {
-        this.removeClass("animated fadeIn");
-    }
-
     // URL
     $("#new-tile-url").focusin(function () {
 
@@ -319,25 +299,25 @@ $(document).ready(function () {
     // Customise tile color
     $("#customise-tile-color-switch input").click(function () {
         if ($(this).hasClass("active")) {
-            
+
             $("#customise-tile-color-switch input").removeClass("active");
-            
+
             $("#new-tile-customise-color, #new-tile-customise-font-color").addClass("fadeOutLeft").removeClass("fadeInLeft");
-            
-            setTimeout(function() {
+
+            setTimeout(function () {
                 $("#new-tile-customise-tile-divider").addClass("tile-divider-move-2");
             }, 350);
-            
-            setTimeout(function() {
+
+            setTimeout(function () {
                 $("#new-tile-customise-color, #new-tile-customise-font-color").addClass("hidden").removeClass("animated fadeOutLeft");
                 $("#new-tile-customise-tile-divider").removeClass("tile-divider-move-2");
             }, 700);
-            
+
         } else {
-            
+
             $("#new-tile-customise-tile-divider").removeClass("tile-divider-move-2").addClass("tile-divider-move--2");
-            
-            setTimeout(function() {
+
+            setTimeout(function () {
                 $("#customise-tile-color-switch input").addClass("active");
                 $("#new-tile-customise-color, #new-tile-customise-font-color").removeClass("fadeOutLeft hidden").addClass("animated fadeInLeft");
                 $("#new-tile-customise-tile-divider").removeClass("tile-divider-move--2");
@@ -415,71 +395,99 @@ $(document).ready(function () {
         this.addClass("hidden");
     }
 
-    // Reset Entire Menu
-    
-    var newTileReset = function() {
-
-        $("#new-tile-url .bar, #new-tile-url label, #new-tile-name .bar, #new-tile-name label, #new-tile-rss .bar, #new-tile-rss label").removeClass("error");
-        $("#new-tile-url label, #new-tile-name label, #new-tile-rss label").removeClass("valid");
-
-        $("#new-tile-url input").removeInput();
-
-        $("#new-tile-name").parent().makeHidden();
-        $("#new-tile-name").parent().removeFadeIn();
-        $("#new-tile-name input").removeInput();
-
-        $("#new-tile-rss").parent().makeHidden();
-        $("#new-tile-rss").parent().removeFadeIn();
-        $("#new-tile-rss input").removeInput();
-
-        $("#customise-tile-color-switch").makeHidden();
-        $("#customise-tile-color-switch").removeFadeIn();
-        $("#customise-tile-color-switch input").removeClass("active").attr('checked', false);
-
-        $("#new-tile-customise-color").addClass("hidden fadeOut").removeFadeIn();
-        $("#new-tile-customise-font-color").addClass("hidden fadeOut").removeFadeIn();
-        setTimeout(function () {
-            $("#new-tile-customise-color").removeClass("animated fadeOut");
-            $("#new-tile-customise-font-color").removeClass("animated fadeOut");
-        }, 400);
-
-        $("#new-tile-choice-title").makeHidden();
-        $("#new-tile-choice-title").removeFadeIn();
-
-        $("#new-tile-select-logo").makeHidden();
-        $("#new-tile-select-logo").removeFadeIn();
-        $("#new-tile-select-logo").removeClass("fadeOutLeft");
-
-        $("#new-tile-add-url").makeHidden();
-        $("#new-tile-add-url").removeFadeIn();
-        $("#new-tile-add-url").removeClass("fadeOutLeft tile-divider-move-1");
-        
-        if ($("#new-tile-add-url-text").hasClass("hidden")) {
-            jQuery.noop();
-        } else {
-            $("#new-tile-add-url-text").removeInput();
-            $("#new-tile-add-url-text").removeClass("tile-divider-move-1 fadeInLeft").addClass("hidden");
-        }
-
-        $("#new-tile-upload-logo").makeHidden();
-        $("#new-tile-upload-logo").removeFadeIn();
-        $("#new-tile-upload-logo").removeClass("fadeOutLeft tile-divider-move-2");
-
-        $("#new-tile-remove-image").makeHidden();
-        $("#new-tile-remove-image").removeFadeIn();
-        $("#new-tile-remove-image").removeClass("fadeOutLeft");
-
-        $("#new-tile-submit-container").makeHidden();
-        $("#new-tile-submit-container").removeFadeIn();
-        
-        $("#new-tile-btn-divider").removeClass("tile-divider-move-2, tile-divider-move-3");
-
-        $("#new-tile-divider-2, #new-tile-divider-3, #new-tile-divider-4").removeFadeIn();
-        $("#new-tile-divider-2, #new-tile-divider-3, #new-tile-divider-4").makeHidden();
-    };
-    
-    $("#new-tile-reset, #nav-new-tile-close > div").click(function() {
+    $("#new-tile-reset, #nav-new-tile-close > div").click(function () {
         newTileReset();
-    })
-    
+    });
+
 });
+
+// Remove hidden
+$.fn.removeHidden = function () {
+    this.parent().removeClass("hidden");
+}
+
+// Reset menu 
+$.fn.resetNewTile = function () {
+    this.children(".bar").removeClass("error");
+    this.children("label").removeClass("error").removeClass("valid");
+    this.parent().addClass("hidden");
+}
+
+$.fn.fadeInFromHidden = function () {
+    this.removeClass("hidden").addClass("animated fadeIn");
+}
+
+$.fn.removeFadeIn = function () {
+    this.removeClass("animated fadeIn");
+}
+
+$.fn.removeInput = function () {
+    this.val('');
+}
+
+$.fn.makeHidden = function () {
+        this.addClass("hidden");
+    }
+
+// Reset Entire Menu
+
+var newTileReset = function () {
+
+    $("#new-tile-url .bar, #new-tile-url label, #new-tile-name .bar, #new-tile-name label, #new-tile-rss .bar, #new-tile-rss label").removeClass("error");
+    $("#new-tile-url label, #new-tile-name label, #new-tile-rss label").removeClass("valid");
+
+    $("#new-tile-url input").removeInput();
+
+    $("#new-tile-name").parent().makeHidden();
+    $("#new-tile-name").parent().removeFadeIn();
+    $("#new-tile-name input").removeInput();
+
+    $("#new-tile-rss").parent().makeHidden();
+    $("#new-tile-rss").parent().removeFadeIn();
+    $("#new-tile-rss input").removeInput();
+
+    $("#customise-tile-color-switch").makeHidden();
+    $("#customise-tile-color-switch").removeFadeIn();
+    $("#customise-tile-color-switch input").removeClass("active").attr('checked', false);
+
+    $("#new-tile-customise-color").addClass("hidden fadeOut").removeFadeIn();
+    $("#new-tile-customise-font-color").addClass("hidden fadeOut").removeFadeIn();
+    setTimeout(function () {
+        $("#new-tile-customise-color").removeClass("animated fadeOut");
+        $("#new-tile-customise-font-color").removeClass("animated fadeOut");
+    }, 400);
+
+    $("#new-tile-choice-title").makeHidden();
+    $("#new-tile-choice-title").removeFadeIn();
+
+    $("#new-tile-select-logo").makeHidden();
+    $("#new-tile-select-logo").removeFadeIn();
+    $("#new-tile-select-logo").removeClass("fadeOutLeft");
+
+    $("#new-tile-add-url").makeHidden();
+    $("#new-tile-add-url").removeFadeIn();
+    $("#new-tile-add-url").removeClass("fadeOutLeft tile-divider-move-1");
+
+    if ($("#new-tile-add-url-text").hasClass("hidden")) {
+        jQuery.noop();
+    } else {
+        $("#new-tile-add-url-text").removeInput();
+        $("#new-tile-add-url-text").removeClass("tile-divider-move-1 fadeInLeft").addClass("hidden");
+    }
+
+    $("#new-tile-upload-logo").makeHidden();
+    $("#new-tile-upload-logo").removeFadeIn();
+    $("#new-tile-upload-logo").removeClass("fadeOutLeft tile-divider-move-2");
+
+    $("#new-tile-remove-image").makeHidden();
+    $("#new-tile-remove-image").removeFadeIn();
+    $("#new-tile-remove-image").removeClass("fadeOutLeft");
+
+    $("#new-tile-submit-container").makeHidden();
+    $("#new-tile-submit-container").removeFadeIn();
+
+    $("#new-tile-btn-divider").removeClass("tile-divider-move-2, tile-divider-move-3");
+
+    $("#new-tile-divider-2, #new-tile-divider-3, #new-tile-divider-4").removeFadeIn();
+    $("#new-tile-divider-2, #new-tile-divider-3, #new-tile-divider-4").makeHidden();
+};
