@@ -76,43 +76,80 @@ var navMainOpen = function () {
     navMain.className += " open";
 }
 
-var navMainClose = function() {
+var navMainClose = function () {
     navMain.className = navMain.className.replace(/(?:^|\s)open(?!\S)/g, '');
 }
 
 // Settings
 // -------------- // 
 
-var settingsOpen = function() {
+var settingsOpen = function () {
     navMainClose();
-    setTimeout(function() {
+    setTimeout(function () {
         navSettingsMenu.className += " open";
         //        navSettingsMenu.className += " ext";
         //        extSidebarOpen();
     }, animaDelay);
 }
 
-var settingsClose = function() {
+var settingsClose = function () {
     navSettingsMenu.className = navSettingsMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
 }
 
 // Customise Tiles Submenu
 
-var settingsTilesOpen = function() {
+var settingsTilesOpen = function () {
     settingsClose();
-    setTimeout(function() {
+    setTimeout(function () {
         navSettingsTilesMenu.className += " open";
     }, animaDelay);
 }
 
-var settingsTilesClose = function() {
+var settingsTilesClose = function () {
     navSettingsTilesMenu.className = navSettingsTilesMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
     settingsOpen();
+}
+
+var bugOpen = function () {
+    settingsClose();
+    setTimeout(function () {
+        navBugMenu.className += " open";
+        navBugMenu.className += " ext2";
+        extSidebarOpen2();
+    }, animaDelay);
+}
+
+var bugClose = function () {
+    navBugMenu.className = navBugMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
+    navBugMenu.className = navBugMenu.className.replace(/(?:^|\s)ext2(?!\S)/g, '');
+    settingsOpen();
+    extSidebarClose();
+}
+
+var changelogOpen = function () {
+    settingsClose();
+    setTimeout(function () {
+        navChangelogMenu.className += " open";
+        navChangelogMenu.className += " ext2";
+        extSidebarOpen2();
+    }, animaDelay);
+}
+
+var changelogClose = function () {
+    navChangelogMenu.className = navChangelogMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
+    navChangelogMenu.className = navChangelogMenu.className.replace(/(?:^|\s)ext2(?!\S)/g, '');
+    settingsOpen();
+    extSidebarClose();
 }
 
 navSettingsTilesButton.addEventListener("click", settingsTilesOpen);
 navSettingsTilesClose.addEventListener("click", settingsTilesClose);
 
+navBugButton.addEventListener("click", bugOpen);
+navBugClose.addEventListener("click", bugClose);
+
+navChangelogButton.addEventListener("click", changelogOpen);
+navChangelogClose.addEventListener("click", changelogClose);
 
 // New Tile
 // -------------- // 
@@ -128,18 +165,10 @@ var newTileOpen = function () {
 
 // -------------- // 
 
-var bugOpen = function() {
-    navMainClose();
-    setTimeout(function() {
-        navBugMenu.className += " open";
-        navBugMenu.className += " ext2";
-        extSidebarOpen2();
-    }, animaDelay);
-}
 
-var donateOpen = function() {
+var donateOpen = function () {
     navMainClose();
-    setTimeout(function() {
+    setTimeout(function () {
         navDonateMenu.className += " open";
         navDonateMenu.className += " ext2";
         extSidebarOpen2();
@@ -150,12 +179,14 @@ var subMenuClose = function () {
     navNewTileMenu.className = navNewTileMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
     navNewTileMenu.className = navNewTileMenu.className.replace(/(?:^|\s)ext(?!\S)/g, '');
     settingsClose();
+    bugClose();
+    changelogClose();
     navDonateMenu.className = navDonateMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
     navDonateMenu.className = navDonateMenu.className.replace(/(?:^|\s)ext2(?!\S)/g, '');
-    navBugMenu.className = navBugMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
-    navBugMenu.className = navBugMenu.className.replace(/(?:^|\s)ext2(?!\S)/g, '');
+
     extSidebarClose();
     setTimeout(function () {
+        settingsClose();
         navMainOpen();
     }, animaDelay);
 }
@@ -170,9 +201,6 @@ navSettingsClose.addEventListener("click", subMenuClose);
 
 navDonateButton.addEventListener("click", donateOpen);
 navDonateClose.addEventListener("click", subMenuClose);
-
-navBugButton.addEventListener("click", bugOpen);
-navBugClose.addEventListener("click", subMenuClose);
 
 // Form Elements
 //

@@ -35,199 +35,349 @@
                 <!--                <p>Mosaic</p>-->
                 <img src="imgs/mosaic_logo.png">
             </div>
-            <form class="tile-preview">
-                <div>
+        </div>
 
-                </div>
-            </form>
-            <form>
-                <div class="text-field-group" id="new-tile-URL">
-                    <input type="text" required>
-                    <span class="bar"></span>
-                    <label>Site URL</label>
-                </div>
-            </form>
-            <form class="hidden">
-                <div class="text-field-group" id="new-tile-name">
-                    <input type="text" required>
-                    <span class="bar"></span>
-                    <label>Site Name</label>
-                </div>
-            </form>
-            <form class="hidden">
-                <div class="text-field-group" id="new-tile-RSS">
-                    <input type="text">
-                    <span class="bar"></span>
-                    <label>Site RSS (optional)</label>
-                </div>
-            </form>
-            <li id="new-tile-divider-2" class="divider hidden"></li>
-            <form class="sidebar-text hidden" id="customise-tile-color-switch">
-                <span id="new-tile-customise-title">Customise tile color</span>
-                <div class="switch sidebar-badge sidebar-icon-right">
-                    <label>
-                        <input type="checkbox">
-                        <span class="lever"></span>
-                    </label>
-                </div>
-            </form>
-            <form id="new-tile-customise-color" class="tile-choice hidden">
-                <span>tile color</span>
-                <div>
-                    <a href="#" class="waves-effect btn color-preview"></a>
-                </div>
-            </form>
-            <form id="new-tile-customise-font-color" class="tile-choice hidden">
-                <span>font color</span>
-                <div>
-                    <a href="#" class="waves-effect btn color-preview"></a>
-                </div>
-            </form>
-            
-            <li id="new-tile-divider-3" class="divider hidden"></li>
+        <div>
+            <!-- Sidebar navigation -->
+            <ul id="nav-main" class="sidebar-nav open">
+                <li id="nav-new-tile-button">
+                    <a href="#">
+                        <i class="sidebar-icon md-add"></i> Add new tile
+                    </a>
+                </li>
+                <form class="sidebar-text">
+                    <span>Edit mode</span>
+                    <div class="switch sidebar-badge sidebar-icon-right">
+                        <label>
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                </form>
 
-            <div id="new-tile-choice-title" class="sidebar-text tile-choice-title hidden">
-                <span>Tile image</span>
-            </div>
-            <form class="tile-choice hidden" id="new-tile-select-logo">
-                <span>Select from our database</span>
-                <div>
-                    <a href="#" class="waves-effect btn btn-inverse">SELECT</a>
-                </div>
-            </form>
-            <form class="tile-choice hidden" id="new-tile-add-url">
-                <span>Add from URL</span>
-                <div>
-                    <a href="#" class="waves-effect btn btn-inverse">add Url</a>
-                </div>
-            </form>
-            <form class="hidden" id="new-tile-add-url-text">
-                <div class="text-field-group" id="tile-image-URL">
-                    <input type="text">
-                    <span class="bar"></span>
-                    <label>Add URL</label>
-                </div>
-            </form>
-            <form class="tile-choice hidden" id="new-tile-upload-logo">
-                <span>Upload from computer</span>
-                <div>
-                    <a href="#" class="waves-effect btn btn-inverse">Upload</a>
-                </div>
-            </form>
-            <form class="tile-choice hidden" id="new-tile-remove-image">
-                <span>remove image</span>
-                <div>
-                    <a href="#" class="waves-effect waves-light btn btn-red">remove</a>
-                </div>
-            </form>
+                <li class="divider"></li>
 
-            <li id="new-tile-divider-4" class="divider hidden"></li>
-            <form class="btn-container hidden" id="new-tile-submit-container">
-                <div id="new-tile-submit">
-                    <a href="#" class="waves-effect waves-light btn">ADD NEW TILE</a>
+                <div class="sidebar-text">Show/Hide sections</div>
+                <form class="sidebar-text">
+                    <span>Show Apps</span>
+                    <div class="switch sidebar-badge sidebar-icon-right">
+                        <label>
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                </form>
+                <form class="sidebar-text">
+                    <span>Show Bookmarks Bar</span>
+                    <div class="switch sidebar-badge sidebar-icon-right">
+                        <label>
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                </form>
+                <form class="sidebar-text">
+                    <span>Show Recently Closed Tabs</span>
+                    <div class="switch sidebar-badge sidebar-icon-right">
+                        <label>
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                </form>
+
+                <li class="divider"></li>
+
+                <li id="nav-settings-button">
+                    <a href="#">
+                        <i class="sidebar-icon md-settings"></i> Settings
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="sidebar-icon md-help"></i> Help
+                    </a>
+                </li>
+                <li id="nav-donate-button">
+                    <a href="#">
+                        <i class="sidebar-icon md-attach-money"></i> Donate
+                    </a>
+                </li>
+                <li>
+                    <a href="http://reddit.com/r/MosaicExtension">
+                        <i class="sidebar-icon"></i> Our subreddit
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Add new tile -->
+            <ul id="nav-new-tile-menu" class="sidebar-nav">
+                <div class="sidebar-text">
+                    <span>Add new tile</span>
+                    <a id="nav-new-tile-close" href="#">
+                        <div class="sidebar-badge sidebar-icon-right md-close"></div>
+                    </a>
                 </div>
-            </form>
-        </ul>
+                <form class="tile-preview">
+                    <div>
 
-        <!-- Settings Menu -->
-        <ul id="nav-settings-menu" class="sidebar-nav">
-            <div class="sidebar-text">
-                <span>Settings</span>
-                <a id="nav-settings-close" href="#">
-                    <div class="sidebar-badge sidebar-icon-right md-close"></div>
-                </a>
-            </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="text-field-group" id="new-tile-url">
+                        <input type="text" required>
+                        <span class="bar"></span>
+                        <label>Site URL</label>
+                    </div>
+                </form>
+                <form class="hidden">
+                    <div class="text-field-group" id="new-tile-name">
+                        <input type="text" required>
+                        <span class="bar"></span>
+                        <label>Site Name</label>
+                    </div>
+                </form>
+                <form class="hidden">
+                    <div class="text-field-group" id="new-tile-rss">
+                        <input type="text">
+                        <span class="bar"></span>
+                        <label>Site RSS (optional)</label>
+                    </div>
+                </form>
+                <li id="new-tile-divider-2" class="divider hidden"></li>
+                <form class="sidebar-text hidden" id="customise-tile-color-switch">
+                    <span id="new-tile-customise-title">Customise tile color</span>
+                    <div class="switch sidebar-badge sidebar-icon-right">
+                        <label>
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                </form>
+                <form id="new-tile-customise-color" class="tile-choice hidden">
+                    <span>tile color</span>
+                    <div>
+                        <a href="#" class="waves-effect btn color-preview"></a>
+                    </div>
+                </form>
+                <form id="new-tile-customise-font-color" class="tile-choice hidden">
+                    <span>font color</span>
+                    <div>
+                        <a href="#" class="waves-effect btn color-preview"></a>
+                    </div>
+                </form>
 
-            <li id="nav-settings-tiles-button">
-                <a href="#">
-                    <i class="sidebar-icon md-view-module"></i> Customise tiles
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="sidebar-icon md-color-lens"></i> Customise theme
-                </a>
-            </li>
-            <li class="divider"></li>
-            <li>
-                <a href="#">
-                    <i class="sidebar-icon mdi mdi-rss"></i> Customise RSS Feed
-                </a>
-            </li>
-            <li class="divider"></li>
-            <li>
-                <a href="#">
-                    <i class="sidebar-icon md-person"></i>Profile Settings
-                </a>
-            </li>
-        </ul>
-        
-        <!-- Customise Tiles -->
-        <ul id="nav-settings-tiles-menu" class="sidebar-nav">
-            <div class="sidebar-text">
-                <span>Customise Tiles</span>
-                <a id="nav-settings-tiles-close" href="#">
-                    <div class="sidebar-badge sidebar-icon-right md-close"></div>
-                </a>
-            </div>
-        </ul>
-        
-        <!-- Report a bug -->
-        <ul id="nav-bug-menu" class="sidebar-nav">
-            <div class="sidebar-text">
-                <span>Report a bug</span>
-                <a id="nav-bug-close" href="#">
-                    <div class="sidebar-badge sidebar-icon-right md-close"></div>
-                </a>
-            </div>
-            
-            <div class="text-chunk">
-                <h3>So you found a bug...</h3>
-                <p>We apologise for there still being bugs. We try our best to test our extension fully, but there are always some weird bugs that manage to make it through.</p>
-                <h3>Now what?</h3>
-                <p>See if you can recreate the bug! Find out what you have to do in order to recreate it. This will help us fix it much quicker as we will be able to see exactly what broke and how.</p>
-                <p>If you can't recreate it, don't panic! Just make note of what you were doing before it broke!</p>
-                <p>Now go to <a href="http://reddit.com/r/MosaicExtension">our subreddit</a> and make a new post. Tell us all about the bug in as much detail as you can. You can <span class="italic">never</span> have too much detail! Tell us everything.</p>
-                <p>Once you've posted, we will get back to you with an update as soon as we can. Just leave the rest to us and we will fix it!</p>
-            </div>            
-        </ul>
-        
-        
-        <!-- Donate -->
-        <ul id="nav-donate-menu" class="sidebar-nav">
-            <div class="sidebar-text">
-                <span>Donate</span>
-                <a id="nav-donate-close" href="#">
-                    <i class="sidebar-badge sidebar-icon-right md-close"></i>
-                </a>
-            </div>
-            <div class="text-chunk">
-                <h3>Thank you very much for using Mosaic!</h3>
-                <p>Thank you for using Mosaic. Although we are still in alpha, there are more than 600 users! To each and every one of you, thank you for supporting us!</p>
-                <p>If you would like to, you can donate to us to help us continue developing. </p>
-                <h3>Why should I donate?</h3>
-                <p>Although we are in alpha, we are planning for the future. We are adding cloud support and other features to the extension that involves using servers and this costs money. As the extension grows, the cost of using servers will grow with it.</p>
-                <h3>How is the money used?</h3>
-                <p>Together, we have agreed that <span>ALL</span> proceeds donated will go towards upkeep of the servers and ensuring the extension runs smoothly. We <span>will not</span> be taking a cut of the money at all.</p>
-                <h3>How much should I donate?</h3>
-                <p>We greatly appreciate any amount. We are doing this for free and because we use and love Mosaic too. Please donate however much you are able to.</p>
-                <h3>I can't donate, but I want to help still!</h3>
-                <p>We understand that not everyone can donate. If you would like to help us more, join <a href="http://reddit.com/r/MosaicExtension">our subreddit</a> and contribute as much as you can! Report bugs, make suggestions, recommend to friends and family, and help our community grow!</p>
-                
-                <p>You can donate through PayPal by clicking the button below.</p>
-                <p>Kindest of regards,<br>
-                Amit Parekh &amp; Alysson Silva.</p>
-            </div>
-            
-            <li class="divider"></li>
-            <form class="btn-conainer">
-            
-            </form>
-            
-        </ul>
+                <div id="new-tile-customise-tile-divider">
 
+                    <li id="new-tile-divider-3" class="divider hidden"></li>
 
+                    <div id="new-tile-choice-title" class="sidebar-text tile-choice-title hidden">
+                        <span>Tile image</span>
+                    </div>
+                    <form class="tile-choice hidden" id="new-tile-select-logo">
+                        <span>Select from our database</span>
+                        <div>
+                            <a href="#" class="waves-effect btn btn-inverse">Select</a>
+                        </div>
+                    </form>
+                    <form class="tile-choice hidden" id="new-tile-add-url">
+                        <span>Add from URL</span>
+                        <div>
+                            <a href="#" class="waves-effect btn btn-inverse">add Url</a>
+                        </div>
+                    </form>
+                    <form class="hidden" id="new-tile-add-url-text">
+                        <div class="text-field-group" id="tile-image-URL">
+                            <input type="text">
+                            <span class="bar"></span>
+                            <label>Add URL</label>
+                        </div>
+                    </form>
+                    <form class="tile-choice hidden" id="new-tile-upload-logo">
+                        <span>Upload from computer</span>
+                        <div>
+                            <a href="#" class="waves-effect btn btn-inverse">Upload</a>
+                        </div>
+                    </form>
+                    <form class="tile-choice hidden" id="new-tile-remove-image">
+                        <span>remove image</span>
+                        <div>
+                            <a href="#" class="waves-effect waves-light btn btn-red">remove</a>
+                        </div>
+                    </form>
+                    <div id="new-tile-btn-divider">
+                        <li id="new-tile-divider-4" class="divider hidden"></li>
+
+                        <form class="btn-container hidden" id="new-tile-submit-container">
+                            <div id="new-tile-reset">
+                                <a href="#" class="waves-effect waves-light btn btn-inverse">reset</a>
+                            </div>
+                            <div id="new-tile-submit">
+                                <a href="#" class="waves-effect waves-light btn">ADD NEW TILE</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </ul>
+
+            <!-- Settings Menu -->
+            <ul id="nav-settings-menu" class="sidebar-nav">
+                <div class="sidebar-text">
+                    <span>Settings</span>
+                    <a id="nav-settings-close" href="#">
+                        <div class="sidebar-badge sidebar-icon-right md-close"></div>
+                    </a>
+                </div>
+
+                <li id="nav-settings-tiles-button">
+                    <a href="#">
+                        <i class="sidebar-icon md-view-module"></i> Customise tiles
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="sidebar-icon md-color-lens"></i> Customise theme
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="#">
+                        <i class="sidebar-icon mdi mdi-rss"></i> Customise RSS Feed
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="#">
+                        <i class="sidebar-icon md-person"></i> Profile Settings
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li id="nav-bug-button">
+                    <a href="#">
+                        <i class="sidebar-icon md-bug-report"></i> Report a bug
+                    </a>
+                </li>
+                <li id="nav-changelog-button">
+                    <a href="#">
+                        <i class="sidebar-icon md-list"></i> Changelog
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Customise Tiles -->
+            <ul id="nav-settings-tiles-menu" class="sidebar-nav">
+                <div class="sidebar-text">
+                    <span>Customise Tiles</span>
+                    <a id="nav-settings-tiles-close" href="#">
+                        <div class="sidebar-badge sidebar-icon-right md-close"></div>
+                    </a>
+                </div>
+            </ul>
+
+            <!-- Report a bug -->
+            <ul id="nav-bug-menu" class="sidebar-nav">
+                <div class="sidebar-text">
+                    <span>Report a bug</span>
+                    <a id="nav-bug-close" href="#">
+                        <div class="sidebar-badge sidebar-icon-right md-close"></div>
+                    </a>
+                </div>
+
+                <div class="text-chunk">
+                    <h3>So you found a bug...</h3>
+                    <p>We apologise for there still being bugs. We try our best to test our extension fully, but there are always some weird bugs that manage to make it through.</p>
+                    <h3>Now what?</h3>
+                    <p>See if you can recreate the bug! Find out what you have to do in order to recreate it. This will help us fix it much quicker as we will be able to see exactly what broke and how.</p>
+                    <p>If you can't recreate it, don't panic! Just make note of what you were doing before it broke!</p>
+                    <p>Now go to <a href="http://reddit.com/r/MosaicExtension">our subreddit</a> and make a new post. Tell us all about the bug in as much detail as you can. You can <span class="italic">never</span> have too much detail! Tell us everything.</p>
+                    <p>Once you've posted, we will get back to you with an update as soon as we can. Just leave the rest to us and we will fix it!</p>
+                    <p></p>
+                    <p><span>Mosaic Subreddit: </span><a href="http://reddit.com/r/mosaicExtension">http://reddit.com/r/MosaicExtension</a>
+                    </p>
+                </div>
+            </ul>
+
+            <!-- Changelog -->
+            <ul id="nav-changelog-menu" class="sidebar-nav">
+                <div class="sidebar-text">
+                    <span>Changelog</span>
+                    <a id="nav-changelog-close" href="#">
+                        <div class="sidebar-badge sidebar-icon-right md-close"></div>
+                    </a>
+                </div>
+                <div class="text-chunk">
+                    <h3>v0.2 (ALPHA)</h3>
+                    <h4>(01 April 2015)</h4>
+                    <p></p>
+                    <p><a href="http://reddit.com/r/MosaicExtension">You can see a detailed changelog here!</a> Alternatively, there is a summary of changes below.</p>
+                    <p></p>
+                    <p>Thank you to all who have supported us so far! It means a lot to us! We both do our best to reply to everyone and we are taking all your feedback into consideration!</p>
+                    <p>Many changes have happened since the last update, so things are going to look a lot different, but the core functionality is still going to be the same. We apologise for how long this message is, but a lot has changed. We'll ensure it won't be this long in the future.</p>
+
+                    <h3>New developer on the team</h3>
+                    <p>A new developer has joined the team! His name is <span class="italic">Amit Parekh</span>offered to help with the design of the extension and he's making A LOT of changes to the UI. As this is still "ALPHA", the UI still has a lot of changing left, but it's on its way there. If you'd like to know exactly what has changed, I recommend reading the full changelog!</p>
+
+                    <h3>New Name and Logo</h3>
+                    <p>After a lot of thought and discussion, we have decided to change the name of the extension to <span>Mosaic</span>. The reason why is because after everything that happened with MNTP, we want to move past that and start fresh. As this is a whole new extension, we think its right to rename it and make it amazing.</p>
+                    <p>We like this name because we feel it explains the core function of the extension perfectly. We believe the main selling point of this extension are the tiles themselves. So we want to make that the focus.</p>
+                    <p>We are currently looking at making a new logo. If you would like to help us, then post your suggestions to <a href="http://reddit.com/r/MosaicExtension">our new subreddit!</a>.</p>
+
+                    <h3>Trello - our 'to do' list</h3>
+                    <p>We've created a board on Trello for you all to keep track of everything that we have planned and what we're working on. Every suggestion you make and every bit of feedback will end up in here for us to look at. You can also vote on features you like! The most voted features will get made quicker, so get voting! You can also comment on different cards to ensure that we add exactly what you want!</p>
+                    <p><a href="https://trello.com/b/5MnbLkQw/mosaic">You can access the Trello board here!</a> Check back regularly for updates!</p>
+
+                    <h3>Subreddit, Suggestions, Screenshots and Bugs!</h3>
+                    <p><a href="http://reddit.com/r/MosaicExtension">Click here to go to our new subreddit!</a> We also included a link for it in the sidebar!</p>
+                    <p>You can post anything you want about the extension, We decided that this would be the best way of keeping things in one place. </p>
+
+                    <h3>Translators</h3>
+                    <p>Want to help us translate the extension? We made a <a href="http://www.reddit.com/r/MosaicExtension/comments/2zsrdu/volunteer_translators/">reddit post here</a> asking for people to volunteer. It would only take a few minutes to translate the extension, and you do not need to know any code! Check out <a href="http://www.reddit.com/r/MosaicExtension/comments/2zsrdu/volunteer_translators/">the post</a> for all the information!</p>
+                </div>
+            </ul>
+
+            <!-- Donate -->
+            <ul id="nav-donate-menu" class="sidebar-nav">
+                <div class="sidebar-text">
+                    <span>Donate</span>
+                    <a id="nav-donate-close" href="#">
+                        <i class="sidebar-badge sidebar-icon-right md-close"></i>
+                    </a>
+                </div>
+                <div class="text-chunk">
+                    <h3>Thank you very much for using Mosaic!</h3>
+                    <p>Thank you for using Mosaic. Although we are still in alpha, there are more than 600 users! To each and every one of you, thank you for supporting us!</p>
+                    <p>If you would like to, you can donate to us to help us continue developing. </p>
+                    <h3>Why should I donate?</h3>
+                    <p>Although we are in alpha, we are planning for the future. We are adding cloud support and other features to the extension that involves using servers and this costs money. As the extension grows, the cost of using servers will grow with it.</p>
+                    <h3>How is the money used?</h3>
+                    <p>Together, we have agreed that <span>ALL</span> proceeds donated will go towards upkeep of the servers and ensuring the extension runs smoothly. We <span>will not</span> be taking a cut of the money at all.</p>
+                    <h3>How much should I donate?</h3>
+                    <p>We greatly appreciate any amount. We are doing this for free and because we use and love Mosaic too. Please donate however much you are able to.</p>
+                    <h3>I can't donate, but I want to help still!</h3>
+                    <p>We understand that not everyone can donate. If you would like to help us more, join <a href="http://reddit.com/r/MosaicExtension">our subreddit</a> and contribute as much as you can! Report bugs, make suggestions, recommend to friends and family, and help our community grow!</p>
+
+                    <p>You can donate through PayPal by clicking the button below.</p>
+                    <p>Kindest of regards,
+                        <br> Amit Parekh &amp; Alysson Silva.</p>
+                </div>
+
+                <li class="divider"></li>
+                <form class="btn-conainer">
+
+                </form>
+
+            </ul>
+        </div>
     </aside>
+
+
+
+
+
+
+
+
+
 
     <div class="wrapper">
         <div class="constructor">
