@@ -737,12 +737,15 @@ $tile-choice-height: 45px;
         padding-right: $sidebar-padding;
         height: 55px;
         &.tile-preview {
-            height: ($sidebar-desktop-width + 20)/2;
+            width: 100%;
+            height: 140px;
             margin-top: 10px;
+            margin-bottom: 10px;
             > div {
-                width: 100%;
+                width: 284px;
                 height: $sidebar-desktop-width / 2;
                 background: $gray-darker;
+                margin: 0 auto;
             }
         }
         &.sidebar-text {

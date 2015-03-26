@@ -112,4 +112,17 @@
             }
         }
     }
+    
+    &.size1 {
+        @include size(140px);
+    }
+    
+    &.size2 {
+        width: 284px;
+        height: 140px;
+    }
+    
+    &.size3 {
+        @include size(284px);
+    }
 }
