@@ -782,6 +782,16 @@ $tile-choice-height: 45px;
                 }
             }
             
+            &.centered {
+                > div {
+                    display: block;
+                    
+                    &, &:first-of-type, &:last-of-type {
+                        float: none;
+                    }
+                }
+            }
+            
         }
         .btn-flat {
             margin: 0;
@@ -795,6 +805,13 @@ $tile-choice-height: 45px;
                 color: $clr-grey-900;
             }
         }
+        .btn-inverse-red {
+            width: auto !important;
+            &:hover {
+                color: $clr-red;
+            }
+        }
+        
         &.tile-choice {
             height: $tile-choice-height;
             line-height: $tile-choice-height;
