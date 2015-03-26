@@ -45,6 +45,10 @@ var navSettingsTilesButton = document.getElementById("nav-settings-tiles-button"
 var navSettingsTilesMenu = document.getElementById("nav-settings-tiles-menu");
 var navSettingsTilesClose = document.getElementById("nav-settings-tiles-close");
 
+var navSettingsThemeButton = document.getElementById("nav-settings-theme-button");
+var navSettingsThemeMenu = document.getElementById("nav-settings-theme-menu");
+var navSettingsThemeClose = document.getElementById("nav-settings-theme-close");
+
 var navSettingsBackupRestoreButton = document.getElementById("nav-settings-backup-restore-button");
 var navSettingsBackupRestoreMenu = document.getElementById("nav-settings-backup-restore-menu");
 var navSettingsBackupRestoreClose = document.getElementById("nav-settings-backup-restore-close");
@@ -114,6 +118,22 @@ var settingsTilesClose = function () {
     settingsOpen();
 }
 
+var settingsThemeOpen = function () {
+    settingsClose();
+    setTimeout(function () {
+        navSettingsThemeMenu.className += " open";
+        navSettingsThemeMenu.className += " ext";
+        extSidebarOpen();
+    }, animaDelay);
+}
+
+var settingsThemeClose = function () {
+    navSettingsThemeMenu.className = navSettingsThemeMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
+    navSettingsThemeMenu.className = navSettingsThemeMenu.className.replace(/(?:^|\s)ext(?!\S)/g, '');
+    settingsOpen();
+    extSidebarClose();
+}
+
 var settingsBackupRestoreOpen = function () {
     settingsClose();
     setTimeout(function () {
@@ -161,6 +181,9 @@ var changelogClose = function () {
 navSettingsTilesButton.addEventListener("click", settingsTilesOpen);
 navSettingsTilesClose.addEventListener("click", settingsTilesClose);
 
+navSettingsThemeButton.addEventListener("click", settingsThemeOpen);
+navSettingsThemeClose.addEventListener("click", settingsThemeClose);
+
 navSettingsBackupRestoreButton.addEventListener("click", settingsBackupRestoreOpen);
 navSettingsBackupRestoreClose.addEventListener("click", settingsBackupRestoreClose);
 
@@ -200,6 +223,7 @@ var subMenuClose = function () {
     newTileReset();
     settingsClose();
     settingsTilesClose();
+    settingsThemeClose();
     settingsBackupRestoreClose();
     bugClose();
     changelogClose();
@@ -426,8 +450,8 @@ $.fn.removeInput = function () {
 }
 
 $.fn.makeHidden = function () {
-        this.addClass("hidden");
-    }
+    this.addClass("hidden");
+}
 
 // Reset Entire Menu
 
