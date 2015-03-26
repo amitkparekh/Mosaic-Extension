@@ -306,12 +306,12 @@ $(document).ready(function () {
 
             setTimeout(function () {
                 $("#new-tile-customise-tile-divider").addClass("tile-divider-move-2");
-            }, 350);
+            }, 250);
 
             setTimeout(function () {
                 $("#new-tile-customise-color, #new-tile-customise-font-color").addClass("hidden").removeClass("animated fadeOutLeft");
                 $("#new-tile-customise-tile-divider").removeClass("tile-divider-move-2");
-            }, 700);
+            }, 600);
 
         } else {
 

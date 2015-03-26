@@ -1,7 +1,7 @@
 .container {
     position: relative;
     float: left;
-    transition: top .3s, left .3s;
+    @include transition(all 0.3s ease-out);
     max-height: 100%;
     left: 0;
 }
@@ -36,7 +36,7 @@
     box-sizing: border-box;
     position: absolute;
     overflow: hidden;
-    -webkit-transition: top .3s, left .3s, width .3s, height .3s, transform .2s;
+    @include transition(all 0.3s ease-out);
     border: 0px solid;
     z-index: 1;
     
@@ -47,7 +47,6 @@
     &:active {
         opacity: 1;
         z-index: 2;
-        @include prefix((transform: scale(1.03)), webkit);
     }
     
     &.dragging {
@@ -59,13 +58,6 @@
         background: none;
         opacity: .3;
         border: 2px dashed #eee;
-    }
-    
-    &.preview {
-        position: relative;
-        margin: 0 auto;
-        width: 240px;
-        height: 119px;
     }
     
     &.selected {
