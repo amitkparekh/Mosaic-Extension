@@ -11,10 +11,7 @@
 }
 
 @mixin box-shadow($box-shadow) {
-  -webkit-box-shadow: $box-shadow;
-     -moz-box-shadow: $box-shadow;
-      -ms-box-shadow: $box-shadow;
-          box-shadow: $box-shadow;
+    @include prefix((box-shadow: $box-shadow), webkit moz ms o);
     /*    box-shadow: x: 0, y: 1px, blur: 2px, spread: 0, alpha: 0.25 */
 }
 
@@ -35,11 +32,7 @@
 }
 
 @mixin animation-delay($delay) {
-    -o-animation-delay: $delay;
-    -ms-animation-delay: $delay;
-    -moz-animation-delay: $delay;
-    -webkit-animation-delay: $delay;
-    animation-delay: $delay;
+    @include prefix((animation-delay: $delay), webkit moz ms o);
 }
 
 @mixin transition-delay($delay) {
@@ -47,11 +40,7 @@
 }
 
 @mixin animation-duration($duration) {
-    -o-animation-duration: $duration;
-    -ms-animation-duration: $duration;
-    -moz-animation-duration: $duration;
-    -webkit-animation-duration: $duration;
-    animation-duration: $duration;
+    @include prefix((animation-duration: $duration), webkit ms moz o);
 }
 
 @mixin translate3d($x, $y, $z) {
