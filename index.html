@@ -286,20 +286,74 @@
                         </label>
                     </div>
                 </form>
-                <form class="sidebar-text" id="show-apps-on-separate-page">
-                    <span>Show apps on separate page</span>
-                    <div class="switch sidebar-badge sidebar-icon-right">
-                        <label>
-                            <input type="checkbox">
-                            <span class="lever"></span>
-                        </label>
+                <li class="divider"></li>
+                <div class="sidebar-text">
+                    <span>Tile colours</span>
+                </div>
+                <form class="tile-choice">
+                    <span>Background colour</span>
+                    <div>
+                        <a class="waves-effect btn color-preview"></a>
+                    </div>
+                </form>
+                <form class="tile-choice">
+                    <span>Text colour</span>
+                    <div>
+                        <a class="waves-effect btn color-preview"></a>
                     </div>
                 </form>
                 <li class="divider"></li>
+                <div class="sidebar-text">
+                    <span>Tile positioning</span>
+                </div>
+
+                
+                <form action="#" class="form-slider">
+                    <label>Number of rows</label>
+                    <p class="range-field">
+                        <input type="range" min="0" max="12" />
+                    </p>
+                </form>
+                <form action="#" class="form-slider">
+                    <label>Number of columns</label>
+                    <p class="range-field">
+                        <input type="range" min="0" max="12" />
+                    </p>
+                </form>
+                
+                
+                
+                
+                
+                
+                
+                <article>
+                    <label>Horizontal align</label>
+                    <select>
+                        <option value="left">Left</option>
+                        <option value="center" selected>Center</option>
+                        <option value="right">Right</option>
+                    </select>
+                </article>
+                <article>
+                    <label>Tile direction</label>
+                    <select>
+                        <option value="vertical">Top to Bottom</option>
+                        <option value="horizontal" selected>Left to Right</option>
+                    </select>
+                </article>
+                
+                <li class="divider"></li>
+
+                <form class="btn-container centered">
+                    <div>
+                        <a class="waves-effect waves-red btn btn-inverse btn-inverse-red">RESET TO DEFAULT</a>
+                    </div>
+                </form>
             </ul>
-            
+
             <!-- Customise theme menu -->
-            
+
             <ul id="nav-settings-theme-menu" class="sidebar-nav">
                 <div class="sidebar-text">
                     <span>Customise theme</span>
