@@ -1,11 +1,60 @@
 $grey-1: #dddddd;
 
+/*******************
+  Utility Classes
+*******************/
+
 .no-margin {
     margin: 0 !important;
 }
 
 .no-transition {
     @include prefix((transition: none), webkit moz ms);
+}
+
+// Text Align
+.left-align {
+  text-align: left;
+}
+.right-align {
+  text-align: right
+}
+.center, .center-align {
+  text-align: center;
+}
+
+.left {
+  float: left !important;
+}
+.right {
+  float: right !important;
+}
+
+// No Text Select
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    @include prefix((user-select: none), webkit moz ms o);
+}
+
+// Circle
+.circle {
+  @include border-radius(50%);
+}
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .hidden {
