@@ -18,7 +18,6 @@
 
 @import 'variables';
 
-
 * {
     -webkit-touch-callout: none;
     @include prefix((user-select:none), webkit moz ms o);
@@ -77,6 +76,9 @@ a {
 
 
 @import 'sidebar';
+@import 'form-elements';
+
 @import 'bookmark-bar';
+
 @import 'tiles';
 @import 'news';
