@@ -515,3 +515,10 @@ var newTileReset = function () {
     $("#new-tile-divider-2, #new-tile-divider-3, #new-tile-divider-4").removeFadeIn();
     $("#new-tile-divider-2, #new-tile-divider-3, #new-tile-divider-4").makeHidden();
 };
+
+// Activate Dropdown
+
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+            
