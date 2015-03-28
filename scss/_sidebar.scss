@@ -737,12 +737,15 @@ $tile-choice-height: 45px;
         padding-right: $sidebar-padding;
         height: 55px;
         &.tile-preview {
-            height: ($sidebar-desktop-width + 20)/2;
+            width: 100%;
+            height: 140px;
             margin-top: 10px;
+            margin-bottom: 10px;
             > div {
-                width: 100%;
+                width: 284px;
                 height: $sidebar-desktop-width / 2;
                 background: $gray-darker;
+                margin: 0 auto;
             }
         }
         &.sidebar-text {
@@ -782,6 +785,16 @@ $tile-choice-height: 45px;
                 }
             }
             
+            &.centered {
+                > div {
+                    display: block;
+                    
+                    &, &:first-of-type, &:last-of-type {
+                        float: none;
+                    }
+                }
+            }
+            
         }
         .btn-flat {
             margin: 0;
@@ -795,13 +808,19 @@ $tile-choice-height: 45px;
                 color: $clr-grey-900;
             }
         }
+        .btn-inverse-red {
+            width: auto !important;
+            &:hover {
+                color: $clr-red;
+            }
+        }
+        
         &.tile-choice {
             height: $tile-choice-height;
             line-height: $tile-choice-height;
             > span {
                 display: inline-block;
                 width: 205px;
-                text-transform: capitalize;
             }
             > div {
                 display: inline-block;
@@ -824,28 +843,6 @@ $tile-choice-height: 45px;
                         background-color: $clr-pink-300;
                         &:hover {
                             background-color: lighten($clr-pink-300, 5%);
-                        }
-                    }
-                    
-                    &.selected {
-                        width: 98px;
-                    }
-                    
-                    > div {
-                        display: inline-block;
-                        
-                        &:last-of-type {
-                            width:25px;
-                            background: $clr-red;
-                            color: white;
-                            text-align: center;
-                            margin-left: 5px;
-                            display: none;
-                            
-                            &.selected {
-                                @extend .visible;
-                                display: inline-block !important;
-                            }
                         }
                     }
                 }

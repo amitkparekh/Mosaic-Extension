@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 
@@ -10,8 +10,10 @@
 
     <title>New tab</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:500,300,700,400,400italic' rel='stylesheet' type='text/css'>
-    <link href="css/index.min.css" rel="stylesheet" type="text/css" />
     
+<!--    <link href="materialize/css/materialize.css" rel="stylesheet" type="text/css" />-->
+    <link href="css/index.min.css" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body>
@@ -30,9 +32,7 @@
         </div>-->
 
         <div id="sidebar-header" class="sidebar-header header-cover">
-            <!--            <div class="top-bar"></div>-->
             <div>
-                <!--                <p>Mosaic</p>-->
                 <img src="imgs/mosaic_logo.png">
             </div>
         </div>
@@ -41,7 +41,7 @@
             <!-- Sidebar navigation -->
             <ul id="nav-main" class="sidebar-nav open">
                 <li id="nav-new-tile-button">
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-add"></i> Add new tile
                     </a>
                 </li>
@@ -59,7 +59,7 @@
 
                 <div class="sidebar-text">Show/Hide sections</div>
                 <form class="sidebar-text">
-                    <span>Show Apps</span>
+                    <span>Show 'Apps'</span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
                             <input type="checkbox">
@@ -68,7 +68,7 @@
                     </div>
                 </form>
                 <form class="sidebar-text">
-                    <span>Show Bookmarks Bar</span>
+                    <span>Show 'Bookmarks Bar'</span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
                             <input type="checkbox">
@@ -77,7 +77,7 @@
                     </div>
                 </form>
                 <form class="sidebar-text">
-                    <span>Show Recently Closed Tabs</span>
+                    <span>Show 'Recently Closed Tabs'</span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
                             <input type="checkbox">
@@ -89,17 +89,17 @@
                 <li class="divider"></li>
 
                 <li id="nav-settings-button">
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-settings"></i> Settings
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-help"></i> Help
                     </a>
                 </li>
                 <li id="nav-donate-button">
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-attach-money"></i> Donate
                     </a>
                 </li>
@@ -114,7 +114,7 @@
             <ul id="nav-new-tile-menu" class="sidebar-nav">
                 <div class="sidebar-text">
                     <span>Add new tile</span>
-                    <a id="nav-new-tile-close" href="#">
+                    <a id="nav-new-tile-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
@@ -134,7 +134,7 @@
                     <div class="text-field-group" id="new-tile-name">
                         <input type="text" required>
                         <span class="bar"></span>
-                        <label>Site Name</label>
+                        <label>Site name</label>
                     </div>
                 </form>
                 <form class="hidden">
@@ -146,7 +146,7 @@
                 </form>
                 <li id="new-tile-divider-2" class="divider hidden"></li>
                 <form class="sidebar-text hidden" id="customise-tile-color-switch">
-                    <span id="new-tile-customise-title">Customise tile color</span>
+                    <span id="new-tile-customise-title">Customise tile colour</span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
                             <input type="checkbox">
@@ -155,15 +155,15 @@
                     </div>
                 </form>
                 <form id="new-tile-customise-color" class="tile-choice hidden">
-                    <span>tile color</span>
+                    <span>Tile colour</span>
                     <div>
-                        <a href="#" class="waves-effect btn color-preview"></a>
+                        <a class="waves-effect btn color-preview"></a>
                     </div>
                 </form>
                 <form id="new-tile-customise-font-color" class="tile-choice hidden">
-                    <span>font color</span>
+                    <span>Font colour</span>
                     <div>
-                        <a href="#" class="waves-effect btn color-preview"></a>
+                        <a class="waves-effect btn color-preview"></a>
                     </div>
                 </form>
 
@@ -177,13 +177,13 @@
                     <form class="tile-choice hidden" id="new-tile-select-logo">
                         <span>Select from our database</span>
                         <div>
-                            <a href="#" class="waves-effect btn btn-inverse">Select</a>
+                            <a class="waves-effect btn btn-inverse">Select</a>
                         </div>
                     </form>
                     <form class="tile-choice hidden" id="new-tile-add-url">
                         <span>Add from URL</span>
                         <div>
-                            <a href="#" class="waves-effect btn btn-inverse">add Url</a>
+                            <a class="waves-effect btn btn-inverse">ADD URL</a>
                         </div>
                     </form>
                     <form class="hidden" id="new-tile-add-url-text">
@@ -196,13 +196,13 @@
                     <form class="tile-choice hidden" id="new-tile-upload-logo">
                         <span>Upload from computer</span>
                         <div>
-                            <a href="#" class="waves-effect btn btn-inverse">Upload</a>
+                            <a class="waves-effect btn btn-inverse">UPLOAD</a>
                         </div>
                     </form>
                     <form class="tile-choice hidden" id="new-tile-remove-image">
-                        <span>remove image</span>
+                        <span>Remove image</span>
                         <div>
-                            <a href="#" class="waves-effect waves-light btn btn-red">remove</a>
+                            <a class="waves-effect waves-light btn btn-red">REMOVE</a>
                         </div>
                     </form>
                     <div id="new-tile-btn-divider">
@@ -210,10 +210,10 @@
 
                         <form class="btn-container hidden" id="new-tile-submit-container">
                             <div id="new-tile-reset">
-                                <a href="#" class="waves-effect waves-light btn btn-inverse">reset</a>
+                                <a class="waves-effect waves-red btn btn-inverse">RESET</a>
                             </div>
                             <div id="new-tile-submit">
-                                <a href="#" class="waves-effect waves-light btn">ADD NEW TILE</a>
+                                <a class="waves-effect waves-light btn">ADD NEW TILE</a>
                             </div>
                         </form>
                     </div>
@@ -224,61 +224,312 @@
             <ul id="nav-settings-menu" class="sidebar-nav">
                 <div class="sidebar-text">
                     <span>Settings</span>
-                    <a id="nav-settings-close" href="#">
+                    <a id="nav-settings-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
 
                 <li id="nav-settings-tiles-button">
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-view-module"></i> Customise tiles
                     </a>
                 </li>
-                <li>
-                    <a href="#">
+                <li id="nav-settings-theme-button">
+                    <a>
                         <i class="sidebar-icon md-color-lens"></i> Customise theme
                     </a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="#">
-                        <i class="sidebar-icon mdi mdi-rss"></i> Customise RSS Feed
+                    <a>
+                        <i class="sidebar-icon mdi mdi-rss"></i> Customise RSS feed
                     </a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="#">
-                        <i class="sidebar-icon md-person"></i> Profile Settings
+                    <a>
+                        <i class="sidebar-icon md-person"></i> Profile settings
+                    </a>
+                </li>
+                <li id="nav-settings-language-button">
+                    <a>
+                        <i class="sidebar-icon md-language"></i> Change language
+                    </a>
+                </li>
+                <li id="nav-settings-backup-restore-button">
+                    <a>
+                        <i class="sidebar-icon md-settings-backup-restore"></i> Backup/Restore settings
                     </a>
                 </li>
                 <li class="divider"></li>
                 <li id="nav-bug-button">
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-bug-report"></i> Report a bug
                     </a>
                 </li>
                 <li id="nav-changelog-button">
-                    <a href="#">
+                    <a>
                         <i class="sidebar-icon md-list"></i> Changelog
                     </a>
                 </li>
             </ul>
 
-            <!-- Customise Tiles -->
+            <!-- Customise Tiles menu -->
             <ul id="nav-settings-tiles-menu" class="sidebar-nav">
                 <div class="sidebar-text">
-                    <span>Customise Tiles</span>
-                    <a id="nav-settings-tiles-close" href="#">
+                    <span>Customise tiles</span>
+                    <a id="nav-settings-tiles-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
+                <form class="sidebar-text" id="show-tile-animation-at-start">
+                    <span>Show tile animation on load</span>
+                    <div class="switch sidebar-badge sidebar-icon-right">
+                        <label>
+                            <input type="checkbox">
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                </form>
+                <li class="divider"></li>
+                <div class="sidebar-text">
+                    <span>Tile colours</span>
+                </div>
+                <form class="tile-choice">
+                    <span>Background colour</span>
+                    <div>
+                        <a class="waves-effect btn color-preview"></a>
+                    </div>
+                </form>
+                <form class="tile-choice">
+                    <span>Text colour</span>
+                    <div>
+                        <a class="waves-effect btn color-preview"></a>
+                    </div>
+                </form>
+                <li class="divider"></li>
+                <div class="sidebar-text">
+                    <span>Tile positioning</span>
+                </div>
+
+                
+                <form action="#" class="form-slider">
+                    <label>Number of rows</label>
+                    <p class="range-field">
+                        <input type="range" min="0" max="12" />
+                    </p>
+                </form>
+                <form action="#" class="form-slider">
+                    <label>Number of columns</label>
+                    <p class="range-field">
+                        <input type="range" min="0" max="12" />
+                    </p>
+                </form>
+                
+                
+                
+                
+                
+                
+                
+                <article>
+                    <label>Horizontal align</label>
+                    <select>
+                        <option value="left">Left</option>
+                        <option value="center" selected>Center</option>
+                        <option value="right">Right</option>
+                    </select>
+                </article>
+                <article>
+                    <label>Tile direction</label>
+                    <select>
+                        <option value="vertical">Top to Bottom</option>
+                        <option value="horizontal" selected>Left to Right</option>
+                    </select>
+                </article>
+                
+                <li class="divider"></li>
+
+                <form class="btn-container centered">
+                    <div>
+                        <a class="waves-effect waves-red btn btn-inverse btn-inverse-red">RESET TO DEFAULT</a>
+                    </div>
+                </form>
             </ul>
 
-            <!-- Report a bug -->
+            <!-- Customise theme menu -->
+
+            <ul id="nav-settings-theme-menu" class="sidebar-nav">
+                <div class="sidebar-text">
+                    <span>Customise theme</span>
+                    <a id="nav-settings-theme-close">
+                        <div class="sidebar-badge sidebar-icon-right md-close"></div>
+                    </a>
+                </div>
+
+                <form class="tile-choice">
+                    <span>Background color</span>
+                    <div>
+                        <a class="waves-effect btn color-preview"></a>
+                    </div>
+                </form>
+
+                <li class="divider"></li>
+
+                <div class="sidebar-text">
+                    <span>Choose background image</span>
+                </div>
+                <form class="tile-choice">
+                    <span>Get from Wikimedia Commons</span>
+                    <div>
+                        <a class="waves-effect btn btn-inverse">SELECT</a>
+                    </div>
+                </form>
+                <form class="tile-choice">
+                    <span>Add from URL</span>
+                    <div>
+                        <a class="waves-effect btn btn-inverse">ADD URL</a>
+                    </div>
+                </form>
+                <form class="tile-choice">
+                    <span>Upload from computer</span>
+                    <div>
+                        <a class="waves-effect btn btn-inverse">UPLOAD</a>
+                    </div>
+                </form>
+                <form class="tile-choice">
+                    <span>Remove image</span>
+                    <div>
+                        <a class="waves-effect waves-light btn btn-red">REMOVE</a>
+                    </div>
+                </form>
+
+                <li class="divider"></li>
+
+                <form class="btn-container centered">
+                    <div>
+                        <a class="waves-effect waves-red btn btn-inverse btn-inverse-red">RESET TO DEFAULT</a>
+                    </div>
+                </form>
+            </ul>
+
+            <!-- Customise RSS feed menu -->
+
+
+
+            <!-- Profile menu -->
+            
+            
+            
+            <!-- Language menu -->
+            
+            <ul id="nav-settings-language-menu" class="sidebar-nav">
+                <div class="sidebar-text">
+                    <span>Change language</span>
+                    <a id="nav-settings-language-close">
+                        <div class="sidebar-badge sidebar-icon-right md-close"></div>
+                    </a>
+                </div>
+                <article>
+                    <label>Change your language</label>
+                    <select>
+<!--                        <option value="am">Amharic</option>-->
+<!--                        <option value="ar">Arabic</option>-->
+<!--                        <option value="bn">Bengali</option>-->
+<!--                        <option value="bg">Bulgarian</option>-->
+<!--                        <option value="ca">Catalan</option>-->
+<!--                        <option value="zh_CN">Chinese (China)</option>-->
+<!--                        <option value="zh_TW">Chinese (Taiwan)</option>-->
+<!--                        <option value="hr">Croatian</option>-->
+<!--                        <option value="cs">Czech</option>-->
+<!--                        <option value="da">Danish</option>-->
+<!--                        <option value="nl">Dutch</option>-->
+                        <option value="en_GB" selected>English (Great Britain)</option>
+<!--                        <option value="en_US">English (US)</option>-->
+<!--                        <option value="et">Estonian</option>-->
+<!--                        <option value="fil">Filipino</option>-->
+<!--                        <option value="fi">Finnish</option>-->
+<!--                        <option value="fr">French</option>-->
+<!--                        <option value="de">German</option>-->
+<!--                        <option value="el">Greek</option>-->
+<!--                        <option value="gu">Gujarati</option>-->
+<!--                        <option value="he">Hebrew</option>-->
+<!--                        <option value="hi">Hindi</option>-->
+<!--                        <option value="hu">Hungarian</option>-->
+<!--                        <option value="id">Indonesian</option>-->
+<!--                        <option value="it">Italian</option>-->
+<!--                        <option value="ja">Japanese</option>-->
+<!--                        <option value="kn">Kannada</option>-->
+<!--                        <option value="ko">Korean</option>-->
+<!--                        <option value="lv">Latvian</option>-->
+<!--                        <option value="lt">Lithuanian</option>-->
+<!--                        <option value="ms">Malay</option>-->
+<!--                        <option value="ml">Malayalam</option>-->
+<!--                        <option value="mr">Marathi</option>-->
+<!--                        <option value="no">Norwegian</option>-->
+<!--                        <option value="fa">Persian</option>-->
+<!--                        <option value="pl">Polish</option>-->
+                        <option value="pt_BR">Portuguese (Brazil)</option>
+<!--                        <option value="pt_PT">Portuguese (Portugal)</option>-->
+<!--                        <option value="ro">Romanian</option>-->
+<!--                        <option value="ru">Russian</option>-->
+<!--                        <option value="sr">Serbian</option>-->
+<!--                        <option value="sk">Slovak</option>-->
+<!--                        <option value="sl">Slovenian</option>-->
+<!--                        <option value="es">Spanish</option>-->
+<!--                        <option value="es_419">Spanish (Latin America &amp; Caribbean)</option>-->
+<!--                        <option value="sw">Swahili</option>-->
+<!--                        <option value="sv">Swedish</option>-->
+<!--                        <option value="ta">Tamil</option>-->
+<!--                        <option value="te">Telugu</option>-->
+<!--                        <option value="th">Thai</option>-->
+<!--                        <option value="tr">Turkish</option>-->
+<!--                        <option value="uk">Ukrainian</option>-->
+<!--                        <option value="vi">Vietnamese</option>-->
+                    </select>
+                </article>
+                <div class="text-chunk">
+                    <h3>A word of warning...</h3>
+                    <p>All the languages are translated by the community. There is a chance that there may be errors with it and it might not be perfect.</p>
+                    <p>If you find an error, <a href="http://www.reddit.com/r/MosaicExtension/submit?idebar&title=%5BBUG%5D">click here to report it at our subreddit</a>.</p>
+                    <p>If you would like to volunteer to translate for us, <a href="http://goo.gl/forms/OFb9rXOgdR">click here to sign up</a>!</p>
+                </div>
+            </ul>
+            
+            <!-- Backup / Restore settings menu -->
+            <ul id="nav-settings-backup-restore-menu" class="sidebar-nav">
+                <div class="sidebar-text">
+                    <span>Backup/Restore settings</span>
+                    <a id="nav-settings-backup-restore-close">
+                        <div class="sidebar-badge sidebar-icon-right md-close"></div>
+                    </a>
+                </div>
+                <form class="tile-choice" id="settings-import">
+                    <span>Import settings</span>
+                    <div>
+                        <a class="waves-effect btn btn-inverse">import</a>
+                    </div>
+                </form>
+                <form class="tile-choice" id="settings-export">
+                    <span>Export settings</span>
+                    <div>
+                        <a class="waves-effect btn btn-inverse">export</a>
+                    </div>
+                </form>
+                <form class="tile-choice" id="settings-reset">
+                    <span>Reset settings</span>
+                    <div>
+                        <a class="waves-effect waves-light btn btn-red">RESET</a>
+                    </div>
+                </form>
+            </ul>
+
+
+            <!-- Report a bug menu -->
             <ul id="nav-bug-menu" class="sidebar-nav">
                 <div class="sidebar-text">
                     <span>Report a bug</span>
-                    <a id="nav-bug-close" href="#">
+                    <a id="nav-bug-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
@@ -289,19 +540,19 @@
                     <h3>Now what?</h3>
                     <p>See if you can recreate the bug! Find out what you have to do in order to recreate it. This will help us fix it much quicker as we will be able to see exactly what broke and how.</p>
                     <p>If you can't recreate it, don't panic! Just make note of what you were doing before it broke!</p>
-                    <p>Now go to <a href="http://reddit.com/r/MosaicExtension">our subreddit</a> and make a new post. Tell us all about the bug in as much detail as you can. You can <span class="italic">never</span> have too much detail! Tell us everything.</p>
+                    <p>Now go to <a href="http://reddit.com/r/MosaicExtension">our subreddit</a> and make a new post from the right. Tell us all about the bug in as much detail as you can. You can <span class="italic">never</span> have too much detail! Tell us everything.</p>
                     <p>Once you've posted, we will get back to you with an update as soon as we can. Just leave the rest to us and we will fix it!</p>
                     <p></p>
-                    <p><span>Mosaic Subreddit: </span><a href="http://reddit.com/r/mosaicExtension">http://reddit.com/r/MosaicExtension</a>
+                    <p><span>Mosaic Subreddit: </span><a href="http://www.reddit.com/r/MosaicExtension/">http://reddit.com/r/MosaicExtension</a>
                     </p>
                 </div>
             </ul>
 
-            <!-- Changelog -->
+            <!-- Changelog menu -->
             <ul id="nav-changelog-menu" class="sidebar-nav">
                 <div class="sidebar-text">
                     <span>Changelog</span>
-                    <a id="nav-changelog-close" href="#">
+                    <a id="nav-changelog-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
@@ -320,7 +571,7 @@
                     <h3>New Name and Logo</h3>
                     <p>After a lot of thought and discussion, we have decided to change the name of the extension to <span>Mosaic</span>. The reason why is because after everything that happened with MNTP, we want to move past that and start fresh. As this is a whole new extension, we think its right to rename it and make it amazing.</p>
                     <p>We like this name because we feel it explains the core function of the extension perfectly. We believe the main selling point of this extension are the tiles themselves. So we want to make that the focus.</p>
-                    <p>We are currently looking at making a new logo. If you would like to help us, then post your suggestions to <a href="http://reddit.com/r/MosaicExtension">our new subreddit!</a>.</p>
+                    <p>We are currently looking at making a new logo. If you would like to help us, then post your suggestions to <a href="http://reddit.com/r/MosaicExtension">our new subreddit!</a>. What we have right now is temporary but if you guys like it, tell us and we'll keep it! If not, improve it for us!</p>
 
                     <h3>Trello - our 'to do' list</h3>
                     <p>We've created a board on Trello for you all to keep track of everything that we have planned and what we're working on. Every suggestion you make and every bit of feedback will end up in here for us to look at. You can also vote on features you like! The most voted features will get made quicker, so get voting! You can also comment on different cards to ensure that we add exactly what you want!</p>
@@ -335,11 +586,11 @@
                 </div>
             </ul>
 
-            <!-- Donate -->
+            <!-- Donate menu -->
             <ul id="nav-donate-menu" class="sidebar-nav">
                 <div class="sidebar-text">
                     <span>Donate</span>
-                    <a id="nav-donate-close" href="#">
+                    <a id="nav-donate-close">
                         <i class="sidebar-badge sidebar-icon-right md-close"></i>
                     </a>
                 </div>
@@ -382,7 +633,10 @@
     <div class="wrapper">
         <div class="constructor">
             <div id="wallpaper" class="wallpaper"></div>
-
+            
+            
+            
+            
             <!--BOOKMARKS-->
             <div class="bookmark-bar">
                 <a id="btn-previous-bookmarks" class="previous"></a>
@@ -906,6 +1160,7 @@
     <script src="js/jquery-2.1.3.min.js"></script>
     <!--    <script src="js/jquery.validate.min.js"></script>-->
 
+    
     <script src="js/util.js" type="text/javascript"></script>
     <script src="js/dragging.js"></script>
     <script src="js/Image.js" type="text/javascript"></script>
@@ -914,7 +1169,12 @@
     <script src="js/Feed.js"></script>
     <script src="js/main.js" type="text/javascript"></script>
 
+    <script src="js/material/velocity.min.js"></script>
     <script src="js/material/waves.js"></script>
+    <script src="js/material/dropdown.js"></script>
+    <script src="js/material/slider.js"></script>
+    
+<!--    <script src="materialize/js/bin/materialize.js"></script>-->
 
     <script src="js/sidebar.js" type="text/javascript"></script>
 
