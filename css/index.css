@@ -13992,8 +13992,16 @@ select {
   opacity: 0;
   overflow-y: hidden;
   z-index: 1200;
-  will-change: width, height;
-  width: 248px !important; }
+  will-change: width, height; }
+  .dropdown-content::-webkit-scrollbar-track {
+    border-radius: 2px; }
+  .dropdown-content::-webkit-scrollbar {
+    width: 5px;
+    background-color: #F7F7F7; }
+  .dropdown-content::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #BFBFBF; }
   .dropdown-content li {
     cursor: pointer;
     color: rgba(0, 0, 0, 0.87);
@@ -14016,6 +14024,8 @@ select {
     font-weight: 400; }
   .sidebar-nav article input {
     font-weight: 500; }
+.sidebar-nav.ext {
+  width: auto; }
 
 /***************
       Range
