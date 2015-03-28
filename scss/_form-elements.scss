@@ -75,7 +75,22 @@ select {
     overflow-y: hidden;
     z-index: 1200;
     will-change: width, height;
-    width: $sidebar-desktop-width - ($sidebar-padding *2) !important;
+//    width: $sidebar-desktop-width - ($sidebar-padding *2) !important;
+    
+    // Scrollbar style for webkit browsers
+    &::-webkit-scrollbar-track {
+        border-radius: 2px;
+    }
+    &::-webkit-scrollbar {
+        width: 5px;
+        background-color: #F7F7F7;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px black(.3);
+        background-color: #BFBFBF;
+    }
+    
     li {
         cursor: pointer;
         color: $off-black;
@@ -106,6 +121,10 @@ select {
         input {
             font-weight: 500;
         }
+    }
+    
+    &.ext {
+        width: auto;
     }
 }
 
