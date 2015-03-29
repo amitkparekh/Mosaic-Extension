@@ -2081,89 +2081,89 @@ var MNTP;
 
         return new Promise(function (success, fail) {
 
-            //color inputs
-            var colorInputs = q("input[type='color']", true);
+            ////color inputs
+            //var colorInputs = q("input[type='color']", true);
 
-            for (var i = 0; i < colorInputs.length; i++) {
+            //for (var i = 0; i < colorInputs.length; i++) {
 
-                var colorInput = colorInputs[i];
+            //    var colorInput = colorInputs[i];
 
-                if (!colorInput.data("customized")) {
+            //    if (!colorInput.data("customized")) {
 
-                    var text = document.createElement("input");
+            //        var text = document.createElement("input");
 
-                    text.type = "text";
-                    text.value = colorInput.value;
+            //        text.type = "text";
+            //        text.value = colorInput.value;
 
-                    text.addEventListener([/*"keydown", */"change"], function () {
-                        var that = this;
-                        setTimeout(function () {
-                            that.previousSibling.value = that.value;
-                        }, 0);
-                    }, "customColorInput");
+            //        text.addEventListener([/*"keydown", */"change"], function () {
+            //            var that = this;
+            //            setTimeout(function () {
+            //                that.previousSibling.value = that.value;
+            //            }, 0);
+            //        }, "customColorInput");
 
-                    colorInput.addEventListener("input", function () {
-                        this.nextSibling.value = this.value;
-                    }, "customColorInput");
-
-
-                    var property = colorInput.data("property");
-                    property && text.setAttribute("data-property", property);
-
-                    colorInput.parentElement.insertBefore(text, colorInput.nextSibling);
-
-                    colorInput.data("customized", true);
-
-                }
-            }
-
-            //range inputs
-            var rangeInputs = q("input[type='range']", true);
-
-            for (var i = 0; i < rangeInputs.length; i++) {
-
-                var rangeInput = rangeInputs[i];
-
-                if (!rangeInput.data("customized")) {
-
-                    var number = document.createElement("input");
-
-                    number.type = "number";
-                    number.value = rangeInput.value;
-
-                    if (rangeInput.getAttribute("min"))
-                        number.setAttribute("min", rangeInput.getAttribute("min"));
-
-                    if (rangeInput.getAttribute("max"))
-                        number.setAttribute("max", rangeInput.getAttribute("max"));
-
-                    if (rangeInput.getAttribute("step"))
-                        number.setAttribute("step", rangeInput.getAttribute("step"));
-
-                    number.addEventListener([/*"keydown", */"change"], function () {
-                        var that = this;
-                        setTimeout(function () {
-                            that.previousSibling.value = that.value;
-                        }, 0);
-                    }, "customRangeInput");
-
-                    rangeInput.addEventListener("input", function () {
-                        this.nextSibling.value = this.value;
-                    }, "customRangeInput");
+            //        colorInput.addEventListener("input", function () {
+            //            this.nextSibling.value = this.value;
+            //        }, "customColorInput");
 
 
-                    var property = rangeInput.data("property");
-                    property && number.setAttribute("data-property", property);
+            //        var property = colorInput.data("property");
+            //        property && text.setAttribute("data-property", property);
 
-                    var propertyType = rangeInput.data("property-type");
-                    propertyType && number.setAttribute("data-property-type", propertyType);
+            //        colorInput.parentElement.insertBefore(text, colorInput.nextSibling);
 
-                    rangeInput.parentElement.insertBefore(number, rangeInput.nextSibling);
+            //        colorInput.data("customized", true);
 
-                    rangeInput.data("customized", true);
+            //    }
+            //}
 
-                }
-            }
+            ////range inputs
+            //var rangeInputs = q("input[type='range']", true);
+
+            //for (var i = 0; i < rangeInputs.length; i++) {
+
+            //    var rangeInput = rangeInputs[i];
+
+            //    if (!rangeInput.data("customized")) {
+
+            //        var number = document.createElement("input");
+
+            //        number.type = "number";
+            //        number.value = rangeInput.value;
+
+            //        if (rangeInput.getAttribute("min"))
+            //            number.setAttribute("min", rangeInput.getAttribute("min"));
+
+            //        if (rangeInput.getAttribute("max"))
+            //            number.setAttribute("max", rangeInput.getAttribute("max"));
+
+            //        if (rangeInput.getAttribute("step"))
+            //            number.setAttribute("step", rangeInput.getAttribute("step"));
+
+            //        number.addEventListener([/*"keydown", */"change"], function () {
+            //            var that = this;
+            //            setTimeout(function () {
+            //                that.previousSibling.value = that.value;
+            //            }, 0);
+            //        }, "customRangeInput");
+
+            //        rangeInput.addEventListener("input", function () {
+            //            this.nextSibling.value = this.value;
+            //        }, "customRangeInput");
+
+
+            //        var property = rangeInput.data("property");
+            //        property && number.setAttribute("data-property", property);
+
+            //        var propertyType = rangeInput.data("property-type");
+            //        propertyType && number.setAttribute("data-property-type", propertyType);
+
+            //        rangeInput.parentElement.insertBefore(number, rangeInput.nextSibling);
+
+            //        rangeInput.data("customized", true);
+
+            //    }
+            //}
 
             success();
 

@@ -1,4 +1,5 @@
 /// <reference path="util.js" />
+/// <reference path="Tile.js" />
 
 // Sidebar toggle
 //
@@ -140,16 +141,16 @@ var settingsThemeClose = function () {
     extSidebarClose();
 }
 
-var settingsLanguageOpen = function() {
+var settingsLanguageOpen = function () {
     settingsClose();
-    setTimeout(function() {
+    setTimeout(function () {
         navSettingsLanguageMenu.className += " open";
         navSettingsLanguageMenu.className += " ext";
         extSidebarOpen();
     }, animaDelay);
 }
 
-var settingsLanguageClose = function() {
+var settingsLanguageClose = function () {
     navSettingsLanguageMenu.className = navSettingsLanguageMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
     navSettingsLanguageMenu.className = navSettingsLanguageMenu.className.replace(/(?:^|\s)ext(?!\S)/g, '');
     settingsOpen();
@@ -286,19 +287,26 @@ $(document).ready(function () {
 
         $("#new-tile-name").parent().fadeInFromHidden();
 
-        $(this).focusout(function () {
+    });
 
-            var url = $("input", this).val();
+    $("#new-tile-url").focusout(function () {
 
-            if (/^(http:\/\/www\.|https:\/\/www\.)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(url)) {
-                $(".bar", this).removeClass("error");
-                $("label", this).removeClass("error");
-            } else {
-                $(".bar", this).addClass("error");
-                $("label", this).addClass("error").addClass("valid");
-            }
+        var url = $("input", this).val();
 
-        });
+        if (url.match(/[\s\S]+\.[\s\S]+/g)) {
+            $(".bar", this).removeClass("error");
+            $("label", this).removeClass("error").addClass("valid");
+        } else {
+            $(".bar", this).addClass("error");
+            $("label", this).addClass("error");
+        }
+
+    });
+
+    $("#new-tile-url").keypress(function () {
+
+        setTimeout(refreshTilePreview, 0);
+
     });
 
     // Text    
@@ -316,34 +324,39 @@ $(document).ready(function () {
         $("#new-tile-remove-image").fadeInFromHidden();
         $("#new-tile-submit-container").fadeInFromHidden();
 
-        $(this).focusout(function () {
+    });
 
-            if ($("input", this).val() == '') {
-                // if false
-                $(".bar", this).addClass("error");
-                $("label", this).addClass("error");
-            } else {
-                // if true
-                $(".bar", this).removeClass("error");
-                $("label", this).removeClass("error").addClass("valid");
-            };
-        });
+    $("#new-tile-name").focusout(function () {
+
+        if ($("input", this).val() == '') {
+            // if false
+            $(".bar", this).addClass("error");
+            $("label", this).addClass("error");
+        } else {
+            // if true
+            $(".bar", this).removeClass("error");
+            $("label", this).removeClass("error").addClass("valid");
+        };
+    });
+
+    $("#new-tile-name").keypress(function () {
+
+        setTimeout(refreshTilePreview, 0);
+
     });
 
     // RSS
-    $("#new-tile-rss").focusin(function () {
+    $("#new-tile-rss").focusout(function () {
 
-        $(this).focusout(function () {
+        if ($("input", this).val() == '') {
+            // if false
+            $("label", this).removeClass("valid");
+        } else {
+            // if true
+            $(".bar", this).removeClass("error");
+            $("label", this).removeClass("error").addClass("valid");
+        };
 
-            if ($("input", this).val() == '') {
-                // if false
-                $("label", this).removeClass("valid");
-            } else {
-                // if true
-                $(".bar", this).removeClass("error");
-                $("label", this).removeClass("error").addClass("valid");
-            };
-        });
     });
 
     // Customise tile color
@@ -410,7 +423,7 @@ $(document).ready(function () {
 
             var url = $("input", this).val();
 
-            if (/^(http:\/\/www\.|https:\/\/www\.)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(url)) {
+            if (/((?:https\:\/\/)|(?:http\:\/\/)|(?:www\.))?([a-zA-Z0-9\-]+[\.]{1}[a-zA-Z]{0,3}(?:\??)[a-zA-Z0-9\-\._\?\,\'\/\\\+&%\$#\=~]+)/ig.test(url)) {
                 $(".bar", this).removeClass("error");
                 $("label", this).removeClass("error");
             } else {
@@ -449,7 +462,70 @@ $(document).ready(function () {
         newTileReset();
     });
 
+
+    //ADD NEW TILE
+    $("#new-tile-submit a").click(function () {
+
+        saveTile();
+
+    });
+
+
 });
+
+
+var getTile = function () {
+
+    var tile = {};
+
+    tile.url = q("#new-tile-url input").value;
+    tile.name = q("#new-tile-name input").value;
+
+    tile.feed = {}
+    tile.url = q("#new-tile-rss input").value;
+    tile.name = q("#new-tile-name input").value;
+
+    tile.accentColor = !q("#customise-tile-color-switch input").checked;
+
+    tile.size = 2;
+
+    return tile;
+
+}
+
+var refreshTilePreview = function () {
+
+    var tilePreviewContainer = q("#tile-preview");
+
+    var tile = getTile();
+
+    var tileNode = Tile.getNode(tile, true);
+
+    tilePreviewContainer.innerHTML = "";
+
+    tilePreviewContainer.insertBefore(tileNode, null);
+
+
+}
+
+var saveTile = function () {
+
+    var tile = getTile();
+
+    Tile.save(tile)
+        .then(function () {
+
+            MNTP.Config.ReloadBackgroundImage = true;
+            load().then(saveTilesOrder);
+
+        })
+        .catch(function (error) {
+            console.log(error);
+            console.log(error.stack);
+        });
+
+}
+
 
 // Remove hidden
 $.fn.removeHidden = function () {
@@ -544,10 +620,10 @@ var newTileReset = function () {
 
 // Activate Dropdown
 
-  $(document).ready(function() {
+$(document).ready(function () {
     $('select').material_select();
-  });
-            
+});
+
 
 navNewTileButton.addEventListener("click", newTileOpen);
 navNewTileClose.addEventListener("click", subMenuClose);

@@ -328,7 +328,7 @@ Tile.createNewTile = function () {
 
     return {
         id: 0,
-        size: 2, //[1, 2]
+        size: 2, //[1, 2, 3]
         url: 'http://',
         name: '',
         accentColor: true,
