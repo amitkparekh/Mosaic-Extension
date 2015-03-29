@@ -20,7 +20,7 @@
 
 * {
     -webkit-touch-callout: none;
-    @include prefix((user-select:none), webkit moz ms o);
+    @include prefix((user-select:none), webkit khtml moz ms o);
     outline: none;
 }
 
@@ -68,6 +68,9 @@ a {
     }
 }
 
+img {
+    pointer-events: none;
+}
 
 
 
