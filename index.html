@@ -521,11 +521,13 @@
                     </a>
                 </div>
                 <form class="tile-choice" id="settings-import">
-                    <span>Import settings</span>
+                    <span>Import settings</span>                
                     <div>
-                        <a class="waves-effect btn btn-inverse">import</a>
+                        <div class="waves-effect btn btn-inverse">
+                            <span>IMPORT</span>
+                            <input id="nav-settings-import-file" accept=".mntp" type="file"/>
+                        </div>
                     </div>
-                    <input type="file" id="nav-settings-import-file" accept=".mntp" style="position: absolute; right: 12px; width: 96px; height: 32px; top: 57px; cursor: pointer; opacity: 0; line-height: 0px;" />
                 </form>
                 <form class="tile-choice" id="settings-export">
                     <span>Export settings</span>

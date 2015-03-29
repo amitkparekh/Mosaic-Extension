@@ -14206,6 +14206,22 @@ select {
         font-size: 0px;
         cursor: pointer; }
 
+.sidebar-nav .btn span, .sidebar-nav .btn-large span {
+  cursor: pointer; }
+.sidebar-nav input[type=file] {
+  height: 100%;
+  line-height: 100%;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  margin: 0;
+  cursor: pointer;
+  opacity: 0; }
+
 .container {
   position: relative;
   float: left;

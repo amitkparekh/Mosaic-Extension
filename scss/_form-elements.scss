@@ -1,4 +1,6 @@
 $dropdown-height: 40px;
+
+
 // Select Field
 .select-label {
     position: absolute;
@@ -317,3 +319,27 @@ select {
 }
 
 // ------------
+// Input[file]
+
+.sidebar-nav {
+    .btn {
+        span {
+            cursor: pointer;
+        }
+    }
+    
+    input[type=file] {
+        height: 100%;
+        line-height: 100%;
+        padding: 0;
+        position: absolute;
+        top:0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        margin: 0;
+        cursor: pointer;
+        opacity: 0; 
+    }
+}
