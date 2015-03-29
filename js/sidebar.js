@@ -1,3 +1,5 @@
+/// <reference path="util.js" />
+
 // Sidebar toggle
 //
 // -------------------
@@ -546,3 +548,46 @@ var newTileReset = function () {
     $('select').material_select();
   });
             
+
+navNewTileButton.addEventListener("click", newTileOpen);
+navNewTileClose.addEventListener("click", subMenuClose);
+
+
+
+// Import tiles and configurations
+//
+// -------------------
+q("#nav-settings-import-file").addEventListener("change", function (event) {
+
+    var file = this.files[0];
+
+    if (file) {
+
+        var reader = new FileReader();
+
+        reader.onload = (function (file) {
+
+            return function (e) {
+
+                var data = JSON.parse(e.target.result);
+
+                if (data.tiles)
+                    data.tiles = JSON.parse(data.tiles);
+
+                if (data.background)
+                    data.background = JSON.parse(data.background);
+
+                if (data.temaPadrao)
+                    data.temaPadrao = JSON.parse(data.temaPadrao);
+
+                MNTP.IDB.importData(data).then(window.location.reload());
+
+            };
+
+        })(file);
+
+        reader.readAsText(file);
+    }
+
+
+});

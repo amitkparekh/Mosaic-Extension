@@ -105,6 +105,10 @@ var navigate = function (url, mouseEvent) {
 
     if (url) {
 
+        if (url.indexOf("://") == -1)
+            url = "http://" + url;
+        
+
         //Swayy
         if (MNTP.WebService)
             MNTP.WebService.sendSwayyEvent({ url: url, action: "click" });
@@ -247,25 +251,34 @@ var getDataUrlFromUrl = function (url, options) {
 };
 
 var dataURLtoObjectURL = function (dataURI) {
-    // convert base64/URLEncoded data component to raw binary data held in a string
-    var byteString;
-    if (dataURI.split(',')[0].indexOf('base64') >= 0)
-        byteString = atob(dataURI.split(',')[1]);
-    else
-        byteString = unescape(dataURI.split(',')[1]);
 
-    // separate out the mime component
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    if (dataURI.indexOf("data:image/") > -1) {
 
-    // write the bytes of the string to a typed array
-    var ia = new Uint8Array(byteString.length);
-    for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
+        // convert base64/URLEncoded data component to raw binary data held in a string
+        var byteString;
+        if (dataURI.split(',')[0].indexOf('base64') >= 0)
+            byteString = atob(dataURI.split(',')[1]);
+        else
+            byteString = unescape(dataURI.split(',')[1]);
+
+        // separate out the mime component
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+        // write the bytes of the string to a typed array
+        var ia = new Uint8Array(byteString.length);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        var b = new Blob([ia], { type: mimeString });
+
+        return URL.createObjectURL(b);
+
+    } else {
+
+        return dataURI;
+
     }
-
-    var b = new Blob([ia], { type: mimeString });
-
-    return URL.createObjectURL(b);
 };
 
 

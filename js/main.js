@@ -2235,7 +2235,7 @@ var MNTP;
 
     window.addEventListener("load", function() { load(); });
 
-    window.addEventListener("resize", function() { resize(); });
+    window.addEventListener("resize", function() { MNTP && resize(); });
 
     window.addEventListener("mousewheel", function (e) {
         if (e.target == q("body")) {

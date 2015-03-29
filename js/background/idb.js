@@ -1,4 +1,6 @@
-﻿var MNTP = MNTP || {};
+﻿/// <reference path="config.js" />
+
+var MNTP = MNTP || {};
 
 (function () {
     MNTP.IDB = {};
@@ -16,9 +18,9 @@
     MNTP.IDB.version = 3;
     MNTP.IDB.OS = {
         Group: { objectStoreName: "Group" },
-        Tile:  { objectStoreName: "Tile", index: ["idGroup", "order"] },
+        Tile: { objectStoreName: "Tile", index: ["idGroup", "order"] },
         Image: { objectStoreName: "Image", keyPath: ["type", "id"], index: ["type"], autoIncrement: false },
-        Feed:  { objectStoreName: "Feed" }
+        Feed: { objectStoreName: "Feed" }
     };
 
 
@@ -137,7 +139,7 @@
 
                 if (MNTP.IDB.firstLoad)
                     MNTP.IDB.loadDefaultData().then(executeQueue);
-                else 
+                else
                     executeQueue();
 
             };
@@ -365,6 +367,110 @@
             });
 
         });
+
+    }
+
+    MNTP.IDB.importData = function (data) {
+
+        return new Promise(function (success, fail) {
+
+            var newTiles = [];
+            var newImages = [];
+            var newFeeds = [];
+
+            if (data.tiles) {
+
+                for (var i = 0; i < data.tiles.length; i++) {
+
+                    var tile = data.tiles[i];
+
+                    var newTile = {};
+
+                    newTile.id = tile.Id;
+                    newTile.size = tile.Tamanho;
+                    newTile.url = tile.Url;
+                    newTile.name = tile.Nome;
+                    newTile.accentColor = tile.Cor ? false : true;
+                    newTile.backgroundColor = tile.Cor;
+                    newTile.hasImage = tile.Imagem ? true : false;
+                    newTile.idGroup = 1;
+                    newTile.order = i + 1;
+
+                    newTiles.push(newTile);
+
+                    var newImage = {};
+
+                    newImage.data = tile.Imagem;
+                    newImage.type = "Tile";
+                    newImage.id = tile.Id;
+
+                    newImages.push(newImage);
+
+                    var newFeed = {};
+
+                    newFeed.idTile = tile.Id;
+                    newFeed.name = tile.Nome;
+                    newFeed.url = tile.RssUrl;
+
+                    newFeeds.push(newFeed);
+
+                }
+
+            }
+
+            if (data.backgroundImage) {
+
+                var newImage = {};
+
+                newImage.data = data.backgroundImage;
+                newImage.type = "Background";
+                newImage.id = 1;
+
+                newImages.push(newImage);
+
+                MNTP.Config.NoBackgroundImage = false;
+                MNTP.Config.BingBackgroundImage = false;
+                MNTP.Config.HasBackgroundImage = true;
+
+            }
+
+            MNTP.Config.OpeningAnimation = data.animacaoInicialTiles == "1";
+
+            if (data.background) {
+
+                MNTP.Config.BackgroundAdjust = data.background.Adjust;
+                MNTP.Config.BackgroundFill = data.background.Fill;
+                MNTP.Config.BackgroundNoRepeat = data.background.NoRepeat;
+
+                if (data.background.Opacity)
+                    MNTP.Config.BackgroundOpacity = parseFloat(data.background.Opacity);
+
+            }
+
+            if (data.temaPadrao) {
+
+                MNTP.Config.BackgroundColor = data.temaPadrao.corPrimaria;
+                MNTP.Config.AccentColor = data.temaPadrao.corSecundaria;
+
+            }
+
+            MNTP.IDB.removeAll(MNTP.IDB.OS.Tile);
+            MNTP.IDB.removeAll(MNTP.IDB.OS.Image);
+
+            MNTP.IDB.saveBatch(MNTP.IDB.OS.Tile, newTiles)
+                .then(function () {
+                    return MNTP.IDB.saveBatch(MNTP.IDB.OS.Image, newImages);
+                })
+                .then(function () {
+                    return MNTP.IDB.saveBatch(MNTP.IDB.OS.Feed, newFeeds);
+                })
+                .then(function () {
+                    success();
+                })
+                .catch(fail);
+
+        });
+
     }
 
     MNTP.IDB.genericErrorHandler = function (event) {
