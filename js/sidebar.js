@@ -1,3 +1,5 @@
+/// <reference path="util.js" />
+
 // Sidebar toggle
 //
 // -------------------
@@ -62,3 +64,45 @@ navSettingsClose.addEventListener("click", subMenuClose);
 
 navNewTileButton.addEventListener("click", newTileOpen);
 navNewTileClose.addEventListener("click", subMenuClose);
+
+
+
+// Import tiles and configurations
+//
+// -------------------
+q("#nav-settings-import-button").addEventListener("click", function (event) {
+
+    var input = q("#nav-settings-import-file");
+
+    var file = input.files[0];
+
+    if (file) {
+
+        var reader = new FileReader();
+
+        reader.onload = (function (file) {
+
+            return function (e) {
+
+                var data = JSON.parse(e.target.result);
+
+                if (data.tiles)
+                    data.tiles = JSON.parse(data.tiles);
+
+                if (data.background)
+                    data.background = JSON.parse(data.background);
+
+                if (data.temaPadrao)
+                    data.temaPadrao = JSON.parse(data.temaPadrao);
+
+                MNTP.IDB.importData(data);
+
+            };
+
+        })(file);
+
+        reader.readAsText(file);
+    }
+
+
+});
