@@ -82,8 +82,8 @@ var extSidebarOpen2 = function () {
 }
 
 var extSidebarClose = function () {
-    navOverview.className = navOverview.className.replace(/(?:^|\s)ext(?!\S)/g, '');
     navOverview.className = navOverview.className.replace(/(?:^|\s)ext2(?!\S)/g, '');
+    navOverview.className = navOverview.className.replace(/(?:^|\s)ext(?!\S)/g, '');
 }
 
 var navMainOpen = function () {
@@ -127,8 +127,7 @@ var settingsTilesClose = function () {
 var settingsThemeOpen = function () {
     settingsClose();
     setTimeout(function () {
-        navSettingsThemeMenu.className += " open";
-        navSettingsThemeMenu.className += " ext";
+        navSettingsThemeMenu.className += " open ext";
         extSidebarOpen();
     }, animaDelay);
 }
@@ -143,8 +142,7 @@ var settingsThemeClose = function () {
 var settingsLanguageOpen = function() {
     settingsClose();
     setTimeout(function() {
-        navSettingsLanguageMenu.className += " open";
-        navSettingsLanguageMenu.className += " ext";
+        navSettingsLanguageMenu.className += " open ext";
         extSidebarOpen();
     }, animaDelay);
 }
@@ -171,8 +169,7 @@ var settingsBackupRestoreClose = function () {
 var bugOpen = function () {
     settingsClose();
     setTimeout(function () {
-        navBugMenu.className += " open";
-        navBugMenu.className += " ext2";
+        navBugMenu.className += " open ext2";
         extSidebarOpen2();
     }, animaDelay);
 }
@@ -187,8 +184,7 @@ var bugClose = function () {
 var changelogOpen = function () {
     settingsClose();
     setTimeout(function () {
-        navChangelogMenu.className += " open";
-        navChangelogMenu.className += " ext2";
+        navChangelogMenu.className += " open ext2";
         extSidebarOpen2();
     }, animaDelay);
 }
@@ -219,25 +215,23 @@ navChangelogButton.addEventListener("click", changelogOpen);
 navChangelogClose.addEventListener("click", changelogClose);
 
 // New Tile
-// -------------- // 
+//
+// -------------------
 
 var newTileOpen = function () {
     navMainClose();
     setTimeout(function () {
-        navNewTileMenu.className += " open";
-        navNewTileMenu.className += " ext";
+        navNewTileMenu.className += " open ext";
         extSidebarOpen();
     }, animaDelay);
 }
 
 // -------------- // 
 
-
 var donateOpen = function () {
     navMainClose();
     setTimeout(function () {
-        navDonateMenu.className += " open";
-        navDonateMenu.className += " ext2";
+        navDonateMenu.className += " open ext2";
         extSidebarOpen2();
     }, animaDelay);
 }
@@ -543,6 +537,8 @@ var newTileReset = function () {
 };
 
 // Activate Dropdown
+//
+// -------------------
 
   $(document).ready(function() {
     $('select').material_select();
