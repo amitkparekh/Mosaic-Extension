@@ -642,6 +642,96 @@
                     </form>
                 </form>
             </ul>
+            
+            <!-- Edit menu -->
+            <ul id="edit-tile-menu" class="sidebar-nav open ext">
+                <div class="sidebar-text">
+                    <span>Edit tile</span>
+                    <a id="edit-tile-close">
+                        <i class="sidebar-badge sidebar-icon-right md-close"></i>
+                    </a>
+                </div>
+                <form class="tile-preview">
+                    <div>
+
+                    </div>
+                </form>
+                <div id="edit-tile-options-menu" class="fadeInLeft">
+                    <li>
+                        <a>
+                            <i class="sidebar-icon md-aspect-ratio"></i> Make tile bigger
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <i class="sidebar-icon md-aspect-ratio"></i> Make tile smaller
+                        </a>
+                    </li>
+                
+                    <li id="edit-tile-divider-1" class="divider"></li>
+
+                    <li id="edit-tile-info-button">
+                        <a>
+                            <i class="sidebar-icon md-create"></i> Edit tile info
+                        </a>
+                    </li>
+
+                    <li id="edit-tile-colour">
+                        <a>
+                            <i class="sidebar-icon md-color-lens"></i> Customise tile colors
+                        </a>
+                    </li>
+                    <li id="edit-tile-image">
+                        <a>
+                            <i class="sidebar-icon md-image"></i> Edit tile image
+                        </a>
+                    </li>
+                </div>
+                <!-- Edit tile info -->
+                <div id="edit-tile-info-menu" class="hidden fadeOutLeft">
+                    <div class="sidebar-text">
+                        <span>Edit tile info</span>
+                        <a id="edit-tile-info-close">
+                            <div class="sidebar-badge sidebar-icon-right md-close"></div>
+                        </a>
+                    </div>
+                    <form>
+                        <div class="text-field-group " id="edit-tile-url">
+                            <input type="text" required>
+                            <span class="bar"></span>
+                            <label>Site URL</label>
+                        </div>
+                    </form>
+                    <form>
+                        <div class="text-field-group " id="edit-tile-name">
+                            <input type="text" required>
+                            <span class="bar"></span>
+                            <label>Site name</label>
+                        </div>
+                    </form>
+                    <form>
+                        <div class="text-field-group " id="edit-tile-rss">
+                            <input type="text">
+                            <span class="bar"></span>
+                            <label>Site RSS (optional)</label>
+                        </div>
+                    </form>
+                </div>
+                
+                <div id="edit-tile-btn-container">
+                    <li id="edit-tile-divider-4" class="divider"></li>
+
+                    <form class="btn-container" id="edit-tile-submit-container">
+                        <div id="edit-tile-reset">
+                            <a class="waves-effect waves-light btn btn-red">DELETE</a>
+                        </div>
+                        <div id="edit-tile-submit">
+                            <a class="waves-effect waves-light btn">SAVE CHANGES</a>
+                        </div>
+                    </form>
+                </div> 
+                
+            </ul>
         </div>
     </aside>
 
