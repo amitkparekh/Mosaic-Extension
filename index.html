@@ -384,7 +384,7 @@
                 </div>
 
                 <form class="tile-choice">
-                    <span>Background color</span>
+                    <span>Background colour</span>
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
@@ -676,23 +676,24 @@
                         </a>
                     </li>
 
-                    <li id="edit-tile-colour">
+                    <li id="edit-tile-color-button">
                         <a>
-                            <i class="sidebar-icon md-color-lens"></i> Customise tile colors
+                            <i class="sidebar-icon md-color-lens"></i> Customise tile colours
                         </a>
                     </li>
-                    <li id="edit-tile-image">
+                    <li id="edit-tile-image-button">
                         <a>
                             <i class="sidebar-icon md-image"></i> Edit tile image
                         </a>
                     </li>
                 </div>
+                
                 <!-- Edit tile info -->
                 <div id="edit-tile-info-menu" class="hidden fadeOutLeft">
                     <div class="sidebar-text">
                         <span>Edit tile info</span>
                         <a id="edit-tile-info-close">
-                            <div class="sidebar-badge sidebar-icon-right md-close"></div>
+                            <div class="sidebar-badge sidebar-icon-right md-arrow-back"></div>
                         </a>
                     </div>
                     <form>
@@ -718,6 +719,71 @@
                     </form>
                 </div>
                 
+                <!-- Edit tile colors -->
+                <div id="edit-tile-color-menu" class="hidden fadeOutLeft">
+                    <div class="sidebar-text">
+                        <span>Customise tile colours</span>
+                        <a id="edit-tile-color-close">
+                            <div class="sidebar-badge sidebar-icon-right md-arrow-back"></div>
+                        </a>
+                    </div>
+                    <form id="edit-tile-customise-color" class="tile-choice">
+                        <span>Tile colour</span>
+                        <div>
+                            <a class="waves-effect btn color-preview"></a>
+                        </div>
+                    </form>
+                    <form id="edit-tile-customise-font-color" class="tile-choice">
+                        <span>Font colour</span>
+                        <div>
+                            <a class="waves-effect btn color-preview"></a>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Edit tile image -->
+                <div id="edit-tile-image-menu" class="hidden fadeOutLeft">
+                    <div class="sidebar-text">
+                        <span>Customise tile image</span>
+                        <a id="edit-tile-image-close">
+                            <div class="sidebar-badge sidebar-icon-right md-arrow-back"></div>
+                        </a>
+                    </div>
+                    <form class="tile-choice " id="edit-tile-select-logo">
+                        <span>Select from our database</span>
+                        <div>
+                            <a class="waves-effect btn btn-inverse">Select</a>
+                        </div>
+                    </form>
+                    <form class="tile-choice " id="edit-tile-add-url">
+                        <span>Add from URL</span>
+                        <div>
+                            <a class="waves-effect btn btn-inverse">ADD URL</a>
+                        </div>
+                    </form>
+                    <form class="hidden fadeOutLeft" id="edit-tile-add-url-text">
+                        <div class="text-field-group" id="tile-image-URL">
+                            <input type="text">
+                            <span class="bar"></span>
+                            <label>Add URL</label>
+                        </div>
+                    </form>
+                    <form class="tile-choice " id="edit-tile-upload-logo">
+                        <span>Upload from computer</span>
+                        <div>
+                            <a class="waves-effect btn btn-inverse">UPLOAD</a>
+                        </div>
+                    </form>
+                    <form class="tile-choice " id="edit-tile-remove-image">
+                        <span>Remove image</span>
+                        <div>
+                            <a class="waves-effect waves-light btn btn-red">REMOVE</a>
+                        </div>
+                    </form>
+                </div>
+                
+                
+                <!-- Edit tile buttons -->
                 <div id="edit-tile-btn-container">
                     <li id="edit-tile-divider-4" class="divider"></li>
 

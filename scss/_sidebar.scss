@@ -234,7 +234,7 @@ $text-link-color) {
         color: darken($icon-color, 20%);
         background-color: transparent;
     }
-    .md-close {
+    .md-close, .md-arrow-back {
         opacity: .7;
         &:hover {
             opacity: 1;

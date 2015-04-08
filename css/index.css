@@ -13484,9 +13484,9 @@ body {
   .sidebar-default .sidebar-icon-right {
     color: #424242;
     background-color: transparent; }
-  .sidebar-default .md-close {
+  .sidebar-default .md-close, .sidebar-default .md-arrow-back {
     opacity: .7; }
-    .sidebar-default .md-close:hover {
+    .sidebar-default .md-close:hover, .sidebar-default .md-arrow-back:hover {
       opacity: 1; }
   .sidebar-default .sidebar-divider,
   .sidebar-default .sidebar-nav .divider {

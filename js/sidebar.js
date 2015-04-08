@@ -239,8 +239,6 @@ var donateOpen = function () {
 // Edit menu
 //
 // -------------------
-var editTileDelay = 400;
-
 var editTileMenu = document.getElementById("edit-tile-menu");
 var editTileClose = document.getElementById("edit-tile-close");
 
@@ -249,6 +247,14 @@ var editTile_OptionsMenu = document.getElementById("edit-tile-options-menu");
 var editTile_TileInfoButton = document.getElementById("edit-tile-info-button");
 var editTile_TileInfoClose = document.getElementById("edit-tile-info-close");
 var editTile_TileInfoMenu = document.getElementById("edit-tile-info-menu");
+
+var editTile_TileColorButton = document.getElementById("edit-tile-color-button");
+var editTile_TileColorClose = document.getElementById("edit-tile-color-close");
+var editTile_TileColorMenu = document.getElementById("edit-tile-color-menu");
+
+var editTile_TileImageButton = document.getElementById("edit-tile-image-button");
+var editTile_TileImageClose = document.getElementById("edit-tile-image-close");
+var editTile_TileImageMenu = document.getElementById("edit-tile-image-menu");
 
 var editMenuClose = function() {
     editTileMenu.className = editTileMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
@@ -262,7 +268,7 @@ var editTile_ChoicesClose = function() {
     
     setTimeout(function() {
         editTile_OptionsMenu.className += " hidden";
-    }, editTileDelay);
+    }, animaDelay);
 };
 
 var editTile_ChoicesOpen = function() {
@@ -272,7 +278,7 @@ var editTile_ChoicesOpen = function() {
     
     setTimeout(function() {
         editTile_OptionsMenu.className = editTile_OptionsMenu.className.replace(/(?:^|\s)animated(?!\S)/g, '');
-    }, editTileDelay);
+    }, animaDelay);
 };
 
 var editTile_InfoOpen = function() {
@@ -282,7 +288,7 @@ var editTile_InfoOpen = function() {
         editTile_TileInfoMenu.className = editTile_TileInfoMenu.className.replace(/(?:^|\s)hidden(?!\S)/g, '');
         editTile_TileInfoMenu.className = editTile_TileInfoMenu.className.replace(/(?:^|\s)fadeOutLeft(?!\S)/g, '');
         editTile_TileInfoMenu.className += " fadeInLeft animated";
-    }, editTileDelay);
+    }, animaDelay);
 };
 
 var editTile_InfoClose = function() {
@@ -293,7 +299,49 @@ var editTile_InfoClose = function() {
         editTile_TileInfoMenu.className += " hidden";
         editTile_TileInfoMenu.className = editTile_TileInfoMenu.className.replace(/(?:^|\s)animated(?!\S)/g, '');
         editTile_ChoicesOpen();
-    }, editTileDelay);
+    }, animaDelay);
+};
+
+var editTile_ColorOpen = function() {
+    editTile_ChoicesClose();
+    
+    setTimeout(function() {
+        editTile_TileColorMenu.className = editTile_TileColorMenu.className.replace(/(?:^|\s)hidden(?!\S)/g, '');
+        editTile_TileColorMenu.className = editTile_TileColorMenu.className.replace(/(?:^|\s)fadeOutLeft(?!\S)/g, '');
+        editTile_TileColorMenu.className += " fadeInLeft animated";
+    }, animaDelay);
+};
+
+var editTile_ColorClose = function() {
+    editTile_TileColorMenu.className = editTile_TileColorMenu.className.replace(/(?:^|\s)fadeInLeft(?!\S)/g, '');
+    editTile_TileColorMenu.className += " fadeOutLeft";
+    
+    setTimeout(function() {
+        editTile_TileColorMenu.className += " hidden";
+        editTile_TileColorMenu.className = editTile_TileColorMenu.className.replace(/(?:^|\s)animated(?!\S)/g, '');
+        editTile_ChoicesOpen();
+    }, animaDelay);
+};
+
+var editTile_ImageOpen = function() {
+    editTile_ChoicesClose();
+    
+    setTimeout(function() {
+        editTile_TileImageMenu.className = editTile_TileImageMenu.className.replace(/(?:^|\s)hidden(?!\S)/g, '');
+        editTile_TileImageMenu.className = editTile_TileImageMenu.className.replace(/(?:^|\s)fadeOutLeft(?!\S)/g, '');
+        editTile_TileImageMenu.className += " fadeInLeft animated";
+    }, animaDelay);
+};
+
+var editTile_ImageClose = function() {
+    editTile_TileImageMenu.className = editTile_TileImageMenu.className.replace(/(?:^|\s)fadeInLeft(?!\S)/g, '');
+    editTile_TileImageMenu.className += " fadeOutLeft";
+    
+    setTimeout(function() {
+        editTile_TileImageMenu.className += " hidden";
+        editTile_TileImageMenu.className = editTile_TileImageMenu.className.replace(/(?:^|\s)animated(?!\S)/g, '');
+        editTile_ChoicesOpen();
+    }, animaDelay);
 };
 
 // Validation
@@ -349,6 +397,28 @@ $(document).ready(function() {
             };
         });
     });
+    
+    // Add image from URL
+    $("#edit-tile-add-url div").click(function() {
+        
+        if( $("#edit-tile-add-url-text").hasClass("active") ) {
+            // if open
+            $("#edit-tile-add-url-text").removeClass("fadeInLeft active").addClass("fadeOutLeft");
+            
+            setTimeout(function() {
+                $("#edit-tile-add-url-text").addClass("hidden").removeClass("animated")
+            }, animaDelay);
+            
+        } else {
+            // if closed
+            $("#edit-tile-add-url-text").removeClass("hidden fadeOutLeft").addClass("fadeInLeft animated active");
+        }; 
+    });
+    
+    
+    
+    
+    
 });
 
 // -------------- // 
@@ -390,6 +460,12 @@ editTileClose.addEventListener("click", subMenuClose);
 
 editTile_TileInfoButton.addEventListener("click", editTile_InfoOpen);
 editTile_TileInfoClose.addEventListener("click", editTile_InfoClose);
+
+editTile_TileColorButton.addEventListener("click", editTile_ColorOpen);
+editTile_TileColorClose.addEventListener("click", editTile_ColorClose);
+
+editTile_TileImageButton.addEventListener("click", editTile_ImageOpen);
+editTile_TileImageClose.addEventListener("click", editTile_ImageClose);
 
 // Form Elements
 //
