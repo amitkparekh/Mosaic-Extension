@@ -414,11 +414,6 @@ $(document).ready(function() {
             $("#edit-tile-add-url-text").removeClass("hidden fadeOutLeft").addClass("fadeInLeft animated active");
         }; 
     });
-    
-    
-    
-    
-    
 });
 
 // -------------- // 
