@@ -1,0 +1,256 @@
+// en_GB
+
+{
+    "extName": {
+        "message": "Mosaic ALPHA"
+    },
+    
+    "extDesc": {
+        "message": "Does stuff in tiles."
+    },
+    
+    /**
+     * Nav Main
+     */
+    
+    "add_new_tile": {
+        "message": "Add new tile"
+    },
+    
+    "show_hide_sections": {
+        "message": "Show/Hide sections"
+    },
+    
+    "show_apps": {
+        "message": "Show 'Apps'"
+    },
+    
+    "show_bookmarks_bar": {
+        "message": "Show 'Bookmarks Bar'"
+    },
+    
+    "show_recently_closed_tabs": {
+        "message": "Show 'Recently Closed Tabs'"
+    },
+    
+    "settings": {
+        "message": "Settings"
+    },
+    
+    "help": {
+        "message": "Help"
+    },
+    
+    "donate": {
+        "message": "Donate"
+    },
+    
+    /**
+     * Add new tile menu
+     */
+    
+    "site_url": {
+        "message": "Site URL"
+    },
+    
+    "site_name": {
+        "message": "Site name"
+    },
+    
+    "site_rss": {
+        "message": "Site RSS (optional)"
+    },
+    
+    "customise_tile_color": {
+        "message": "Customise tile colour"
+    },
+    
+    "tile_color": {
+        "message": "Tile colour"
+    },
+    
+    "font_color": {
+        "message": "Font colour"
+    },
+    
+    "tile_image": {
+        "message": "Tile Image"
+    },
+    
+    "select_from_our_database": {
+        "message": "Select from our database"
+    },
+    
+    "select": {
+        "message": "Select"
+    },
+    
+    "add_from_url": {
+        "message": "Add from URL"
+    },
+    
+    "add_url": {
+        "message": "Add URL"
+    },
+    
+    "upload_from_computer": {
+        "message": "Upload from computer"
+    },
+    
+    "upload": {
+        "message": "Upload"
+    },
+    
+    "remove_image": {
+        "message": "Remove image"
+    },
+    
+    "remove": {
+        "message": "Remove"
+    },
+    
+    "reset": {
+        "message": "Reset"
+    },
+    
+    /**
+     * Settings menu
+     */
+    
+    "customise_tiles": {
+        "message": "Customise tiles"
+    },
+    
+    "customise_theme": {
+        "message": "Customise theme"
+    },
+    
+    "customise_rss_feed": {
+        "message": "Customise RSS feed"
+    },
+    
+    "profile_settings": {
+        "message": "Profile settings"
+    },
+    
+    "change_language": {
+        "message": "Change language"
+    },
+    
+    "backup_restore_settings": {
+        "message": "Backup/Restore settings"
+    },
+    
+    "report_a_bug": {
+        "message": "Report a bug"
+    },
+    
+    "changelog": {
+        "message": "Changelog"
+    },
+    
+    /**
+     * Customise tiles menu
+     */    
+    
+    "show_tile_animation_on_load": {
+        "message": "Show tile animation on load"
+    },
+    
+    "default_tile_color": {
+        "message": "Default tile colour"
+    },
+    
+    "background_color": {
+        "message": "Background colour"
+    },
+    
+    "text_color": {
+        "message": "Text colour"
+    },
+    
+    "tile_positioning": {
+        "message": "Tile positioning"
+    },
+    
+    "tile_layout": {
+        "message": "Tile layout"
+    },
+    
+    "grid": {
+        "message": "Grid"
+    },
+    
+    "free": {
+        "message": "Free"
+    },
+    
+    "number_of_rows": {
+        "message": "Number of rows"
+    },
+    
+    "number_of_columns": {
+        "message": "Number of columns"
+    },
+    
+    "horizontal_align": {
+        "message": "Horizontal align"
+    },
+    
+    "left": {
+        "message": "Left"
+    },
+    
+    "centre": {
+        "message": "Centre"
+    },
+    
+    "right": {
+        "message": "Right"
+    },
+    
+    "vertical_align": {
+        "message": "Vertical align"
+    },
+    
+    "top": {
+        "message": "Top"
+    },
+    
+    "bottom": {
+        "message": "Bottom"
+    },
+    
+    "tile_flow_direction": {
+        "message": "Tile flow direction"
+    }, 
+    
+    "top_to_bottom": {
+        "message": "Top to bottom"
+    },
+    
+    "left_to_right": {
+        "message": "Left to right"
+    },
+    
+    "reset_to_default": {
+        "message": "Reset to default"
+    },
+    
+    /**
+     * Customise tiles menu
+     */ 
+    
+    "choose_background_image": {
+        "message": "Choose background image"
+    },
+    
+    "get_from_wikimedia_commons": {
+        "message": "Get from 'Wikimedia Commons'"
+    }
+    
+    
+    
+    
+    
+}

@@ -205,8 +205,8 @@ navSettingsThemeClose.addEventListener("click", settingsThemeClose);
 navSettingsBackupRestoreButton.addEventListener("click", settingsBackupRestoreOpen);
 navSettingsBackupRestoreClose.addEventListener("click", settingsBackupRestoreClose);
 
-navSettingsLanguageButton.addEventListener("click", settingsLanguageOpen);
-navSettingsLanguageClose.addEventListener("click", settingsLanguageClose);
+//navSettingsLanguageButton.addEventListener("click", settingsLanguageOpen);
+//navSettingsLanguageClose.addEventListener("click", settingsLanguageClose);
 
 navBugButton.addEventListener("click", bugOpen);
 navBugClose.addEventListener("click", bugClose);
@@ -426,7 +426,7 @@ var subMenuClose = function () {
     settingsTilesClose();
     settingsThemeClose();
     settingsBackupRestoreClose();
-    settingsLanguageClose();
+//    settingsLanguageClose();
     bugClose();
     changelogClose();
     navDonateMenu.className = navDonateMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
