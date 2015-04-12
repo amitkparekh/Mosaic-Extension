@@ -734,9 +734,13 @@ var newTileReset = function () {
 //
 // -------------------
 
-  $(document).ready(function() {
-    $('select').material_select();
-  });
+$(document).ready(function() {
+    
+    setTimeout(function() {
+        $('select').material_select();
+    }, 1000);
+    
+});
             
 
 navNewTileButton.addEventListener("click", newTileOpen);
