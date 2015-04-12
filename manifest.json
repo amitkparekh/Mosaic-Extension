@@ -1,6 +1,7 @@
 {
     "name": "Modern New Tab Page 2 ALPHA",
     "description": "The most beautiful new tab page extension evah!",
+    "default_locale": "en",
     "version": "2015.3.13",
     "incognito": "split",
     "icons": {
