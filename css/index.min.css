@@ -3372,7 +3372,7 @@ Copyright (c) 2015 Daniel Eden
 .clearer{clear:both}
 [data-panel]{display:none}
 .sidebar .sidebar-header>div,.vertical-center{min-height:100%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column}
-.italic{font-style:italic}
+.italic,.sidebar .text-chunk h4,.sidebar .text-chunk h5{font-style:italic}
 *{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;outline:0}
 body{overflow:hidden;font-family:Roboto,"Segoe UI",Helvetica,Arial,sans-serif;margin:0;font-size:13px;line-height:1.4;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;-webkit-font-feature-settings:kern 1;-moz-font-feature-settings:kern 1;font-feature-settings:kern 1}
 h1,h2,h3,h4,h5,h6,label,li,p,span{cursor:default}
@@ -3458,8 +3458,9 @@ body,html{position:relative;min-height:100%;height:100%}
 .sidebar-default .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus{background-color:#e0e0e0;color:#212121}
 .sidebar-default .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover{background-color:#cecece;color:#212121}
 .sidebar-default .sidebar-nav>.dropdown>.dropdown-menu>.active>a,.sidebar-default .sidebar-nav>.dropdown>.dropdown-menu>.active>a:focus,.sidebar-default .sidebar-nav>.dropdown>.dropdown-menu>.active>a:hover{color:#212121;background-color:#e0e0e0}
-.sidebar-default .sidebar-nav .text-chunk a{color:#03a9f4;background:0 0;-webkit-transition:.2s ease all;transition:.2s ease all}
-.sidebar-default .sidebar-nav .text-chunk a:hover{border-bottom:1px solid #03a9f4}
+.sidebar-default .sidebar-nav .text-chunk .emphasis,.sidebar-default .sidebar-nav .text-chunk a{color:#03a9f4;background:0 0;-webkit-transition:.2s ease all;transition:.2s ease all}
+.sidebar-default .sidebar-nav .text-chunk .emphasis li:hover>a,.sidebar-default .sidebar-nav .text-chunk .emphasis:hover,.sidebar-default .sidebar-nav .text-chunk a li:hover>a,.sidebar-default .sidebar-nav .text-chunk a:hover{border-bottom:1px solid #03a9f4;color:#03a9f4;background:0 0}
+.sidebar-default .sidebar-nav .text-chunk .emphasis:hover{border:none}
 .sidebar{width:0;-webkit-transform:translate3d(-280px,0,0);-ms-transform:translate3d(-280px,0,0);transform:translate3d(-280px,0,0)}
 .sidebar.open{min-width:280px;width:280px;-webkit-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
 .sidebar-stacked{position:fixed;top:0;bottom:0;z-index:1035;left:0}
@@ -3507,13 +3508,15 @@ body,html{position:relative;min-height:100%;height:100%}
 .sidebar form.tile-choice>div>.btn.color-preview,.sidebar form.tile-choice>div>.color-preview.btn-large{background-color:#f06292}
 .sidebar form.tile-choice>div>.btn.color-preview:hover,.sidebar form.tile-choice>div>.color-preview.btn-large:hover{background-color:#f279a2}
 .sidebar .text-chunk{white-space:initial;height:auto;padding:16px;padding-top:5px;padding-bottom:5px}
-.sidebar .text-chunk h3,.sidebar .text-chunk h4,.sidebar .text-chunk li,.sidebar .text-chunk p,.sidebar .text-chunk ul{font-weight:400;color:#212121;line-height:1.6;margin:15px 0}
-.sidebar .text-chunk h3 span,.sidebar .text-chunk h4 span,.sidebar .text-chunk li span,.sidebar .text-chunk p span,.sidebar .text-chunk ul span{font-weight:600}
-.sidebar .text-chunk h3 span.italic,.sidebar .text-chunk h4 span.italic,.sidebar .text-chunk li span.italic,.sidebar .text-chunk p span.italic,.sidebar .text-chunk ul span.italic{font-weight:400}
+.sidebar .text-chunk h3,.sidebar .text-chunk h4,.sidebar .text-chunk h5,.sidebar .text-chunk li,.sidebar .text-chunk p,.sidebar .text-chunk ul{font-weight:400;color:#212121;line-height:1.6!important;margin:15px 0}
+.sidebar .text-chunk h3 span,.sidebar .text-chunk h4 span,.sidebar .text-chunk h5 span,.sidebar .text-chunk li span,.sidebar .text-chunk p span,.sidebar .text-chunk ul span{font-weight:600}
+.sidebar .text-chunk h3 span.italic,.sidebar .text-chunk h4 span.italic,.sidebar .text-chunk h5 span.italic,.sidebar .text-chunk li span.italic,.sidebar .text-chunk p span.italic,.sidebar .text-chunk ul span.italic{font-weight:400}
 .sidebar .text-chunk h3{font-weight:600;font-size:16px}
 .sidebar .text-chunk h3:first-of-type{margin:0}
-.sidebar .text-chunk li{list-style-type:circle}
-.sidebar .text-chunk h4{font-size:14px;line-height:14px;margin:0;letter-spacing:1px;text-transform:uppercase;color:#9e9e9e;font-weight:500;font-style:italic}
+.sidebar .text-chunk li{list-style-type:initial;margin:0;margin-left:20px}
+.sidebar .text-chunk h4,.sidebar .text-chunk h5{font-size:14px;line-height:14px;margin:0;letter-spacing:1px;text-transform:uppercase;color:#9e9e9e;font-weight:500}
+.sidebar .text-chunk h5{text-transform:initial;margin-bottom:5px;color:#212121;font-style:normal}
+.sidebar .text-chunk a{display:inline!important;margin:0!important;padding:0!important;height:auto!important;line-height:inherit!important}
 .text-field-group{position:relative;padding-top:13px}
 .text-field-group input{padding:10px 10px 10px 0;display:block;width:288px;border:none;border-bottom:1px solid #bdbdbd;box-sizing:border-box}
 .text-field-group input:focus{outline:0}

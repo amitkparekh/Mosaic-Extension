@@ -247,10 +247,77 @@
     
     "get_from_wikimedia_commons": {
         "message": "Get from 'Wikimedia Commons'"
+    },
+    
+    /**
+     * Customise RSS feed menu
+     */ 
+    
+    /**
+     * Backup / Restore menu
+     */ 
+    
+    "import_settings": {
+        "message": "Import settings"
+    },
+    
+    "import": {
+        "message": "Import"
+    },
+    
+    "export_settings": {
+        "message": "Export settings"
+    },
+    
+    "export": {
+        "message": "Export"
+    },
+    
+    "reset_settings": {
+        "message": "Reset settings"
+    },
+    
+    /**
+     * Report a bug
+     */ 
+    
+    /**
+     * Changelog
+     */ 
+    
+    /**
+     * Edit menu
+     */ 
+    
+    "edit_tile": {
+        "message": "Edit tile"
+    },
+    
+    "make_tile_bigger": {
+        "message": "Make tile bigger"
+    },
+    
+    "make_tile_smaller": {
+        "message": "Make tile smaller"
+    },
+    
+    "edit_tile_info": {
+        "message": "Edit tile info"
+    },
+    
+    "customise_tile_colours": {
+        "message": "Customise tile colours"
+    },
+    
+    "edit_tile_image": {
+        "message": "Edit tile image"
+    },
+    
+    "delete": {
+        "message": "Delete"
+    },
+    
+    "save_changes": {
+        "message": "Save changes"
     }
-    
-    
-    
-    
-    
 }

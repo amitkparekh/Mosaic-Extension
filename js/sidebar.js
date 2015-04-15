@@ -51,6 +51,10 @@ var navSettingsThemeButton = document.getElementById("nav-settings-theme-button"
 var navSettingsThemeMenu = document.getElementById("nav-settings-theme-menu");
 var navSettingsThemeClose = document.getElementById("nav-settings-theme-close");
 
+var navSettingsRSSFeedButton = document.getElementById("nav-settings-rss-feed-button");
+var navSettingsRSSFeedMenu = document.getElementById("nav-settings-rss-feed-menu");
+var navSettingsRSSFeedClose = document.getElementById("nav-settings-rss-feed-close");
+
 var navSettingsBackupRestoreButton = document.getElementById("nav-settings-backup-restore-button");
 var navSettingsBackupRestoreMenu = document.getElementById("nav-settings-backup-restore-menu");
 var navSettingsBackupRestoreClose = document.getElementById("nav-settings-backup-restore-close");
@@ -139,6 +143,18 @@ var settingsThemeClose = function () {
     extSidebarClose();
 }
 
+var settingsRSSFeedOpen = function () {
+    settingsClose();
+    setTimeout(function () {
+        navSettingsRSSFeedMenu.className += " open";
+    }, animaDelay);
+}
+
+var settingsRSSFeedClose = function () {
+    navSettingsRSSFeedMenu.className = navSettingsRSSFeedMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
+    settingsOpen();
+}
+
 var settingsLanguageOpen = function() {
     settingsClose();
     setTimeout(function() {
@@ -201,6 +217,9 @@ navSettingsTilesClose.addEventListener("click", settingsTilesClose);
 
 navSettingsThemeButton.addEventListener("click", settingsThemeOpen);
 navSettingsThemeClose.addEventListener("click", settingsThemeClose);
+
+//navSettingsRSSFeedButton.addEventListener("click", settingsRSSFeedOpen);
+//navSettingsRSSFeedClose.addEventListener("click", settingsRSSFeedClose);
 
 navSettingsBackupRestoreButton.addEventListener("click", settingsBackupRestoreOpen);
 navSettingsBackupRestoreClose.addEventListener("click", settingsBackupRestoreClose);

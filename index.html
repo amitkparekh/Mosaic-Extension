@@ -241,19 +241,19 @@
                     </a>
                 </li>
                 <li class="divider"></li>
-                <li>
+<!--                <li id="nav-settings-rss-feed-button">
                     <a>
                         <i class="sidebar-icon mdi mdi-rss"></i> 
                         <span id="text_customise_rss_feed"></span>
                     </a>
-                </li>
-                <li class="divider"></li>
-                <li>
+                </li>-->
+<!--                <li class="divider"></li>-->
+<!--                <li id="nav-settings-profile-button">
                     <a>
                         <i class="sidebar-icon md-person"></i> 
                         <span id="text_profile_settings"></span>
                     </a>
-                </li>
+                </li>-->
 <!--                <li id="nav-settings-language-button">
                     <a>
                         <i class="sidebar-icon md-language"></i> 
@@ -429,8 +429,10 @@
                 </form>
             </ul>
 
-            <!-- Customise RSS feed menu -->
-            
+            <!-- Customise RSS feed menu 
+            <ul id="nav-settings-rss-feed-menu" class="sidebar-nav">
+                
+            </ul> -->
             
             
             <!-- Profile menu -->
@@ -513,30 +515,30 @@
             <!-- Backup / Restore settings menu -->
             <ul id="nav-settings-backup-restore-menu" class="sidebar-nav">
                 <div class="sidebar-text">
-                    <span>Backup/Restore settings</span>
+                    <span id="text_backup_restore_settings_2"></span>
                     <a id="nav-settings-backup-restore-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
                 <form class="tile-choice" id="settings-import">
-                    <span>Import settings</span>                
+                    <span id="text_import_settings"></span>                
                     <div>
                         <div class="waves-effect btn btn-inverse">
-                            <span>IMPORT</span>
+                            <span id="text_import"></span>
                             <input id="nav-settings-import-file" accept=".mntp" type="file"/>
                         </div>
                     </div>
                 </form>
                 <form class="tile-choice" id="settings-export">
-                    <span>Export settings</span>
+                    <span id="text_export_settings"></span>
                     <div>
-                        <a class="waves-effect btn btn-inverse">export</a>
+                        <a class="waves-effect btn btn-inverse" id="text_export"></a>
                     </div>
                 </form>
                 <form class="tile-choice" id="settings-reset">
-                    <span>Reset settings</span>
+                    <span id="text_reset_settings"></span>
                     <div>
-                        <a class="waves-effect waves-light btn btn-red">RESET</a>
+                        <a class="waves-effect waves-light btn btn-red" id="text_reset_2"></a>
                     </div>
                 </form>
             </ul>
@@ -582,18 +584,17 @@
                     <p>Thank you to all who have supported us so far! It means a lot to us! We both do our best to reply to everyone and we are taking all your feedback into consideration!</p>
                     <p>Many changes have happened since the last update, so things are going to look a lot different, but the core functionality is still going to be the same.</p>
                     
+                    <h5>Changelog:</h5>
                     <ul>
-                        <h4>The changelog below has been listed randomly.</h4>
                         <li>A whole design overhaul.</li>
                         <li>New name and logo</li>
                         <li>Added a sidebar instead of the bottom bar</li>
                         <li>Added a method of donation</li>
-                        <li>Added capability to import from preview version <a class="italic">[BETA]</a></li>
+                        <li>Added ability to import from preview version <span class="italic emphasis">[BETA]</span></li>
                         <li>Added a menu for bug reporting - find in "Settings" menu</li>
                         
                         <li>Started added translations. If you wish to help, find out more <a href="http://www.reddit.com/r/MosaicExtension/comments/2zsrdu/volunteer_translators/">here</a></li>
                     </ul>
-
                 </div>
             </ul>
 
@@ -620,7 +621,7 @@
 
                     <p>You can donate through PayPal by clicking the button below.</p>
 
-                    <p>Kindest of regards,
+                    <p>Kind regards,
                         <br> Amit Parekh &amp; Alysson Silva.</p>
                 </div>
 
@@ -638,7 +639,7 @@
             <!-- Edit menu -->
             <ul id="edit-tile-menu" class="sidebar-nav open ext">
                 <div class="sidebar-text">
-                    <span>Edit tile</span>
+                    <span id="text_edit_tile"></span>
                     <a id="edit-tile-close">
                         <i class="sidebar-badge sidebar-icon-right md-close"></i>
                     </a>
@@ -651,12 +652,14 @@
                 <div id="edit-tile-options-menu" class="fadeInLeft">
                     <li>
                         <a>
-                            <i class="sidebar-icon md-aspect-ratio"></i> Make tile bigger
+                            <i class="sidebar-icon md-aspect-ratio"></i> 
+                            <span id="text_make_tile_bigger"></span>
                         </a>
                     </li>
                     <li>
                         <a>
-                            <i class="sidebar-icon md-aspect-ratio"></i> Make tile smaller
+                            <i class="sidebar-icon md-aspect-ratio"></i> 
+                            <span id="text_make_tile_smaller"></span>
                         </a>
                     </li>
                 
@@ -664,18 +667,21 @@
 
                     <li id="edit-tile-info-button">
                         <a>
-                            <i class="sidebar-icon md-create"></i> Edit tile info
+                            <i class="sidebar-icon md-create"></i> 
+                            <span id="text_edit_tile_info"></span>
                         </a>
                     </li>
 
                     <li id="edit-tile-color-button">
                         <a>
-                            <i class="sidebar-icon md-color-lens"></i> Customise tile colours
+                            <i class="sidebar-icon md-color-lens"></i> 
+                            <span id="text_customise_tile_color_2"></span>
                         </a>
                     </li>
                     <li id="edit-tile-image-button">
                         <a>
-                            <i class="sidebar-icon md-image"></i> Edit tile image
+                            <i class="sidebar-icon md-image"></i> 
+                            <span id="text_edit_tile_image"></span>
                         </a>
                     </li>
                 </div>
@@ -683,7 +689,7 @@
                 <!-- Edit tile info -->
                 <div id="edit-tile-info-menu" class="hidden fadeOutLeft">
                     <div class="sidebar-text">
-                        <span>Edit tile info</span>
+                        <span id="text_edit_tile_info_2"></span>
                         <a id="edit-tile-info-close">
                             <div class="sidebar-badge sidebar-icon-right md-arrow-back"></div>
                         </a>
@@ -692,21 +698,21 @@
                         <div class="text-field-group " id="edit-tile-url">
                             <input type="text" required>
                             <span class="bar"></span>
-                            <label>Site URL</label>
+                            <label id="text_site_url_2"></label>
                         </div>
                     </form>
                     <form>
                         <div class="text-field-group " id="edit-tile-name">
                             <input type="text" required>
                             <span class="bar"></span>
-                            <label>Site name</label>
+                            <label id="text_site_name_2"></label>
                         </div>
                     </form>
                     <form>
                         <div class="text-field-group " id="edit-tile-rss">
                             <input type="text">
                             <span class="bar"></span>
-                            <label>Site RSS (optional)</label>
+                            <label id="text_site_rss_2"></label>
                         </div>
                     </form>
                 </div>
@@ -714,19 +720,19 @@
                 <!-- Edit tile colors -->
                 <div id="edit-tile-color-menu" class="hidden fadeOutLeft">
                     <div class="sidebar-text">
-                        <span>Customise tile colours</span>
+                        <span id="text_customise_tile_color_3"></span>
                         <a id="edit-tile-color-close">
                             <div class="sidebar-badge sidebar-icon-right md-arrow-back"></div>
                         </a>
                     </div>
                     <form id="edit-tile-customise-color" class="tile-choice">
-                        <span>Tile colour</span>
+                        <span id="text_tile_color_2"></span>
                         <div>
                             <a class="waves-effect btn color-preview"></a>
                         </div>
                     </form>
                     <form id="edit-tile-customise-font-color" class="tile-choice">
-                        <span>Font colour</span>
+                        <span id="text_font_color_2"></span>
                         <div>
                             <a class="waves-effect btn color-preview"></a>
                         </div>
@@ -736,40 +742,40 @@
                 <!-- Edit tile image -->
                 <div id="edit-tile-image-menu" class="hidden fadeOutLeft">
                     <div class="sidebar-text">
-                        <span>Customise tile image</span>
+                        <span id="text_edit_tile_image_2"></span>
                         <a id="edit-tile-image-close">
                             <div class="sidebar-badge sidebar-icon-right md-arrow-back"></div>
                         </a>
                     </div>
                     <form class="tile-choice " id="edit-tile-select-logo">
-                        <span>Select from our database</span>
+                        <span id="text_select_from_our_database_2"></span>
                         <div>
-                            <a class="waves-effect btn btn-inverse">Select</a>
+                            <a class="waves-effect btn btn-inverse" id="text_select_3"></a>
                         </div>
                     </form>
                     <form class="tile-choice " id="edit-tile-add-url">
-                        <span>Add from URL</span>
+                        <span id="text_add_from_url_3"></span>
                         <div>
-                            <a class="waves-effect btn btn-inverse">ADD URL</a>
+                            <a class="waves-effect btn btn-inverse" id="text_add_url_5"></a>
                         </div>
                     </form>
                     <form class="hidden fadeOutLeft" id="edit-tile-add-url-text">
                         <div class="text-field-group" id="tile-image-URL">
                             <input type="text">
                             <span class="bar"></span>
-                            <label>Add URL</label>
+                            <label id="text_add_url_6"></label>
                         </div>
                     </form>
                     <form class="tile-choice " id="edit-tile-upload-logo">
-                        <span>Upload from computer</span>
+                        <span id="text_upload_from_computer_3"></span>
                         <div>
-                            <a class="waves-effect btn btn-inverse">UPLOAD</a>
+                            <a class="waves-effect btn btn-inverse" id="text_upload_3"></a>
                         </div>
                     </form>
                     <form class="tile-choice " id="edit-tile-remove-image">
-                        <span>Remove image</span>
+                        <span id="text_remove_image_3"></span>
                         <div>
-                            <a class="waves-effect waves-light btn btn-red">REMOVE</a>
+                            <a class="waves-effect waves-light btn btn-red" id="text_remove_3"></a>
                         </div>
                     </form>
                 </div>
@@ -781,10 +787,10 @@
 
                     <form class="btn-container" id="edit-tile-submit-container">
                         <div id="edit-tile-reset">
-                            <a class="waves-effect waves-light btn btn-red">DELETE</a>
+                            <a class="waves-effect waves-light btn btn-red" id="text_delete"></a>
                         </div>
                         <div id="edit-tile-submit">
-                            <a class="waves-effect waves-light btn">SAVE CHANGES</a>
+                            <a class="waves-effect waves-light btn" id="text_save_changes"></a>
                         </div>
                     </form>
                 </div> 

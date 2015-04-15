@@ -360,12 +360,19 @@ $text-link-color) {
             }
         }
         .text-chunk {
-            a {
+            a, .emphasis {
                 color: $text-link-color;
                 background: transparent;
                 @include transition(0.2s ease all);
-                &:hover {
+                &:hover, li:hover > a {
                     border-bottom: 1px solid $text-link-color;
+                    color: $text-link-color;
+                    background: transparent;
+                }
+            }
+            .emphasis {
+                &:hover {
+                    border: none;
                 }
             }
         }
@@ -856,10 +863,10 @@ $tile-choice-height: 45px;
         padding: $sidebar-padding;
         padding-top: 5px;
         padding-bottom: 5px;
-        h3, p, ul, li, h4 {
+        h3, p, ul, li, h4, h5 {
             font-weight: 400;
             color: $clr-grey-900;
-            line-height: 1.6;
+            line-height: 1.6 !important;
             margin: 15px 0;
             span {
                 font-weight: 600;
@@ -876,9 +883,11 @@ $tile-choice-height: 45px;
             margin: 0;
         }
         li {
-            list-style-type: circle;
+            list-style-type: initial;
+            margin: 0;
+            margin-left: 20px;
         }
-        h4 {
+        h4, h5 {
             font-size: 14px;
             line-height: 14px;
             margin: 0;
@@ -886,7 +895,22 @@ $tile-choice-height: 45px;
             text-transform: uppercase;
             color: $clr-grey-500;
             font-weight: 500;
-            font-style: italic;
+            @extend .italic;
+        }
+        
+        h5 {
+            text-transform: initial;
+            margin-bottom: 5px;
+            color: $clr-grey-900;
+            font-style: normal;
+        }
+        
+        a {
+            display: inline !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            height: auto !important;
+            line-height: inherit !important;
         }
     }
 }
