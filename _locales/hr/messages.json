@@ -1,0 +1,323 @@
+// Croatian (hr)
+
+{
+    "extName": {
+        "message": "Mosaic ALPHA"
+    },
+    
+    "extDesc": {
+        "message": "Radi stvari s pločicama."
+    },
+    
+    /**
+     * Nav Main
+     */
+    
+    "add_new_tile": {
+        "message": "Dodaj novu pločicu"
+    },
+    
+    "show_hide_sections": {
+        "message": "Prikaži/Sakrij sekcije"
+    },
+    
+    "show_apps": {
+        "message": "Prikaži 'Aplikacije'"
+    },
+    
+    "show_bookmarks_bar": {
+        "message": "Prikaži 'Bookmarks Bar'"
+    },
+    
+    "show_recently_closed_tabs": {
+        "message": "Prikaži 'Nedavno Zatvorene Kartice'"
+    },
+    
+    "settings": {
+        "message": "Postavke"
+    },
+    
+    "help": {
+        "message": "Pomoć"
+    },
+    
+    "donate": {
+        "message": "Doniraj"
+    },
+    
+    /**
+     * Add new tile menu
+     */
+    
+    "site_url": {
+        "message": "URL stranice"
+    },
+    
+    "site_name": {
+        "message": "Ime stranice"
+    },
+    
+    "site_rss": {
+        "message": "RSS stranice (neobavezno)"
+    },
+    
+    "customise_tile_color": {
+        "message": "Promjeni boju pločice"
+    },
+    
+    "tile_color": {
+        "message": "Boja pločice"
+    },
+    
+    "font_color": {
+        "message": "Boja teksta"
+    },
+    
+    "tile_image": {
+        "message": "Slika pločice"
+    },
+    
+    "select_from_our_database": {
+        "message": "Izaberi iz naše baze"
+    },
+    
+    "select": {
+        "message": "Odaberi"
+    },
+    
+    "add_from_url": {
+        "message": "Dodaj s URL-a"
+    },
+    
+    "add_url": {
+        "message": "Dodaj URL"
+    },
+    
+    "upload_from_computer": {
+        "message": "Prenesi s računala"
+    },
+    
+    "upload": {
+        "message": "Prenesi"
+    },
+    
+    "remove_image": {
+        "message": "Ukloni sliku"
+    },
+    
+    "remove": {
+        "message": "Ukloni"
+    },
+    
+    "reset": {
+        "message": "Vrati na početne postavke"
+    },
+    
+    /**
+     * Settings menu
+     */
+    
+    "customise_tiles": {
+        "message": "Uredi pločice"
+    },
+    
+    "customise_theme": {
+        "message": "Uredi temu"
+    },
+    
+    "customise_rss_feed": {
+        "message": "Uredi RSS feed"
+    },
+    
+    "profile_settings": {
+        "message": "Postavke profila"
+    },
+    
+    "change_language": {
+        "message": "Promjeni jezik"
+    },
+    
+    "backup_restore_settings": {
+        "message": "Spremi/Povrati sigurnosnu kopiju postavki"
+    },
+    
+    "report_a_bug": {
+        "message": "Prijavi grešku"
+    },
+    
+    "changelog": {
+        "message": "Dnevnik promjena"
+    },
+    
+    /**
+     * Customise tiles menu
+     */    
+    
+    "show_tile_animation_on_load": {
+        "message": "Prikaži animaciju pločice prilikom učitavanja"
+    },
+    
+    "default_tile_color": {
+        "message": "Zadana boja pločica"
+    },
+    
+    "background_color": {
+        "message": "Boja pozadine"
+    },
+    
+    "text_color": {
+        "message": "Boja teksta"
+    },
+    
+    "tile_positioning": {
+        "message": "Smještaj pločice"
+    },
+    
+    "tile_layout": {
+        "message": "Raspored pločica"
+    },
+    
+    "grid": {
+        "message": "Mreža"
+    },
+    
+    "free": {
+        "message": "Slobodno"
+    },
+    
+    "number_of_rows": {
+        "message": "Broj redaka"
+    },
+    
+    "number_of_columns": {
+        "message": "Broj stupaca"
+    },
+    
+    "horizontal_align": {
+        "message": "Horizontalno poravnanje"
+    },
+    
+    "left": {
+        "message": "Lijevo"
+    },
+    
+    "centre": {
+        "message": "Centralno"
+    },
+    
+    "right": {
+        "message": "Desno"
+    },
+    
+    "vertical_align": {
+        "message": "Vertikalno poravnanje"
+    },
+    
+    "top": {
+        "message": "Vrh"
+    },
+    
+    "bottom": {
+        "message": "Dno"
+    },
+    
+    "tile_flow_direction": {
+        "message": "Smjer strujanja pločica" 
+    }, 
+    
+    "top_to_bottom": {
+        "message": "Od vrha prema dnu"
+    },
+    
+    "left_to_right": {
+        "message": "Lijevo prema desno"
+    },
+    
+    "reset_to_default": {
+        "message": "Vrati na zadano"
+    },
+    
+    /**
+     * Customise tiles menu
+     */ 
+    
+    "choose_background_image": {
+        "message": "Promjeni pozadinsku sliku"
+    },
+    
+    "get_from_wikimedia_commons": {
+        "message": "Preuzmi s 'Wikimedia Commons'"
+    },
+    
+    /**
+     * Customise RSS feed menu
+     */ 
+    
+    /**
+     * Backup / Restore menu
+     */ 
+    
+    "import_settings": {
+        "message": "Uvezi postavke"
+    },
+    
+    "import": {
+        "message": "Uvezi"
+    },
+    
+    "export_settings": {
+        "message": "Izvezi postavke"
+    },
+    
+    "export": {
+        "message": "Izvezi"
+    },
+    
+    "reset_settings": {
+        "message": "Vrati zadane postavke"
+    },
+    
+    /**
+     * Report a bug
+     */ 
+    
+    /**
+     * Changelog
+     */ 
+    
+    /**
+     * Edit menu
+     */ 
+    
+    "edit_tile": {
+        "message": "Uredi pločicu"
+    },
+    
+    "make_tile_bigger": {
+        "message": "Povečaj pločicu"
+    },
+    
+    "make_tile_smaller": {
+        "message": "Smanji pločicu"
+    },
+    
+    "edit_tile_info": {
+        "message": "Uredi informacije o pločici"
+    },
+    
+    "customise_tile_colours": {
+        "message": "Uredi boje pločice"
+    },
+    
+    "edit_tile_image": {
+        "message": "Uredi sliku pločice"
+    },
+    
+    "delete": {
+        "message": "Obriši"
+    },
+    
+    "save_changes": {
+        "message": "Spremi promjene"
+    }
+}
