@@ -1,4 +1,4 @@
-// es_ES
+ï»¿// es_ES
 
 {
     "extName": {
@@ -14,7 +14,7 @@
      */
     
     "add_new_tile": {
-        "message": "Añadir nuevo mosaico"
+        "message": "AÃ±adir nuevo mosaico"
     },
     
     "show_hide_sections": {
@@ -30,7 +30,7 @@
     },
     
     "show_recently_closed_tabs": {
-        "message": "Mostrar 'Pestañas cerradas recientemente'"
+        "message": "Mostrar 'PestaÃ±as cerradas recientemente'"
     },
     
     "settings": {
@@ -50,15 +50,15 @@
      */
     
     "site_url": {
-        "message": "URL de la página"
+        "message": "URL de la pÃ¡gina"
     },
     
     "site_name": {
-        "message": "Nombre de la página"
+        "message": "Nombre de la pÃ¡gina"
     },
     
     "site_rss": {
-        "message": "RSS de la página (opcional)"
+        "message": "RSS de la pÃ¡gina (opcional)"
     },
     
     "customise_tile_color": {
@@ -86,11 +86,11 @@
     },
     
     "add_from_url": {
-        "message": "Añadir desde URL"
+        "message": "AÃ±adir desde URL"
     },
     
     "add_url": {
-        "message": "Añadir URL"
+        "message": "AÃ±adir URL"
     },
     
     "upload_from_computer": {
@@ -154,7 +154,7 @@
      */    
     
     "show_tile_animation_on_load": {
-        "message": "Animación de mosaicos al cargar"
+        "message": "AnimaciÃ³n de mosaicos al cargar"
     },
     
     "default_tile_color": {
@@ -170,11 +170,11 @@
     },
     
     "tile_positioning": {
-        "message": "Posición del mosaico"
+        "message": "PosiciÃ³n del mosaico"
     },
     
     "tile_layout": {
-        "message": "Diseño del mosaico"
+        "message": "DiseÃ±o del mosaico"
     },
     
     "grid": {
@@ -186,15 +186,15 @@
     },
     
     "number_of_rows": {
-        "message": "Número de filas"
+        "message": "NÃºmero de filas"
     },
     
     "number_of_columns": {
-        "message": "Número de columnas"
+        "message": "NÃºmero de columnas"
     },
     
     "horizontal_align": {
-        "message": "Alineación horizontal"
+        "message": "AlineaciÃ³n horizontal"
     },
     
     "left": {
@@ -210,7 +210,7 @@
     },
     
     "vertical_align": {
-        "message": "Alineación vertical"
+        "message": "AlineaciÃ³n vertical"
     },
     
     "top": {
@@ -222,7 +222,7 @@
     },
     
     "tile_flow_direction": {
-        "message": "Dirección de los mosaicos"
+        "message": "DirecciÃ³n de los mosaicos"
     }, 
     
     "top_to_bottom": {
@@ -290,7 +290,7 @@
      */ 
     
     "edit_tile": {
-        "message": "Editar título"
+        "message": "Editar tÃ­tulo"
     },
     
     "make_tile_bigger": {
