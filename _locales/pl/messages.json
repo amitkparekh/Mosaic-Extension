@@ -1,0 +1,323 @@
+﻿// pl_PL
+ 
+{
+    "extName": {
+        "message": "Mosaic ALPHA"
+    },
+   
+    "extDesc": {
+        "message": "Does stuff in tiles."
+    },
+   
+    /**
+     * Nav Main
+     */
+   
+    "add_new_tile": {
+        "message": "Dodaj nowy kafelek"
+    },
+   
+    "show_hide_sections": {
+        "message": "Pokaż/Ukryj sekcje"
+    },
+   
+    "show_apps": {
+        "message": "Pokaż 'Usługi'"
+    },
+   
+    "show_bookmarks_bar": {
+        "message": "Pokaż 'Pasek zakładek'"
+    },
+   
+    "show_recently_closed_tabs": {
+        "message": "Pokaż 'Ostatnio Zamknięte Karty'"
+    },
+   
+    "settings": {
+        "message": "Ustawienia"
+    },
+   
+    "help": {
+        "message": "Pomoc"
+    },
+   
+    "donate": {
+        "message": "Wspomóż nas"
+    },
+   
+    /**
+     * Add new tile menu
+     */
+   
+    "site_url": {
+        "message": "Adres strony"
+    },
+   
+    "site_name": {
+        "message": "Nazwa strony"
+    },
+   
+    "site_rss": {
+        "message": "RSS strony (opcjonalnie)"
+    },
+   
+    "customise_tile_color": {
+        "message": "Zmień kolor kafelka"
+    },
+   
+    "tile_color": {
+        "message": "Kolor kafelka"
+    },
+   
+    "font_color": {
+        "message": "Kolor czcionki"
+    },
+   
+    "tile_image": {
+        "message": "Obrazek kafelka"
+    },
+   
+    "select_from_our_database": {
+        "message": "Wybierz z naszej bazy"
+    },
+   
+    "select": {
+        "message": "Wybierz"
+    },
+   
+    "add_from_url": {
+        "message": "Dodaj z adresu"
+    },
+   
+    "add_url": {
+        "message": "Dodaj adres"
+    },
+   
+    "upload_from_computer": {
+        "message": "Wgraj z komputera"
+    },
+   
+    "upload": {
+        "message": "Wgraj"
+    },
+   
+    "remove_image": {
+        "message": "Usuń obrazek"
+    },
+   
+    "remove": {
+        "message": "Usuń"
+    },
+   
+    "reset": {
+        "message": "Zresetuj"
+    },
+   
+    /**
+     * Settings menu
+     */
+   
+    "customise_tiles": {
+        "message": "Dostosuj kafelki"
+    },
+   
+    "customise_theme": {
+        "message": "Dostosuj temat"
+    },
+   
+    "customise_rss_feed": {
+        "message": "Dostosuj RSS"
+    },
+   
+    "profile_settings": {
+        "message": "Ustawienia profilu"
+    },
+   
+    "change_language": {
+        "message": "Zmień język (Change language)"
+    },
+   
+    "backup_restore_settings": {
+        "message": "Kopia zapasowa/Przywracanie ustawień"
+    },
+   
+    "report_a_bug": {
+        "message": "Zgłoś błąd"
+    },
+   
+    "changelog": {
+        "message": "Lista zmian"
+    },
+   
+    /**
+     * Customise tiles menu
+     */    
+   
+    "show_tile_animation_on_load": {
+        "message": "Pokaż początkową animację kafelków"
+    },
+   
+    "default_tile_color": {
+        "message": "Domyślny kolor kafelka"
+    },
+   
+    "background_color": {
+        "message": "Kolor tła"
+    },
+   
+    "text_color": {
+        "message": "Kolor tekstu"
+    },
+   
+    "tile_positioning": {
+        "message": "Ułożenie kafelków"
+    },
+   
+    "tile_layout": {
+        "message": "Układ kafelków"
+    },
+   
+    "grid": {
+        "message": "Przyciągaj do siatki"
+    },
+   
+    "free": {
+        "message": "Ułożenie dowolne"
+    },
+   
+    "number_of_rows": {
+        "message": "Liczba rzędów"
+    },
+   
+    "number_of_columns": {
+        "message": "Liczba kolumn"
+    },
+   
+    "horizontal_align": {
+        "message": "Wyrównanie poziome"
+    },
+   
+    "left": {
+        "message": "Do lewej"
+    },
+   
+    "centre": {
+        "message": "Do środka"
+    },
+   
+    "right": {
+        "message": "Do prawej"
+    },
+   
+    "vertical_align": {
+        "message": "Wyrównanie pionowe"
+    },
+   
+    "top": {
+        "message": "Do góry"
+    },
+   
+    "bottom": {
+        "message": "Do dołu"
+    },
+   
+    "tile_flow_direction": {
+        "message": "Kierunek płynięcia kafelków"
+    },
+   
+    "top_to_bottom": {
+        "message": "Z góry na dół"
+    },
+   
+    "left_to_right": {
+        "message": "Z lewej do prawej"
+    },
+   
+    "reset_to_default": {
+        "message": "Przywróć wartości domyślne"
+    },
+   
+    /**
+     * Customise tiles menu
+     */
+   
+    "choose_background_image": {
+        "message": "Wybierz obrazek tła"
+    },
+   
+    "get_from_wikimedia_commons": {
+        "message": "Pobierz z 'Wikimedia Commons'"
+    },
+   
+    /**
+     * Customise RSS feed menu
+     */
+   
+    /**
+     * Backup / Restore menu
+     */
+   
+    "import_settings": {
+        "message": "Importuj ustawienia"
+    },
+   
+    "import": {
+        "message": "Importuj"
+    },
+   
+    "export_settings": {
+        "message": "Eksportuj ustawienia"
+    },
+   
+    "export": {
+        "message": "Eksportuj"
+    },
+   
+    "reset_settings": {
+        "message": "Przywróć ustawienia"
+    },
+   
+    /**
+     * Report a bug
+     */
+   
+    /**
+     * Changelog
+     */
+   
+    /**
+     * Edit menu
+     */
+   
+    "edit_tile": {
+        "message": "Edytuj kafelek"
+    },
+   
+    "make_tile_bigger": {
+        "message": "Powiększ kafelek"
+    },
+   
+    "make_tile_smaller": {
+        "message": "Zmniejsz kafelek"
+    },
+   
+    "edit_tile_info": {
+        "message": "Edytuj info kafelka"
+    },
+   
+    "customise_tile_colours": {
+        "message": "Zmień kolory kafelka"
+    },
+   
+    "edit_tile_image": {
+        "message": "Edytuj obrazek kafelka"
+    },
+   
+    "delete": {
+        "message": "Skasuj"
+    },
+   
+    "save_changes": {
+        "message": "Zapisz zmiany"
+    }
+}
