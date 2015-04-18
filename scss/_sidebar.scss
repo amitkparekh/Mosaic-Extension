@@ -1019,6 +1019,7 @@ $tile-choice-height: 45px;
     
     > div {
         @extend .vertical-center;
+        flex-direction: row;
         
     }
     

@@ -13882,6 +13882,8 @@ body {
   border-bottom: #bdbdbd 1px solid;
   margin-bottom: 8px;
   height: 121px; }
+  .sidebar .sidebar-header > div {
+    flex-direction: row; }
   .sidebar .sidebar-header p {
     font-size: 28px;
     color: #212121;
