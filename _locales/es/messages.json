@@ -69,6 +69,10 @@
         "message": "Personalizar color del mosaico"
     },
     
+    "choose_tile_color": {
+        "message": "Elegir el color del azulejo"
+    },
+    
     "tile_color": {
         "message": "Color del mosaico"
     },
@@ -121,6 +125,11 @@
         "message": "Subir"
     },
     
+    "get": {
+        // Max 7 characters (if possible)
+        "message": "Get"
+    },
+    
     "remove_image": {
         "message": "Eliminar imagen"
     },
@@ -133,6 +142,11 @@
     "reset": {
         // Max 7 characters (if possible)
         "message": "Resetear"
+    },
+    
+    "cancel": {
+        // Max 7 characters (if possible)
+        "message": "Cancel"
     },
     
     "add_tile": {
@@ -165,6 +179,10 @@
     
     "backup_restore_settings": {
         "message": "Guardar/Cargar ajustes"
+    },
+    
+    "backup_restore": {
+        "message": "Backup/Restore"
     },
     
     "report_a_bug": {
