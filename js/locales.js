@@ -232,6 +232,52 @@ function setLocalisedTopicList() {
     
     q("#text_delete").innerText = getI18nMsg("delete");
     q("#text_save_changes").innerText = getI18nMsg("save_changes");
+    
+    var editTileBtnContainerFix = function() {
+        var length_Delete = getI18nMsg("delete").length;
+        var length_Remove = getI18nMsg("remove").length;
+        var length_SaveChanges = getI18nMsg("save_changes").length;
+        var length_Confirm = getI18nMsg("confirm").length;
+        var length_Save = getI18nMsg("save").length;
+        
+        var length_Combined = length_Delete + length_SaveChanges;
+        var length_Combined_2 = length_Remove + length_SaveChanges;
+        var length_Combined_3 = length_Delete + length_Save;
+        var length_Combined_4 = length_Remove + length_Save;
+        var length_Combined_5 = length_Delete + length_Confirm;
+        var length_Combined_6 = length_Remove + length_Confirm;
+        
+        if ( length_Combined < 21 ) {
+            q("#text_delete").innerText = getI18nMsg("delete");
+            q("#text_save_changes").innerText = getI18nMsg("save_changes");
+        } else {
+            if ( length_Combined_2 < 21 ) {
+                q("#text_delete").innerText = getI18nMsg("remove");
+                q("#text_save_changes").innerText = getI18nMsg("save_changes");
+            } else {
+                if ( length_Combined_3 < 21 ) {
+                    q("#text_delete").innerText = getI18nMsg("delete");
+                    q("#text_save_changes").innerText = getI18nMsg("save");
+                } else {
+                    if ( length_Combined_4 < 21 ) {
+                        q("#text_delete").innerText = getI18nMsg("remove");
+                        q("#text_save_changes").innerText = getI18nMsg("save");
+                    } else {
+                        if ( length_Combined_5 < 21 ) {
+                            q("#text_delete").innerText = getI18nMsg("delete");
+                            q("#text_save_changes").innerText = getI18nMsg("confirm");
+                        } else {
+                           if ( length_Combined_6 < 21 ) {
+                                q("#text_delete").innerText = getI18nMsg("remove");
+                                q("#text_save_changes").innerText = getI18nMsg("confirm");
+                           }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    editTileBtnContainerFix();
 }
 
 window.onload = function() {
