@@ -14,6 +14,17 @@ function setLocalisedTopicList() {
     q("#text_show_apps").innerText = getI18nMsg("show_apps");
     q("#text_show_bookmarks_bar").innerText = getI18nMsg("show_bookmarks_bar");
     q("#text_show_recently_closed_tabs").innerText = getI18nMsg("show_recently_closed_tabs");
+    
+    if ( getI18nMsg("show_recently_closed_tabs").length < 26 ) {
+        q("#text_show_recently_closed_tabs").innerText = getI18nMsg("show_recently_closed_tabs");
+    } else {
+        if ( getI18nMsg("show_recently_closed").length < getI18nMsg("show_recently_closed_tabs").length ) {
+            q("#text_show_recently_closed_tabs").innerText = getI18nMsg("show_recently_closed");
+        } else {
+            q("#text_show_recently_closed_tabs").innerText = getI18nMsg("show_recently_closed_tabs");
+        }
+    }
+    
     q("#text_settings").innerText = getI18nMsg("settings");
     q("#text_help").innerText = getI18nMsg("help");
     q("#text_donate").innerText = getI18nMsg("donate");
@@ -31,12 +42,18 @@ function setLocalisedTopicList() {
     if ( getI18nMsg("select_from_our_database").length < 26 ) {
         q("#text_select_from_our_database").innerText = getI18nMsg("select_from_our_database");
     } else {
-        q("#text_select_from_our_database").innerText = getI18nMsg("choose_from_the_database");
+        if ( getI18nMsg("choose_from_the_database").length < getI18nMsg("select_from_our_databse").length ) {
+            q("#text_select_from_our_database").innerText = getI18nMsg("choose_from_the_database");
+        } else {
+            q("#text_select_from_our_database").innerText = getI18nMsg("select_from_our_database");
+        }
     }
     
     if ( getI18nMsg("select").length > 7 ) {        
         if ( getI18nMsg("choose").length < 8 ) {
             q("#text_select").innerText = getI18nMsg("choose");
+        } else {
+            q("#text_select").innerText = getI18nMsg("select");
         }
     } else {
         q("#text_select").innerText = getI18nMsg("select");
@@ -125,10 +142,12 @@ function setLocalisedTopicList() {
     
     if ( getI18nMsg("select").length > 7 ) {        
         if ( getI18nMsg("choose").length < 8 ) {
-            q("#text_select_2").innerText = getI18nMsg("choose");
+            q("#text_select_3").innerText = getI18nMsg("choose");
+        } else {
+            q("#text_select_3").innerText = getI18nMsg("select");
         }
     } else {
-        q("#text_select_2").innerText = getI18nMsg("select");
+        q("#text_select_3").innerText = getI18nMsg("select");
     }
     
     q("#text_add_from_url_2").innerText = getI18nMsg("add_from_url");
@@ -175,10 +194,36 @@ function setLocalisedTopicList() {
     q("#text_font_color_2").innerText = getI18nMsg("font_color");
     
     q("#text_edit_tile_image_2").innerText = getI18nMsg("edit_tile_image");
-    q("#text_select_from_our_database_2").innerText = getI18nMsg("select_from_our_database");
-    q("#text_select_3").innerText = getI18nMsg("select");
+    
+    if ( getI18nMsg("select_from_our_database").length < 26 ) {
+        q("#text_select_from_our_database_2").innerText = getI18nMsg("select_from_our_database");
+    } else {
+        if ( getI18nMsg("choose_from_the_database").length < getI18nMsg("select_from_our_databse").length ) {
+            q("#text_select_from_our_database_2").innerText = getI18nMsg("choose_from_the_database");
+        } else {
+            q("#text_select_from_our_database_2").innerText = getI18nMsg("select_from_our_database");
+        }
+    }
+    
+    
+    if ( getI18nMsg("select").length > 7 ) {        
+        if ( getI18nMsg("choose").length < 8 ) {
+            q("#text_select_3").innerText = getI18nMsg("choose");
+        } else {
+            q("#text_select_3").innerText = getI18nMsg("select");
+        }
+    } else {
+        q("#text_select_3").innerText = getI18nMsg("select");
+    }
+    
     q("#text_add_from_url_3").innerText = getI18nMsg("add_from_url");
-    q("#text_add_url_5").innerText = getI18nMsg("add_url");
+    
+    if ( getI18nMsg("add_url").length > 7 ) {
+        q("#text_add_url_5").innerText = getI18nMsg("add");
+    } else {
+        q("#text_add_url_5").innerText = getI18nMsg("add_url"); 
+    }
+    
     q("#text_add_url_6").innerText = getI18nMsg("add_url");
     q("#text_upload_from_computer_3").innerText = getI18nMsg("upload_from_computer");
     q("#text_upload_3").innerText = getI18nMsg("upload");
