@@ -786,6 +786,11 @@ $tile-choice-height: 45px;
                 }
             }
             
+            .btn-wide {
+                float: none !important;
+                display: block;
+            }
+            
             .btn-inverse {
                 &:hover {
                     color: $clr-red;
@@ -838,8 +843,9 @@ $tile-choice-height: 45px;
                 > .btn {
                     height: 32px;
                     line-height: 32px;
-                    margin: 0;
-                    padding: 0 1rem;
+                    margin: auto;
+                    text-align: center;
+                    padding: 0;
                     width: 90px;
                     
                     > a {
@@ -854,6 +860,9 @@ $tile-choice-height: 45px;
                     }
                 }
             }
+        }
+        &.btn-container {
+            height: auto;
         }
     }
     .text-chunk {

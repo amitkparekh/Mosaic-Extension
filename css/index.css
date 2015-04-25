@@ -13715,6 +13715,9 @@ body {
         float: right; }
       .sidebar form.btn-container > div > a {
         text-transform: uppercase; }
+    .sidebar form.btn-container .btn-wide {
+      float: none !important;
+      display: block; }
     .sidebar form.btn-container .btn-inverse:hover {
       color: #f44336; }
     .sidebar form.btn-container.centered > div {
@@ -13748,8 +13751,9 @@ body {
       .sidebar form.tile-choice > div > .btn, .sidebar form.tile-choice > div > .btn-large {
         height: 32px;
         line-height: 32px;
-        margin: 0;
-        padding: 0 1rem;
+        margin: auto;
+        text-align: center;
+        padding: 0;
         width: 90px; }
         .sidebar form.tile-choice > div > .btn > a, .sidebar form.tile-choice > div > .btn-large > a {
           text-transform: uppercase; }
@@ -13757,6 +13761,8 @@ body {
           background-color: #f06292; }
           .sidebar form.tile-choice > div > .btn.color-preview:hover, .sidebar form.tile-choice > div > .color-preview.btn-large:hover {
             background-color: #f279a2; }
+  .sidebar form.btn-container {
+    height: auto; }
 .sidebar .text-chunk {
   white-space: initial;
   height: auto;
