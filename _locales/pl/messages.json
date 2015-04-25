@@ -32,6 +32,10 @@
     "show_recently_closed_tabs": {
         "message": "Pokaż 'Ostatnio Zamknięte Karty'"
     },
+    
+    "show_recently_closed": {
+        "message": "Show 'Recently Closed"
+    },
    
     "settings": {
         "message": "Ustawienia"
@@ -81,16 +85,32 @@
         "message": "Wybierz z naszej bazy"
     },
    
+    "choose_from_the_database": {
+        "message": "Choose from the database"
+    },
+    
     "select": {
+        // Max 7 characters (if possible)
         "message": "Wybierz"
     },
    
+    "choose": {
+        // Max 7 characters (if possible)
+        "message": "Choose"
+    },
+    
     "add_from_url": {
         "message": "Dodaj z adresu"
     },
    
     "add_url": {
+        // Max 7 characters (if possible)
         "message": "Dodaj adres"
+    },
+    
+    "add": {
+        // Max 7 characters
+        "message": "Add"
     },
    
     "upload_from_computer": {
@@ -98,19 +118,36 @@
     },
    
     "upload": {
+        // Max 7 characters (if possible)
         "message": "Wgraj"
     },
    
+    "get": {
+        // Max 7 characters (if possible)
+        "message": "Get"
+    },
+    
     "remove_image": {
         "message": "Usuń obrazek"
     },
    
     "remove": {
+        // Max 7 characters (if possible)
         "message": "Usuń"
     },
    
     "reset": {
+        // Max 7 characters (if possible)
         "message": "Zresetuj"
+    },
+    
+    "cancel": {
+        // Max 7 characters (if possible)
+        "message": "Cancel"
+    },
+    
+    "add_tile": {
+        "message": "Add tile"
     },
    
     /**
@@ -141,6 +178,10 @@
         "message": "Kopia zapasowa/Przywracanie ustawień"
     },
    
+    "backup_restore": {
+        "message": "Backup/Restore"
+    },
+    
     "report_a_bug": {
         "message": "Zgłoś błąd"
     },
@@ -157,6 +198,10 @@
         "message": "Pokaż początkową animację kafelków"
     },
    
+    "show_tile_animation": {
+        "message": "Show tile animation"
+    },
+    
     "default_tile_color": {
         "message": "Domyślny kolor kafelka"
     },
@@ -262,6 +307,7 @@
     },
    
     "import": {
+        // Max 7 characters (if possible)
         "message": "Importuj"
     },
    
@@ -270,6 +316,7 @@
     },
    
     "export": {
+        // Max 7 characters (if possible)
         "message": "Eksportuj"
     },
    
@@ -319,5 +366,13 @@
    
     "save_changes": {
         "message": "Zapisz zmiany"
+    }, 
+    
+    "save": {
+        "message": "Save"
+    },
+    
+    "confirm": {
+        "message": "Confirm"
     }
 }
