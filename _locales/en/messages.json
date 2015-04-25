@@ -81,8 +81,18 @@
         "message": "Select from our database"
     },
     
+    "choose_from_the_database": {
+        "message": "Choose from the database"
+    },
+    
     "select": {
+        // Max 7 characters (if possible)
         "message": "Select"
+    },
+    
+    "choose": {
+        // Max 7 characters (if possible)
+        "message": "Choose"
     },
     
     "add_from_url": {
@@ -90,6 +100,7 @@
     },
     
     "add_url": {
+        // Max 7 characters (if possible)
         "message": "Add URL"
     },
     
@@ -98,6 +109,7 @@
     },
     
     "upload": {
+        // Max 7 characters (if possible)
         "message": "Upload"
     },
     
@@ -106,11 +118,17 @@
     },
     
     "remove": {
+        // Max 7 characters (if possible)
         "message": "Remove"
     },
     
     "reset": {
+        // Max 7 characters (if possible)
         "message": "Reset"
+    },
+    
+    "add_tile": {
+        "message": "Add tile"
     },
     
     /**
@@ -262,6 +280,7 @@
     },
     
     "import": {
+        // Max 7 characters (if possible)
         "message": "Import"
     },
     
@@ -270,6 +289,7 @@
     },
     
     "export": {
+        // Max 7 characters (if possible)
         "message": "Export"
     },
     
