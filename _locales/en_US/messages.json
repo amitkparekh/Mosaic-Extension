@@ -9,6 +9,10 @@
         "message": "Customize tile color"
     },
     
+    "choose_tile_color": {
+        "message": "Choose tile color"
+    },
+    
     "tile_color": {
         "message": "Tile color"
     },
