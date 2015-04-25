@@ -23,7 +23,6 @@ $sidebar-icon-color: $gray-dark;
 $sidebar-menu-color: $gray-darker;
 $sidebar-font-weight: 500;
 $sidebar-desktop-width-ext: 320px;
-$sidebar-desktop-width-ext1-5: 360px;
 $sidebar-desktop-width-ext2: 400px;
 [class^="md-"],
 [class*=" md-"] {
@@ -708,14 +707,21 @@ $text-link-color) {
 
 // Form elements
 .sidebar {
-    &.ext, .sidebar-nav.ext {
+    &.ext {
         width: $sidebar-desktop-width-ext;
     }
-    &.ext2, .sidebar-nav-ext2 {
+    .sidebar-nav {
+        &.ext {
+            width: $sidebar-desktop-width-ext;
+        }
+    }
+    &.ext2 {
         width: $sidebar-desktop-width-ext2;
-    }    
-    &.ext3, .sidebar-nav-ext1-5 {
-        width: $sidebar-desktop-width-ext1-5;
+    }
+    .sidebar-nav {
+        &.ext2 {
+            width: $sidebar-desktop-width-ext2;
+        }
     }
 }
 
@@ -723,11 +729,11 @@ $tile-choice-height: 45px;
 
 .sidebar {
     .sidebar-nav {
-        &.ext, &.ext2, &.ext1-5 {
+        &.ext, &.ext2 {
             form {
                 &.sidebar-text {
                     > span {
-                        width: 91% !important;
+                        width: 190px + ($sidebar-desktop-width-ext - $sidebar-desktop-width);
                     }
                 }
             }
@@ -778,11 +784,6 @@ $tile-choice-height: 45px;
                 > a {
                     text-transform: uppercase;
                 }
-            }
-            
-            .btn-wide {
-                float: none !important;
-                display: block;
             }
             
             .btn-inverse {
@@ -837,9 +838,8 @@ $tile-choice-height: 45px;
                 > .btn {
                     height: 32px;
                     line-height: 32px;
-                    margin: auto;
-                    text-align: center;
-                    padding: 0;
+                    margin: 0;
+                    padding: 0 1rem;
                     width: 90px;
                     
                     > a {
@@ -854,9 +854,6 @@ $tile-choice-height: 45px;
                     }
                 }
             }
-        }
-        &.btn-container {
-            height: auto;
         }
     }
     .text-chunk {

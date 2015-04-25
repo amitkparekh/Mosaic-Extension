@@ -13673,15 +13673,17 @@ body {
     .menu-button.active::after {
       transform: translateY(-5px) rotate(45deg); }
 
-.sidebar.ext, .sidebar .sidebar-nav.ext {
+.sidebar.ext {
   width: 320px; }
-.sidebar.ext2, .sidebar .sidebar-nav-ext2 {
+.sidebar .sidebar-nav.ext {
+  width: 320px; }
+.sidebar.ext2 {
   width: 400px; }
-.sidebar.ext3, .sidebar .sidebar-nav-ext1-5 {
-  width: 360px; }
+.sidebar .sidebar-nav.ext2 {
+  width: 400px; }
 
-.sidebar .sidebar-nav.ext form.sidebar-text > span, .sidebar .sidebar-nav.ext2 form.sidebar-text > span, .sidebar .sidebar-nav.ext1-5 form.sidebar-text > span {
-  width: 91% !important; }
+.sidebar .sidebar-nav.ext form.sidebar-text > span, .sidebar .sidebar-nav.ext2 form.sidebar-text > span {
+  width: 230px; }
 .sidebar form {
   padding-right: 16px;
   height: 55px; }
@@ -13713,9 +13715,6 @@ body {
         float: right; }
       .sidebar form.btn-container > div > a {
         text-transform: uppercase; }
-    .sidebar form.btn-container .btn-wide {
-      float: none !important;
-      display: block; }
     .sidebar form.btn-container .btn-inverse:hover {
       color: #f44336; }
     .sidebar form.btn-container.centered > div {
@@ -13749,9 +13748,8 @@ body {
       .sidebar form.tile-choice > div > .btn, .sidebar form.tile-choice > div > .btn-large {
         height: 32px;
         line-height: 32px;
-        margin: auto;
-        text-align: center;
-        padding: 0;
+        margin: 0;
+        padding: 0 1rem;
         width: 90px; }
         .sidebar form.tile-choice > div > .btn > a, .sidebar form.tile-choice > div > .btn-large > a {
           text-transform: uppercase; }
@@ -13759,8 +13757,6 @@ body {
           background-color: #f06292; }
           .sidebar form.tile-choice > div > .btn.color-preview:hover, .sidebar form.tile-choice > div > .color-preview.btn-large:hover {
             background-color: #f279a2; }
-  .sidebar form.btn-container {
-    height: auto; }
 .sidebar .text-chunk {
   white-space: initial;
   height: auto;

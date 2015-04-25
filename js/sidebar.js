@@ -3,8 +3,8 @@
 // Sidebar toggle
 //
 // -------------------
-var sidebar = q("#sidebar");
-var menuButton = q("#menu-button");
+var sidebar = document.getElementById("sidebar");
+var menuButton = document.getElementById("menu-button");
 
 var sidebarToggle = function () {
     if (sidebar.className.match(/(?:^|\s)open(?!\S)/)) {
@@ -32,48 +32,48 @@ menuButton.addEventListener("click", sidebarToggle);
 // -------------------
 var animaDelay = 510;
 
-var navOverview = q("#sidebar");
-var navMain = q("#nav-main");
+var navOverview = document.getElementById("sidebar");
+var navMain = document.getElementById("nav-main");
 
-var navNewTileButton = q("#nav-new-tile-button");
-var navNewTileMenu = q("#nav-new-tile-menu");
-var navNewTileClose = q("#nav-new-tile-close");
+var navNewTileButton = document.getElementById("nav-new-tile-button");
+var navNewTileMenu = document.getElementById("nav-new-tile-menu");
+var navNewTileClose = document.getElementById("nav-new-tile-close");
 
-var navSettingsButton = q("#nav-settings-button");
-var navSettingsMenu = q("#nav-settings-menu");
-var navSettingsClose = q("#nav-settings-close");
+var navSettingsButton = document.getElementById("nav-settings-button");
+var navSettingsMenu = document.getElementById("nav-settings-menu");
+var navSettingsClose = document.getElementById("nav-settings-close");
 
-var navSettingsTilesButton = q("#nav-settings-tiles-button");
-var navSettingsTilesMenu = q("#nav-settings-tiles-menu");
-var navSettingsTilesClose = q("#nav-settings-tiles-close");
+var navSettingsTilesButton = document.getElementById("nav-settings-tiles-button");
+var navSettingsTilesMenu = document.getElementById("nav-settings-tiles-menu");
+var navSettingsTilesClose = document.getElementById("nav-settings-tiles-close");
 
-var navSettingsThemeButton = q("#nav-settings-theme-button");
-var navSettingsThemeMenu = q("#nav-settings-theme-menu");
-var navSettingsThemeClose = q("#nav-settings-theme-close");
+var navSettingsThemeButton = document.getElementById("nav-settings-theme-button");
+var navSettingsThemeMenu = document.getElementById("nav-settings-theme-menu");
+var navSettingsThemeClose = document.getElementById("nav-settings-theme-close");
 
-var navSettingsRSSFeedButton = q("#nav-settings-rss-feed-button");
-var navSettingsRSSFeedMenu = q("#nav-settings-rss-feed-menu");
-var navSettingsRSSFeedClose = q("#nav-settings-rss-feed-close");
+var navSettingsRSSFeedButton = document.getElementById("nav-settings-rss-feed-button");
+var navSettingsRSSFeedMenu = document.getElementById("nav-settings-rss-feed-menu");
+var navSettingsRSSFeedClose = document.getElementById("nav-settings-rss-feed-close");
 
-var navSettingsBackupRestoreButton = q("#nav-settings-backup-restore-button");
-var navSettingsBackupRestoreMenu = q("#nav-settings-backup-restore-menu");
-var navSettingsBackupRestoreClose = q("#nav-settings-backup-restore-close");
+var navSettingsBackupRestoreButton = document.getElementById("nav-settings-backup-restore-button");
+var navSettingsBackupRestoreMenu = document.getElementById("nav-settings-backup-restore-menu");
+var navSettingsBackupRestoreClose = document.getElementById("nav-settings-backup-restore-close");
 
-var navSettingsLanguageButton = q("#nav-settings-language-button");
-var navSettingsLanguageMenu = q("#nav-settings-language-menu");
-var navSettingsLanguageClose = q("#nav-settings-language-close");
+var navSettingsLanguageButton = document.getElementById("nav-settings-language-button");
+var navSettingsLanguageMenu = document.getElementById("nav-settings-language-menu");
+var navSettingsLanguageClose = document.getElementById("nav-settings-language-close");
 
-var navBugButton = q("#nav-bug-button");
-var navBugMenu = q("#nav-bug-menu");
-var navBugClose = q("#nav-bug-close");
+var navBugButton = document.getElementById("nav-bug-button");
+var navBugMenu = document.getElementById("nav-bug-menu");
+var navBugClose = document.getElementById("nav-bug-close");
 
-var navChangelogButton = q("#nav-changelog-button");
-var navChangelogMenu = q("#nav-changelog-menu");
-var navChangelogClose = q("#nav-changelog-close");
+var navChangelogButton = document.getElementById("nav-changelog-button");
+var navChangelogMenu = document.getElementById("nav-changelog-menu");
+var navChangelogClose = document.getElementById("nav-changelog-close");
 
-var navDonateButton = q("#nav-donate-button");
-var navDonateMenu = q("#nav-donate-menu");
-var navDonateClose = q("#nav-donate-close");
+var navDonateButton = document.getElementById("nav-donate-button");
+var navDonateMenu = document.getElementById("nav-donate-menu");
+var navDonateClose = document.getElementById("nav-donate-close");
 
 // -------------- // 
 
@@ -258,24 +258,22 @@ var donateOpen = function () {
 // Edit menu
 //
 // -------------------
-var editTileMenu = q("#edit-tile-menu");
-var editTileClose = q("#edit-tile-close");
+var editTileMenu = document.getElementById("edit-tile-menu");
+var editTileClose = document.getElementById("edit-tile-close");
 
-var editTile_OptionsMenu = q("#edit-tile-options-menu");
+var editTile_OptionsMenu = document.getElementById("edit-tile-options-menu");
 
-var editTile_TileInfoButton = q("#edit-tile-info-button");
-var editTile_TileInfoClose = q("#edit-tile-info-close");
-var editTile_TileInfoMenu = q("#edit-tile-info-menu");
+var editTile_TileInfoButton = document.getElementById("edit-tile-info-button");
+var editTile_TileInfoClose = document.getElementById("edit-tile-info-close");
+var editTile_TileInfoMenu = document.getElementById("edit-tile-info-menu");
 
-var editTile_TileColorButton = q("#edit-tile-color-button");
-var editTile_TileColorClose = q("#edit-tile-color-close");
-var editTile_TileColorMenu = q("#edit-tile-color-menu");
+var editTile_TileColorButton = document.getElementById("edit-tile-color-button");
+var editTile_TileColorClose = document.getElementById("edit-tile-color-close");
+var editTile_TileColorMenu = document.getElementById("edit-tile-color-menu");
 
-var editTile_TileImageButton = q("#edit-tile-image-button");
-var editTile_TileImageClose = q("#edit-tile-image-close");
-var editTile_TileImageMenu = q("#edit-tile-image-menu");
-
-var editTile_TileResetButton = q("#edit-tile-reset");
+var editTile_TileImageButton = document.getElementById("edit-tile-image-button");
+var editTile_TileImageClose = document.getElementById("edit-tile-image-close");
+var editTile_TileImageMenu = document.getElementById("edit-tile-image-menu");
 
 var editMenuClose = function() {
     editTileMenu.className = editTileMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
