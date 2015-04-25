@@ -33,6 +33,10 @@
         "message": "Mostrar 'Pestañas cerradas recientemente'"
     },
     
+    "show_recently_closed": {
+        "message": "Mostrar 'Cerrado Recientemente'"
+    },
+    
     "settings": {
         "message": "Ajustes"
     },
@@ -343,5 +347,13 @@
     
     "save_changes": {
         "message": "Guardar cambios"
+    },
+    
+    "save": {
+        "message": "Guardar"
+    },
+    
+    "confirm": {
+        "message": "Confirmar"
     }
 }
