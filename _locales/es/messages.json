@@ -1,4 +1,4 @@
-﻿// Spanish (es)
+// Spanish (es)
 
 {
     "extName": {
@@ -81,8 +81,18 @@
         "message": "Seleccionar de nuestra base de datos"
     },
     
+    "choose_from_the_database": {
+        "message": "Elija de la base de datos"
+    },
+    
     "select": {
+        // Max 7 characters (if possible)
         "message": "Seleccionar"
+    },
+    
+    "choose": {
+        // Max 7 characters (if possible)
+        "message": "Elegir"
     },
     
     "add_from_url": {
@@ -90,7 +100,12 @@
     },
     
     "add_url": {
+        // Max 7 characters (if possible)
         "message": "Añadir URL"
+    },
+    
+    "add": {
+        "message": "Añadir"
     },
     
     "upload_from_computer": {
@@ -98,6 +113,7 @@
     },
     
     "upload": {
+        // Max 7 characters (if possible)
         "message": "Subir"
     },
     
@@ -106,11 +122,17 @@
     },
     
     "remove": {
+        // Max 7 characters (if possible)
         "message": "Eliminar"
     },
     
     "reset": {
+        // Max 7 characters (if possible)
         "message": "Resetear"
+    },
+    
+    "add_tile": {
+        "message": "Añadir mosaico"
     },
     
     /**
@@ -262,6 +284,7 @@
     },
     
     "import": {
+        // Max 7 characters (if possible)
         "message": "Importar"
     },
     
@@ -270,6 +293,7 @@
     },
     
     "export": {
+        // Max 7 characters (if possible)
         "message": "Exportar"
     },
     
