@@ -69,30 +69,47 @@ function setLocalisedTopicList() {
     
     q("#text_add_url_2").innerText = getI18nMsg("add_url");
     q("#text_upload_from_computer").innerText = getI18nMsg("upload_from_computer");
-    q("#text_upload").innerText = getI18nMsg("upload");
+    
+    
+    if ( getI18nMsg("upload").length > 8 ) {
+        q("#text_upload").innerText = getI18nMsg("get");
+    } else {
+        q("#text_upload").innerText = getI18nMsg("upload");
+    }
+    
     q("#text_remove_image").innerText = getI18nMsg("remove_image");
     q("#text_remove").innerText = getI18nMsg("remove");
     
     var newTileBtnContainerFix = function() {
         var length_Reset = getI18nMsg("reset").length;
+        var length_Cancel = getI18nMsg("cancel").length;
         var length_AddNewTile = getI18nMsg("add_new_tile").length;
         var length_AddTile = getI18nMsg("add_tile").length;
         var length_Combined = length_Reset + length_AddNewTile;
         var length_Combined_2 = length_Reset + length_AddTile;
+        var length_Combined_3 = length_Cancel + length_AddNewTile;
+        var length_Combined_4 = length_Cancel + length_AddTile;
         
-        if (length_Combined < 21) {
-            console.log("1");
+        if ( length_Combined < 21 ) {
             q("#text_reset").innerText = getI18nMsg("reset");
             q("#text_add_new_tile_3").innerText = getI18nMsg("add_new_tile");
         } else {
-            console.log("2");
             if ( length_Combined_2 < 21 ) {
-                console.log("3");
                 q("#text_reset").innerText = getI18nMsg("reset");
                 q("#text_add_new_tile_3").innerText = getI18nMsg("add_tile");
             } else {
-                q("#text_reset").innerText = getI18nMsg("reset");
-                q("#text_add_new_tile_3").innerText = getI18nMsg("add"); 
+                if ( length_Combined_3 < 21 ) {
+                    q("#text_reset").innerText = getI18nMsg("cancel");
+                    q("#text_add_new_tile_3").innerText = getI18nMsg("add_new_tile");
+                } else {
+                    if ( length_Combined_4 < 21 ) {
+                        q("#text_reset").innerText = getI18nMsg("cancel");
+                        q("#text_add_new_tile_3").innerText = getI18nMsg("add_tile");
+                    } else {
+                        q("#text_reset").innerText = getI18nMsg("reset");
+                        q("#text_add_new_tile_3").innerText = getI18nMsg("add"); 
+                    }
+                }
             }
         }
     }
@@ -111,7 +128,13 @@ function setLocalisedTopicList() {
     
     // Customise tiles menu
     q("#text_customise_tiles_2").innerText = getI18nMsg("customise_tiles");
-    q("#text_show_tile_animation_on_load").innerText = getI18nMsg("show_tile_animation_on_load");
+    
+    if ( getI18nMsg("show_tile_animation_on_load").length > 28 ) {
+        q("#text_show_tile_animation_on_load").innerText = getI18nMsg("show_tile_animation");
+    } else {
+        q("#text_show_tile_animation_on_load").innerText = getI18nMsg("show_tile_animation_on_load");
+    }
+    
     q("#text_default_tile_color").innerText = getI18nMsg("default_tile_color");
     q("#text_background_color").innerText = getI18nMsg("background_color");
     q("#text_text_color").innerText = getI18nMsg("text_color");
@@ -132,7 +155,16 @@ function setLocalisedTopicList() {
     q("#text_tile_flow_direction").innerText = getI18nMsg("tile_flow_direction");
     q("#text_top_to_bottom").innerText = getI18nMsg("top_to_bottom");
     q("#text_left_to_right").innerText = getI18nMsg("left_to_right");
-    q("#text_reset_to_default").innerText = getI18nMsg("reset_to_default");
+    
+    if ( getI18nMsg("reset_to_default".length < 24 ) ) {
+        q("#text_reset_to_default").innerText = getI18nMsg("reset_to_default");
+    } else {
+        if ( getI18nMsg("reset_settings").length < 24 ) {
+            q("#text_reset_to_default").innerText = getI18nMsg("reset_settings");
+        } else {
+            q("#text_reset_to_default").innerText = getI18nMsg("reset");
+        }
+    }
     
     // Customise theme menu
     q("#text_customise_theme_2").innerText = getI18nMsg("customise_theme");
@@ -142,12 +174,12 @@ function setLocalisedTopicList() {
     
     if ( getI18nMsg("select").length > 7 ) {        
         if ( getI18nMsg("choose").length < 8 ) {
-            q("#text_select_3").innerText = getI18nMsg("choose");
+            q("#text_select_2").innerText = getI18nMsg("choose");
         } else {
-            q("#text_select_3").innerText = getI18nMsg("select");
+            q("#text_select_2").innerText = getI18nMsg("select");
         }
     } else {
-        q("#text_select_3").innerText = getI18nMsg("select");
+        q("#text_select_2").innerText = getI18nMsg("select");
     }
     
     q("#text_add_from_url_2").innerText = getI18nMsg("add_from_url");
@@ -163,7 +195,16 @@ function setLocalisedTopicList() {
     q("#text_upload_2").innerText = getI18nMsg("upload");
     q("#text_remove_image_2").innerText = getI18nMsg("remove_image");
     q("#text_remove_2").innerText = getI18nMsg("remove");
-    q("#text_reset_to_default_2").innerText = getI18nMsg("reset_to_default");
+    
+    if ( getI18nMsg("reset_to_default".length < 24 ) ) {
+        q("#text_reset_to_default_2").innerText = getI18nMsg("reset_to_default");
+    } else {
+        if ( getI18nMsg("reset_settings").length < 24 ) {
+            q("#text_reset_to_default_2").innerText = getI18nMsg("reset_settings");
+        } else {
+            q("#text_reset_to_default_2").innerText = getI18nMsg("reset");
+        }
+    }
     
     // Customise RSS feed menu
     
@@ -204,7 +245,6 @@ function setLocalisedTopicList() {
             q("#text_select_from_our_database_2").innerText = getI18nMsg("select_from_our_database");
         }
     }
-    
     
     if ( getI18nMsg("select").length > 7 ) {        
         if ( getI18nMsg("choose").length < 8 ) {
