@@ -741,6 +741,7 @@ $tile-choice-height: 45px;
             height: 140px;
             margin-top: 10px;
             margin-bottom: 10px;
+            position: relative;
             > div {
                 width: 284px;
                 height: $sidebar-desktop-width / 2;

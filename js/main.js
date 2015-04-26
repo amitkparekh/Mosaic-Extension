@@ -687,26 +687,27 @@ var MNTP;
                 q("#dropbox-loader").style.display = "none";
             });
 
-            //click on the preview tile does nothing
-            q("#tile-config-preview-tile").addEventListener("click", function (event) {
+            //-- click on the preview tile does nothing
+            q("#nav-new-tile-menu #tile-preview").addEventListener("click", function (event) {
                 event.preventDefault();
                 event.stopPropagation();
                 return false;
             });
 
-            //avoid dragging the preview tile
-            q("#tile-config-preview-tile").addEventListener("mousedown", function (event) {
+            //-- avoid dragging the preview tile
+            q("#nav-new-tile-menu #tile-preview").addEventListener("mousedown", function (event) {
                 event.preventDefault();
                 event.stopPropagation();
                 return false;
             });
 
-            //save tile configurations
-            q("#tile-config-btn-ok").addEventListener("click", function () {
+            //-- save tile configurations
+            q("#new-tile-submit a").addEventListener("click", function () {
                 saveTileConfig()
                     .then(function () {
                         hideConfigs();
-						MNTP.Config.ReloadBackgroundImage = true;
+                        MNTP.Config.ReloadBackgroundImage = true;
+                        sidebarToggle();
                         load().then(saveTilesOrder);
                     })
                     .catch(function (error) {
@@ -720,10 +721,10 @@ var MNTP;
                 hideConfigs();
             });
 
-            //live update the preview tile
-            q("#tile-config input, #tile-config select", true).forEach(function (element) {
+            //-- live update the preview tile
+            q("#nav-new-tile-menu input, #nav-new-tile-menu select", true).forEach(function (element) {
 
-                element.addEventListener(["keypress", "change"], function () {
+                element.addEventListener(["keypress", "change", "input"], function () {
                     setTimeout(function () {
                         loadPreviewTile();
                     }, 0);
@@ -731,16 +732,19 @@ var MNTP;
 
             });
 
-            //remove tile image
-            q("#tile-config-btn-removeImage").addEventListener("click", function () {
+            //-- remove tile image
+            q("#new-tile-remove-image").addEventListener("click", function () {
 
-                q("input[data-property='removeImage']", "#tile-config").value = "true";
-                q("input[data-property='image.data']", "#tile-config").value = ""
+                q("input[data-property='removeImage']", "#nav-new-tile-menu").value = "true";
+                q("input[data-property='image.data']", "#nav-new-tile-menu").value = ""
 
                 loadPreviewTile();
 
-                q("#tile-config-file-image").style.display = "";
-                q("#tile-config-btn-removeImage").style.display = "none";
+                q("#new-tile-remove-image").removeClass("fadeIn").addClass("fadeOut");
+
+                setTimeout(function () {
+                    q("#new-tile-remove-image").addClass("hidden");
+                }, 200);
 
             });
 
@@ -1515,19 +1519,20 @@ var MNTP;
         if (!wallpaper.style.backgroundImage)
             config.ReloadBackgroundImage = true;
 
-        if (config.ReloadBackgroundImage) {
+        if (config.ReloadBackgroundImage && backgroundUrl) {
 
 			//pre-load the image for the fade effect to work
 			var img = document.createElement("img");
 
 			img.onload = function () {
+
 				wallpaper.style.backgroundImage = "url('" + this.src + "')";
 
 				q(".tile .accentbg", true).forEach(function (bgNode) {
 
 					if (config.TileExtendBackground)
 						bgNode.style.backgroundImage = wallpaper.style.backgroundImage;
-					else if (!config.TileExtendBackground)
+					else
 						bgNode.style.backgroundImage = "";
 
 				});
@@ -1551,6 +1556,9 @@ var MNTP;
 
 			if (config.TileExtendBackground) {
             
+			    if (wallpaper.style.backgroundImage && !bgNode.style.backgroundImage)
+			        bgNode.style.backgroundImage = wallpaper.style.backgroundImage;
+
 				if (config.BackgroundFill)
 					bgNode.style.backgroundSize = "100% 100%";
 				else if (config.BackgroundAdjust)
@@ -1740,11 +1748,15 @@ var MNTP;
     }
 
     var loadPreviewTile = function (tile) {
-        q("#tile-config-preview-tile").innerHTML = "";
+        q("#nav-new-tile-menu #tile-preview").innerHTML = "";
 
         var tile = tile || getTileConfig();
 
-        q("#tile-config-preview-tile").insertBefore(Tile.getNode(tile, true), null);
+        q("#nav-new-tile-menu #tile-preview").insertBefore(Tile.getNode(tile, true), null);
+
+        if (q("#wallpaper").style.backgroundImage && MNTP.Config.TileExtendBackground && tile.accentColor) {
+            q("#nav-new-tile-menu #tile-preview .tile-background").style.backgroundImage = q("#wallpaper").style.backgroundImage;
+        }
     }
 
     var loadTileConfig = function (tile) {
@@ -1767,7 +1779,7 @@ var MNTP;
 
     var getTileConfig = function () {
 
-        var inputs = q("input[data-property], select[data-property]", "#tile-config", true);
+        var inputs = q("input[data-property], select[data-property]", "#nav-new-tile-menu", true);
 
         var tile = {};
 
@@ -1775,40 +1787,39 @@ var MNTP;
 
             var input = inputs[i];
 
-            if (input.type.toLowerCase() != "color") {
 
-                if (input.type == "file" && input.files.length > 0) {
+            if (input.type == "file" && input.files.length > 0) {
 
-                    assign(tile, input.data("property"), input.files[0]);
+                assign(tile, input.data("property"), input.files[0]);
 
-                } else if (input.type == "checkbox" || input.type == "radio") {
+            } else if (input.type == "checkbox" || input.type == "radio") {
 
-                    assign(tile, input.data("property"), input.checked);
+                assign(tile, input.data("property"), input.checked);
 
-                } else if (input.value) {
+            } else if (input.value) {
 
-                    var propertyType = input.data("property-type") || "";
+                var propertyType = input.data("property-type") || "";
 
-                    switch (propertyType.toLowerCase()) {
-                        case "boolean":
-                            assign(tile, input.data("property"), (input.value.toLowerCase() == "true"))
-                            break;
-                        case "float":
-                            assign(tile, input.data("property"), parseFloat(input.value));
-                            break;
-                        case "int":
-                            assign(tile, input.data("property"), parseInt(input.value));
-                            break;
-                        default:
-                            assign(tile, input.data("property"), input.value);
-                            break;
-                    }
-
+                switch (propertyType.toLowerCase()) {
+                    case "boolean":
+                        assign(tile, input.data("property"), (input.value.toLowerCase() == "true"))
+                        break;
+                    case "float":
+                        assign(tile, input.data("property"), parseFloat(input.value));
+                        break;
+                    case "int":
+                        assign(tile, input.data("property"), parseInt(input.value));
+                        break;
+                    default:
+                        assign(tile, input.data("property"), input.value);
+                        break;
                 }
 
             }
 
         }
+
+        tile.accentColor = !tile.accentColor;
 
         if (tile.url && (tile.url.toLowerCase().indexOf("http://") < 0 && tile.url.toLowerCase().indexOf("https://") < 0)) {
             tile.url = "http://" + tile.url;
@@ -1818,31 +1829,21 @@ var MNTP;
             tile.hasImage = true;
             tile.removeImage = false;
 
-            q("input[data-property='hasImage']", "#tile-config").value = "true";
-            q("input[data-property='removeImage']", "#tile-config").value = "false";
+            q("input[data-property='hasImage']", "#nav-new-tile-menu").value = "true";
+            q("input[data-property='removeImage']", "#nav-new-tile-menu").value = "false";
         }
 
-        if (tile.hasImage && !tile.removeImage) {
-
-            tile.image = tile.image || {};
-
-            q("#tile-config-file-image").style.display = "none";
-
-            q("#tile-config-btn-removeImage").style.display = "";
-            q("#tile-config-imageSize").style.display = "";
+        if (tile.hasImage) {
+            q("#new-tile-remove-image").removeClass("hidden").addClass("animated fadeIn");
         } else {
-            q("#tile-config-file-image").style.display = "";
+            q("#new-tile-remove-image").removeClass("fadeIn").addClass("fadeOut");
 
-            q("#tile-config-btn-removeImage").style.display = "none";
-            q("#tile-config-imageSize").style.display = "none";
+            setTimeout(function () {
+                q("#new-tile-remove-image").addClass("hidden");
+            }, 200);
         }
 
-        if (tile.accentColor)
-            q("#tile-config-backgroundColor").style.display = "none";
-        else
-            q("#tile-config-backgroundColor").style.display = "block";
-
-		if (!tile.position && MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
+        if (!tile.position && MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
 		
 			tile.position = { 
 				left: (window.innerWidth / 2) - (MNTP.Config.TileWidthLg / 2), 

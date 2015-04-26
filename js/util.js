@@ -312,7 +312,7 @@ var dataURLtoObjectURL = function (dataURI) {
 	    if (cssClass instanceof Array)
 	        classList = cssClass;
 	    else
-	        classList.push(cssClass);
+	        classList.push(cssClass.split(" "));
 
 	    for (var i = 0; i < classList.length; i++)
 	        this.classList.add(classList[i]);

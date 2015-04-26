@@ -229,6 +229,15 @@ var newTileOpen = function () {
         navNewTileMenu.className += " ext";
         extSidebarOpen();
     }, animaDelay);
+
+    $("#new-tile-customise-color a.color-preview").css("background-color", MNTP.Config.AccentColor);
+    $("#new-tile-customise-color input").val(MNTP.Config.AccentColor);
+
+    $("#new-tile-customise-font-color a.color-preview").css("background-color", "#FFFFFF");
+    $("#new-tile-customise-font-color input").val("#FFFFFF");
+
+    loadPreviewTile();
+
 }
 
 // -------------- // 
@@ -303,12 +312,6 @@ $(document).ready(function () {
 
     });
 
-    $("#new-tile-url").keypress(function () {
-
-        setTimeout(refreshTilePreview, 0);
-
-    });
-
     // Text    
     $("#new-tile-name").focusin(function () {
 
@@ -321,7 +324,7 @@ $(document).ready(function () {
         $("#new-tile-select-logo").fadeInFromHidden();
         $("#new-tile-add-url").fadeInFromHidden();
         $("#new-tile-upload-logo").fadeInFromHidden();
-        $("#new-tile-remove-image").fadeInFromHidden();
+        //$("#new-tile-remove-image").fadeInFromHidden();
         $("#new-tile-submit-container").fadeInFromHidden();
 
     });
@@ -337,12 +340,6 @@ $(document).ready(function () {
             $(".bar", this).removeClass("error");
             $("label", this).removeClass("error").addClass("valid");
         };
-    });
-
-    $("#new-tile-name").keypress(function () {
-
-        setTimeout(refreshTilePreview, 0);
-
     });
 
     // RSS
@@ -386,35 +383,39 @@ $(document).ready(function () {
                 $("#new-tile-customise-tile-divider").removeClass("tile-divider-move--2");
             }, 350);
         }
+
+    });
+
+    //Tile color
+    $("#new-tile-customise-color input").change(function () {
+
+        $("#new-tile-customise-color a.color-preview").css("background-color", $(this).val());
+
+    });
+
+    //Font color
+    $("#new-tile-customise-font-color input").change(function () {
+
+        $("#new-tile-customise-font-color a.color-preview").css("background-color", $(this).val());
+
     });
 
     // Tile Logo - Select from database
     $("#new-tile-select-logo").click(function () {
-        $("#new-tile-add-url").addClass("fadeOutLeft");
+
+        $("#new-tile-add-url-text").addClass("fadeOutLeft");
+
         setTimeout(function () {
-            $("#new-tile-upload-logo").addClass("fadeOutLeft");
-        }, 100);
-        setTimeout(function () {
-            $("#new-tile-remove-image").addClass("fadeOutLeft");
-            $("#new-tile-btn-divider").addClass("tile-divider-move-3");
-        }, 200);
+            $("#new-tile-add-url-text").addClass("hidden").removeClass("fadeOutLeft");
+        }, 400);
+
     });
 
     // Tile Logo - Add URL
     $("#new-tile-add-url").click(function () {
-        $("#new-tile-select-logo").addClass("fadeOutLeft");
-        setTimeout(function () {
-            $("#new-tile-add-url").addClass("tile-divider-move-1");
-            $("#new-tile-upload-logo").addClass("fadeOutLeft");
-            $("#new-tile-add-url-text").removeClass("hidden").addClass("fadeInLeft animated");
-        }, 100);
-        setTimeout(function () {
-            $("#new-tile-add-url-text").removeClass("animated").addClass("tile-divider-move-1");
-        }, 400);
-        setTimeout(function () {
-            $("#new-tile-remove-image").addClass("fadeOutLeft");
-            $("#new-tile-btn-divider").addClass("tile-divider-move-3");
-        }, 200);
+
+        $("#new-tile-add-url-text").removeClass("hidden").addClass("fadeInLeft animated");
+
     });
 
     // Tile Logo - Add URL validation
@@ -433,21 +434,15 @@ $(document).ready(function () {
         });
     });
 
-
     // Tile Logo - Upload
     $("#new-tile-upload-logo").click(function () {
 
-        $("#new-tile-select-logo").addClass("fadeOutLeft");
+        $("#new-tile-add-url-text").addClass("fadeOutLeft");
 
         setTimeout(function () {
-            $("#new-tile-add-url").addClass("fadeOutLeft");
-            $("#new-tile-upload-logo").addClass("tile-divider-move-2");
-        }, 100);
+            $("#new-tile-add-url-text").addClass("hidden").removeClass("fadeOutLeft");
+        }, 400);
 
-        setTimeout(function () {
-            $("#new-tile-remove-image").addClass("fadeOutLeft");
-            $("#new-tile-btn-divider").addClass("tile-divider-move-3");
-        }, 200);
     });
 
     $.fn.removeInput = function () {
@@ -462,69 +457,7 @@ $(document).ready(function () {
         newTileReset();
     });
 
-
-    //ADD NEW TILE
-    $("#new-tile-submit a").click(function () {
-
-        saveTile();
-
-    });
-
-
 });
-
-
-var getTile = function () {
-
-    var tile = {};
-
-    tile.url = q("#new-tile-url input").value;
-    tile.name = q("#new-tile-name input").value;
-
-    tile.feed = {}
-    tile.url = q("#new-tile-rss input").value;
-    tile.name = q("#new-tile-name input").value;
-
-    tile.accentColor = !q("#customise-tile-color-switch input").checked;
-
-    tile.size = 2;
-
-    return tile;
-
-}
-
-var refreshTilePreview = function () {
-
-    var tilePreviewContainer = q("#tile-preview");
-
-    var tile = getTile();
-
-    var tileNode = Tile.getNode(tile, true);
-
-    tilePreviewContainer.innerHTML = "";
-
-    tilePreviewContainer.insertBefore(tileNode, null);
-
-
-}
-
-var saveTile = function () {
-
-    var tile = getTile();
-
-    Tile.save(tile)
-        .then(function () {
-
-            MNTP.Config.ReloadBackgroundImage = true;
-            load().then(saveTilesOrder);
-
-        })
-        .catch(function (error) {
-            console.log(error);
-            console.log(error.stack);
-        });
-
-}
 
 
 // Remove hidden
@@ -604,6 +537,7 @@ var newTileReset = function () {
     $("#new-tile-upload-logo").makeHidden();
     $("#new-tile-upload-logo").removeFadeIn();
     $("#new-tile-upload-logo").removeClass("fadeOutLeft tile-divider-move-2");
+    $("#new-tile-upload-logo input").removeInput();
 
     $("#new-tile-remove-image").makeHidden();
     $("#new-tile-remove-image").removeFadeIn();
@@ -616,6 +550,8 @@ var newTileReset = function () {
 
     $("#new-tile-divider-2, #new-tile-divider-3, #new-tile-divider-4").removeFadeIn();
     $("#new-tile-divider-2, #new-tile-divider-3, #new-tile-divider-4").makeHidden();
+
+    $("#nav-new-tile-menu input[type='hidden']").val("");
 };
 
 // Activate Dropdown

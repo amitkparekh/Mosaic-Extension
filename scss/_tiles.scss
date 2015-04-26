@@ -39,6 +39,7 @@
     @include transition(all 0.3s ease-out);
     border: 0px solid;
     z-index: 1;
+    color: white;
     
     &:hover {
         opacity: .9 !important;
@@ -99,10 +100,11 @@
                 margin: auto;
                 position: absolute;
                 top: 0; left: 0; bottom: 0; right: 0;
+                max-height: 80%;
+                max-width: 80%;
             }
             
             > label {
-                color: white;
                 font-size: 1.7em;
                 font-weight: 400;
                 position: absolute;

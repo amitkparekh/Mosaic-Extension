@@ -218,6 +218,9 @@ Tile.getNode = function (tile, preview) {
 
     tileNode.addClass("size" + tile.size);
 
+    if (tile.fontColor)
+        tileNode.style.color = tile.fontColor;
+
     if (tile.url && !preview) {
         tileNode.addEventListener("click", function (event) {
             navigate(tile.url, event);
@@ -333,6 +336,7 @@ Tile.createNewTile = function () {
         name: '',
         accentColor: true,
         backgroundColor: '',
+        fontColor: '',
         hasImage: false,
         removeImage: false,
         opacity: 0.3,
