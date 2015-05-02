@@ -416,23 +416,39 @@ $(document).ready(function () {
 
         $("#new-tile-add-url-text").removeClass("hidden").addClass("fadeInLeft animated");
 
+        q("input[data-property='removeImage']", "#nav-new-tile-menu").value = "true";
+        $("input[data-property='image.data']", "#nav-new-tile-menu").val("");
+
+        loadPreviewTile();
+
     });
 
     // Tile Logo - Add URL validation
     $("#new-tile-add-url-text").focusin(function () {
-        $(this).focusout(function () {
+        //$(this).focusout(function () {
 
-            var url = $("input", this).val();
+        //    var url = $("input", this).val();
 
-            if (/((?:https\:\/\/)|(?:http\:\/\/)|(?:www\.))?([a-zA-Z0-9\-]+[\.]{1}[a-zA-Z]{0,3}(?:\??)[a-zA-Z0-9\-\._\?\,\'\/\\\+&%\$#\=~]+)/ig.test(url)) {
-                $(".bar", this).removeClass("error");
-                $("label", this).removeClass("error");
-            } else {
-                $(".bar", this).addClass("error");
-                $("label", this).addClass("error").addClass("valid");
-            }
-        });
+        //    if (url.match(/[\s\S]+\.[\s\S]+/g) || url == "") {
+        //        $(".bar", this).removeClass("error");
+        //        $("label", this).removeClass("error");
+        //    } else {
+        //        $(".bar", this).addClass("error");
+        //        $("label", this).addClass("error").addClass("valid");
+        //    }
+        //});
     });
+
+    $("#new-tile-add-url-text").focusout(function () {
+
+        var url = $("input", this).val();
+
+        if (url == "")
+            $("label", this).removeClass("valid");
+        else
+            $("label", this).addClass("valid");
+    });
+
 
     // Tile Logo - Upload
     $("#new-tile-upload-logo").click(function () {
@@ -492,7 +508,7 @@ $.fn.makeHidden = function () {
 
 var newTileReset = function () {
 
-    $("#new-tile-url .bar, #new-tile-url label, #new-tile-name .bar, #new-tile-name label, #new-tile-rss .bar, #new-tile-rss label").removeClass("error");
+    $("#new-tile-url .bar, #new-tile-url label, #new-tile-name .bar, #new-tile-name label, #new-tile-rss .bar, #new-tile-rss label, #new-tile-add-url").removeClass("error");
     $("#new-tile-url label, #new-tile-name label, #new-tile-rss label").removeClass("valid");
 
     $("#new-tile-url input").removeInput();
@@ -526,13 +542,15 @@ var newTileReset = function () {
     $("#new-tile-add-url").makeHidden();
     $("#new-tile-add-url").removeFadeIn();
     $("#new-tile-add-url").removeClass("fadeOutLeft tile-divider-move-1");
+    $("#new-tile-add-url").removeInput();
 
     if ($("#new-tile-add-url-text").hasClass("hidden")) {
         jQuery.noop();
     } else {
-        $("#new-tile-add-url-text").removeInput();
         $("#new-tile-add-url-text").removeClass("tile-divider-move-1 fadeInLeft").addClass("hidden");
     }
+
+    $("#new-tile-add-url-text input").removeInput();
 
     $("#new-tile-upload-logo").makeHidden();
     $("#new-tile-upload-logo").removeFadeIn();

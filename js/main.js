@@ -703,17 +703,22 @@ var MNTP;
 
             //-- save tile configurations
             q("#new-tile-submit a").addEventListener("click", function () {
-                saveTileConfig()
-                    .then(function () {
-                        hideConfigs();
-                        MNTP.Config.ReloadBackgroundImage = true;
-                        sidebarToggle();
-                        load().then(saveTilesOrder);
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                        console.log(error.stack);
-                    });
+
+                if (validateForms(q("#nav-new-tile-menu"))) {
+
+                    saveTileConfig()
+                        .then(function () {
+                            hideConfigs();
+                            MNTP.Config.ReloadBackgroundImage = true;
+                            sidebarToggle();
+                            load().then(saveTilesOrder);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            console.log(error.stack);
+                        });
+
+                }
             });
 
             //cancel tile configurations
@@ -737,14 +742,20 @@ var MNTP;
 
                 q("input[data-property='removeImage']", "#nav-new-tile-menu").value = "true";
                 q("input[data-property='image.data']", "#nav-new-tile-menu").value = ""
+                q("input[data-property='image.url']", "#nav-new-tile-menu").value = ""
 
                 loadPreviewTile();
 
                 q("#new-tile-remove-image").removeClass("fadeIn").addClass("fadeOut");
-
                 setTimeout(function () {
                     q("#new-tile-remove-image").addClass("hidden");
                 }, 200);
+
+
+                $("#new-tile-add-url-text").addClass("fadeOutLeft");
+                setTimeout(function () {
+                    $("#new-tile-add-url-text").addClass("hidden").removeClass("fadeOutLeft");
+                }, 400);
 
             });
 
@@ -1825,9 +1836,12 @@ var MNTP;
             tile.url = "http://" + tile.url;
         }
 
-        if (tile.image && tile.image.data) {
+        if (tile.image && (tile.image.data || tile.image.url)) {
             tile.hasImage = true;
             tile.removeImage = false;
+
+            if (tile.image.data)
+                q("input[data-property='image.url']", "#nav-new-tile-menu").value = ""
 
             q("input[data-property='hasImage']", "#nav-new-tile-menu").value = "true";
             q("input[data-property='removeImage']", "#nav-new-tile-menu").value = "false";
