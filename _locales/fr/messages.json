@@ -34,7 +34,7 @@
     },
     
     "show_recently_closed": {
-        "message": "Show 'Recently Closed'"
+        "message": "Afficher 'Récemment fermés'"
     },
     
     "settings": {
@@ -94,12 +94,12 @@
     },
     
     "select": {
-        // Max 7 characters (if possible)
-        "message": "Sélectionner"
+        // Done
+        "message": "Choisir"
     },
     
     "choose": {
-        // Max 7 characters (if possible)
+        // Done, same as the previous one though
         "message": "Choisir"
     },
     
@@ -108,8 +108,8 @@
     },
     
     "add_url": {
-        // Max 7 characters (if possible)
-        "message": "Ajouter une URL"
+        // Not possible but I still shortened this one
+        "message": "Ajouter l'URL"
     },
     
     "upload_from_computer": {
@@ -117,13 +117,13 @@
     },
     
     "upload": {
-        // Max 7 characters (if possible)
-        "message": "Télécharger"
+        // Upload is an english word but we can use it in french too
+        "message": "Upload"
     },
     
     "get": {
-        // Max 7 characters (if possible)
-        "message": "Get"
+        // Done
+        "message": "Obtenir"
     },
     
     "remove_image": {
@@ -131,18 +131,18 @@
     },
     
     "remove": {
-        // Max 7 characters (if possible)
+        // Done
         "message": "Enlever"
     },
     
     "reset": {
-        // Max 7 characters (if possible)
+        // Done
         "message": "Remettre"
     },
     
     "cancel": {
-        // Max 7 characters (if possible)
-        "message": "Cancel"
+        // Done
+        "message": "Annuler"
     },
     
      "add_tile": {
@@ -178,7 +178,7 @@
     },
     
     "backup_restore": {
-        "message": "Backup/Restore"
+        "message": "Sauvegarder/Restaurer"
     },
     
     "report_a_bug": {
@@ -198,7 +198,7 @@
     },
     
     "show_tile_animation": {
-        "message": "Show tile animation"
+        "message": "Afficher l'animation des tuiles"
     },
     
     "default_tile_color": {
@@ -290,7 +290,7 @@
     },
     
     "get_from_wikimedia_commons": {
-        "message": "Obtenir de 'Wikimedia Commons'"
+        "message": "Obtenir depuis 'Wikimedia Commons'"
     },
     
     /**
@@ -306,7 +306,7 @@
     },
     
     "import": {
-        // Max 7 characters (if possible)
+        // Almost 7, sorry
         "message": "Importer"
     },
     
@@ -315,7 +315,7 @@
     },
     
     "export": {
-        // Max 7 characters (if possible)
+        // Same here
         "message": "Exporter"
     },
     
@@ -368,11 +368,11 @@
     },
     
     "save": {
-        "message": "Save"
+        "message": "Sauvegarder"
     },
     
     "confirm": {
-        "message": "Confirm"
+        "message": "Confirmer"
     }
     
 }
