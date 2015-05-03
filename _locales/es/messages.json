@@ -1,4 +1,4 @@
-// Spanish (es)
+﻿// Spanish (es)
 
 {
     "extName": {
@@ -70,7 +70,7 @@
     },
     
     "choose_tile_color": {
-        "message": "Elegir el color del azulejo"
+        "message": "Elegir el color del mosaico"
     },
     
     "tile_color": {
@@ -90,12 +90,12 @@
     },
     
     "choose_from_the_database": {
-        "message": "Elija de la base de datos"
+        "message": "Elije de la base de datos"
     },
     
     "select": {
         // Max 7 characters (if possible)
-        "message": "Seleccionar"
+        "message": "Escoger"
     },
     
     "choose": {
@@ -109,7 +109,7 @@
     
     "add_url": {
         // Max 7 characters (if possible)
-        "message": "Añadir URL"
+        "message": "Aña.URL"
     },
     
     "add": {
@@ -127,7 +127,7 @@
     
     "get": {
         // Max 7 characters (if possible)
-        "message": "Get"
+        "message": "Obtener"
     },
     
     "remove_image": {
@@ -146,7 +146,7 @@
     
     "cancel": {
         // Max 7 characters (if possible)
-        "message": "Cancel"
+        "message": "Cancelar"
     },
     
     "add_tile": {
@@ -178,11 +178,11 @@
     },
     
     "backup_restore_settings": {
-        "message": "Guardar/Cargar ajustes"
+        "message": "Guardar/Restaurar ajustes"
     },
     
     "backup_restore": {
-        "message": "Backup/Restore"
+        "message": "Guardar/Restaurar"
     },
     
     "report_a_bug": {
@@ -202,7 +202,7 @@
     },
     
     "default_tile_color": {
-        "message": "Color del mosaico por defecto"
+        "message": "Color por defecto del mosaico"
     },
     
     "background_color": {
@@ -278,7 +278,7 @@
     },
     
     "reset_to_default": {
-        "message": "Resetear por defecto"
+        "message": "Valores por defecto"
     },
     
     /**
@@ -348,7 +348,7 @@
     },
     
     "edit_tile_info": {
-        "message": "Editar info del mosaico"
+        "message": "Editar información del mosaico"
     },
     
     "customise_tile_colours": {
