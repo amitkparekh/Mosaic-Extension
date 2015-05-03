@@ -34,7 +34,7 @@
     },
     
     "show_recently_closed": {
-        "message": "Show 'Recently Closed"
+        "message": "Pokaż 'Ostatnio Zamknięte'"
     },
    
     "settings": {
@@ -86,7 +86,7 @@
     },
    
     "choose_from_the_database": {
-        "message": "Choose from the database"
+        "message": "Wybierz z bazy"
     },
     
     "select": {
@@ -96,7 +96,7 @@
    
     "choose": {
         // Max 7 characters (if possible)
-        "message": "Choose"
+        "message": "Wybierz"
     },
     
     "add_from_url": {
@@ -105,12 +105,12 @@
    
     "add_url": {
         // Max 7 characters (if possible)
-        "message": "Dodaj adres"
+        "message": "Dodaj URL"
     },
     
     "add": {
         // Max 7 characters
-        "message": "Add"
+        "message": "Dodaj"
     },
    
     "upload_from_computer": {
@@ -124,7 +124,7 @@
    
     "get": {
         // Max 7 characters (if possible)
-        "message": "Get"
+        "message": "Pobierz"
     },
     
     "remove_image": {
@@ -138,16 +138,16 @@
    
     "reset": {
         // Max 7 characters (if possible)
-        "message": "Zresetuj"
+        "message": "Resetuj"
     },
     
     "cancel": {
         // Max 7 characters (if possible)
-        "message": "Cancel"
+        "message": "Anuluj"
     },
     
     "add_tile": {
-        "message": "Add tile"
+        "message": "Dodaj kafelek"
     },
    
     /**
@@ -179,7 +179,7 @@
     },
    
     "backup_restore": {
-        "message": "Backup/Restore"
+        "message": "Kopia zapasowa/Przywracanie"
     },
     
     "report_a_bug": {
@@ -199,7 +199,7 @@
     },
    
     "show_tile_animation": {
-        "message": "Show tile animation"
+        "message": "Pokaż animację kafelków"
     },
     
     "default_tile_color": {
@@ -308,7 +308,7 @@
    
     "import": {
         // Max 7 characters (if possible)
-        "message": "Importuj"
+        "message": "Import"
     },
    
     "export_settings": {
@@ -317,7 +317,7 @@
    
     "export": {
         // Max 7 characters (if possible)
-        "message": "Eksportuj"
+        "message": "Eksport"
     },
    
     "reset_settings": {
@@ -369,10 +369,10 @@
     }, 
     
     "save": {
-        "message": "Save"
+        "message": "Zapisz"
     },
     
     "confirm": {
-        "message": "Confirm"
+        "message": "Potwierdź"
     }
 }
