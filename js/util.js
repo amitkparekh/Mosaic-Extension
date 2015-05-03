@@ -67,20 +67,6 @@ var invertColor = function(hexColor) {
     return color;
 }
 
-var JSONLocalStorage = {
-
-    getItem: function (key) {
-        var value = localStorage.getItem(key);
-        return value ? JSON.parse(value) : null;
-    },
-
-    setItem: function (key, value) {
-        var string = JSON.stringify(value);
-        localStorage.setItem(key, string);
-    }
-
-};
-
 var createTab = function (url) {
 
     new Promise(function (success, fail) {
@@ -281,6 +267,49 @@ var dataURLtoObjectURL = function (dataURI) {
     }
 };
 
+var validateForms = function (container) {
+
+    var valid = true;
+
+    var forms = q("form", container, true);
+
+    for (var i = 0; i < forms.length; i++) {
+
+        var inputs = q("input, text", forms[i], true);
+
+        for (var x = 0; x < inputs.length; x++) {
+            
+            var input = inputs[x];
+
+            valid = input.validity.valid;
+
+            valid = valid && !q("span", input.parentNode).hasClass("error");
+
+            if (!valid) {
+                break;
+            }
+        }
+
+        if (!valid) break;
+    }
+
+    return valid;
+
+}
+
+var JSONLocalStorage = {
+
+    getItem: function (key) {
+        var value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : null;
+    },
+
+    setItem: function (key, value) {
+        var string = JSON.stringify(value);
+        localStorage.setItem(key, string);
+    }
+
+};
 
 (function() {
 
@@ -312,7 +341,7 @@ var dataURLtoObjectURL = function (dataURI) {
 	    if (cssClass instanceof Array)
 	        classList = cssClass;
 	    else
-	        classList.push(cssClass);
+	        classList.push(cssClass.split(" "));
 
 	    for (var i = 0; i < classList.length; i++)
 	        this.classList.add(classList[i]);

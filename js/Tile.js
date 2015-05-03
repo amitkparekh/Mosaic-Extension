@@ -66,6 +66,13 @@ Tile.save = function (tile) {
                         success();
                     }, fail);
 
+                } else if (tile.image && tile.image.url) {
+
+                    getDataUrlFromUrl(tile.image.url).then(function (result) {
+                        tile.image.data = result.dataURL;
+                        success();
+                    }, fail);
+
                 } else {
                     success();
                 }
@@ -218,6 +225,9 @@ Tile.getNode = function (tile, preview) {
 
     tileNode.addClass("size" + tile.size);
 
+    if (tile.fontColor)
+        tileNode.style.color = tile.fontColor;
+
     if (tile.url && !preview) {
         tileNode.addEventListener("click", function (event) {
             navigate(tile.url, event);
@@ -266,18 +276,27 @@ Tile.getNode = function (tile, preview) {
         new Promise(function (success, fail) {
 
             if (tile.image && tile.image.data) {
+
                 getDataUrlFromFile(tile.image.data).then(function (dataURL) {
                     tile.image.data = dataURL;
                     success(tile.image);
                 }, fail);
-            } else {
-                Image.get(Image.Type.Tile, tile.id).then(function (obj) {
 
+            } else if (tile.image && tile.image.url) {
+
+                getDataUrlFromUrl(tile.image.url).then(function (result) {
+                    tile.image.data = result.dataURL;
+                    success(tile.image);
+                });
+
+            } else if (tile.id > 0) {
+
+                Image.get(Image.Type.Tile, tile.id).then(function (obj) {
                     var image = tile.image || obj;
                     image.data = obj.data;
                     success(image);
-
                 }, fail);
+
             }
 
         }).then(function (image) {
@@ -328,11 +347,12 @@ Tile.createNewTile = function () {
 
     return {
         id: 0,
-        size: 2, //[1, 2]
+        size: 2, //[1, 2, 3]
         url: 'http://',
         name: '',
         accentColor: true,
         backgroundColor: '',
+        fontColor: '',
         hasImage: false,
         removeImage: false,
         opacity: 0.3,

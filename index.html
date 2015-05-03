@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 
@@ -111,34 +111,45 @@
 
             <!-- Add new tile -->
             <ul id="nav-new-tile-menu" class="sidebar-nav">
+
+                <input type="hidden" data-property="id" data-property-type="int" />
+                <input type="hidden" data-property="idGroup" data-property-type="int" />
+                <input type="hidden" data-property="size" data-property-type="int" />
+                <input type="hidden" data-property="order" data-property-type="int" />
+                <input type="hidden" data-property="hasImage" data-property-type="boolean" />
+                <input type="hidden" data-property="removeImage" data-property-type="boolean" />
+
+                <input type="hidden" data-property="position.left" data-property-type="int" />
+                <input type="hidden" data-property="position.top" data-property-type="int" />
+
                 <div class="sidebar-text">
                     <span id="text_add_new_tile_2"></span>
                     <a id="nav-new-tile-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
-                <form class="tile-preview">
+                <form class="tile-preview" id="tile-preview">
                     <div>
 
                     </div>
                 </form>
                 <form>
                     <div class="text-field-group" id="new-tile-url">
-                        <input type="text" required>
+                        <input type="text" data-property="url">
                         <span class="bar"></span>
                         <label id="text_site_url"></label>
                     </div>
                 </form>
                 <form class="hidden">
                     <div class="text-field-group" id="new-tile-name">
-                        <input type="text" required>
+                        <input type="text" data-property="name">
                         <span class="bar"></span>
                         <label id="text_site_name"></label>
                     </div>
                 </form>
                 <form class="hidden">
                     <div class="text-field-group" id="new-tile-rss">
-                        <input type="text">
+                        <input type="text" data-property="rss">
                         <span class="bar"></span>
                         <label id="text_site_rss"></label>
                     </div>
@@ -148,7 +159,7 @@
                     <span id="text_customise_tile_color"></span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
-                            <input type="checkbox">
+                            <input type="checkbox" data-property="accentColor">
                             <span class="lever"></span>
                         </label>
                     </div>
@@ -158,12 +169,14 @@
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
+                    <input type="color" data-property="backgroundColor" style="position: absolute; right: 12px; width: 90px; height: 32px; top: 8px; cursor: pointer; z-index: 2; opacity: 0;" />
                 </form>
                 <form id="new-tile-customise-font-color" class="tile-choice hidden">
                     <span id="text_font_color"></span>
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
+                    <input type="color" data-property="fontColor" style="position: absolute; right: 12px; width: 90px; height: 32px; top: 8px; cursor: pointer; z-index: 2; opacity: 0;" />
                 </form>
 
                 <div id="new-tile-customise-tile-divider">
@@ -173,8 +186,8 @@
                     <div id="new-tile-choice-title" class="sidebar-text tile-choice-title hidden">
                         <span id="text_tile_image"></span>
                     </div>
-                    <form class="tile-choice hidden" id="new-tile-select-logo">
-                        <span id="text_select_from_our_database"></span>
+                    <form class="tile-choice hidden" id="new-tile-select-logo" style="display: none;">
+                        <span>Select from our database</span>
                         <div>
                             <a class="waves-effect btn btn-inverse" id="text_select"></a>
                         </div>
@@ -187,7 +200,7 @@
                     </form>
                     <form class="hidden" id="new-tile-add-url-text">
                         <div class="text-field-group" id="tile-image-URL">
-                            <input type="text">
+                            <input type="text" data-property="image.url">
                             <span class="bar"></span>
                             <label id="text_add_url_2"></label>
                         </div>
@@ -197,6 +210,7 @@
                         <div>
                             <a class="waves-effect btn btn-inverse" id="text_upload"></a>
                         </div>
+                        <input type="file" data-property="image.data" style="position: relative; left: 197px; width: 96px; height: 32px; top: -38px; cursor: pointer; opacity: 0; line-height: 0px;" />
                     </form>
                     <form class="tile-choice hidden" id="new-tile-remove-image">
                         <span id="text_remove_image"></span>
@@ -810,10 +824,8 @@
 
     <div class="wrapper">
         <div class="constructor">
+
             <div id="wallpaper" class="wallpaper"></div>
-            
-            
-            
             
             <!--BOOKMARKS-->
             <div class="bookmark-bar">
@@ -1330,6 +1342,7 @@
             </div>
 
             <a id="button-options" class="button-options"></a>
+
         </div>
     </div>
 
