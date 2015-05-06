@@ -231,6 +231,7 @@ function setLocalisedTopicList() {
     q("#text_site_rss_2").innerText = getI18nMsg("site_rss");
     
     q("#text_customise_tile_color_3").innerText = getI18nMsg("customise_tile_color");
+    q("#text_customise_tile_color_4").innerText = getI18nMsg("customise_tile_color");
     q("#text_tile_color_2").innerText = getI18nMsg("tile_color");
     q("#text_font_color_2").innerText = getI18nMsg("font_color");
     
@@ -333,12 +334,12 @@ var fixSizes = function() {
     console.log(browserLocale);
     
     // Fix "Edit Tile Menu Btn Container"
-    var editTile_ResetButton_a = document.getElementById("edit-tile-reset").getElementsByTagName("a")[0].innerText.length;
+    var editTile_ResetButton_a = document.getElementById("edit-tile-delete").getElementsByTagName("a")[0].innerText.length;
     var editTile_SubmitButton_a = document.getElementById("edit-tile-submit").getElementsByTagName("a")[0].innerText.length;
     var editTileBtnLength = editTile_ResetButton_a + editTile_SubmitButton_a;
     
     if ( editTileBtnLength > 20 ) {
-        q("#edit-tile-reset").className += " btn-wide";
+        q("#edit-tile-delete").className += " btn-wide";
         q("#edit-tile-submit").className += " btn-wide";
     };
     

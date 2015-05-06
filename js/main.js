@@ -8,6 +8,7 @@
 /// <reference path="swayy.js" />
 /// <reference path="Feed.js" />
 /// <reference path="background/backgroundutils.js" />
+/// <reference path="sidebar.js" />
 
 var MNTP;
 
@@ -661,32 +662,6 @@ var MNTP;
             //close popups
             //q("#overlay").addEventListener("click", hideConfigs);
 
-            //swith between configurations panels
-            q("[data-panel-for]", true).forEach(function (element) {
-
-                element.addEventListener("click", function () {
-
-                    q("[data-panel]", true).forEach(function (element) {
-                        element.style.display = "none";
-                    });
-
-                    q("[data-panel=" + element.data("panel-for") + "]", true).forEach(function (element) {
-                        element.style.display = "block";
-                    });
-
-                    if (element.data("panel-for") == "config-sync" && !q("#iframe-dropbox").attributes["src"]) {
-                        q("#iframe-dropbox").setAttribute("src", "http://localhost:63408/Dropbox/Default.aspx");
-                    }
-
-                });
-
-            });
-
-            //hides the loader when the iframe finishes loading
-            q("#iframe-dropbox").addEventListener("load", function () {
-                q("#dropbox-loader").style.display = "none";
-            });
-
             //-- click on the preview tile does nothing
             q("#nav-new-tile-menu #tile-preview").addEventListener("click", function (event) {
                 event.preventDefault();
@@ -701,7 +676,7 @@ var MNTP;
                 return false;
             });
 
-            //-- save tile configurations
+            //-- save tile configurations (new)
             q("#new-tile-submit a").addEventListener("click", function () {
 
                 if (validateForms(q("#nav-new-tile-menu"))) {
@@ -719,14 +694,31 @@ var MNTP;
                         });
 
                 }
+
             });
 
-            //cancel tile configurations
-            q("#tile-config-btn-cancel").addEventListener("click", function () {
-                hideConfigs();
+            //-- save tile configurations (edit)
+            q("#edit-tile-submit a").addEventListener("click", function () {
+
+                if (validateForms(q("#edit-tile-menu"))) {
+
+                    saveTileConfig(true)
+                        .then(function () {
+                            hideConfigs();
+                            MNTP.Config.ReloadBackgroundImage = true;
+                            sidebarToggle();
+                            load().then(saveTilesOrder);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            console.log(error.stack);
+                        });
+
+                }
+
             });
 
-            //-- live update the preview tile
+            //-- live update the preview tile (new)
             q("#nav-new-tile-menu input, #nav-new-tile-menu select", true).forEach(function (element) {
 
                 element.addEventListener(["keypress", "change", "input"], function () {
@@ -737,7 +729,18 @@ var MNTP;
 
             });
 
-            //-- remove tile image
+            //-- live update the preview tile (edit)
+            q("#edit-tile-menu input, #edit-tile-menu select", true).forEach(function (element) {
+
+                element.addEventListener(["keypress", "change", "input"], function () {
+                    setTimeout(function () {
+                        loadPreviewTile(null, true);
+                    }, 0);
+                });
+
+            });
+
+            //-- remove tile image (new)
             q("#new-tile-remove-image").addEventListener("click", function () {
 
                 q("input[data-property='removeImage']", "#nav-new-tile-menu").value = "true";
@@ -752,29 +755,61 @@ var MNTP;
                 }, 200);
 
 
-                $("#new-tile-add-url-text").addClass("fadeOutLeft");
+                q("#new-tile-add-url-text").addClass("fadeOutLeft");
                 setTimeout(function () {
-                    $("#new-tile-add-url-text").addClass("hidden").removeClass("fadeOutLeft");
+                    q("#new-tile-add-url-text").addClass("hidden").removeClass("fadeOutLeft");
                 }, 400);
 
             });
 
-            //right click on tiles
+            //-- remove tile image (edit)
+            q("#edit-tile-remove-image").addEventListener("click", function () {
+
+                q("input[data-property='removeImage']", "#edit-tile-menu").value = "true";
+                q("input[data-property='image.data']", "#edit-tile-menu").value = ""
+                q("input[data-property='image.url']", "#edit-tile-menu").value = ""
+
+                loadPreviewTile(null, true);
+
+                q("#edit-tile-remove-image").removeClass("fadeIn").addClass("fadeOut");
+                setTimeout(function () {
+                    q("#edit-tile-remove-image").addClass("hidden");
+                }, 200);
+
+
+                q("#edit-tile-add-url-text").addClass("fadeOutLeft");
+                setTimeout(function () {
+                    q("#edit-tile-add-url-text").addClass("hidden").removeClass("fadeOutLeft");
+                }, 400);
+
+            });
+
+            //-- right click on tiles
             q(".tile", true).forEach(function (element) {
 
                 element.addEventListener("contextmenu", function (event) {
 
-                    q("#options .context").style.display = "block";
+                    q(".tile.selected", true).forEach(function (tileNode) {
+                        tileNode.removeClass("selected");
+                    });
 
-                    this.toggleClass("selected");
+                    this.addClass("selected");
 
-                    var selectCount = q(".tile.selected", true).length;
+                    q("#context-edit-tile").style.display = "block";
+                    q("#context-remove-tile").style.display = "block";
+                    q("#context-separator").style.display = "block";
 
-                    q("#options").toggleClass("hidden", selectCount == 0);
+                    var contextMenu = q(".context-menu");
 
-                    q("#options-btn-edit").style.display = selectCount == 1 ? "block" : "none";
+                    contextMenu.addClass("hidden");
+                    
+                    setTimeout(function () {
 
-                    //this.style.borderColor = invertColor(MNTP.Config.AccentColor);
+                        contextMenu.removeClass("hidden");
+                        contextMenu.style.top = event.y + "px";
+                        contextMenu.style.left = event.x + "px";
+
+                    }, 50);
 
                     event.stopPropagation();
                     event.preventDefault();
@@ -783,45 +818,61 @@ var MNTP;
 
             });
 
-            //right anywhere else shows the global options
+            //-- right anywhere else shows the global options
             q("body").addEventListener("contextmenu", function (event) {
 
-                if (event.target == q("body") || event.target.hasClass(["tile-group", "container"])) {
+                if (event.target == q("body") || event.target.hasClass(["wrapper", "container", "wallpaper", "tile-group"])) {
 
-                    if (q(".tile.selected", true).length == 0) {
+                    q(".tile.selected", true).forEach(function (tileNode) {
+                        tileNode.removeClass("selected");
+                    });
 
-                        q("#options .context").style.display = "none";
+                    q("#context-edit-tile").style.display = "none";
+                    q("#context-remove-tile").style.display = "none";
+                    q("#context-separator").style.display = "none";
 
-                        q("#options").toggleClass("hidden");
-                        q("#options-btn-edit").style.display = "none";
+                    var contextMenu = q(".context-menu");
 
-                    }
+                    contextMenu.addClass("hidden");
+
+                    setTimeout(function () {
+
+                        contextMenu.removeClass("hidden");
+                        contextMenu.style.top = event.y + "px";
+                        contextMenu.style.left = event.x + "px";
+
+                    }, 50);
+
                 }
 
-             //   event.preventDefault();
-                //return false;
-
+                event.preventDefault();
+                return false;
             });
 
-            //left click anywhere else closes the options popup
+            //-- left click anywhere else closes the context menu and the sidebar
             q("body").addEventListener("click", function (event) {
-                if (event.target == q("body") || event.target.hasClass(["tile-group", "container"])) {
-                    hideOptions();
+
+                if (event.target == q("body") || event.target.hasClass(["wrapper", "container", "wallpaper", "tile-group"])) {
+
+                    q(".context-menu").addClass("hidden");
+
+                    q(".tile.selected", true).forEach(function (tileNode) {
+                        tileNode.removeClass("selected");
+                    });
+
+                    sidebar.removeClass("open");
+                    menuButton.removeClass("active");
+                    subMenuClose();
+                    
+                    setTimeout(function () {
+                        navMain.removeClass("open");
+                    }, animaDelay);
+                    
                 }
             });
 
-            //click on options button shows global options
-            q("#button-options").addEventListener("click", function (event) {
-
-                q("#options .context").style.display = "none";
-
-                q("#options").toggleClass("hidden");
-                q("#options-btn-edit").style.display = "none";
-
-            });
-
-            //resize tile - smaller
-            q("#options-btn-resize-small").addEventListener("click", function () {
+            //-- resize tile - smaller
+            q("#edit-tile-make-smaller").addEventListener("click", function () {
 
                 var tiles = q(".tile.selected", true);
 
@@ -853,8 +904,8 @@ var MNTP;
 
             });
 
-            //resize tile - bigger
-            q("#options-btn-resize-big").addEventListener("click", function () {
+            //-- resize tile - bigger
+            q("#edit-tile-make-bigger").addEventListener("click", function () {
 
                 var tiles = q(".tile.selected", true);
 
@@ -886,46 +937,110 @@ var MNTP;
 
             });
 
-            //edit tile
-            q("#options-btn-edit").addEventListener("click", function () {
-                var id = q(".tile.selected").data("id");
-                showTileConfig(id);
+            //-- edit tile
+            q("#context-edit-tile").addEventListener("click", function (event) {
 
-                hideOptions();
-            });
+                closeAllSubmenus().then(function () {
 
-            //remove tiles
-            q("#options-btn-remove").addEventListener("click", function () {
+                    q(".context-menu").addClass("hidden");
 
-                var tiles = q(".tile.selected", true);
+                    var id = q(".tile.selected").data("id");
+                    showTileConfig(id);
 
-                for (var i = 0; i < tiles.length; i++) {
+                });
 
-                    var tileNode = tiles[i];
-                    var id = tileNode.data("id");
-
-                    tileNode.remove();
-                    Tile.remove(id);
-
-                }
-
-                reorder();
-
-                hideOptions();
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
 
             });
 
-            //add tile
-            q("#options-btn-add-tile").addEventListener("click", function () {
-                showTileConfig();
-                hideOptions();
+            //-- remove tile
+            q("#context-remove-tile, #edit-tile-delete", true).forEach(function (element) {
+
+                element.addEventListener("click", function () {
+
+                    q(".context-menu").addClass("hidden");
+
+                    var tiles = q(".tile.selected", true);
+
+                    for (var i = 0; i < tiles.length; i++) {
+
+                        var tileNode = tiles[i];
+                        var id = tileNode.data("id");
+
+                        tileNode.remove();
+                        Tile.remove(id);
+
+                    }
+
+                    reorder();
+
+                    sidebar.removeClass("open");
+                    menuButton.removeClass("active");
+                    subMenuClose();
+
+                    setTimeout(function () {
+                        navMain.removeClass("open");
+                    }, animaDelay);
+
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return false;
+
+                });
+
             });
 
-            //settings
-            q("#options-btn-settings").addEventListener("click", function () {
-                loadConfig();
-                showConfig();
-                hideOptions();
+            //-- add tile
+            q("#context-add-tile").addEventListener("click", function () {
+
+                closeAllSubmenus().then(function () {
+
+                    sidebar.addClass("open");
+                    menuButton.addClass("active");
+
+                    navNewTileMenu.addClass("open ext");
+                    extSidebarOpen();
+
+                    loadPreviewTile();
+
+                    q(".context-menu").addClass("hidden");
+
+                    q(".tile.selected", true).forEach(function (tileNode) {
+                        tileNode.removeClass("selected");
+                    });
+
+                });
+
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+
+            });
+
+            //-- settings
+            q("#context-settings").addEventListener("click", function () {
+
+                closeAllSubmenus().then(function () {
+
+                    sidebar.addClass("open");
+                    menuButton.addClass("active");
+
+                    navMainOpen();
+
+                    q(".context-menu").addClass("hidden");
+
+                    q(".tile.selected", true).forEach(function (tileNode) {
+                        tileNode.removeClass("selected");
+                    });
+
+                });
+
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+
             });
 
             //live update the configurations
@@ -1234,6 +1349,26 @@ var MNTP;
             });
 
             success();
+
+        });
+
+    }
+
+    var closeAllSubmenus = function () {
+
+        return new Promise(function (success, fail) {
+
+            extSidebarClose();
+
+            var subMenus = q(".sidebar-nav.open", true);
+
+            for (var i = 0; i < subMenus.length; i++)
+                subMenus[i].removeClass("open ext");
+
+            if (subMenus.length > 0)
+                setTimeout(success, animaDelay);
+            else
+                success();
 
         });
 
@@ -1736,15 +1871,7 @@ var MNTP;
 
     var showTileConfig = function (idTile) {
 
-        q("#overlay").style.display = "block";
-        q("#config").style.display = "none";
-        q("#tile-config").style.display = "block";
-
-        q("[data-panel]", true).forEach(function (element) {
-            element.style.display = "none";
-        });
-
-        q("[data-panel='tile-config-general']").style.display = "block";
+        editMenuOpen();
 
         if (idTile) {
 
@@ -1752,45 +1879,75 @@ var MNTP;
                 loadTileConfig(tile);
             });
 
-        } else {
-            loadTileConfig(Tile.createNewTile());
-        }
-
+        } 
     }
 
-    var loadPreviewTile = function (tile) {
-        q("#nav-new-tile-menu #tile-preview").innerHTML = "";
+    var loadPreviewTile = function (tile, isEdit) {
 
-        var tile = tile || getTileConfig();
+        var idMenu = isEdit ? "#edit-tile-menu" : "#nav-new-tile-menu";
 
-        q("#nav-new-tile-menu #tile-preview").insertBefore(Tile.getNode(tile, true), null);
+        q(".tile-preview", idMenu).innerHTML = "";
+
+        var tile = tile || getTileConfig(isEdit);
+
+        q(".tile-preview", idMenu).insertBefore(Tile.getNode(tile, true), null);
 
         if (q("#wallpaper").style.backgroundImage && MNTP.Config.TileExtendBackground && tile.accentColor) {
-            q("#nav-new-tile-menu #tile-preview .tile-background").style.backgroundImage = q("#wallpaper").style.backgroundImage;
+            q(".tile-preview .tile-background", idMenu).style.backgroundImage = q("#wallpaper").style.backgroundImage;
         }
     }
 
     var loadTileConfig = function (tile) {
 
-        var inputs = q("input[data-property], select[data-property]", "#tile-config", true);
+        var inputs = q("input[data-property], select[data-property]", "#edit-tile-menu", true);
 
         for (var i = 0; i < inputs.length; i++) {
             var input = inputs[i];
 
-            if (input.type == "checkbox" || input.type == "radio")
+            if (input.type == "checkbox" || input.type == "radio") {
+
                 input.checked = getPropertyValue(tile, input.data("property")) || false;
-            else
+
+            } else {
+
                 input.value = getPropertyValue(tile, input.data("property")) || "";
+
+                if (input.type == "text")
+                    q("label", input.parentNode).toggleClass("valid", input.value != "");
+
+            }
+
         }
 
+        q("input[data-property=accentColor]", "#edit-tile-menu").checked = !tile.accentColor;
+        q("input[data-property=accentColor]", "#edit-tile-menu").toggleClass("active", !tile.accentColor);
 
-        loadPreviewTile();
+
+        if (tile.accentColor) {
+            q("#edit-tile-customise-color").removeClass("animated fadeInLeft").addClass("hidden");
+            q("#edit-tile-customise-font-color").removeClass("animated fadeInLeft").addClass("hidden");
+        } else {
+            q("#edit-tile-customise-color").removeClass("hidden").addClass("animated fadeInLeft");
+            q("#edit-tile-customise-font-color").removeClass("hidden").addClass("animated fadeInLeft");
+        }
+
+        var colorInputs = q("input[type=color]", "#edit-tile-menu", true);
+
+        for (var i = 0; i < colorInputs.length; i++) 
+            q(".color-preview", colorInputs[i].parentNode).style.backgroundColor = colorInputs[i].value;
+        
+
+        loadPreviewTile(null, true);
 
     }
 
-    var getTileConfig = function () {
+    var getTileConfig = function (isEdit) {
 
-        var inputs = q("input[data-property], select[data-property]", "#nav-new-tile-menu", true);
+        var idMenu = isEdit ? "#edit-tile-menu" : "#nav-new-tile-menu";
+
+        q("#tile-preview", idMenu).innerHTML = "";
+
+        var inputs = q("input[data-property], select[data-property]", idMenu, true);
 
         var tile = {};
 
@@ -1841,19 +1998,19 @@ var MNTP;
             tile.removeImage = false;
 
             if (tile.image.data)
-                q("input[data-property='image.url']", "#nav-new-tile-menu").value = ""
+                q("input[data-property='image.url']", idMenu).value = ""
 
-            q("input[data-property='hasImage']", "#nav-new-tile-menu").value = "true";
-            q("input[data-property='removeImage']", "#nav-new-tile-menu").value = "false";
+            q("input[data-property='hasImage']", idMenu).value = "true";
+            q("input[data-property='removeImage']", idMenu).value = "false";
         }
 
         if (tile.hasImage) {
-            q("#new-tile-remove-image").removeClass("hidden").addClass("animated fadeIn");
+            q("[id*=tile-remove-image]", idMenu).removeClass("hidden fadeOut").addClass("animated fadeIn");
         } else {
-            q("#new-tile-remove-image").removeClass("fadeIn").addClass("fadeOut");
+            q("[id*=tile-remove-image]", idMenu).removeClass("fadeIn").addClass("fadeOut");
 
             setTimeout(function () {
-                q("#new-tile-remove-image").addClass("hidden");
+                q("[id*=tile-remove-image]", idMenu).addClass("hidden");
             }, 200);
         }
 
@@ -1870,11 +2027,11 @@ var MNTP;
 
     }
 
-    var saveTileConfig = function () {
+    var saveTileConfig = function (isEdit) {
 
         return new Promise(function (success, fail) {
 
-            var tile = getTileConfig();
+            var tile = getTileConfig(isEdit);
 
             tile.size = tile.size || 2;
 

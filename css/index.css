@@ -14251,6 +14251,35 @@ select {
   cursor: pointer;
   opacity: 0; }
 
+.context-menu {
+  position: absolute;
+  background: #FFFFFF;
+  text-align: left;
+  z-index: 3;
+  max-width: 100px;
+  max-height: 122px;
+  overflow: hidden;
+  transition: max-width .2s, max-height .2s; }
+  .context-menu.hidden {
+    max-height: 0;
+    max-width: 0;
+    display: block !important;
+    visibility: visible !important; }
+  .context-menu ul {
+    margin: 0;
+    width: 100px; }
+    .context-menu ul li {
+      margin: 0;
+      padding: 5px 15px;
+      cursor: pointer; }
+      .context-menu ul li.separator {
+        height: 1px;
+        padding: 0;
+        margin: 0px;
+        background: #ddd; }
+      .context-menu ul li:hover {
+        background: #ddd; }
+
 .container {
   position: relative;
   float: left;

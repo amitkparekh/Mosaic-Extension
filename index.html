@@ -9,20 +9,21 @@
     <meta name="author" content="">
 
     <title>New tab</title>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:500,300,400,400italic' rel='stylesheet' type='text/css'>
     
 <!--    <link href="materialize/css/materialize.css" rel="stylesheet" type="text/css" />-->
     <link href="css/index.css" rel="stylesheet" type="text/css" />
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:500,300,400,400italic' rel='stylesheet' type='text/css'>
 
 </head>
 
 <body>
 
     <!-- Menu button -->
-    <button id="menu-button" class="menu-button active">Toggle Menu</button>
+    <button id="menu-button" class="menu-button">Toggle Menu</button>
     
     <!-- Material sidebar -->
-    <aside id="sidebar" class="sidebar sidebar-default sidebar-stacked open ext" role="navigation">
+    <aside id="sidebar" class="sidebar sidebar-default sidebar-stacked" role="navigation">
         <!-- Sidebar header -->
         <!--        <div id="sidebar-header" class="sidebar-header header-cover" style="background-image: url(http://2.bp.blogspot.com/-2RewSLZUzRg/U-9o6SD4M6I/AAAAAAAADIE/voax99AbRx0/s1600/14%2B-%2B1%2B%281%29.jpg);">
             <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
@@ -46,7 +47,8 @@
                         <span id="text_add_new_tile"></span>
                     </a>
                 </li>
-<!--                <form class="sidebar-text">
+                <!--                
+                <form class="sidebar-text">
                     <span>Edit mode</span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
@@ -54,7 +56,8 @@
                             <span class="lever"></span>
                         </label>
                     </div>
-                </form>-->
+                </form>
+                -->
 
                 <li class="divider"></li>
 
@@ -154,7 +157,9 @@
                         <label id="text_site_rss"></label>
                     </div>
                 </form>
+
                 <li id="new-tile-divider-2" class="divider hidden"></li>
+
                 <form class="sidebar-text hidden" id="customise-tile-color-switch">
                     <span id="text_customise_tile_color"></span>
                     <div class="switch sidebar-badge sidebar-icon-right">
@@ -208,9 +213,11 @@
                     <form class="tile-choice hidden" id="new-tile-upload-logo">
                         <span id="text_upload_from_computer"></span>
                         <div>
-                            <a class="waves-effect btn btn-inverse" id="text_upload"></a>
+                            <div class="waves-effect btn btn-inverse">
+                                <span id="text_upload"></span>
+                                <input type="file" data-property="image.data" />
+                            </div>
                         </div>
-                        <input type="file" data-property="image.data" style="position: relative; left: 197px; width: 96px; height: 32px; top: -38px; cursor: pointer; opacity: 0; line-height: 0px;" />
                     </form>
                     <form class="tile-choice hidden" id="new-tile-remove-image">
                         <span id="text_remove_image"></span>
@@ -388,7 +395,6 @@
             </ul>
 
             <!-- Customise theme menu -->
-
             <ul id="nav-settings-theme-menu" class="sidebar-nav">
                 <div class="sidebar-text">
                     <span id="text_customise_theme_2"></span>
@@ -448,10 +454,7 @@
                 
             </ul> -->
             
-            
             <!-- Profile menu -->
-            
-            
             <!-- Language menu 
             <ul id="nav-settings-language-menu" class="sidebar-nav">
                 <div class="sidebar-text">
@@ -557,7 +560,6 @@
                 </form>
             </ul>
 
-
             <!-- Report a bug menu -->
             <ul id="nav-bug-menu" class="sidebar-nav">
                 <div class="sidebar-text">
@@ -640,23 +642,34 @@
                 </div>
 
                 <li class="divider"></li>
-                <form class="btn-container">
+                <!--<form class="btn-container">
                     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                         <input type="hidden" name="cmd" value="_s-xclick">
                         <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
                         <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
                         <img alt="" border="0" src="https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif" width="1" height="1">
                     </form>
-                </form>
+                </form>-->
             </ul>
             
             <!-- Edit menu -->
-            <ul id="edit-tile-menu" class="sidebar-nav open ext">
+            <ul id="edit-tile-menu" class="sidebar-nav">
+
+                <input type="hidden" data-property="id" data-property-type="int" />
+                <input type="hidden" data-property="idGroup" data-property-type="int" />
+                <input type="hidden" data-property="size" data-property-type="int" />
+                <input type="hidden" data-property="order" data-property-type="int" />
+                <input type="hidden" data-property="hasImage" data-property-type="boolean" />
+                <input type="hidden" data-property="removeImage" data-property-type="boolean" />
+
+                <input type="hidden" data-property="position.left" data-property-type="int" />
+                <input type="hidden" data-property="position.top" data-property-type="int" />
+
                 <div class="sidebar-text">
                     <span id="text_edit_tile"></span>
-                    <a id="edit-tile-close">
+                    <!--<a id="edit-tile-close">
                         <i class="sidebar-badge sidebar-icon-right md-close"></i>
-                    </a>
+                    </a>-->
                 </div>
                 <form class="tile-preview">
                     <div>
@@ -665,14 +678,14 @@
                 </form>
                 <div id="edit-tile-options-menu" class="fadeInLeft">
                     <li>
-                        <a>
-                            <i class="sidebar-icon md-aspect-ratio"></i> 
+                        <a id="edit-tile-make-bigger">
+                            <i class="sidebar-icon md-aspect-ratio"></i>
                             <span id="text_make_tile_bigger"></span>
                         </a>
                     </li>
                     <li>
-                        <a>
-                            <i class="sidebar-icon md-aspect-ratio"></i> 
+                        <a id="edit-tile-make-smaller">
+                            <i class="sidebar-icon md-aspect-ratio"></i>
                             <span id="text_make_tile_smaller"></span>
                         </a>
                     </li>
@@ -710,21 +723,21 @@
                     </div>
                     <form>
                         <div class="text-field-group " id="edit-tile-url">
-                            <input type="text" required>
+                            <input type="text" data-property="url">
                             <span class="bar"></span>
                             <label id="text_site_url_2"></label>
                         </div>
                     </form>
                     <form>
                         <div class="text-field-group " id="edit-tile-name">
-                            <input type="text" required>
+                            <input type="text" data-property="name">
                             <span class="bar"></span>
                             <label id="text_site_name_2"></label>
                         </div>
                     </form>
                     <form>
                         <div class="text-field-group " id="edit-tile-rss">
-                            <input type="text">
+                            <input type="text" data-property="rss">
                             <span class="bar"></span>
                             <label id="text_site_rss_2"></label>
                         </div>
@@ -733,24 +746,39 @@
                 
                 <!-- Edit tile colors -->
                 <div id="edit-tile-color-menu" class="hidden fadeOutLeft">
+
                     <div class="sidebar-text">
                         <span id="text_customise_tile_color_3"></span>
                         <a id="edit-tile-color-close">
                             <div class="sidebar-badge sidebar-icon-right md-arrow-back"></div>
                         </a>
                     </div>
+
+                    <form class="sidebar-text" id="edit-tile-color-switch">
+                        <span id="text_customise_tile_color_4"></span>
+                        <div class="switch sidebar-badge sidebar-icon-right">
+                            <label>
+                                <input type="checkbox" data-property="accentColor">
+                                <span class="lever"></span>
+                            </label>
+                        </div>
+                    </form>
+
                     <form id="edit-tile-customise-color" class="tile-choice">
                         <span id="text_tile_color_2"></span>
                         <div>
                             <a class="waves-effect btn color-preview"></a>
                         </div>
+                        <input type="color" data-property="backgroundColor" style="position: absolute; right: 12px; width: 90px; height: 32px; top: 8px; cursor: pointer; z-index: 2; opacity: 0;" />
                     </form>
                     <form id="edit-tile-customise-font-color" class="tile-choice">
                         <span id="text_font_color_2"></span>
                         <div>
                             <a class="waves-effect btn color-preview"></a>
                         </div>
+                        <input type="color" data-property="fontColor" style="position: absolute; right: 12px; width: 90px; height: 32px; top: 8px; cursor: pointer; z-index: 2; opacity: 0;" />
                     </form>
+
                 </div>
                 
                 <!-- Edit tile image -->
@@ -761,7 +789,7 @@
                             <div class="sidebar-badge sidebar-icon-right md-arrow-back"></div>
                         </a>
                     </div>
-                    <form class="tile-choice " id="edit-tile-select-logo">
+                    <form class="tile-choice " id="edit-tile-select-logo" style="display: none;">
                         <span id="text_select_from_our_database_2"></span>
                         <div>
                             <a class="waves-effect btn btn-inverse" id="text_select_3"></a>
@@ -775,7 +803,7 @@
                     </form>
                     <form class="hidden fadeOutLeft" id="edit-tile-add-url-text">
                         <div class="text-field-group" id="tile-image-URL">
-                            <input type="text">
+                            <input type="text" data-property="image.url">
                             <span class="bar"></span>
                             <label id="text_add_url_6"></label>
                         </div>
@@ -783,7 +811,10 @@
                     <form class="tile-choice " id="edit-tile-upload-logo">
                         <span id="text_upload_from_computer_3"></span>
                         <div>
-                            <a class="waves-effect btn btn-inverse" id="text_upload_3"></a>
+                            <div class="waves-effect btn btn-inverse">
+                                <span id="text_upload_3"></span>
+                                <input type="file" data-property="image.data" />
+                            </div>
                         </div>
                     </form>
                     <form class="tile-choice " id="edit-tile-remove-image">
@@ -794,13 +825,12 @@
                     </form>
                 </div>
                 
-                
                 <!-- Edit tile buttons -->
                 <div id="edit-tile-btn-container">
                     <li id="edit-tile-divider-4" class="divider"></li>
 
                     <form class="btn-container" id="edit-tile-submit-container">
-                        <div id="edit-tile-reset">
+                        <div id="edit-tile-delete">
                             <a class="waves-effect waves-light btn btn-red" id="text_delete"></a>
                         </div>
                         <div id="edit-tile-submit">
@@ -815,7 +845,15 @@
 
 
 
-
+    <div class="context-menu hidden">
+        <ul>
+            <li id="context-edit-tile">Edit tile</li>
+            <li id="context-remove-tile">Remove tile</li>
+            <li id="context-separator" class="separator"></li>
+            <li id="context-add-tile">Add tile</li>
+            <li id="context-settings">Settings</li>
+        </ul>
+    </div>
 
 
 
@@ -1368,10 +1406,10 @@
 <!--    <script src="materialize/js/bin/materialize.js"></script>-->
 
     <script src="js/sidebar.js" type="text/javascript"></script>
-
-    <script src="js/analytics.js"></script>
     
     <script src="js/locales.js"></script>
+
+    <script src="js/analytics.js"></script>
 
 </body>
 

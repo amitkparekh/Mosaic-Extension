@@ -1,5 +1,6 @@
 /// <reference path="util.js" />
 /// <reference path="Tile.js" />
+/// <reference path="main.js" />
 
 // Sidebar toggle
 //
@@ -99,6 +100,7 @@ var navMainClose = function () {
     navMain.className = navMain.className.replace(/(?:^|\s)open(?!\S)/g, '');
 }
 
+
 // Settings
 // -------------- // 
 
@@ -156,15 +158,15 @@ var settingsRSSFeedClose = function () {
     settingsOpen();
 }
 
-var settingsLanguageOpen = function() {
+var settingsLanguageOpen = function () {
     settingsClose();
-    setTimeout(function() {
+    setTimeout(function () {
         navSettingsLanguageMenu.className += " open ext";
         extSidebarOpen();
     }, animaDelay);
 }
 
-var settingsLanguageClose = function() {
+var settingsLanguageClose = function () {
     navSettingsLanguageMenu.className = navSettingsLanguageMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
     navSettingsLanguageMenu.className = navSettingsLanguageMenu.className.replace(/(?:^|\s)ext(?!\S)/g, '');
     settingsOpen();
@@ -269,7 +271,7 @@ var donateOpen = function () {
 //
 // -------------------
 var editTileMenu = q("#edit-tile-menu");
-var editTileClose = q("#edit-tile-close");
+//var editTileClose = q("#edit-tile-close");
 
 var editTile_OptionsMenu = q("#edit-tile-options-menu");
 
@@ -287,88 +289,104 @@ var editTile_TileImageMenu = q("#edit-tile-image-menu");
 
 var editTile_TileResetButton = q("#edit-tile-reset");
 
-var editMenuClose = function() {
+var editMenuOpen = function () {
+    sidebar.addClass("open");
+    menuButton.addClass("active");
+
+    editTile_TileInfoMenu.addClass("hidden");
+    editTile_TileColorMenu.addClass("hidden");
+    editTile_TileImageMenu.addClass("hidden");
+
+    editTile_OptionsMenu.removeClass("animated fadeOutLeft hidden")
+
+    $("#edit-tile-add-url-text").addClass("hidden").removeClass("fadeOutLeft");
+
+    editTileMenu.addClass("open ext");
+    extSidebarOpen();
+};
+
+var editMenuClose = function () {
     editTileMenu.className = editTileMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
     editTileMenu.className = editTileMenu.className.replace(/(?:^|\s)ext(?!\S)/g, '');
 };
 
-var editTile_ChoicesClose = function() {
-    
+var editTile_ChoicesClose = function () {
+
     editTile_OptionsMenu.className = editTile_OptionsMenu.className.replace(/(?:^|\s)fadeInLeft(?!\S)/g, '');
     editTile_OptionsMenu.className += " animated fadeOutLeft";
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
         editTile_OptionsMenu.className += " hidden";
     }, animaDelay);
 };
 
-var editTile_ChoicesOpen = function() {
+var editTile_ChoicesOpen = function () {
     editTile_OptionsMenu.className = editTile_OptionsMenu.className.replace(/(?:^|\s)hidden(?!\S)/g, '');
     editTile_OptionsMenu.className = editTile_OptionsMenu.className.replace(/(?:^|\s)fadeOutLeft(?!\S)/g, '');
     editTile_OptionsMenu.className += " fadeInLeft";
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
         editTile_OptionsMenu.className = editTile_OptionsMenu.className.replace(/(?:^|\s)animated(?!\S)/g, '');
     }, animaDelay);
 };
 
-var editTile_InfoOpen = function() {
+var editTile_InfoOpen = function () {
     editTile_ChoicesClose();
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
         editTile_TileInfoMenu.className = editTile_TileInfoMenu.className.replace(/(?:^|\s)hidden(?!\S)/g, '');
         editTile_TileInfoMenu.className = editTile_TileInfoMenu.className.replace(/(?:^|\s)fadeOutLeft(?!\S)/g, '');
         editTile_TileInfoMenu.className += " fadeInLeft animated";
     }, animaDelay);
 };
 
-var editTile_InfoClose = function() {
+var editTile_InfoClose = function () {
     editTile_TileInfoMenu.className = editTile_TileInfoMenu.className.replace(/(?:^|\s)fadeInLeft(?!\S)/g, '');
     editTile_TileInfoMenu.className += " fadeOutLeft";
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
         editTile_TileInfoMenu.className += " hidden";
         editTile_TileInfoMenu.className = editTile_TileInfoMenu.className.replace(/(?:^|\s)animated(?!\S)/g, '');
         editTile_ChoicesOpen();
     }, animaDelay);
 };
 
-var editTile_ColorOpen = function() {
+var editTile_ColorOpen = function () {
     editTile_ChoicesClose();
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
         editTile_TileColorMenu.className = editTile_TileColorMenu.className.replace(/(?:^|\s)hidden(?!\S)/g, '');
         editTile_TileColorMenu.className = editTile_TileColorMenu.className.replace(/(?:^|\s)fadeOutLeft(?!\S)/g, '');
         editTile_TileColorMenu.className += " fadeInLeft animated";
     }, animaDelay);
 };
 
-var editTile_ColorClose = function() {
+var editTile_ColorClose = function () {
     editTile_TileColorMenu.className = editTile_TileColorMenu.className.replace(/(?:^|\s)fadeInLeft(?!\S)/g, '');
     editTile_TileColorMenu.className += " fadeOutLeft";
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
         editTile_TileColorMenu.className += " hidden";
         editTile_TileColorMenu.className = editTile_TileColorMenu.className.replace(/(?:^|\s)animated(?!\S)/g, '');
         editTile_ChoicesOpen();
     }, animaDelay);
 };
 
-var editTile_ImageOpen = function() {
+var editTile_ImageOpen = function () {
     editTile_ChoicesClose();
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
         editTile_TileImageMenu.className = editTile_TileImageMenu.className.replace(/(?:^|\s)hidden(?!\S)/g, '');
         editTile_TileImageMenu.className = editTile_TileImageMenu.className.replace(/(?:^|\s)fadeOutLeft(?!\S)/g, '');
         editTile_TileImageMenu.className += " fadeInLeft animated";
     }, animaDelay);
 };
 
-var editTile_ImageClose = function() {
+var editTile_ImageClose = function () {
     editTile_TileImageMenu.className = editTile_TileImageMenu.className.replace(/(?:^|\s)fadeInLeft(?!\S)/g, '');
     editTile_TileImageMenu.className += " fadeOutLeft";
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
         editTile_TileImageMenu.className += " hidden";
         editTile_TileImageMenu.className = editTile_TileImageMenu.className.replace(/(?:^|\s)animated(?!\S)/g, '');
         editTile_ChoicesOpen();
@@ -377,15 +395,14 @@ var editTile_ImageClose = function() {
 
 // Validation
 
-$(document).ready(function() {
-    // URL
-    $("#edit-tile-url").focusin(function () {
+$(document).ready(function () {
 
-        $(this).focusout(function () {
+    // URL
+    $("#edit-tile-url").focusout(function () {
 
             var url = $("input", this).val();
 
-            if (/^(http:\/\/www\.|https:\/\/www\.)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(url)) {
+            if (url.match(/[\s\S]+\.[\s\S]+/g)) {
                 $(".bar", this).removeClass("error");
                 $("label", this).removeClass("error");
             } else {
@@ -393,13 +410,10 @@ $(document).ready(function() {
                 $("label", this).addClass("error").addClass("valid");
             }
 
-        });
     });
 
     // Text    
-    $("#edit-tile-name").focusin(function () {
-
-        $(this).focusout(function () {
+    $("#edit-tile-name").focusout(function () {
 
             if ($("input", this).val() == '') {
                 // if false
@@ -410,13 +424,11 @@ $(document).ready(function() {
                 $(".bar", this).removeClass("error");
                 $("label", this).removeClass("error").addClass("valid");
             };
-        });
+
     });
 
     // RSS
-    $("#edit-tile-rss").focusin(function () {
-
-        $(this).focusout(function () {
+    $("#edit-tile-rss").focusout(function () {
 
             if ($("input", this).val() == '') {
                 // if false
@@ -426,25 +438,65 @@ $(document).ready(function() {
                 $(".bar", this).removeClass("error");
                 $("label", this).removeClass("error").addClass("valid");
             };
-        });
+
     });
-    
-    // Add image from URL
-    $("#edit-tile-add-url div").click(function() {
-        
-        if( $("#edit-tile-add-url-text").hasClass("active") ) {
-            // if open
-            $("#edit-tile-add-url-text").removeClass("fadeInLeft active").addClass("fadeOutLeft");
-            
-            setTimeout(function() {
-                $("#edit-tile-add-url-text").addClass("hidden").removeClass("animated")
-            }, animaDelay);
-            
+
+    // Customise tile color
+    $("#edit-tile-color-switch input").click(function () {
+        if ($(this).hasClass("active")) {
+
+            $("#edit-tile-color-switch input").removeClass("active");
+
+            $("#edit-tile-customise-color, #edit-tile-customise-font-color").addClass("fadeOutLeft").removeClass("fadeInLeft");
+
+            setTimeout(function () {
+                $("#edit-tile-customise-tile-divider").addClass("tile-divider-move-2");
+            }, 250);
+
+            setTimeout(function () {
+                $("#edit-tile-customise-color, #edit-tile-customise-font-color").addClass("hidden").removeClass("animated fadeOutLeft");
+                $("#edit-tile-customise-tile-divider").removeClass("tile-divider-move-2");
+            }, 600);
+
         } else {
-            // if closed
-            $("#edit-tile-add-url-text").removeClass("hidden fadeOutLeft").addClass("fadeInLeft animated active");
-        }; 
+
+            $("#edit-tile-customise-tile-divider").removeClass("tile-divider-move-2").addClass("tile-divider-move--2");
+
+            setTimeout(function () {
+                $("#edit-tile-color-switch input").addClass("active");
+                $("#edit-tile-customise-color, #edit-tile-customise-font-color").removeClass("fadeOutLeft hidden").addClass("animated fadeInLeft");
+                $("#edit-tile-customise-tile-divider").removeClass("tile-divider-move--2");
+            }, 350);
+        }
+
     });
+
+    // Add image from URL
+    $("#edit-tile-add-url div").click(function () {
+
+        $("#edit-tile-add-url-text").removeClass("hidden fadeOutLeft").addClass("fadeInLeft animated active");
+
+        $("input[data-property='removeImage']", "#edit-tile-menu").val("true");
+        $("input[data-property='image.data']", "#edit-tile-menu").val("");
+
+        loadPreviewTile(null, true);
+
+    });
+
+    //Tile color
+    $("#edit-tile-customise-color input").change(function () {
+
+        $("#edit-tile-customise-color a.color-preview").css("background-color", $(this).val());
+
+    });
+
+    //Font color
+    $("#edit-tile-customise-font-color input").change(function () {
+
+        $("#edit-tile-customise-font-color a.color-preview").css("background-color", $(this).val());
+
+    });
+
 });
 
 // -------------- // 
@@ -457,7 +509,7 @@ var subMenuClose = function () {
     settingsTilesClose();
     settingsThemeClose();
     settingsBackupRestoreClose();
-//    settingsLanguageClose();
+    //    settingsLanguageClose();
     bugClose();
     changelogClose();
     navDonateMenu.className = navDonateMenu.className.replace(/(?:^|\s)open(?!\S)/g, '');
@@ -482,7 +534,7 @@ navSettingsClose.addEventListener("click", subMenuClose);
 navDonateButton.addEventListener("click", donateOpen);
 navDonateClose.addEventListener("click", subMenuClose);
 
-editTileClose.addEventListener("click", subMenuClose);
+//editTileClose.addEventListener("click", subMenuClose);
 
 editTile_TileInfoButton.addEventListener("click", editTile_InfoOpen);
 editTile_TileInfoClose.addEventListener("click", editTile_InfoClose);
@@ -625,7 +677,7 @@ $(document).ready(function () {
 
         $("#new-tile-add-url-text").removeClass("hidden").addClass("fadeInLeft animated");
 
-        q("input[data-property='removeImage']", "#nav-new-tile-menu").value = "true";
+        q("input[data-property='removeImage']", "#nav-new-tile-menu").val("true");
         $("input[data-property='image.data']", "#nav-new-tile-menu").val("");
 
         loadPreviewTile();
@@ -785,14 +837,14 @@ var newTileReset = function () {
 //
 // -------------------
 
-$(document).ready(function() {
-    
-    setTimeout(function() {
+$(document).ready(function () {
+
+    setTimeout(function () {
         $('select').material_select();
     }, 1000);
-    
+
 });
-            
+
 
 navNewTileButton.addEventListener("click", newTileOpen);
 navNewTileClose.addEventListener("click", subMenuClose);

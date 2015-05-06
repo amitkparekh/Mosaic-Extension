@@ -320,9 +320,13 @@ var JSONLocalStorage = {
 
         if (cssClass instanceof Array)
             classList = cssClass;
-        else
-            classList.push(cssClass);
+        else {
+            var array = cssClass.split(" ");
 
+            for (var i = 0; i < array.length; i++) {
+                classList.push(array[i]);
+            }
+        }
 
         for (var i = 0; i < classList.length; i++) {
             if (this.classList.contains(classList[i])) {
@@ -338,10 +342,15 @@ var JSONLocalStorage = {
 	HTMLElement.prototype.addClass = function (cssClass) {
 	    var classList = [];
 
-	    if (cssClass instanceof Array)
+	    if (cssClass instanceof Array) {
 	        classList = cssClass;
-	    else
-	        classList.push(cssClass.split(" "));
+	    } else {
+	        var array = cssClass.split(" ");
+
+	        for (var i = 0; i < array.length; i++) {
+	            classList.push(array[i]);
+	        }
+	    }
 
 	    for (var i = 0; i < classList.length; i++)
 	        this.classList.add(classList[i]);
@@ -354,8 +363,13 @@ var JSONLocalStorage = {
 
 	    if (cssClass instanceof Array)
 	        classList = cssClass;
-	    else
-	        classList.push(cssClass);
+	    else {
+	        var array = cssClass.split(" ");
+
+	        for (var i = 0; i < array.length; i++) {
+	            classList.push(array[i]);
+	        }
+	    }
 
 	    for (var i = 0; i < classList.length; i++)
 	        this.classList.remove(classList[i]);
