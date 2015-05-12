@@ -147,11 +147,11 @@ function setLocalisedTopicList() {
     q("#text_horizontal_align").innerText = getI18nMsg("horizontal_align");
     q("#text_left").innerText = getI18nMsg("left");
     q("#text_centre").innerText = getI18nMsg("centre");
-    q("#text_right").innerText = getI18nMsg("right");
+    //q("#text_right").innerText = getI18nMsg("right");
     q("#text_vertical_align").innerText = getI18nMsg("vertical_align");
     q("#text_top").innerText = getI18nMsg("top");
     q("#text_centre_2").innerText = getI18nMsg("centre");
-    q("#text_bottom").innerText = getI18nMsg("bottom");
+    //q("#text_bottom").innerText = getI18nMsg("bottom");
     q("#text_tile_flow_direction").innerText = getI18nMsg("tile_flow_direction");
     q("#text_top_to_bottom").innerText = getI18nMsg("top_to_bottom");
     q("#text_left_to_right").innerText = getI18nMsg("left_to_right");

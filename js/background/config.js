@@ -16,10 +16,13 @@ MNTP.Config = (function () {
         TileBorderRadius: 0,
         TileGrayscale: 0,
         TileExtendBackground: true,
-		TilePlacementMode: "flow",
+        TilePlacementMode: "flow",
+        TileFlowDirection: "vertical",
+        TileFontColor: "#FFFFFF",
         GroupMargin: 250,
         GroupTop: -1,
-        GroupLeft: 240,
+        GroupLeft: 120,
+        GroupColumns: 0,
         GroupRows: 3,
         ShowNews: true,
         NewsViewMode: "list",
@@ -87,6 +90,13 @@ MNTP.Config = (function () {
 			FLOW: "flow",
 			FREE: "free"
 			
+		},
+
+		FLOW_DIRECTION: {
+
+		    VERTICAL: "vertical",
+		    HORIZONTAL: "horizontal"
+
 		},
 	
         replace: function (config) {
@@ -215,6 +225,24 @@ MNTP.Config = (function () {
             val("TilePlacementMode", value);
         },
 
+        //TileFlowDirection
+        get TileFlowDirection() {
+            return val("TileFlowDirection");
+        },
+
+        set TileFlowDirection(value) {
+            val("TileFlowDirection", value);
+        },
+
+        //TileFontColor
+        get TileFontColor() {
+            return val("TileFontColor");
+        },
+
+        set TileFontColor(value) {
+            val("TileFontColor", value);
+        },
+
         //GroupMargin
         get GroupMargin() {
             return val("GroupMargin");
@@ -240,6 +268,15 @@ MNTP.Config = (function () {
 
         set GroupLeft(value) {
             val("GroupLeft", value);
+        },
+
+        //GroupColumns
+        get GroupColumns() {
+            return val("GroupColumns");
+        },
+
+        set GroupColumns(value) {
+            val("GroupColumns", value);
         },
 
         //GroupRows

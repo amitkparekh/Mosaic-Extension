@@ -11422,19 +11422,28 @@ Copyright (c) 2015 Daniel Eden
   -webkit-animation-name: bounceOutUp;
   animation-name: bounceOutUp; }
 
-@-webkit-keyframes fadeIn {
+/*@-webkit-keyframes fadeIn {
   0% {
-    opacity: 0; }
+    opacity: 0;
+  }
+
   100% {
-    opacity: 1; } }
+    opacity: 1;
+  }
+}
+
 @keyframes fadeIn {
   0% {
-    opacity: 0; }
+    opacity: 0;
+  }
+
   100% {
-    opacity: 1; } }
+    opacity: 1;
+  }
+}*/
 .fadeIn {
-  -webkit-animation-name: fadeIn;
-  animation-name: fadeIn; }
+  transition: .4s;
+  opacity: 1; }
 
 @-webkit-keyframes fadeInDown {
   0% {
@@ -11505,8 +11514,10 @@ Copyright (c) 2015 Daniel Eden
     -ms-transform: none;
     transform: none; } }
 .fadeInLeft {
-  -webkit-animation-name: fadeInLeft;
-  animation-name: fadeInLeft; }
+  opacity: 1;
+  -webkit-transform: none;
+  -ms-transform: none;
+  transform: none; }
 
 @-webkit-keyframes fadeInLeftBig {
   0% {
@@ -11628,19 +11639,29 @@ Copyright (c) 2015 Daniel Eden
   -webkit-animation-name: fadeInUpBig;
   animation-name: fadeInUpBig; }
 
-@-webkit-keyframes fadeOut {
+/*@-webkit-keyframes fadeOut {
   0% {
-    opacity: 1; }
+    opacity: 1;
+  }
+
   100% {
-    opacity: 0; } }
+    opacity: 0;
+  }
+}
+
 @keyframes fadeOut {
   0% {
-    opacity: 1; }
+    opacity: 1;
+  }
+
   100% {
-    opacity: 0; } }
+    opacity: 0;
+  }
+}*/
 .fadeOut {
-  -webkit-animation-name: fadeOut;
-  animation-name: fadeOut; }
+  transition: .4s;
+  opacity: 0;
+  height: 0 !important; }
 
 @-webkit-keyframes fadeOutDown {
   0% {
@@ -11680,24 +11701,40 @@ Copyright (c) 2015 Daniel Eden
   -webkit-animation-name: fadeOutDownBig;
   animation-name: fadeOutDownBig; }
 
-@-webkit-keyframes fadeOutLeft {
+/*@-webkit-keyframes fadeOutLeft {
   0% {
-    opacity: 1; }
-  100% {
+    opacity: 1;
+  }
+
+  99% {
     opacity: 0;
     -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0); } }
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  100% {
+      display: none;
+  }
+}
+
 @keyframes fadeOutLeft {
   0% {
-    opacity: 1; }
+    opacity: 1;
+  }
+
   100% {
     opacity: 0;
     -webkit-transform: translate3d(-100%, 0, 0);
     -ms-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0); } }
+    transform: translate3d(-100%, 0, 0);
+  }
+}*/
 .fadeOutLeft {
-  -webkit-animation-name: fadeOutLeft;
-  animation-name: fadeOutLeft; }
+  opacity: 0;
+  height: 0 !important;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  -ms-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0); }
 
 @-webkit-keyframes fadeOutLeftBig {
   0% {
@@ -13964,8 +14001,8 @@ div.divider {
   transform: translateY(-135px); }
 
 .fadeOutLeft, .fadeInLeft {
-  -webkit-animation-duration: 0.4s;
-  animation-duration: 0.4s; }
+  -webkit-transition: 0.4s !important;
+  transition: 0.4s !important; }
 
 .select-label {
   position: absolute; }
@@ -14280,7 +14317,7 @@ select {
       .context-menu ul li:hover {
         background: #ddd; }
 
-.container {
+.tile-container {
   position: relative;
   float: left;
   -webkit-transition: all 0.3s ease-out;

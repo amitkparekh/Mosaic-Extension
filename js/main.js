@@ -186,7 +186,7 @@ var MNTP;
             var news = q("#news");
 			var tiles = q(".tile", true);
 			
-            container.style.height = "100%";
+            container.style.height = "";
 			
 			if (openingAnimation) {
 			
@@ -214,6 +214,7 @@ var MNTP;
                 group = groups[g];
 
                 group.style.marginLeft = groupLeft + "px";
+                group.style.height = "";
 
                 groupLeft = config.GroupMargin;
 
@@ -750,15 +751,8 @@ var MNTP;
                 loadPreviewTile();
 
                 q("#new-tile-remove-image").removeClass("fadeIn").addClass("fadeOut");
-                setTimeout(function () {
-                    q("#new-tile-remove-image").addClass("hidden");
-                }, 200);
 
-
-                q("#new-tile-add-url-text").addClass("fadeOutLeft");
-                setTimeout(function () {
-                    q("#new-tile-add-url-text").addClass("hidden").removeClass("fadeOutLeft");
-                }, 400);
+                q("#new-tile-add-url-text").removeClass("fadeInLeft").addClass("fadeOutLeft");
 
             });
 
@@ -772,15 +766,8 @@ var MNTP;
                 loadPreviewTile(null, true);
 
                 q("#edit-tile-remove-image").removeClass("fadeIn").addClass("fadeOut");
-                setTimeout(function () {
-                    q("#edit-tile-remove-image").addClass("hidden");
-                }, 200);
-
 
                 q("#edit-tile-add-url-text").addClass("fadeOutLeft");
-                setTimeout(function () {
-                    q("#edit-tile-add-url-text").addClass("hidden").removeClass("fadeOutLeft");
-                }, 400);
 
             });
 
@@ -1043,14 +1030,19 @@ var MNTP;
 
             });
 
-            //live update the configurations
-            q("#config input, #config select", true).forEach(function (element) {
+            //** live update the configurations
+            q("input[data-config], select[data-config]", true).forEach(function (element) {
 
                 element.addEventListener(["keypress", "change", "input"], function () {
+
+                    var that = this;
+
                     setTimeout(function () {
-                        getConfig().then(function (config) {
-                            loadConfig(config);
-                        });
+
+                        setConfig(that);
+
+                        loadConfig();
+
                     }, 0);
                 });
 
@@ -1439,17 +1431,52 @@ var MNTP;
 
     }
 
+    var setConfig = function (input) {
+
+        var config = input.data("config");
+
+        if (input.type == "file" && input.files.length > 0) {
+
+            //assign(config, config, input.files[0]);
+
+        } else if (input.type == "checkbox" || input.type == "radio") {
+
+            MNTP.Config[config] = input.checked;
+
+        } else if (input.value) {
+
+            var configType = input.data("config-type") || "";
+
+            switch (configType.toLowerCase()) {
+                case "boolean":
+                    MNTP.Config[config] = input.value.toLowerCase() == "true";
+                    break;
+                case "float":
+                    MNTP.Config[config] = parseFloat(input.value);
+                    break;
+                case "int":
+                    MNTP.Config[config] = parseInt(input.value);
+                    break;
+                default:
+                    MNTP.Config[config] = input.value;
+                    break;
+            }
+
+        }
+
+    }
+
     var loadConfig = function (conf) {
 
         var config = conf || MNTP.Config;
 
         return new Promise(function (success, fail) {
 
-            var inputs = q("input[data-property], select[data-property]", "#config", true);
+            var inputs = q("input[data-config], select[data-config]", true);
 
             for (var i = 0; i < inputs.length; i++) {
                 var input = inputs[i];
-                var value = getPropertyValue(config, input.data("property"));
+                var value = getPropertyValue(config, input.data("config"));
 
                 if (input.type == "checkbox" || input.type == "radio")
                     input.checked = value || false;
@@ -1531,6 +1558,13 @@ var MNTP;
                 element.style.backgroundColor = config.AccentColor;
             });
 
+            if (config.TileExtendBackground) {
+                q("#tile-background-color").removeClass("fadeInLeft").addClass("fadeOutLeft");
+            } else {
+                q("#tile-background-color").removeClass("fadeOutLeft").addClass("fadeInLeft");
+            }
+
+
             //animation speed
             if (config.OpeningAnimation)
                 q("#config-animation-speed").style.display = "block";
@@ -1543,7 +1577,6 @@ var MNTP;
             else
                 q("#config-tiles-placement").style.display = "none";
 			
-				
             //background color
             q("body").style.backgroundColor = config.BackgroundColor;
 
@@ -1712,6 +1745,10 @@ var MNTP;
 				else
 					bgNode.style.backgroundSize = "";
 				
+			} else {
+
+			    bgNode.style.backgroundImage = "";
+
 			}
 
 			if ((config.HasBackgroundImage || config.BingBackgroundImage) && config.TileExtendBackground)
@@ -1730,7 +1767,7 @@ var MNTP;
 
         return new Promise(function (success, fail) {
 
-            var inputs = q("input[data-property], select[data-property]", "#config", true);
+            var inputs = q("input[data-config], select[data-config]", true);
 
             var config = {};
 
@@ -1740,28 +1777,28 @@ var MNTP;
 
                 if (input.type == "file" && input.files.length > 0) {
 
-                    assign(config, input.data("property"), input.files[0]);
+                    assign(config, input.data("config"), input.files[0]);
 
                 } else if (input.type == "checkbox" || input.type == "radio") {
 
-                    assign(config, input.data("property"), input.checked);
+                    assign(config, input.data("config"), input.checked);
 
                 } else if (input.value) {
 
-                    var propertyType = input.data("property-type") || "";
+                    var configType = input.data("config-type") || "";
 
-                    switch (propertyType.toLowerCase()) {
+                    switch (configType.toLowerCase()) {
                         case "boolean":
-                            assign(config, input.data("property"), (input.value.toLowerCase() == "true"))
+                            assign(config, input.data("config"), (input.value.toLowerCase() == "true"))
                             break;
                         case "float":
-                            assign(config, input.data("property"), parseFloat(input.value));
+                            assign(config, input.data("config"), parseFloat(input.value));
                             break;
                         case "int":
-                            assign(config, input.data("property"), parseInt(input.value));
+                            assign(config, input.data("config"), parseInt(input.value));
                             break;
                         default:
-                            assign(config, input.data("property"), input.value);
+                            assign(config, input.data("config"), input.value);
                             break;
                     }
 
@@ -2004,15 +2041,10 @@ var MNTP;
             q("input[data-property='removeImage']", idMenu).value = "false";
         }
 
-        if (tile.hasImage) {
-            q("[id*=tile-remove-image]", idMenu).removeClass("hidden fadeOut").addClass("animated fadeIn");
-        } else {
+        if (tile.hasImage)
+            q("[id*=tile-remove-image]", idMenu).removeClass("fadeOut").addClass("fadeIn");
+        else
             q("[id*=tile-remove-image]", idMenu).removeClass("fadeIn").addClass("fadeOut");
-
-            setTimeout(function () {
-                q("[id*=tile-remove-image]", idMenu).addClass("hidden");
-            }, 200);
-        }
 
         if (!tile.position && MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
 		
@@ -2253,89 +2285,34 @@ var MNTP;
 
         return new Promise(function (success, fail) {
 
-            ////color inputs
-            //var colorInputs = q("input[type='color']", true);
+            //color inputs
+            var colorInputs = q("input[type='color']", true);
 
-            //for (var i = 0; i < colorInputs.length; i++) {
+            var updateColor = function (colorInput) {
 
-            //    var colorInput = colorInputs[i];
+                if (colorInput.previousElementSibling && colorInput.previousElementSibling.tagName.toLowerCase() == "div") {
 
-            //    if (!colorInput.data("customized")) {
+                    var a = q("a", colorInput.previousElementSibling);
 
-            //        var text = document.createElement("input");
+                    a && (a.style.backgroundColor = colorInput.value);
 
-            //        text.type = "text";
-            //        text.value = colorInput.value;
+                }
 
-            //        text.addEventListener([/*"keydown", */"change"], function () {
-            //            var that = this;
-            //            setTimeout(function () {
-            //                that.previousSibling.value = that.value;
-            //            }, 0);
-            //        }, "customColorInput");
+            }
 
-            //        colorInput.addEventListener("input", function () {
-            //            this.nextSibling.value = this.value;
-            //        }, "customColorInput");
+            for (var i = 0; i < colorInputs.length; i++) {
 
+                var colorInput = colorInputs[i];
 
-            //        var property = colorInput.data("property");
-            //        property && text.setAttribute("data-property", property);
+                colorInput.addEventListener("change", function () {
 
-            //        colorInput.parentElement.insertBefore(text, colorInput.nextSibling);
+                    updateColor(this);
 
-            //        colorInput.data("customized", true);
+                }, "customColorChange");
 
-            //    }
-            //}
+                updateColor(colorInput);
 
-            ////range inputs
-            //var rangeInputs = q("input[type='range']", true);
-
-            //for (var i = 0; i < rangeInputs.length; i++) {
-
-            //    var rangeInput = rangeInputs[i];
-
-            //    if (!rangeInput.data("customized")) {
-
-            //        var number = document.createElement("input");
-
-            //        number.type = "number";
-            //        number.value = rangeInput.value;
-
-            //        if (rangeInput.getAttribute("min"))
-            //            number.setAttribute("min", rangeInput.getAttribute("min"));
-
-            //        if (rangeInput.getAttribute("max"))
-            //            number.setAttribute("max", rangeInput.getAttribute("max"));
-
-            //        if (rangeInput.getAttribute("step"))
-            //            number.setAttribute("step", rangeInput.getAttribute("step"));
-
-            //        number.addEventListener([/*"keydown", */"change"], function () {
-            //            var that = this;
-            //            setTimeout(function () {
-            //                that.previousSibling.value = that.value;
-            //            }, 0);
-            //        }, "customRangeInput");
-
-            //        rangeInput.addEventListener("input", function () {
-            //            this.nextSibling.value = this.value;
-            //        }, "customRangeInput");
-
-
-            //        var property = rangeInput.data("property");
-            //        property && number.setAttribute("data-property", property);
-
-            //        var propertyType = rangeInput.data("property-type");
-            //        propertyType && number.setAttribute("data-property-type", propertyType);
-
-            //        rangeInput.parentElement.insertBefore(number, rangeInput.nextSibling);
-
-            //        rangeInput.data("customized", true);
-
-            //    }
-            //}
+            }
 
             success();
 
