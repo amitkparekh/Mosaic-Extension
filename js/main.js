@@ -1030,7 +1030,7 @@ var MNTP;
 
             });
 
-            //** live update the configurations
+            //-- live update the configurations
             q("input[data-config], select[data-config]", true).forEach(function (element) {
 
                 element.addEventListener(["keypress", "change", "input"], function () {
@@ -1048,42 +1048,169 @@ var MNTP;
 
             });
 			
-			//reload background image only when changing the image
-            q("#config input[data-reload-background]", true).forEach(function (element) {
+            //-- tiles animation preview
+            var animationpreview;
+            q("[data-config='OpeningAnimationTime']").addEventListener("input", function() {
 
-                element.addEventListener("change", function () {
-					setTimeout(function () {
-						q("[data-property='ReloadBackgroundImage']").value = "true";
-					}, 0);
-                }, "reloadbg");
+                var that = this;
+                				
+                animationpreview && clearTimeout(animationpreview);
 
-            });
+                animationpreview = setTimeout(function () {
 
-			//tiles animation test
-			q("#btn-speed-test").addEventListener("click", function() {
-				
-				openingAnimation = true;
-				getConfig().then(function (config) {
-					reorder(config);
-				});
-				
-			});
-				
-            //save configurations changes and close popup
-            q("#config-btn-ok").addEventListener("click", function () {
-                saveConfig().then(hideConfigs());
-            });
+                    MNTP.Config.OpeningAnimationTime = parseInt(that.value);
 
-            //cancel configurations changes and close popup
-            q("#config-btn-cancel").addEventListener("click", function () {
-                hideConfigs();
+                    openingAnimation = true;
+
+                    reorder();
+
+                }, 500);
+
+            }, "animationPreview");
+
+            q("[data-config='OpeningAnimation']").addEventListener("change", function () {
+
+                var that = this;
+
+                setTimeout(function () {
+
+                    if (that.checked) {
+
+                        MNTP.Config.OpeningAnimation = true;
+
+                        openingAnimation = true;
+
+                        reorder();
+
+                    }
+
+                });
+
+            }, "animationPreview");
+
+            //-- get background from bing
+            q("#btn-bing-background").addEventListener("click", function () {
+
+                MNTP.Config.HasBackgroundImage = false;
+                MNTP.Config.BingBackgroundImage = true;
+                MNTP.Config.NoBackgroundImage = false;
+
+                MNTP.Config.ReloadBackgroundImage = true;
+
+                q("#background-url").fadeOutLeft();
+                
                 loadConfig();
+
             });
 
-            //apply configurations changes
-            q("#config-btn-apply").addEventListener("click", function () {
-                saveConfig();
+            //-- add background from URL
+            q("#btn-background-url").addEventListener("click", function () {
+
+                q("#background-url").toggleFadeLeft();
+
             });
+
+            //-- get background from URL
+            q("#txt-background-url").addEventListener("keydown", function () {
+
+                var that = this;
+
+                setTimeout(function () {
+
+                    var img = new Image();
+
+                    img.onload = function () {
+
+                        getDataUrlFromUrl(this.src).then(function (opt) {
+
+                            var image = {};
+                            image.type = Image.Type.Background;
+                            image.id = 1;
+                            image.data = opt.dataURL;
+
+                            Image.save(image).then(function () {
+
+                                MNTP.Config.HasBackgroundImage = true;
+                                MNTP.Config.BingBackgroundImage = false;
+                                MNTP.Config.NoBackgroundImage = false;
+
+                                MNTP.Config.ReloadBackgroundImage = true;
+
+                                q("#background-url").fadeOutLeft();
+                                
+                                loadConfig();
+
+                            });
+
+                        });
+
+                    }
+
+                    img.src = that.value;
+
+                }, 0);
+
+            });
+
+            q("#txt-background-url").addEventListener("blur", function () {
+
+                q("label", this.parentElement).toggleClass("valid", this.value.length > 0);
+
+            });
+
+            //-- upload background
+            q("#file-background").addEventListener("change", function () {
+
+                if (this.files) {
+
+                    var that = this;
+
+                    setTimeout(function () {
+
+                        getDataUrlFromFile(that.files[0]).then(function (dataURL) {
+
+                            var image = {};
+                            image.type = Image.Type.Background;
+                            image.id = 1;
+                            image.data = dataURL;
+
+                            Image.save(image).then(function () {
+
+                                MNTP.Config.HasBackgroundImage = true;
+                                MNTP.Config.BingBackgroundImage = false;
+                                MNTP.Config.NoBackgroundImage = false;
+
+                                MNTP.Config.ReloadBackgroundImage = true;
+
+                                q("#background-url").fadeOutLeft();
+
+                                loadConfig();
+
+                            });
+
+                        });
+
+                    }, 0);
+
+                }
+
+            });
+
+            //-- remove background
+            q("#btn-remove-background").addEventListener("click", function () {
+
+                MNTP.Config.HasBackgroundImage = false;
+                MNTP.Config.BingBackgroundImage = false;
+                MNTP.Config.NoBackgroundImage = true;
+
+                MNTP.Config.ReloadBackgroundImage = true;
+
+                q("#background-url").fadeOutLeft();
+
+                loadConfig();
+
+            });
+
 
             //change news view mode
             q("#news-btn-change-view").addEventListener("click", function () {
@@ -1559,17 +1686,17 @@ var MNTP;
             });
 
             if (config.TileExtendBackground) {
-                q("#tile-background-color").removeClass("fadeInLeft").addClass("fadeOutLeft");
+                q("#tile-background-color").fadeOutLeft();
             } else {
-                q("#tile-background-color").removeClass("fadeOutLeft").addClass("fadeInLeft");
+                q("#tile-background-color").fadeInLeft();
             }
 
 
             //animation speed
             if (config.OpeningAnimation)
-                q("#config-animation-speed").style.display = "block";
+                q("#animation-speed").fadeInLeft();
             else
-                q("#config-animation-speed").style.display = "none";
+                q("#animation-speed").fadeOutLeft();
 				
 			//tiles positioning
 			if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
@@ -1591,7 +1718,9 @@ var MNTP;
                 bingImagesSlider && clearInterval(bingImagesSlider);
 				bingImagesSlider = null;
 
-                loadBackground(config.BackgroundImage, config);
+				loadBackground(config.BackgroundImage, config);
+
+				q("#remove-background").fadeInLeft();
 
             } else if (config.HasBackgroundImage) {
 
@@ -1603,6 +1732,8 @@ var MNTP;
                     if (image) {
 
                         loadBackground(image, config);
+
+                        q("#remove-background").fadeInLeft();
 
                     } else {
 
@@ -1630,6 +1761,8 @@ var MNTP;
 							config.ReloadBackgroundImage = true;
 							loadBackground({ url: imageUrl }, config);
 
+							q("#remove-background").fadeInLeft();
+
 						});
 
 					});
@@ -1638,21 +1771,22 @@ var MNTP;
 
 						MNTP.BGUtils.getNextBingImage().then(function (image) {	
 							
-							getConfig().then(function (config) {
+							var imageUrl = image.url || dataURLtoObjectURL(image.data);
+							config.ReloadBackgroundImage = true;
+							loadBackground({ url: imageUrl }, config);
 
-								var imageUrl = image.url || dataURLtoObjectURL(image.data);
-								config.ReloadBackgroundImage = true;
-								loadBackground({ url: imageUrl }, config);
+							q("#remove-background").fadeInLeft();
 
-							});
 						});
 						
-					}, 10000);
+					}, 20000);
 				
 					
 				} else {
 
 					loadBackground(null, config);
+
+					q("#remove-background").fadeInLeft();
 
 				}
 					
@@ -1676,6 +1810,9 @@ var MNTP;
                 q("#config-loadBackgroundImage").style.display = "none";
 
                 q("#config-backgroundImage-options").style.display = "none";
+
+
+                q("#remove-background").fadeOutLeft();
 
             }
             //<--
@@ -1961,11 +2098,11 @@ var MNTP;
 
 
         if (tile.accentColor) {
-            q("#edit-tile-customise-color").removeClass("animated fadeInLeft").addClass("hidden");
-            q("#edit-tile-customise-font-color").removeClass("animated fadeInLeft").addClass("hidden");
+            q("#edit-tile-customise-color").fadeOutLeft();
+            q("#edit-tile-customise-font-color").fadeOutLeft();
         } else {
-            q("#edit-tile-customise-color").removeClass("hidden").addClass("animated fadeInLeft");
-            q("#edit-tile-customise-font-color").removeClass("hidden").addClass("animated fadeInLeft");
+            q("#edit-tile-customise-color").fadeInLeft();
+            q("#edit-tile-customise-font-color").fadeInLeft();
         }
 
         var colorInputs = q("input[type=color]", "#edit-tile-menu", true);

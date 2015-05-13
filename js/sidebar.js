@@ -401,73 +401,62 @@ $(document).ready(function () {
     // URL
     $("#edit-tile-url").focusout(function () {
 
-            var url = $("input", this).val();
+        var url = $("input", this).val();
 
-            if (url.match(/[\s\S]+\.[\s\S]+/g)) {
-                $(".bar", this).removeClass("error");
-                $("label", this).removeClass("error");
-            } else {
-                $(".bar", this).addClass("error");
-                $("label", this).addClass("error").addClass("valid");
-            }
+        if (url.match(/[\s\S]+\.[\s\S]+/g)) {
+            $(".bar", this).removeClass("error");
+            $("label", this).removeClass("error");
+        } else {
+            $(".bar", this).addClass("error");
+            $("label", this).addClass("error").addClass("valid");
+        }
 
     });
 
     // Text    
     $("#edit-tile-name").focusout(function () {
 
-            if ($("input", this).val() == '') {
-                // if false
-                $(".bar", this).addClass("error");
-                $("label", this).addClass("error");
-            } else {
-                // if true
-                $(".bar", this).removeClass("error");
-                $("label", this).removeClass("error").addClass("valid");
-            };
+        if ($("input", this).val() == '') {
+            // if false
+            $(".bar", this).addClass("error");
+            $("label", this).addClass("error");
+        } else {
+            // if true
+            $(".bar", this).removeClass("error");
+            $("label", this).removeClass("error").addClass("valid");
+        };
 
     });
 
     // RSS
     $("#edit-tile-rss").focusout(function () {
 
-            if ($("input", this).val() == '') {
-                // if false
-                $("label", this).removeClass("valid");
-            } else {
-                // if true
-                $(".bar", this).removeClass("error");
-                $("label", this).removeClass("error").addClass("valid");
-            };
+        if ($("input", this).val() == '') {
+            // if false
+            $("label", this).removeClass("valid");
+        } else {
+            // if true
+            $(".bar", this).removeClass("error");
+            $("label", this).removeClass("error").addClass("valid");
+        };
 
     });
 
     // Customise tile color
     $("#edit-tile-color-switch input").click(function () {
-        if ($(this).hasClass("active")) {
 
-            $("#edit-tile-color-switch input").removeClass("active");
+        if (this.hasClass("active")) {
 
-            $("#edit-tile-customise-color, #edit-tile-customise-font-color").addClass("fadeOutLeft").removeClass("fadeInLeft");
-
-            setTimeout(function () {
-                $("#edit-tile-customise-tile-divider").addClass("tile-divider-move-2");
-            }, 400);
-
-            setTimeout(function () {
-                $("#edit-tile-customise-color, #edit-tile-customise-font-color").removeClass("animated fadeOutLeft");
-                $("#edit-tile-customise-tile-divider").removeClass("tile-divider-move-2");
-            }, 400);
+            q("#edit-tile-color-switch input").removeClass("active");
+            q("#edit-tile-customise-color").fadeOutLeft();
+            q("#edit-tile-customise-font-color").fadeOutLeft();
 
         } else {
 
-            $("#edit-tile-customise-tile-divider").removeClass("tile-divider-move-2").addClass("tile-divider-move--2");
+            q("#edit-tile-color-switch input").addClass("active");
+            q("#edit-tile-customise-color").fadeInLeft();
+            q("#edit-tile-customise-font-color").fadeInLeft();
 
-            setTimeout(function () {
-                $("#edit-tile-color-switch input").addClass("active");
-                $("#edit-tile-customise-color, #edit-tile-customise-font-color").removeClass("fadeOutLeft").addClass("fadeInLeft");
-                $("#edit-tile-customise-tile-divider").removeClass("tile-divider-move-2");
-            }, 400);
         }
 
     });
@@ -484,19 +473,7 @@ $(document).ready(function () {
 
     });
 
-    ////Tile color
-    //$("#edit-tile-customise-color input").change(function () {
 
-    //    $("#edit-tile-customise-color a.color-preview").css("background-color", $(this).val());
-
-    //});
-
-    ////Font color
-    //$("#edit-tile-customise-font-color input").change(function () {
-
-    //    $("#edit-tile-customise-font-color a.color-preview").css("background-color", $(this).val());
-
-    //});
 
 });
 
@@ -628,11 +605,11 @@ $(document).ready(function () {
 
         } else {
 
-            
-                $("#customise-tile-color-switch input").addClass("active");
-                $("#new-tile-customise-color, #new-tile-customise-font-color").removeClass("fadeOutLeft").addClass("fadeInLeft");
-                
-            
+
+            $("#customise-tile-color-switch input").addClass("active");
+            $("#new-tile-customise-color, #new-tile-customise-font-color").removeClass("fadeOutLeft").addClass("fadeInLeft");
+
+
         }
 
     });
@@ -753,12 +730,8 @@ var newTileReset = function () {
     $("#customise-tile-color-switch").removeFadeIn();
     $("#customise-tile-color-switch input").removeClass("active").attr('checked', false);
 
-    $("#new-tile-customise-color").addClass("hidden fadeOut").removeFadeIn();
-    $("#new-tile-customise-font-color").addClass("hidden fadeOut").removeFadeIn();
-    setTimeout(function () {
-        $("#new-tile-customise-color").removeClass("animated fadeOut");
-        $("#new-tile-customise-font-color").removeClass("animated fadeOut");
-    }, 400);
+    $("#new-tile-customise-color").addClass("fadeOutLeft").removeFadeIn();
+    $("#new-tile-customise-font-color").addClass("fadeOutLeft").removeFadeIn();
 
     $("#new-tile-choice-title").makeHidden();
     $("#new-tile-choice-title").removeFadeIn();

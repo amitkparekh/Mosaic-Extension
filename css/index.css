@@ -11729,7 +11729,7 @@ Copyright (c) 2015 Daniel Eden
     transform: translate3d(-100%, 0, 0);
   }
 }*/
-.fadeOutLeft {
+.fadeOutLeft, .form-slider.fadeOutLeft {
   opacity: 0;
   height: 0 !important;
   -webkit-transform: translate3d(-100%, 0, 0);

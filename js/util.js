@@ -1,4 +1,3 @@
-//ocho.js
 var q = function (query, context, array) {
 
     if (context === true && !array) {
@@ -186,6 +185,7 @@ var getUserId = function () {
 };
 
 var getDataUrlFromFile = function (file) {
+
     return new Promise(function (success, fail) {
         try {
             var reader = new FileReader();
@@ -202,9 +202,11 @@ var getDataUrlFromFile = function (file) {
             fail(e);
         }
     });
+
 };
 
 var getDataUrlFromUrl = function (url, options) {
+
     return new Promise(function (success, fail) {
 
         try {
@@ -234,6 +236,7 @@ var getDataUrlFromUrl = function (url, options) {
         }
 
     });
+
 };
 
 var dataURLtoObjectURL = function (dataURI) {
@@ -407,6 +410,54 @@ var JSONLocalStorage = {
 	    }
 
 	    return this;
+	};
+
+	HTMLElement.prototype.fadeIn = function () {
+
+	    this.removeClass("fadeOut").addClass("fadeIn");
+
+	    return this;
+
+	};
+
+	HTMLElement.prototype.fadeOut = function () {
+
+	    this.removeClass("fadeIn").addClass("fadeOut");
+
+	    return this;
+
+	};
+
+	HTMLElement.prototype.toggleFade = function () {
+
+	    this.toggleClass("fadeIn", "fadeOut");
+
+	    return this;
+
+	};
+
+	HTMLElement.prototype.fadeInLeft = function () {
+
+	    this.removeClass("fadeOutLeft").addClass("fadeInLeft");
+
+	    return this;
+
+	};
+
+	HTMLElement.prototype.fadeOutLeft = function () {
+
+	    this.removeClass("fadeInLeft").addClass("fadeOutLeft");
+
+	    return this;
+
+	};
+
+	HTMLElement.prototype.toggleFadeLeft = function () {
+
+	    this.toggleClass("fadeInLeft", "fadeOutLeft");
+
+	    return this;
+
 	};
 
 	HTMLElement.prototype.getIndex = function (cssClass) {
