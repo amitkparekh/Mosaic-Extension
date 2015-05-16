@@ -34,7 +34,7 @@
     },
     
     "show_recently_closed": {
-        "message": "Show 'Recently Closed"
+        "message": "Show 'Recently Closed'"
     },
     
     "settings": {
@@ -65,6 +65,9 @@
         "message": "Site RSS (optional)"
     },
     
+    "customise_tile_color": {
+        "message": "Customize tile colour"
+    },
     
     "choose_tile_color": {
         "message": "Choose tile colour"
@@ -203,10 +206,22 @@
         "message": "Show tile animation"
     },
     
+    "animation_speed": {
+        "message": "Animation speed"
+    },
+
     "default_tile_color": {
         "message": "Default tile colour"
     },
     
+    "opacity": {
+        "message": "Opacity"
+    },
+
+    "extend_background_to_tiles": {
+        "message": "Extend background to tiles"
+    },
+
     "background_color": {
         "message": "Background colour"
     },
@@ -284,17 +299,41 @@
     },
     
     /**
-     * Customise tiles menu
+     * Customise theme menu
      */ 
     
     "choose_background_image": {
         "message": "Choose background image"
     },
-    
+
     "get_from_wikimedia_commons": {
         "message": "Get from 'Wikimedia Commons'"
     },
+
+    "get_from_bing": {
+        "message": "Get from Bing"
+    },
     
+    "background_options": {
+        "message": "Background options"
+    },
+
+    "choose_fit": {
+        "message": "Choose fit"
+    },
+
+    "adjust": {
+        "message": "Adjust"
+    },
+
+    "fill": {
+        "message": "Fill"
+    },
+
+    "original_size": {
+        "message": "Original size"
+    },
+
     /**
      * Customise RSS feed menu
      */ 

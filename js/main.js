@@ -742,7 +742,7 @@ var MNTP;
             });
 
             //-- remove tile image (new)
-            q("#new-tile-remove-image").addEventListener("click", function () {
+            q("#new-tile-remove-image a").addEventListener("click", function () {
 
                 q("input[data-property='removeImage']", "#nav-new-tile-menu").value = "true";
                 q("input[data-property='image.data']", "#nav-new-tile-menu").value = ""
@@ -757,7 +757,7 @@ var MNTP;
             });
 
             //-- remove tile image (edit)
-            q("#edit-tile-remove-image").addEventListener("click", function () {
+            q("#edit-tile-remove-image a").addEventListener("click", function () {
 
                 q("input[data-property='removeImage']", "#edit-tile-menu").value = "true";
                 q("input[data-property='image.data']", "#edit-tile-menu").value = ""

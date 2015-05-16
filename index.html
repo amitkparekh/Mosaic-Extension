@@ -44,16 +44,16 @@
                 <li id="nav-new-tile-button">
                     <a >
                         <i class="sidebar-icon md-add"></i>
-                        <span id="text_add_new_tile"></span>
+                        <span data-message="add_new_tile"></span>
                     </a>
                 </li>
 
                 <li class="divider"></li>
 
-                <div class="sidebar-text" id="text_show_hide_sections"></div>
+                <div class="sidebar-text" data-message="show_hide_sections"></div>
 
                 <form class="sidebar-text">
-                    <span id="text_show_apps"></span>
+                    <span data-message="show_apps"></span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
                             <input type="checkbox">
@@ -62,7 +62,7 @@
                     </div>
                 </form>
                 <form class="sidebar-text">
-                    <span id="text_show_bookmarks_bar"></span>
+                    <span data-message="show_bookmarks_bar"></span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
                             <input type="checkbox" data-config="ShowBookmarksBar">
@@ -71,7 +71,7 @@
                     </div>
                 </form>
                 <form class="sidebar-text">
-                    <span id="text_show_recently_closed_tabs"></span>
+                    <span data-message="show_recently_closed_tabs" data-message-max-length="27" data-message-alt="show_recently_closed"></span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
                             <input type="checkbox">
@@ -85,19 +85,19 @@
                 <li id="nav-settings-button">
                     <a>
                         <i class="sidebar-icon md-settings"></i> 
-                        <span id="text_settings"></span>
+                        <span data-message="settings"></span>
                     </a>
                 </li>
                 <li>
                     <a>
                         <i class="sidebar-icon md-help"></i> 
-                        <span id="text_help"></span>
+                        <span data-message="help"></span>
                     </a>
                 </li>
                 <li id="nav-donate-button">
                     <a>
                         <i class="sidebar-icon md-attach-money"></i> 
-                        <span id="text_donate"></span>
+                        <span data-message="donate"></span>
                     </a>
                 </li>
             </ul>
@@ -116,7 +116,7 @@
                 <input type="hidden" data-property="position.top" data-property-type="int" />
 
                 <div class="sidebar-text">
-                    <span id="text_add_new_tile_2"></span>
+                    <span data-message="add_new_tile"></span>
                     <a id="nav-new-tile-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
@@ -130,28 +130,28 @@
                     <div class="text-field-group" id="new-tile-url">
                         <input type="text" data-property="url">
                         <span class="bar"></span>
-                        <label id="text_site_url"></label>
+                        <label data-message="site_url"></label>
                     </div>
                 </form>
                 <form class="hidden">
                     <div class="text-field-group" id="new-tile-name">
                         <input type="text" data-property="name">
                         <span class="bar"></span>
-                        <label id="text_site_name"></label>
+                        <label data-message="site_name"></label>
                     </div>
                 </form>
                 <form class="hidden">
                     <div class="text-field-group" id="new-tile-rss">
                         <input type="text" data-property="rss">
                         <span class="bar"></span>
-                        <label id="text_site_rss"></label>
+                        <label data-message="site_rss"></label>
                     </div>
                 </form>
 
                 <li id="new-tile-divider-2" class="divider hidden"></li>
 
                 <form class="sidebar-text hidden" id="customise-tile-color-switch">
-                    <span id="text_customise_tile_color"></span>
+                    <span data-message="customise_tile_color"></span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
                             <input type="checkbox" data-property="accentColor">
@@ -160,14 +160,14 @@
                     </div>
                 </form>
                 <form id="new-tile-customise-color" class="tile-choice fadeOutLeft">
-                    <span id="text_tile_color"></span>
+                    <span data-message="tile_color"></span>
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
                     <input type="color" data-property="backgroundColor" style="position: relative; right: 12px; width: 90px; height: 32px; top: 7px; left: -6px; cursor: pointer; z-index: 2; opacity: 0;" />
                 </form>
                 <form id="new-tile-customise-font-color" class="tile-choice fadeOutLeft">
-                    <span id="text_font_color"></span>
+                    <span data-message="font_color"></span>
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
@@ -179,40 +179,40 @@
                     <li id="new-tile-divider-3" class="divider hidden"></li>
 
                     <div id="new-tile-choice-title" class="sidebar-text tile-choice-title hidden">
-                        <span id="text_tile_image"></span>
+                        <span data-message="tile_image"></span>
                     </div>
                     <form class="tile-choice hidden" id="new-tile-select-logo" style="display: none;">
-                        <span id="text_select_from_our_database">Select from our database</span>
+                        <span data-message="select_from_our_database" data-message-max-length="26" data-message-alt="choose_from_the_database">Select from our database</span>
                         <div>
-                            <a class="waves-effect btn btn-inverse" id="text_select"></a>
+                            <a class="waves-effect btn btn-inverse" data-message="select" data-message-max-length="7" data-message-alt="choose"></a>
                         </div>
                     </form>
                     <form class="tile-choice hidden" id="new-tile-add-url">
-                        <span id="text_add_from_url"></span>
+                        <span data-message="add_from_url"></span>
                         <div>
-                            <a class="waves-effect btn btn-inverse" id="text_add_url"></a>
+                            <a class="waves-effect btn btn-inverse" data-message="add_url" data-message-max-length="7" data-message-alt="add"></a>
                         </div>
                     </form>
                     <form class="fadeOutLeft" id="new-tile-add-url-text">
                         <div class="text-field-group" id="tile-image-URL">
                             <input type="text" data-property="image.url">
                             <span class="bar"></span>
-                            <label id="text_add_url_2"></label>
+                            <label data-message="add_url"></label>
                         </div>
                     </form>
                     <form class="tile-choice hidden" id="new-tile-upload-logo">
-                        <span id="text_upload_from_computer"></span>
+                        <span data-message="upload_from_computer"></span>
                         <div>
                             <div class="waves-effect btn btn-inverse">
-                                <span id="text_upload"></span>
+                                <span data-message="upload" data-message-max-length="8" data-message-alt="get"></span>
                                 <input type="file" data-property="image.data" />
                             </div>
                         </div>
                     </form>
                     <form class="tile-choice fadeOut" id="new-tile-remove-image">
-                        <span id="text_remove_image"></span>
+                        <span data-message="remove_image"></span>
                         <div>
-                            <a class="waves-effect waves-light btn btn-red" id="text_remove"></a>
+                            <a class="waves-effect waves-light btn btn-red" data-message="remove"></a>
                         </div>
                     </form>
                     <div id="new-tile-btn-divider">
@@ -233,7 +233,7 @@
             <!-- Settings Menu -->
             <ul id="nav-settings-menu" class="sidebar-nav">
                 <div class="sidebar-text">
-                    <span id="text_settings_2"></span>
+                    <span data-message="settings"></span>
                     <a id="nav-settings-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
@@ -242,52 +242,52 @@
                 <li id="nav-settings-tiles-button">
                     <a>
                         <i class="sidebar-icon md-view-module"></i> 
-                        <span id="text_customise_tiles"></span>
+                        <span data-message="customise_tiles"></span>
                     </a>
                 </li>
                 <li id="nav-settings-theme-button">
                     <a>
                         <i class="sidebar-icon md-color-lens"></i> 
-                        <span id="text_customise_theme"></span>
+                        <span data-message="customise_theme"></span>
                     </a>
                 </li>
                 <li class="divider"></li>
 <!--                <li id="nav-settings-rss-feed-button">
                     <a>
                         <i class="sidebar-icon mdi mdi-rss"></i> 
-                        <span id="text_customise_rss_feed"></span>
+                        <span data-message="customise_rss_feed"></span>
                     </a>
                 </li>-->
 <!--                <li class="divider"></li>-->
 <!--                <li id="nav-settings-profile-button">
                     <a>
                         <i class="sidebar-icon md-person"></i> 
-                        <span id="text_profile_settings"></span>
+                        <span data-message="profile_settings"></span>
                     </a>
                 </li>-->
 <!--                <li id="nav-settings-language-button">
                     <a>
                         <i class="sidebar-icon md-language"></i> 
-                        <span id="text_change_language"></span>
+                        <span data-message="change_language"></span>
                     </a>
                 </li>-->
                 <li id="nav-settings-backup-restore-button">
                     <a>
                         <i class="sidebar-icon md-settings-backup-restore"></i> 
-                        <span id="text_backup_restore_settings"></span>
+                        <span data-message="backup_restore_settings"></span>
                     </a>
                 </li>
                 <li class="divider"></li>
                 <li id="nav-bug-button">
                     <a>
                         <i class="sidebar-icon md-bug-report"></i> 
-                        <span id="text_report_a_bug"></span>
+                        <span data-message="report_a_bug"></span>
                     </a>
                 </li>
                 <li id="nav-changelog-button">
                     <a>
                         <i class="sidebar-icon md-list"></i> 
-                        <span id="text_changelog"></span>
+                        <span data-message="changelog"></span>
                     </a>
                 </li>
             </ul>
@@ -295,13 +295,13 @@
             <!-- Customise Tiles menu -->
             <ul id="nav-settings-tiles-menu" class="sidebar-nav">
                 <div class="sidebar-text">
-                    <span id="text_customise_tiles_2"></span>
+                    <span data-message="customise_tiles"></span>
                     <a id="nav-settings-tiles-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
                 <form class="sidebar-text" id="show-tile-animation-at-start">
-                    <span id="text_show_tile_animation_on_load"></span>
+                    <span data-message="show_tile_animation_on_load" data-message-max-length="28" data-message-alt="show_tile_animation"></span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
                             <input type="checkbox" data-config="OpeningAnimation" />
@@ -310,7 +310,7 @@
                     </div>
                 </form>
                 <form id="animation-speed" class="form-slider fadeOutLeft">
-                    <label id="text_animation_speed">Animation speed</label>
+                    <label data-message="animation_speed"></label>
                     <p class="range-field">
                         <input type="range" min="0" max="3000" step="100" data-config="OpeningAnimationTime" data-config-type="int" />
                     </p>
@@ -319,18 +319,18 @@
                 <li class="divider"></li>
 
                 <div class="sidebar-text">
-                    <span id="text_default_tile_color"></span>
+                    <span data-message="default_tile_color"></span>
                 </div>
 
                 <form action="#" class="form-slider">
-                    <label id="text_opacity">Opacity</label>
+                    <label data-message="opacity"></label>
                     <p class="range-field">
                         <input type="range" min="0.1" max="1" step=".05" data-config="TileOpacity" data-config-type="float" />
                     </p>
                 </form>
 
                 <form class="sidebar-text">
-                    <span id="text_extend_background_to_tiles">Extend background to tiles</span>
+                    <span data-message="extend_background_to_tiles"></span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
                             <input type="checkbox" data-config="TileExtendBackground" />
@@ -340,7 +340,7 @@
                 </form>
 
                 <form class="tile-choice" id="tile-background-color">
-                    <span id="text_background_color"></span>
+                    <span data-message="background_color"></span>
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
@@ -348,7 +348,7 @@
                 </form>
 
                 <form class="tile-choice">
-                    <span id="text_text_color"></span>
+                    <span data-message="font_color"></span>
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
@@ -357,56 +357,58 @@
 
                 <li class="divider"></li>
                 <div class="sidebar-text">
-                    <span id="text_tile_positioning"></span>
+                    <span data-message="tile_positioning"></span>
                 </div>
                 
                 <article>
-                    <label id="text_tile_layout"></label>
+                    <label data-message="tile_layout"></label>
                     <select data-config="TilePlacementMode">
-                        <option value="flow" selected id="text_grid"></option>
-                        <option value="free" id="text_free"></option>
+                        <option value="flow" data-message="grid"></option>
+                        <option value="free" data-message="free"></option>
                     </select>
                 </article>
 
                 <div id="tile-grid-configs" style="height: 210px;">
 
                     <form action="#" class="form-slider">
-                        <label id="text_number_of_rows"></label>
+                        <label data-message="number_of_rows"></label>
                         <p class="range-field">
                             <input type="range" min="1" max="12" data-config="GroupRows" data-config-type="int" />
                         </p>
                     </form>
 
+                    <!--
                     <form action="#" class="form-slider hidden">
-                        <label id="text_number_of_columns"></label>
+                        <label data-message="number_of_columns"></label>
                         <p class="range-field">
                             <input type="range" min="2" max="12" data-config="GroupColumns" data-config-type="int" />
                         </p>
                     </form>
+                    -->
 
                     <article>
-                        <label id="text_horizontal_align"></label>
+                        <label data-message="horizontal_align"></label>
                         <select data-config="GroupLeft" data-config-type="int">
-                            <option value="120" id="text_left"></option>
-                            <option value="-1" selected id="text_centre"></option>
-                            <!--<option value="right" id="text_right"></option>-->
+                            <option value="120" data-message="left"></option>
+                            <option value="-1" data-message="centre"></option>
+                            <!--<option value="right" data-message="right"></option>-->
                         </select>
                     </article>
 
                     <article>
-                        <label id="text_vertical_align"></label>
+                        <label data-message="vertical_align"></label>
                         <select data-config="GroupTop" data-config-type="int">
-                            <option value="120" id="text_top"></option>
-                            <option value="-1" selected id="text_centre_2"></option>
-                            <!--<option value="bottom" id="text_bottom"></option>-->
+                            <option value="120" data-message="top"></option>
+                            <option value="-1" data-message="centre"></option>
+                            <!--<option value="bottom" data-message="bottom"></option>-->
                         </select>
                     </article>
 
                     <article class="hidden">
-                        <label id="text_tile_flow_direction"></label>
+                        <label data-message="tile_flow_direction"></label>
                         <select data-config="TileFlowDirection">
-                            <option value="vertical" selected id="text_top_to_bottom"></option>
-                            <option value="horizontal" id="text_left_to_right"></option>
+                            <option value="vertical" data-message="top_to_bottom"></option>
+                            <option value="horizontal" data-message="left_to_right"></option>
                         </select>
                     </article>
 
@@ -416,7 +418,8 @@
 
                 <form class="btn-container centered">
                     <div>
-                        <a class="waves-effect waves-red btn btn-inverse btn-inverse-red" id="btn-reset-tiles-config"></a>
+                        <a class="waves-effect waves-red btn btn-inverse btn-inverse-red" id="btn-reset-tiles-config" 
+                            data-message="reset_to_default" data-message-max-length="24" data-message-alt="reset"></a>
                     </div>
                 </form>
 
@@ -443,14 +446,14 @@
                 
                 
                 <div class="sidebar-text">
-                    <span id="text_customise_theme_2"></span>
+                    <span data-message="customise_theme"></span>
                     <a id="nav-settings-theme-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
 
                 <form class="tile-choice">
-                    <span id="text_background_color_2"></span>
+                    <span data-message="background_color"></span>
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
@@ -460,46 +463,49 @@
                 <li class="divider"></li>
 
                 <div class="sidebar-text">
-                    <span id="text_choose_background_image"></span>
+                    <span data-message="choose_background_image"></span>
                 </div>
                 <form class="tile-choice hidden">
-                    <span id="text_get_from_wikimedia_commons"></span>
+                    <span data-message="get_from_wikimedia_commons"></span>
                     <div>
-                        <a class="waves-effect btn btn-inverse" id="text_select_2"></a>
+                        <a class="waves-effect btn btn-inverse" id="btn-wikimedia-background"
+                            data-message="select" data-message-max-length="7" data-message-alt="choose"></a>
                     </div>
                 </form>
                 <form class="tile-choice">
-                    <span id="text_get_from_bing">Get from bing</span>
+                    <span data-message="get_from_bing"></span>
                     <div>
-                        <a class="waves-effect btn btn-inverse" id="btn-bing-background">Select</a>
+                        <a class="waves-effect btn btn-inverse" id="btn-bing-background"
+                           data-message="select" data-message-max-length="7" data-message-alt="choose"></a>
                     </div>
                 </form>
                 <form class="tile-choice">
-                    <span id="text_add_from_url_2"></span>
+                    <span data-message="add_from_url"></span>
                     <div>
-                        <a class="waves-effect btn btn-inverse" id="btn-background-url"></a>
+                        <a class="waves-effect btn btn-inverse" id="btn-background-url"
+                           data-message="add_url" data-message-max-length="7" data-message-alt="add"></a>
                     </div>
                 </form>
                 <form class="fadeOutLeft" id="background-url">
                     <div class="text-field-group">
                         <input type="text" id="txt-background-url">
                         <span class="bar"></span>
-                        <label id="text_add_url_4">Add URL</label>
+                        <label data-message="add_url"></label>
                     </div>
                 </form>
                 <form class="tile-choice">
-                    <span id="text_upload_from_computer_2"></span>
+                    <span data-message="upload_from_computer"></span>
                     <div>
                         <div class="waves-effect btn btn-inverse">
-                            <span id="text_upload_2">Upload</span>
+                            <span data-message="upload">Upload</span>
                             <input id="file-background" type="file">
                         </div>
                     </div>
                 </form>
                 <form class="tile-choice" id="remove-background">
-                    <span id="text_remove_image_2"></span>
+                    <span data-message="remove_image"></span>
                     <div>
-                        <a class="waves-effect waves-light btn btn-red" id="btn-remove-background"></a>
+                        <a class="waves-effect waves-light btn btn-red" id="btn-remove-background" data-message="remove"></a>
                     </div>
                 </form>
 
@@ -508,22 +514,22 @@
                     <li class="divider"></li>
 
                     <div class="sidebar-text">
-                        <span id="text_background_options">Background options</span>
+                        <span data-message="background_options"></span>
                     </div>
 
                     <form class="form-slider">
-                        <label id="text_opacity_2">Opacity</label>
+                        <label data-message="opacity"></label>
                         <p class="range-field">
                             <input type="range" min="0.1" max="1" step=".05" data-config="BackgroundOpacity" data-config-type="float" />
                         </p>
                     </form>
 
                     <article>
-                        <label id="text_choose_fit">Choose a fit</label>
+                        <label data-message="choose_fit"></label>
                         <select id="select-background-fit">
-                            <option value="adjust" id="text_adjust">Adjust</option>
-                            <option value="fill" id="text_fill">Fill</option>
-                            <option value="original" id="text_original_size">Original size</option>
+                            <option value="adjust" data-message="adjust">Adjust</option>
+                            <option value="fill" data-message="fill">Fill</option>
+                            <option value="original" data-message="original_size">Original size</option>
                         </select>
                     </article>
 
@@ -534,7 +540,8 @@
 
                 <form class="btn-container centered">
                     <div>
-                        <a class="waves-effect waves-red btn btn-inverse btn-inverse-red" id="text_reset_to_default_2"></a>
+                        <a class="waves-effect waves-red btn btn-inverse btn-inverse-red"
+                           data-message="reset_to_default" data-message-max-length="24" data-message-alt="reset"></a>
                     </div>
                 </form>
             </ul>
@@ -622,32 +629,33 @@
             <!-- Backup / Restore settings menu -->
             <ul id="nav-settings-backup-restore-menu" class="sidebar-nav">
                 <div class="sidebar-text">
-                    <span id="text_backup_restore_settings_2"></span>
+                    <span data-message="backup_restore_settings"></span>
                     <a id="nav-settings-backup-restore-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
                 <form class="tile-choice" id="settings-import">
-                    <span id="text_import_settings"></span>                
+                    <span data-message="import_settings"></span>                
                     <div>
                         <div class="waves-effect btn btn-inverse">
-                            <span id="text_import"></span>
+                            <span data-message="import"></span>
                             <input id="nav-settings-import-file" accept=".mntp" type="file"/>
                         </div>
                     </div>
                 </form>
                 <form class="tile-choice" id="settings-export">
-                    <span id="text_export_settings"></span>
+                    <span data-message="export_settings"></span>
                     <div>
-                        <a class="waves-effect btn btn-inverse" id="text_export"></a>
+                        <a class="waves-effect btn btn-inverse" data-message="export"></a>
                     </div>
                 </form>
-                <form class="tile-choice" id="settings-reset">
-                    <span id="text_reset_settings"></span>
+                
+                <!--<form class="tile-choice" id="settings-reset">
+                    <span data-message="reset_settings"></span>
                     <div>
-                        <a class="waves-effect waves-light btn btn-red" id="text_reset_2"></a>
+                        <a class="waves-effect waves-light btn btn-red" data-message="reset"></a>
                     </div>
-                </form>
+                </form>-->
             </ul>
 
             <!-- Report a bug menu -->
@@ -756,7 +764,7 @@
                 <input type="hidden" data-property="position.top" data-property-type="int" />
 
                 <div class="sidebar-text">
-                    <span id="text_edit_tile"></span>
+                    <span data-message="edit_tile"></span>
                     <!--<a id="edit-tile-close">
                         <i class="sidebar-badge sidebar-icon-right md-close"></i>
                     </a>-->
@@ -770,13 +778,13 @@
                     <li>
                         <a id="edit-tile-make-bigger">
                             <i class="sidebar-icon md-aspect-ratio"></i>
-                            <span id="text_make_tile_bigger"></span>
+                            <span data-message="make_tile_bigger"></span>
                         </a>
                     </li>
                     <li>
                         <a id="edit-tile-make-smaller">
                             <i class="sidebar-icon md-aspect-ratio"></i>
-                            <span id="text_make_tile_smaller"></span>
+                            <span data-message="make_tile_smaller"></span>
                         </a>
                     </li>
                 
@@ -785,20 +793,20 @@
                     <li id="edit-tile-info-button">
                         <a>
                             <i class="sidebar-icon md-create"></i> 
-                            <span id="text_edit_tile_info"></span>
+                            <span data-message="edit_tile_info"></span>
                         </a>
                     </li>
 
                     <li id="edit-tile-color-button">
                         <a>
                             <i class="sidebar-icon md-color-lens"></i> 
-                            <span id="text_customise_tile_color_2"></span>
+                            <span data-message="customise_tile_color"></span>
                         </a>
                     </li>
                     <li id="edit-tile-image-button">
                         <a>
                             <i class="sidebar-icon md-image"></i> 
-                            <span id="text_edit_tile_image"></span>
+                            <span data-message="edit_tile_image"></span>
                         </a>
                     </li>
                 </div>
@@ -806,7 +814,7 @@
                 <!-- Edit tile info -->
                 <div id="edit-tile-info-menu" class="fadeOutLeft">
                     <div class="sidebar-text">
-                        <span id="text_edit_tile_info_2"></span>
+                        <span data-message="edit_tile_info"></span>
                         <a id="edit-tile-info-close">
                             <div class="sidebar-badge sidebar-icon-right md-arrow-back"></div>
                         </a>
@@ -815,21 +823,21 @@
                         <div class="text-field-group " id="edit-tile-url">
                             <input type="text" data-property="url">
                             <span class="bar"></span>
-                            <label id="text_site_url_2"></label>
+                            <label data-message="site_url"></label>
                         </div>
                     </form>
                     <form>
                         <div class="text-field-group " id="edit-tile-name">
                             <input type="text" data-property="name">
                             <span class="bar"></span>
-                            <label id="text_site_name_2"></label>
+                            <label data-message="site_name"></label>
                         </div>
                     </form>
                     <form>
                         <div class="text-field-group " id="edit-tile-rss">
                             <input type="text" data-property="rss">
                             <span class="bar"></span>
-                            <label id="text_site_rss_2"></label>
+                            <label data-message="site_rss"></label>
                         </div>
                     </form>
                 </div>
@@ -838,14 +846,14 @@
                 <div id="edit-tile-color-menu" class="fadeOutLeft">
 
                     <div class="sidebar-text">
-                        <span id="text_customise_tile_color_3"></span>
+                        <span data-message="customise_tile_color"></span>
                         <a id="edit-tile-color-close">
                             <div class="sidebar-badge sidebar-icon-right md-arrow-back"></div>
                         </a>
                     </div>
 
                     <form class="sidebar-text" id="edit-tile-color-switch">
-                        <span id="text_customise_tile_color_4"></span>
+                        <span data-message="customise_tile_color"></span>
                         <div class="switch sidebar-badge sidebar-icon-right">
                             <label>
                                 <input type="checkbox" data-property="accentColor">
@@ -855,14 +863,14 @@
                     </form>
 
                     <form id="edit-tile-customise-color" class="tile-choice">
-                        <span id="text_tile_color_2"></span>
+                        <span data-message="tile_color"></span>
                         <div>
                             <a class="waves-effect btn color-preview"></a>
                         </div>
                         <input type="color" data-property="backgroundColor" style="position: relative; right: 12px; width: 90px; height: 32px; top: 7px; left: -6px; cursor: pointer; z-index: 2; opacity: 0;" />
                     </form>
                     <form id="edit-tile-customise-font-color" class="tile-choice">
-                        <span id="text_font_color_2"></span>
+                        <span data-message="font_color"></span>
                         <div>
                             <a class="waves-effect btn color-preview"></a>
                         </div>
@@ -874,43 +882,43 @@
                 <!-- Edit tile image -->
                 <div id="edit-tile-image-menu" class="fadeOutLeft">
                     <div class="sidebar-text">
-                        <span id="text_edit_tile_image_2"></span>
+                        <span data-message="edit_tile_image"></span>
                         <a id="edit-tile-image-close">
                             <div class="sidebar-badge sidebar-icon-right md-arrow-back"></div>
                         </a>
                     </div>
                     <form class="tile-choice " id="edit-tile-select-logo" style="display: none;">
-                        <span id="text_select_from_our_database_2"></span>
+                        <span data-message="select_from_our_database" data-message-max-length="26" data-message-alt="choose_from_the_database"></span>
                         <div>
-                            <a class="waves-effect btn btn-inverse" id="text_select_3"></a>
+                            <a class="waves-effect btn btn-inverse" data-message="select" data-message-max-length="7" data-message-alt="choose"></a>
                         </div>
                     </form>
                     <form class="tile-choice " id="edit-tile-add-url">
                         <span id="text_add_from_url_3"></span>
                         <div>
-                            <a class="waves-effect btn btn-inverse" id="text_add_url_5"></a>
+                            <a class="waves-effect btn btn-inverse" data-message="add_url" data-message-max-length="7" data-message-alt="add"></a>
                         </div>
                     </form>
                     <form class="hidden fadeOutLeft" id="edit-tile-add-url-text">
                         <div class="text-field-group" id="tile-image-URL">
                             <input type="text" data-property="image.url">
                             <span class="bar"></span>
-                            <label id="text_add_url_6"></label>
+                            <label data-message="add_url"></label>
                         </div>
                     </form>
                     <form class="tile-choice " id="edit-tile-upload-logo">
-                        <span id="text_upload_from_computer_3"></span>
+                        <span data-message="upload_from_computer"></span>
                         <div>
                             <div class="waves-effect btn btn-inverse">
-                                <span id="text_upload_3"></span>
+                                <span data-message="upload"></span>
                                 <input type="file" data-property="image.data" />
                             </div>
                         </div>
                     </form>
                     <form class="tile-choice" id="edit-tile-remove-image">
-                        <span id="text_remove_image_3"></span>
+                        <span data-message="remove_image"></span>
                         <div>
-                            <a class="waves-effect waves-light btn btn-red" id="text_remove_3"></a>
+                            <a class="waves-effect waves-light btn btn-red" data-message="remove"></a>
                         </div>
                     </form>
                 </div>

@@ -540,8 +540,10 @@ var JSONLocalStorage = {
 			this.attributes["data-" + key] = value;
 		} else if (key !== undefined) {
 			var attr = this.attributes["data-" + key];
-			if (attr) 
-				return attr.value || attr;
+			if (attr)
+			    return attr.value || attr;
+			else
+			    return "";
 		} else if (!key && !value) {
 			
 			var attrs = { };
