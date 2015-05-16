@@ -47,21 +47,11 @@
                         <span id="text_add_new_tile"></span>
                     </a>
                 </li>
-                <!--                
-                <form class="sidebar-text">
-                    <span>Edit mode</span>
-                    <div class="switch sidebar-badge sidebar-icon-right">
-                        <label>
-                            <input type="checkbox">
-                            <span class="lever"></span>
-                        </label>
-                    </div>
-                </form>
-                -->
 
                 <li class="divider"></li>
 
                 <div class="sidebar-text" id="text_show_hide_sections"></div>
+
                 <form class="sidebar-text">
                     <span id="text_show_apps"></span>
                     <div class="switch sidebar-badge sidebar-icon-right">
@@ -75,7 +65,7 @@
                     <span id="text_show_bookmarks_bar"></span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
-                            <input type="checkbox">
+                            <input type="checkbox" data-config="ShowBookmarksBar">
                             <span class="lever"></span>
                         </label>
                     </div>
@@ -169,19 +159,19 @@
                         </label>
                     </div>
                 </form>
-                <form id="new-tile-customise-color" class="tile-choice hidden">
+                <form id="new-tile-customise-color" class="tile-choice fadeOutLeft">
                     <span id="text_tile_color"></span>
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
-                    <input type="color" data-property="backgroundColor" style="position: absolute; right: 12px; width: 90px; height: 32px; top: 8px; cursor: pointer; z-index: 2; opacity: 0;" />
+                    <input type="color" data-property="backgroundColor" style="position: relative; right: 12px; width: 90px; height: 32px; top: 7px; left: -6px; cursor: pointer; z-index: 2; opacity: 0;" />
                 </form>
-                <form id="new-tile-customise-font-color" class="tile-choice hidden">
+                <form id="new-tile-customise-font-color" class="tile-choice fadeOutLeft">
                     <span id="text_font_color"></span>
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
-                    <input type="color" data-property="fontColor" style="position: absolute; right: 12px; width: 90px; height: 32px; top: 8px; cursor: pointer; z-index: 2; opacity: 0;" />
+                    <input type="color" data-property="fontColor" style="position: relative; right: 12px; width: 90px; height: 32px; top: 7px; left: -6px; cursor: pointer; z-index: 2; opacity: 0;" />
                 </form>
 
                 <div id="new-tile-customise-tile-divider">
@@ -203,7 +193,7 @@
                             <a class="waves-effect btn btn-inverse" id="text_add_url"></a>
                         </div>
                     </form>
-                    <form class="hidden" id="new-tile-add-url-text">
+                    <form class="fadeOutLeft" id="new-tile-add-url-text">
                         <div class="text-field-group" id="tile-image-URL">
                             <input type="text" data-property="image.url">
                             <span class="bar"></span>
@@ -219,7 +209,7 @@
                             </div>
                         </div>
                     </form>
-                    <form class="tile-choice hidden" id="new-tile-remove-image">
+                    <form class="tile-choice fadeOut" id="new-tile-remove-image">
                         <span id="text_remove_image"></span>
                         <div>
                             <a class="waves-effect waves-light btn btn-red" id="text_remove"></a>
@@ -314,27 +304,57 @@
                     <span id="text_show_tile_animation_on_load"></span>
                     <div class="switch sidebar-badge sidebar-icon-right">
                         <label>
-                            <input type="checkbox">
+                            <input type="checkbox" data-config="OpeningAnimation" />
                             <span class="lever"></span>
                         </label>
                     </div>
                 </form>
+                <form id="animation-speed" class="form-slider fadeOutLeft">
+                    <label id="text_animation_speed">Animation speed</label>
+                    <p class="range-field">
+                        <input type="range" min="0" max="3000" step="100" data-config="OpeningAnimationTime" data-config-type="int" />
+                    </p>
+                </form>
+
                 <li class="divider"></li>
+
                 <div class="sidebar-text">
                     <span id="text_default_tile_color"></span>
                 </div>
-                <form class="tile-choice">
+
+                <form action="#" class="form-slider">
+                    <label id="text_opacity">Opacity</label>
+                    <p class="range-field">
+                        <input type="range" min="0.1" max="1" step=".05" data-config="TileOpacity" data-config-type="float" />
+                    </p>
+                </form>
+
+                <form class="sidebar-text">
+                    <span id="text_extend_background_to_tiles">Extend background to tiles</span>
+                    <div class="switch sidebar-badge sidebar-icon-right">
+                        <label>
+                            <input type="checkbox" data-config="TileExtendBackground" />
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                </form>
+
+                <form class="tile-choice" id="tile-background-color">
                     <span id="text_background_color"></span>
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
+                    <input type="color" data-config="AccentColor" style="position: relative; right: 12px; width: 90px; height: 32px; top: 7px; left: -46px; cursor: pointer; z-index: 2; opacity: 0;" />
                 </form>
+
                 <form class="tile-choice">
                     <span id="text_text_color"></span>
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
+                    <input type="color" data-config="TileFontColor" style="position: relative; right: 12px; width: 90px; height: 32px; top: 7px; left: -46px; cursor: pointer; z-index: 2; opacity: 0;" />
                 </form>
+
                 <li class="divider"></li>
                 <div class="sidebar-text">
                     <span id="text_tile_positioning"></span>
@@ -342,60 +362,86 @@
                 
                 <article>
                     <label id="text_tile_layout"></label>
-                    <select>
-                        <option value="grid" selected id="text_grid"></option>
+                    <select data-config="TilePlacementMode">
+                        <option value="flow" selected id="text_grid"></option>
                         <option value="free" id="text_free"></option>
                     </select>
                 </article>
 
-                <form action="#" class="form-slider">
-                    <label id="text_number_of_rows"></label>
-                    <p class="range-field">
-                        <input type="range" min="0" max="12" />
-                    </p>
-                </form>
-                <form action="#" class="form-slider">
-                    <label id="text_number_of_columns"></label>
-                    <p class="range-field">
-                        <input type="range" min="0" max="12" />
-                    </p>
-                </form>
+                <div id="tile-grid-configs" style="height: 210px;">
 
-                <article>
-                    <label id="text_horizontal_align"></label>
-                    <select>
-                        <option value="left" id="text_left"></option>
-                        <option value="centre" selected id="text_centre"></option>
-                        <option value="right" id="text_right"></option>
-                    </select>
-                </article>
-                <article>
-                    <label id="text_vertical_align"></label>
-                    <select>
-                        <option value="top" id="text_top"></option>
-                        <option value="middle" selected id="text_centre_2"></option>
-                        <option value="bottom" id="text_bottom"></option>
-                    </select>
-                </article>
-                <article>
-                    <label id="text_tile_flow_direction"></label>
-                    <select>
-                        <option value="vertical" selected id="text_top_to_bottom"></option>
-                        <option value="horizontal" id="text_left_to_right"></option>
-                    </select>
-                </article>
-                
+                    <form action="#" class="form-slider">
+                        <label id="text_number_of_rows"></label>
+                        <p class="range-field">
+                            <input type="range" min="1" max="12" data-config="GroupRows" data-config-type="int" />
+                        </p>
+                    </form>
+
+                    <form action="#" class="form-slider hidden">
+                        <label id="text_number_of_columns"></label>
+                        <p class="range-field">
+                            <input type="range" min="2" max="12" data-config="GroupColumns" data-config-type="int" />
+                        </p>
+                    </form>
+
+                    <article>
+                        <label id="text_horizontal_align"></label>
+                        <select data-config="GroupLeft" data-config-type="int">
+                            <option value="120" id="text_left"></option>
+                            <option value="-1" selected id="text_centre"></option>
+                            <!--<option value="right" id="text_right"></option>-->
+                        </select>
+                    </article>
+
+                    <article>
+                        <label id="text_vertical_align"></label>
+                        <select data-config="GroupTop" data-config-type="int">
+                            <option value="120" id="text_top"></option>
+                            <option value="-1" selected id="text_centre_2"></option>
+                            <!--<option value="bottom" id="text_bottom"></option>-->
+                        </select>
+                    </article>
+
+                    <article class="hidden">
+                        <label id="text_tile_flow_direction"></label>
+                        <select data-config="TileFlowDirection">
+                            <option value="vertical" selected id="text_top_to_bottom"></option>
+                            <option value="horizontal" id="text_left_to_right"></option>
+                        </select>
+                    </article>
+
+                </div>
+
                 <li class="divider"></li>
 
                 <form class="btn-container centered">
                     <div>
-                        <a class="waves-effect waves-red btn btn-inverse btn-inverse-red" id="text_reset_to_default"></a>
+                        <a class="waves-effect waves-red btn btn-inverse btn-inverse-red" id="btn-reset-tiles-config"></a>
                     </div>
                 </form>
+
             </ul>
 
             <!-- Customise theme menu -->
             <ul id="nav-settings-theme-menu" class="sidebar-nav">
+
+                <input type="hidden" data-config="LastBackgroundImageName" data-config-type="string" />
+                <input type="hidden" data-config="ReloadBackgroundImage" data-config-type="boolean" />
+
+                <input type="hidden" data-config="NewsViewMode" data-config-type="string" />
+                <input type="hidden" data-config="ShowImageNewsList" data-config-type="boolean" />
+                <input type="hidden" data-config="NewsWidth" data-config-type="int" />
+                <input type="hidden" data-config="NewsHeight" data-config-type="int" />
+
+                <input type="hidden" data-config="GroupMargin" data-config-type="int" />
+
+                <input type="hidden" data-config="TileWidthLg" data-config-type="int" />
+                <input type="hidden" data-config="TileHeightLg" data-config-type="int" />
+                <input type="hidden" data-config="TileMargin" data-config-type="int" />
+
+                <input type="hidden" data-config="BackgroundOpacity" data-config-type="float" />
+                
+                
                 <div class="sidebar-text">
                     <span id="text_customise_theme_2"></span>
                     <a id="nav-settings-theme-close">
@@ -408,6 +454,7 @@
                     <div>
                         <a class="waves-effect btn color-preview"></a>
                     </div>
+                    <input type="color" data-config="BackgroundColor" style="position: relative; right: 12px; width: 90px; height: 32px; top: 7px; left: -6px; cursor: pointer; z-index: 2; opacity: 0;" />
                 </form>
 
                 <li class="divider"></li>
@@ -415,30 +462,73 @@
                 <div class="sidebar-text">
                     <span id="text_choose_background_image"></span>
                 </div>
-                <form class="tile-choice">
+                <form class="tile-choice hidden">
                     <span id="text_get_from_wikimedia_commons"></span>
                     <div>
                         <a class="waves-effect btn btn-inverse" id="text_select_2"></a>
                     </div>
                 </form>
                 <form class="tile-choice">
+                    <span id="text_get_from_bing">Get from bing</span>
+                    <div>
+                        <a class="waves-effect btn btn-inverse" id="btn-bing-background">Select</a>
+                    </div>
+                </form>
+                <form class="tile-choice">
                     <span id="text_add_from_url_2"></span>
                     <div>
-                        <a class="waves-effect btn btn-inverse" id="text_add_url_3"></a>
+                        <a class="waves-effect btn btn-inverse" id="btn-background-url"></a>
+                    </div>
+                </form>
+                <form class="fadeOutLeft" id="background-url">
+                    <div class="text-field-group">
+                        <input type="text" id="txt-background-url">
+                        <span class="bar"></span>
+                        <label id="text_add_url_4">Add URL</label>
                     </div>
                 </form>
                 <form class="tile-choice">
                     <span id="text_upload_from_computer_2"></span>
                     <div>
-                        <a class="waves-effect btn btn-inverse" id="text_upload_2"></a>
+                        <div class="waves-effect btn btn-inverse">
+                            <span id="text_upload_2">Upload</span>
+                            <input id="file-background" type="file">
+                        </div>
                     </div>
                 </form>
-                <form class="tile-choice">
+                <form class="tile-choice" id="remove-background">
                     <span id="text_remove_image_2"></span>
                     <div>
-                        <a class="waves-effect waves-light btn btn-red" id="text_remove_2"></a>
+                        <a class="waves-effect waves-light btn btn-red" id="btn-remove-background"></a>
                     </div>
                 </form>
+
+                <div id="background-options" class="fadeOutLeft">
+                    
+                    <li class="divider"></li>
+
+                    <div class="sidebar-text">
+                        <span id="text_background_options">Background options</span>
+                    </div>
+
+                    <form class="form-slider">
+                        <label id="text_opacity_2">Opacity</label>
+                        <p class="range-field">
+                            <input type="range" min="0.1" max="1" step=".05" data-config="BackgroundOpacity" data-config-type="float" />
+                        </p>
+                    </form>
+
+                    <article>
+                        <label id="text_choose_fit">Choose a fit</label>
+                        <select id="select-background-fit">
+                            <option value="adjust" id="text_adjust">Adjust</option>
+                            <option value="fill" id="text_fill">Fill</option>
+                            <option value="original" id="text_original_size">Original size</option>
+                        </select>
+                    </article>
+
+                </div>
+
 
                 <li class="divider"></li>
 
@@ -714,7 +804,7 @@
                 </div>
                 
                 <!-- Edit tile info -->
-                <div id="edit-tile-info-menu" class="hidden fadeOutLeft">
+                <div id="edit-tile-info-menu" class="fadeOutLeft">
                     <div class="sidebar-text">
                         <span id="text_edit_tile_info_2"></span>
                         <a id="edit-tile-info-close">
@@ -745,7 +835,7 @@
                 </div>
                 
                 <!-- Edit tile colors -->
-                <div id="edit-tile-color-menu" class="hidden fadeOutLeft">
+                <div id="edit-tile-color-menu" class="fadeOutLeft">
 
                     <div class="sidebar-text">
                         <span id="text_customise_tile_color_3"></span>
@@ -769,20 +859,20 @@
                         <div>
                             <a class="waves-effect btn color-preview"></a>
                         </div>
-                        <input type="color" data-property="backgroundColor" style="position: absolute; right: 12px; width: 90px; height: 32px; top: 8px; cursor: pointer; z-index: 2; opacity: 0;" />
+                        <input type="color" data-property="backgroundColor" style="position: relative; right: 12px; width: 90px; height: 32px; top: 7px; left: -6px; cursor: pointer; z-index: 2; opacity: 0;" />
                     </form>
                     <form id="edit-tile-customise-font-color" class="tile-choice">
                         <span id="text_font_color_2"></span>
                         <div>
                             <a class="waves-effect btn color-preview"></a>
                         </div>
-                        <input type="color" data-property="fontColor" style="position: absolute; right: 12px; width: 90px; height: 32px; top: 8px; cursor: pointer; z-index: 2; opacity: 0;" />
+                        <input type="color" data-property="fontColor" style="position: relative; right: 12px; width: 90px; height: 32px; top: 7px; left: -6px; cursor: pointer; z-index: 2; opacity: 0;" />
                     </form>
 
                 </div>
                 
                 <!-- Edit tile image -->
-                <div id="edit-tile-image-menu" class="hidden fadeOutLeft">
+                <div id="edit-tile-image-menu" class="fadeOutLeft">
                     <div class="sidebar-text">
                         <span id="text_edit_tile_image_2"></span>
                         <a id="edit-tile-image-close">
@@ -817,7 +907,7 @@
                             </div>
                         </div>
                     </form>
-                    <form class="tile-choice " id="edit-tile-remove-image">
+                    <form class="tile-choice" id="edit-tile-remove-image">
                         <span id="text_remove_image_3"></span>
                         <div>
                             <a class="waves-effect waves-light btn btn-red" id="text_remove_3"></a>
@@ -844,6 +934,523 @@
     </aside>
 
 
+    <div id="wallpaper" class="wallpaper"></div>
+            
+    <!--BOOKMARKS-->
+    <div class="bookmark-bar">
+        <a id="btn-previous-bookmarks" class="previous"></a>
+        <div class="bookmarks list" id="bookmarks-list">
+            <ul></ul>
+        </div>
+        <a id="btn-next-bookmarks" class="next"></a>
+        <div class="bookmarks menu" id="bookmarks-menu">
+            <ul>
+                <li>
+                    All bookmarks
+                    <ul></ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TILES CONTAINER -->
+    <div id="container" class="tile-container">
+
+    </div>
+
+    <!-- FEEDS -->
+    <div id="news" class="news list">
+        <div class="loader">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="header">
+            <div id="news-titles" class="titles">
+                <p class="active">Featured</p>
+            </div>
+            <a id="news-btn-change-view" class="change-view"></a>
+            <a id="news-btn-change-view-pictures" class="change-view-pictures"></a>
+        </div>
+        <div class="items" id="news-items">
+        </div>
+        <a id="news-resize" class="resize"></a>
+    </div>
+
+    <!-- OPTIONS -->
+    <div id="options" class="options hidden accentbg">
+
+        <div class="context">
+            <a id="options-btn-resize-small" class="resize-small">smaller</a>
+            <a id="options-btn-resize-big" class="resize-big">bigger</a>
+
+            <div class="separator"></div>
+
+            <a id="options-btn-edit" class="edit">edit</a>
+            <a id="options-btn-remove" class="remove">remove</a>
+
+        </div>
+
+        <div class="global">
+            <a id="options-btn-add-tile" class="add-tile">add tile</a>
+            <a id="options-btn-settings" class="settings">settings</a>
+        </div>
+
+    </div>
+
+    <div id="overlay" class="overlay"></div>
+
+    <!-- CONFIGURATIONS -->
+    <div id="config" class="config">
+
+        <input type="hidden" data-property="LastBackgroundImageName" data-property-type="string" />
+        <input type="hidden" data-property="ReloadBackgroundImage" data-property-type="boolean" />
+
+        <input type="hidden" data-property="NewsViewMode" data-property-type="string" />
+        <input type="hidden" data-property="ShowImageNewsList" data-property-type="boolean" />
+        <input type="hidden" data-property="NewsWidth" data-property-type="int" />
+        <input type="hidden" data-property="NewsHeight" data-property-type="int" />
+
+        <input type="hidden" data-property="GroupMargin" data-property-type="int" />
+
+        <div class="top-bar"></div>
+
+        <div class="left-col">
+
+            <h3>Configurations</h3>
+
+            <ul>
+                <li><a data-panel-for="config-general">General</a>
+                </li>
+                <li><a data-panel-for="config-colors">Colors and background</a>
+                </li>
+                <li><a data-panel-for="config-tiles">Tiles appearance and positioning</a>
+                </li>
+                <li><a data-panel-for="config-feeds">Feeds</a>
+                </li>
+                <!-- <li><a data-panel-for="config-sync">Synchronization</a></li> -->
+            </ul>
+
+        </div>
+
+        <!--General-->
+        <div class="right-col top" data-panel="config-general">
+
+            <h4>General settings</h4>
+
+            <div class="form-row">
+                <div class="size12">
+                    <input type="checkbox" id="config-show-bookmarks" data-property="ShowBookmarksBar" />
+                    <label for="config-show-bookmarks">Show bookmarks bar</label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="size12">
+                    <input type="checkbox" id="config-show-news" data-property="ShowNews" />
+                    <label for="config-show-news">Show news feed</label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="size12">
+                    <input type="checkbox" id="config-show-options" data-property="ShowOptionsButton" />
+                    <label for="config-show-options"> Show options button</label>
+                    <span class="details">(little 3 dots on the bottom right corner - you can access the options bar by right clicking anywhere)</span>
+
+                </div>
+            </div>
+
+            <div id="config-animation">
+                <div class="form-row">
+                    <div class="size12">
+                        <input type="checkbox" id="config-initial-animation" data-property="OpeningAnimation" />
+                        <label for="config-initial-animation">Initial tiles animation</label>
+                    </div>
+                </div>
+
+                <div class="form-row" id="config-animation-speed">
+                    <div class="size6">
+                        <span>Animation speed:</span>
+                        <input type="range" min="0" max="3000" step="50" data-property="OpeningAnimationTime" data-property-type="int" />
+                    </div>
+                    <div class="size6">
+                        <a id="btn-speed-test" class="speed-test">Test</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Colors and background-->
+        <div class="right-col top" data-panel="config-colors">
+
+            <h4>Colors</h4>
+
+            <div class="form-row">
+                <div class="size6">
+                    <span>Background color:</span>
+                    <input type="color" data-property="BackgroundColor" />
+                </div>
+                <div class="size6">
+                    <span>Accent color:</span>
+                    <input type="color" data-property="AccentColor" />
+                </div>
+            </div>
+
+            <h4>Background image</h4>
+
+            <div class="form-row">
+                <div class="size12">
+                    <input type="radio" name="background" id="config-noBackgroundImage" checked="checked" data-property="NoBackgroundImage" data-reload-background="true" />
+                    <label for="config-noBackgroundImage">No background image</label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="size12">
+                    <input type="radio" name="background" id="config-bingBackgroundImage" data-property="BingBackgroundImage" data-reload-background="true" />
+                    <label for="config-bingBackgroundImage">Use Bing images of the day</label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="size12">
+                    <input type="radio" name="background" id="config-fileBackgroundImage" data-property="HasBackgroundImage" data-reload-background="true" />
+                    <label for="config-fileBackgroundImage">Use image from my computer</label>
+
+                    <div id="config-loadBackgroundImage" class="load-file">
+                        <input type="file" class="size12" data-property="BackgroundImage.data" data-reload-background="true" />
+                        <a>Click here to select an image from your machine</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="config-backgroundImage-options">
+
+                <div class="form-row">
+                    <div class="size12">
+                        <span>Image size:</span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="size12">
+                        <input type="radio" name="image-resize" id="config-bg-original" checked="checked" />
+                        <label for="config-bg-original">original size</label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="size12">
+                        <input type="radio" name="image-resize" id="config-bg-ajust" data-property="BackgroundAdjust" />
+                        <label for="config-bg-ajust">adjust</label>
+                        <span class="details">(try to occupy the whole window without distorting the image)</span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="size12">
+                        <input type="radio" name="image-resize" id="config-bg-fill" data-property="BackgroundFill" />
+                        <label for="config-bg-fill">fill</label>
+                        <span class="details">(occupy the whole window - may distort the image)</span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="size6">
+                        <span>Image opacity:</span>
+                        <input type="range" min="0.1" max="1" step=".05" data-property="BackgroundOpacity" data-property-type="float" />
+                    </div>
+                    <div class="size6">
+                        <span>Gray scale:</span>
+                        <input type="range" min="0" max="1" step=".05" data-property="BackgroundGrayscale" data-property-type="float" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="size12">
+                        <input type="checkbox" id="extend-background" data-property="TileExtendBackground" />
+                        <label for="extend-background">Extend background image to tiles</label>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!--Tiles appearance and positioning-->
+        <div class="right-col top" data-panel="config-tiles">
+
+            <h4>Tiles appearance</h4>
+
+            <div class="form-row">
+                <div class="size6">
+                    <span>Width:</span>
+                    <input type="range" min="50" max="500" step="1" data-property="TileWidthLg" data-property-type="int" />
+                </div>
+
+                <div class="size6">
+                    <span>Height:</span>
+                    <input type="range" min="100" max="1000" step="1" data-property="TileHeightLg" data-property-type="int" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="size6">
+                    <span>Border radius:</span>
+                    <input type="range" min="0" max="250" step="1" data-property="TileBorderRadius" data-property-type="int" />
+                </div>
+                <div class="size6">
+                    <span>Opacity:</span>
+                    <input type="range" min="0.1" max="1" step=".05" data-property="TileOpacity" data-property-type="float" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="size6">
+                    <span>Gray scale:</span>
+                    <input type="range" min="0" max="1" step=".05" data-property="TileGrayscale" data-property-type="float" />
+                </div>
+            </div>
+
+            <h4>Tiles positioning</h4>
+
+            <div class="form-row">
+                <div class="size6">
+                    <span>Positioning mode:</span>
+                    <select data-property="TilePlacementMode">
+                        <option value="flow">Flow</option>
+                        <option value="free">Free</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="config-tiles-placement">
+                <div class="form-row">
+                    <div class="size6">
+                        <span>Left margin:</span>
+                        <span class="details">(use -1 to center horizontaly)</span>
+                        <input type="range" min="-1" max="1000" step="1" data-property="GroupLeft" data-property-type="int" />
+                    </div>
+
+                    <div class="size6">
+                        <span>Top margin:</span>
+                        <span class="details">(use -1 to center vertically)</span>
+                        <input type="range" min="-1" max="500" step="1" data-property="GroupTop" data-property-type="int" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="size6">
+                        <span>Margin between tiles:</span>
+                        <input type="range" min="0" max="30" step="1" data-property="TileMargin" data-property-type="int" />
+                    </div>
+                    <div class="size6">
+                        <span>Rows #:</span>
+                        <input type="range" min="1" max="20" step="1" data-property="GroupRows" data-property-type="int" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Feeds-->
+        <div class="right-col top" data-panel="config-feeds">
+
+            <h4>Feeds</h4>
+
+            <div class="feeds" id="config-feeds">
+                <div>
+                    <span>The Verge</span>
+                    <span class="url">http://www.theverge.com/rss/frontpage</span>
+                    <a class="btn-edit-feed"></a>
+                    <a class="btn-remove-feed"></a>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="size12">
+                    <a id="btn-add-feed" class="btn-add-feed"></a>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Synchronization-->
+        <div class="right-col top" data-panel="config-sync">
+
+            <iframe id="iframe-dropbox"></iframe>
+
+            <div id="dropbox-loader" class="loader dark">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </div>
+
+
+        <div id="config-buttons" class="right-col bottom">
+            <input type="button" id="config-btn-ok" value="OK" />
+            <input type="button" id="config-btn-cancel" value="Cancel" />
+            <input type="button" id="config-btn-apply" value="Apply" />
+        </div>
+
+    </div>
+
+    <!-- FEED CONFIGURATIONS -->
+    <div id="feed-config" class="config">
+
+        <div class="top-bar"></div>
+
+        <div class="right-col top">
+
+            <h4>Feed configuration</h4>
+
+            <input type="hidden" id="hdn-feed-id" />
+
+            <div class="form-row">
+                <div class="size6">
+                    <span>Name:</span>
+                    <input type="text" id="txt-feed-name" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="size12">
+                    <span>Url:</span>
+                    <input type="text" id="txt-feed-url" />
+                </div>
+            </div>
+
+        </div>
+
+        <div id="config-buttons" class="right-col bottom">
+            <input type="button" id="feed-config-btn-ok" value="OK" />
+            <input type="button" id="feed-config-btn-cancel" value="Cancel" />
+        </div>
+
+    </div>
+
+    <!-- TILE CONFIGURATIONS -->
+    <div id="tile-config" class="config">
+        <div class="top-bar"></div>
+
+        <div class="left-col">
+
+            <h3>Tile configurations</h3>
+
+            <ul>
+                <li><a data-panel-for="tile-config-general">General</a>
+                </li>
+                <li><a data-panel-for="tile-config-advanced">Advanced</a>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="right-col top scroll">
+
+            <h4 class="no-margin">Tile preview:</h4>
+
+            <div class="preview-tile" id="tile-config-preview-tile"> </div>
+
+            <!--General-->
+            <div data-panel="tile-config-general">
+                <input type="hidden" data-property="id" data-property-type="int" />
+                <input type="hidden" data-property="idGroup" data-property-type="int" />
+                <input type="hidden" data-property="size" data-property-type="int" />
+                <input type="hidden" data-property="order" data-property-type="int" />
+                <input type="hidden" data-property="hasImage" data-property-type="boolean" />
+                <input type="hidden" data-property="removeImage" data-property-type="boolean" />
+
+                <input type="hidden" data-property="position.left" data-property-type="int" />
+                <input type="hidden" data-property="position.top" data-property-type="int" />
+
+                <div class="form-row">
+                    <div class="size12">
+                        <span>URL:</span>
+                        <input type="text" data-property="url" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="size12">
+                        <span>Site name:</span>
+                        <input type="text" data-property="name" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="size12">
+                        <span>Image:</span>
+
+                        <div id="tile-config-file-image">
+                            <input type="file" class="size12" data-property="image.data" />
+                            <a>Click here to select an image from your machine</a>
+                        </div>
+                        <a id="tile-config-btn-removeImage" class="remove-image">Remove image</a>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="size12">
+                        <input type="checkbox" id="tile-config-accentColor" checked="checked" data-property="accentColor" />
+                        <label for="tile-config-accentColor">use accent color</label>
+                    </div>
+                </div>
+
+                <div class="form-row" id="tile-config-backgroundColor">
+                    <div class="size12">
+                        <span>Background color:</span>
+                        <input type="color" data-property="backgroundColor" />
+                    </div>
+                </div>
+
+            </div>
+
+            <!--Advanced-->
+            <div data-panel="tile-config-advanced">
+
+                <div id="tile-config-imageSize" class="columns">
+                    <div class="form-row">
+                        <div class="size6">
+                            <span>Image width:</span>
+                            <input type="text" data-property="imageWidth.value" data-property-type="float" />
+                            <select data-property="imageWidth.unit">
+                                <option value="px">px</option>
+                                <option value="%">%</option>
+                            </select>
+                        </div>
+
+                        <div class="size6">
+                            <span>Image height:</span>
+                            <input type="text" data-property="imageHeight.value" data-property-type="float" />
+                            <select data-property="imageHeight.unit">
+                                <option value="px">px</option>
+                                <option value="%">%</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="tile-config-buttons" class="right-col bottom">
+            <input type="button" id="tile-config-btn-ok" value="OK" />
+            <input type="button" id="tile-config-btn-cancel" value="Cancel" />
+        </div>
+
+    </div>
+
+    <a id="button-options" class="button-options"></a>
 
     <div class="context-menu hidden">
         <ul>
@@ -855,534 +1462,6 @@
         </ul>
     </div>
 
-
-
-
-
-
-    <div class="wrapper">
-        <div class="constructor">
-
-            <div id="wallpaper" class="wallpaper"></div>
-            
-            <!--BOOKMARKS-->
-            <div class="bookmark-bar">
-                <a id="btn-previous-bookmarks" class="previous"></a>
-                <div class="bookmarks list" id="bookmarks-list">
-                    <ul></ul>
-                </div>
-                <a id="btn-next-bookmarks" class="next"></a>
-                <div class="bookmarks menu" id="bookmarks-menu">
-                    <ul>
-                        <li>
-                            All bookmarks
-                            <ul></ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- TILES CONTAINER -->
-            <div id="container" class="container">
-
-            </div>
-
-            <!-- FEEDS -->
-            <div id="news" class="news list">
-                <div class="loader">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <div class="header">
-                    <div id="news-titles" class="titles">
-                        <p class="active">Featured</p>
-                    </div>
-                    <a id="news-btn-change-view" class="change-view"></a>
-                    <a id="news-btn-change-view-pictures" class="change-view-pictures"></a>
-                </div>
-                <div class="items" id="news-items">
-                </div>
-                <a id="news-resize" class="resize"></a>
-            </div>
-
-            <!-- OPTIONS -->
-            <div id="options" class="options hidden accentbg">
-
-                <div class="context">
-                    <a id="options-btn-resize-small" class="resize-small">smaller</a>
-                    <a id="options-btn-resize-big" class="resize-big">bigger</a>
-
-                    <div class="separator"></div>
-
-                    <a id="options-btn-edit" class="edit">edit</a>
-                    <a id="options-btn-remove" class="remove">remove</a>
-
-                </div>
-
-                <div class="global">
-                    <a id="options-btn-add-tile" class="add-tile">add tile</a>
-                    <a id="options-btn-settings" class="settings">settings</a>
-                </div>
-
-            </div>
-
-            <div id="overlay" class="overlay"></div>
-
-            <!-- CONFIGURATIONS -->
-            <div id="config" class="config">
-
-                <input type="hidden" data-property="LastBackgroundImageName" data-property-type="string" />
-                <input type="hidden" data-property="ReloadBackgroundImage" data-property-type="boolean" />
-
-                <input type="hidden" data-property="NewsViewMode" data-property-type="string" />
-                <input type="hidden" data-property="ShowImageNewsList" data-property-type="boolean" />
-                <input type="hidden" data-property="NewsWidth" data-property-type="int" />
-                <input type="hidden" data-property="NewsHeight" data-property-type="int" />
-
-                <input type="hidden" data-property="GroupMargin" data-property-type="int" />
-
-                <div class="top-bar"></div>
-
-                <div class="left-col">
-
-                    <h3>Configurations</h3>
-
-                    <ul>
-                        <li><a data-panel-for="config-general">General</a>
-                        </li>
-                        <li><a data-panel-for="config-colors">Colors and background</a>
-                        </li>
-                        <li><a data-panel-for="config-tiles">Tiles appearance and positioning</a>
-                        </li>
-                        <li><a data-panel-for="config-feeds">Feeds</a>
-                        </li>
-                        <!-- <li><a data-panel-for="config-sync">Synchronization</a></li> -->
-                    </ul>
-
-                </div>
-
-                <!--General-->
-                <div class="right-col top" data-panel="config-general">
-
-                    <h4>General settings</h4>
-
-                    <div class="form-row">
-                        <div class="size12">
-                            <input type="checkbox" id="config-show-bookmarks" data-property="ShowBookmarksBar" />
-                            <label for="config-show-bookmarks">Show bookmarks bar</label>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="size12">
-                            <input type="checkbox" id="config-show-news" data-property="ShowNews" />
-                            <label for="config-show-news">Show news feed</label>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="size12">
-                            <input type="checkbox" id="config-show-options" data-property="ShowOptionsButton" />
-                            <label for="config-show-options"> Show options button</label>
-                            <span class="details">(little 3 dots on the bottom right corner - you can access the options bar by right clicking anywhere)</span>
-
-                        </div>
-                    </div>
-
-                    <div id="config-animation">
-                        <div class="form-row">
-                            <div class="size12">
-                                <input type="checkbox" id="config-initial-animation" data-property="OpeningAnimation" />
-                                <label for="config-initial-animation">Initial tiles animation</label>
-                            </div>
-                        </div>
-
-                        <div class="form-row" id="config-animation-speed">
-                            <div class="size6">
-                                <span>Animation speed:</span>
-                                <input type="range" min="0" max="3000" step="50" data-property="OpeningAnimationTime" data-property-type="int" />
-                            </div>
-                            <div class="size6">
-                                <a id="btn-speed-test" class="speed-test">Test</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!--Colors and background-->
-                <div class="right-col top" data-panel="config-colors">
-
-                    <h4>Colors</h4>
-
-                    <div class="form-row">
-                        <div class="size6">
-                            <span>Background color:</span>
-                            <input type="color" data-property="BackgroundColor" />
-                        </div>
-                        <div class="size6">
-                            <span>Accent color:</span>
-                            <input type="color" data-property="AccentColor" />
-                        </div>
-                    </div>
-
-                    <h4>Background image</h4>
-
-                    <div class="form-row">
-                        <div class="size12">
-                            <input type="radio" name="background" id="config-noBackgroundImage" checked="checked" data-property="NoBackgroundImage" data-reload-background="true" />
-                            <label for="config-noBackgroundImage">No background image</label>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="size12">
-                            <input type="radio" name="background" id="config-bingBackgroundImage" data-property="BingBackgroundImage" data-reload-background="true" />
-                            <label for="config-bingBackgroundImage">Use Bing images of the day</label>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="size12">
-                            <input type="radio" name="background" id="config-fileBackgroundImage" data-property="HasBackgroundImage" data-reload-background="true" />
-                            <label for="config-fileBackgroundImage">Use image from my computer</label>
-
-                            <div id="config-loadBackgroundImage" class="load-file">
-                                <input type="file" class="size12" data-property="BackgroundImage.data" data-reload-background="true" />
-                                <a>Click here to select an image from your machine</a>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div id="config-backgroundImage-options">
-
-                        <div class="form-row">
-                            <div class="size12">
-                                <span>Image size:</span>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="size12">
-                                <input type="radio" name="image-resize" id="config-bg-original" checked="checked" />
-                                <label for="config-bg-original">original size</label>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="size12">
-                                <input type="radio" name="image-resize" id="config-bg-ajust" data-property="BackgroundAdjust" />
-                                <label for="config-bg-ajust">adjust</label>
-                                <span class="details">(try to occupy the whole window without distorting the image)</span>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="size12">
-                                <input type="radio" name="image-resize" id="config-bg-fill" data-property="BackgroundFill" />
-                                <label for="config-bg-fill">fill</label>
-                                <span class="details">(occupy the whole window - may distort the image)</span>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="size6">
-                                <span>Image opacity:</span>
-                                <input type="range" min="0.1" max="1" step=".05" data-property="BackgroundOpacity" data-property-type="float" />
-                            </div>
-                            <div class="size6">
-                                <span>Gray scale:</span>
-                                <input type="range" min="0" max="1" step=".05" data-property="BackgroundGrayscale" data-property-type="float" />
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="size12">
-                                <input type="checkbox" id="extend-background" data-property="TileExtendBackground" />
-                                <label for="extend-background">Extend background image to tiles</label>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!--Tiles appearance and positioning-->
-                <div class="right-col top" data-panel="config-tiles">
-
-                    <h4>Tiles appearance</h4>
-
-                    <div class="form-row">
-                        <div class="size6">
-                            <span>Width:</span>
-                            <input type="range" min="50" max="500" step="1" data-property="TileWidthLg" data-property-type="int" />
-                        </div>
-
-                        <div class="size6">
-                            <span>Height:</span>
-                            <input type="range" min="100" max="1000" step="1" data-property="TileHeightLg" data-property-type="int" />
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="size6">
-                            <span>Border radius:</span>
-                            <input type="range" min="0" max="250" step="1" data-property="TileBorderRadius" data-property-type="int" />
-                        </div>
-                        <div class="size6">
-                            <span>Opacity:</span>
-                            <input type="range" min="0.1" max="1" step=".05" data-property="TileOpacity" data-property-type="float" />
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="size6">
-                            <span>Gray scale:</span>
-                            <input type="range" min="0" max="1" step=".05" data-property="TileGrayscale" data-property-type="float" />
-                        </div>
-                    </div>
-
-                    <h4>Tiles positioning</h4>
-
-                    <div class="form-row">
-                        <div class="size6">
-                            <span>Positioning mode:</span>
-                            <select data-property="TilePlacementMode">
-                                <option value="flow">Flow</option>
-                                <option value="free">Free</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div id="config-tiles-placement">
-                        <div class="form-row">
-                            <div class="size6">
-                                <span>Left margin:</span>
-                                <span class="details">(use -1 to center horizontaly)</span>
-                                <input type="range" min="-1" max="1000" step="1" data-property="GroupLeft" data-property-type="int" />
-                            </div>
-
-                            <div class="size6">
-                                <span>Top margin:</span>
-                                <span class="details">(use -1 to center vertically)</span>
-                                <input type="range" min="-1" max="500" step="1" data-property="GroupTop" data-property-type="int" />
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="size6">
-                                <span>Margin between tiles:</span>
-                                <input type="range" min="0" max="30" step="1" data-property="TileMargin" data-property-type="int" />
-                            </div>
-                            <div class="size6">
-                                <span>Rows #:</span>
-                                <input type="range" min="1" max="20" step="1" data-property="GroupRows" data-property-type="int" />
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!--Feeds-->
-                <div class="right-col top" data-panel="config-feeds">
-
-                    <h4>Feeds</h4>
-
-                    <div class="feeds" id="config-feeds">
-                        <div>
-                            <span>The Verge</span>
-                            <span class="url">http://www.theverge.com/rss/frontpage</span>
-                            <a class="btn-edit-feed"></a>
-                            <a class="btn-remove-feed"></a>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="size12">
-                            <a id="btn-add-feed" class="btn-add-feed"></a>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!--Synchronization-->
-                <div class="right-col top" data-panel="config-sync">
-
-                    <iframe id="iframe-dropbox"></iframe>
-
-                    <div id="dropbox-loader" class="loader dark">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-
-                </div>
-
-
-                <div id="config-buttons" class="right-col bottom">
-                    <input type="button" id="config-btn-ok" value="OK" />
-                    <input type="button" id="config-btn-cancel" value="Cancel" />
-                    <input type="button" id="config-btn-apply" value="Apply" />
-                </div>
-
-            </div>
-
-            <!-- FEED CONFIGURATIONS -->
-            <div id="feed-config" class="config">
-
-                <div class="top-bar"></div>
-
-                <div class="right-col top">
-
-                    <h4>Feed configuration</h4>
-
-                    <input type="hidden" id="hdn-feed-id" />
-
-                    <div class="form-row">
-                        <div class="size6">
-                            <span>Name:</span>
-                            <input type="text" id="txt-feed-name" />
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="size12">
-                            <span>Url:</span>
-                            <input type="text" id="txt-feed-url" />
-                        </div>
-                    </div>
-
-                </div>
-
-                <div id="config-buttons" class="right-col bottom">
-                    <input type="button" id="feed-config-btn-ok" value="OK" />
-                    <input type="button" id="feed-config-btn-cancel" value="Cancel" />
-                </div>
-
-            </div>
-
-            <!-- TILE CONFIGURATIONS -->
-            <div id="tile-config" class="config">
-                <div class="top-bar"></div>
-
-                <div class="left-col">
-
-                    <h3>Tile configurations</h3>
-
-                    <ul>
-                        <li><a data-panel-for="tile-config-general">General</a>
-                        </li>
-                        <li><a data-panel-for="tile-config-advanced">Advanced</a>
-                        </li>
-                    </ul>
-
-                </div>
-
-                <div class="right-col top scroll">
-
-                    <h4 class="no-margin">Tile preview:</h4>
-
-                    <div class="preview-tile" id="tile-config-preview-tile"> </div>
-
-                    <!--General-->
-                    <div data-panel="tile-config-general">
-                        <input type="hidden" data-property="id" data-property-type="int" />
-                        <input type="hidden" data-property="idGroup" data-property-type="int" />
-                        <input type="hidden" data-property="size" data-property-type="int" />
-                        <input type="hidden" data-property="order" data-property-type="int" />
-                        <input type="hidden" data-property="hasImage" data-property-type="boolean" />
-                        <input type="hidden" data-property="removeImage" data-property-type="boolean" />
-
-                        <input type="hidden" data-property="position.left" data-property-type="int" />
-                        <input type="hidden" data-property="position.top" data-property-type="int" />
-
-                        <div class="form-row">
-                            <div class="size12">
-                                <span>URL:</span>
-                                <input type="text" data-property="url" />
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="size12">
-                                <span>Site name:</span>
-                                <input type="text" data-property="name" />
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="size12">
-                                <span>Image:</span>
-
-                                <div id="tile-config-file-image">
-                                    <input type="file" class="size12" data-property="image.data" />
-                                    <a>Click here to select an image from your machine</a>
-                                </div>
-                                <a id="tile-config-btn-removeImage" class="remove-image">Remove image</a>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="size12">
-                                <input type="checkbox" id="tile-config-accentColor" checked="checked" data-property="accentColor" />
-                                <label for="tile-config-accentColor">use accent color</label>
-                            </div>
-                        </div>
-
-                        <div class="form-row" id="tile-config-backgroundColor">
-                            <div class="size12">
-                                <span>Background color:</span>
-                                <input type="color" data-property="backgroundColor" />
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!--Advanced-->
-                    <div data-panel="tile-config-advanced">
-
-                        <div id="tile-config-imageSize" class="columns">
-                            <div class="form-row">
-                                <div class="size6">
-                                    <span>Image width:</span>
-                                    <input type="text" data-property="imageWidth.value" data-property-type="float" />
-                                    <select data-property="imageWidth.unit">
-                                        <option value="px">px</option>
-                                        <option value="%">%</option>
-                                    </select>
-                                </div>
-
-                                <div class="size6">
-                                    <span>Image height:</span>
-                                    <input type="text" data-property="imageHeight.value" data-property-type="float" />
-                                    <select data-property="imageHeight.unit">
-                                        <option value="px">px</option>
-                                        <option value="%">%</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div id="tile-config-buttons" class="right-col bottom">
-                    <input type="button" id="tile-config-btn-ok" value="OK" />
-                    <input type="button" id="tile-config-btn-cancel" value="Cancel" />
-                </div>
-
-            </div>
-
-            <a id="button-options" class="button-options"></a>
-
-        </div>
-    </div>
 
     <!--<script src="js/es6-promise-2.0.0.js"></script>-->
 

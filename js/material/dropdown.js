@@ -245,8 +245,33 @@
           activateOption(options, selectedOption);
         });
 
+
         $newSelect.on('blur', function(){
-          $(this).trigger('close');
+
+            $(this).trigger('close');
+            
+            var that = this;
+
+            setTimeout(function () {
+
+                var select = $("select", that.parentElement);
+
+                if (select && select[0].eventListeners) {
+
+                    select[0].eventListeners.forEach(function (eventName) {
+
+                        if (eventName.indexOf("_") >= 0)
+                            eventName = eventName.substr(0, eventName.indexOf("_"));
+
+                        var event = new Event(eventName);
+                        select[0].dispatchEvent(event);
+
+                    });
+
+                }
+
+            }, 250);
+
         });
 
         // Make option as selected and scroll to selected position

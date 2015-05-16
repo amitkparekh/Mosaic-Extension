@@ -1096,5 +1096,6 @@ div {
 }
 
 .fadeOutLeft, .fadeInLeft {
-    @include prefix((animation-duration: 0.4s), webkit);
+    @include prefix((transition: 0.4s !important), webkit);
 }
+

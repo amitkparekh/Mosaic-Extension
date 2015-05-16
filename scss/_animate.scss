@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 
 /*!
 Animate.css - http://daneden.me/animate
@@ -1123,7 +1123,7 @@ Copyright (c) 2015 Daniel Eden
   animation-name: bounceOutUp;
 }
 
-@-webkit-keyframes fadeIn {
+/*@-webkit-keyframes fadeIn {
   0% {
     opacity: 0;
   }
@@ -1141,11 +1141,11 @@ Copyright (c) 2015 Daniel Eden
   100% {
     opacity: 1;
   }
-}
+}*/
 
 .fadeIn {
-  -webkit-animation-name: fadeIn;
-  animation-name: fadeIn;
+  transition: .4s;
+  opacity: 1;
 }
 
 @-webkit-keyframes fadeInDown {
@@ -1249,8 +1249,10 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .fadeInLeft {
-  -webkit-animation-name: fadeInLeft;
-  animation-name: fadeInLeft;
+    opacity: 1;
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
 }
 
 @-webkit-keyframes fadeInLeftBig {
@@ -1428,7 +1430,7 @@ Copyright (c) 2015 Daniel Eden
   animation-name: fadeInUpBig;
 }
 
-@-webkit-keyframes fadeOut {
+/*@-webkit-keyframes fadeOut {
   0% {
     opacity: 1;
   }
@@ -1446,11 +1448,12 @@ Copyright (c) 2015 Daniel Eden
   100% {
     opacity: 0;
   }
-}
+}*/
 
 .fadeOut {
-  -webkit-animation-name: fadeOut;
-  animation-name: fadeOut;
+  transition: .4s;
+  opacity: 0;
+  height: 0 !important;
 }
 
 @-webkit-keyframes fadeOutDown {
@@ -1513,15 +1516,19 @@ Copyright (c) 2015 Daniel Eden
   animation-name: fadeOutDownBig;
 }
 
-@-webkit-keyframes fadeOutLeft {
+/*@-webkit-keyframes fadeOutLeft {
   0% {
     opacity: 1;
   }
 
-  100% {
+  99% {
     opacity: 0;
     -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
+  }
+
+  100% {
+      display: none;
   }
 }
 
@@ -1536,11 +1543,14 @@ Copyright (c) 2015 Daniel Eden
     -ms-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
   }
-}
+}*/
 
-.fadeOutLeft {
-  -webkit-animation-name: fadeOutLeft;
-  animation-name: fadeOutLeft;
+.fadeOutLeft, .form-slider.fadeOutLeft {
+    opacity: 0;
+    height:0 !important;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    -ms-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
 }
 
 @-webkit-keyframes fadeOutLeftBig {

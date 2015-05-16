@@ -293,13 +293,11 @@ var editMenuOpen = function () {
     sidebar.addClass("open");
     menuButton.addClass("active");
 
-    editTile_TileInfoMenu.addClass("hidden");
-    editTile_TileColorMenu.addClass("hidden");
-    editTile_TileImageMenu.addClass("hidden");
+    editTile_TileInfoMenu.addClass("fadeOutLeft");
+    editTile_TileColorMenu.addClass("fadeOutLeft");
+    editTile_TileImageMenu.addClass("fadeOutLeft");
 
-    editTile_OptionsMenu.removeClass("animated fadeOutLeft hidden")
-
-    $("#edit-tile-add-url-text").addClass("hidden").removeClass("fadeOutLeft");
+    editTile_OptionsMenu.removeClass("fadeOutLeft")
 
     editTileMenu.addClass("open ext");
     extSidebarOpen();
@@ -311,87 +309,90 @@ var editMenuClose = function () {
 };
 
 var editTile_ChoicesClose = function () {
+    editTile_OptionsMenu.removeClass("fadeInLeft").addClass("fadeOutLeft");
 
-    editTile_OptionsMenu.className = editTile_OptionsMenu.className.replace(/(?:^|\s)fadeInLeft(?!\S)/g, '');
-    editTile_OptionsMenu.className += " animated fadeOutLeft";
-
-    setTimeout(function () {
-        editTile_OptionsMenu.className += " hidden";
-    }, animaDelay);
+    editTile_animateBtnContainer();
 };
 
 var editTile_ChoicesOpen = function () {
-    editTile_OptionsMenu.className = editTile_OptionsMenu.className.replace(/(?:^|\s)hidden(?!\S)/g, '');
-    editTile_OptionsMenu.className = editTile_OptionsMenu.className.replace(/(?:^|\s)fadeOutLeft(?!\S)/g, '');
-    editTile_OptionsMenu.className += " fadeInLeft";
+    editTile_OptionsMenu.removeClass("fadeOutLeft").addClass("fadeInLeft");
 
-    setTimeout(function () {
-        editTile_OptionsMenu.className = editTile_OptionsMenu.className.replace(/(?:^|\s)animated(?!\S)/g, '');
-    }, animaDelay);
+    editTile_animateBtnContainer();
 };
 
 var editTile_InfoOpen = function () {
     editTile_ChoicesClose();
 
     setTimeout(function () {
-        editTile_TileInfoMenu.className = editTile_TileInfoMenu.className.replace(/(?:^|\s)hidden(?!\S)/g, '');
-        editTile_TileInfoMenu.className = editTile_TileInfoMenu.className.replace(/(?:^|\s)fadeOutLeft(?!\S)/g, '');
-        editTile_TileInfoMenu.className += " fadeInLeft animated";
+        editTile_TileInfoMenu.removeClass("fadeOutLeft").addClass("fadeInLeft");
     }, animaDelay);
+
+    editTile_animateBtnContainer();
 };
 
 var editTile_InfoClose = function () {
-    editTile_TileInfoMenu.className = editTile_TileInfoMenu.className.replace(/(?:^|\s)fadeInLeft(?!\S)/g, '');
-    editTile_TileInfoMenu.className += " fadeOutLeft";
+    editTile_TileInfoMenu.removeClass("fadeInLeft").addClass("fadeOutLeft");
 
     setTimeout(function () {
-        editTile_TileInfoMenu.className += " hidden";
-        editTile_TileInfoMenu.className = editTile_TileInfoMenu.className.replace(/(?:^|\s)animated(?!\S)/g, '');
         editTile_ChoicesOpen();
     }, animaDelay);
+
+    editTile_animateBtnContainer();
 };
 
 var editTile_ColorOpen = function () {
     editTile_ChoicesClose();
 
     setTimeout(function () {
-        editTile_TileColorMenu.className = editTile_TileColorMenu.className.replace(/(?:^|\s)hidden(?!\S)/g, '');
-        editTile_TileColorMenu.className = editTile_TileColorMenu.className.replace(/(?:^|\s)fadeOutLeft(?!\S)/g, '');
-        editTile_TileColorMenu.className += " fadeInLeft animated";
+        editTile_TileColorMenu.removeClass("fadeOutLeft").addClass("fadeInLeft");
     }, animaDelay);
+
+    editTile_animateBtnContainer();
 };
 
 var editTile_ColorClose = function () {
-    editTile_TileColorMenu.className = editTile_TileColorMenu.className.replace(/(?:^|\s)fadeInLeft(?!\S)/g, '');
-    editTile_TileColorMenu.className += " fadeOutLeft";
+    editTile_TileColorMenu.removeClass("fadeInLeft").addClass("fadeOutLeft");
 
     setTimeout(function () {
-        editTile_TileColorMenu.className += " hidden";
-        editTile_TileColorMenu.className = editTile_TileColorMenu.className.replace(/(?:^|\s)animated(?!\S)/g, '');
         editTile_ChoicesOpen();
     }, animaDelay);
+
+    editTile_animateBtnContainer();
 };
 
 var editTile_ImageOpen = function () {
     editTile_ChoicesClose();
 
     setTimeout(function () {
-        editTile_TileImageMenu.className = editTile_TileImageMenu.className.replace(/(?:^|\s)hidden(?!\S)/g, '');
-        editTile_TileImageMenu.className = editTile_TileImageMenu.className.replace(/(?:^|\s)fadeOutLeft(?!\S)/g, '');
-        editTile_TileImageMenu.className += " fadeInLeft animated";
+        editTile_TileImageMenu.removeClass("fadeOutLeft").addClass("fadeInLeft");
     }, animaDelay);
+
+    editTile_animateBtnContainer();
 };
 
 var editTile_ImageClose = function () {
-    editTile_TileImageMenu.className = editTile_TileImageMenu.className.replace(/(?:^|\s)fadeInLeft(?!\S)/g, '');
-    editTile_TileImageMenu.className += " fadeOutLeft";
+    editTile_TileImageMenu.removeClass("fadeInLeft").addClass("fadeOutLeft");
 
     setTimeout(function () {
-        editTile_TileImageMenu.className += " hidden";
-        editTile_TileImageMenu.className = editTile_TileImageMenu.className.replace(/(?:^|\s)animated(?!\S)/g, '');
         editTile_ChoicesOpen();
     }, animaDelay);
+
+    editTile_animateBtnContainer();
 };
+
+var editTile_animateBtnContainer = function () {
+    q("#edit-tile-btn-container").addClass("hidden fadeOutLeft").removeClass("fadeInLeft");
+
+    setTimeout(function () {
+        q("#edit-tile-btn-container").removeClass("hidden");
+
+        setTimeout(function () {
+            q("#edit-tile-btn-container").removeClass("fadeOutLeft").addClass("fadeInLeft");
+        }, 0);
+
+    }, animaDelay);
+
+}
 
 // Validation
 
@@ -400,73 +401,62 @@ $(document).ready(function () {
     // URL
     $("#edit-tile-url").focusout(function () {
 
-            var url = $("input", this).val();
+        var url = $("input", this).val();
 
-            if (url.match(/[\s\S]+\.[\s\S]+/g)) {
-                $(".bar", this).removeClass("error");
-                $("label", this).removeClass("error");
-            } else {
-                $(".bar", this).addClass("error");
-                $("label", this).addClass("error").addClass("valid");
-            }
+        if (url.match(/[\s\S]+\.[\s\S]+/g)) {
+            $(".bar", this).removeClass("error");
+            $("label", this).removeClass("error");
+        } else {
+            $(".bar", this).addClass("error");
+            $("label", this).addClass("error").addClass("valid");
+        }
 
     });
 
     // Text    
     $("#edit-tile-name").focusout(function () {
 
-            if ($("input", this).val() == '') {
-                // if false
-                $(".bar", this).addClass("error");
-                $("label", this).addClass("error");
-            } else {
-                // if true
-                $(".bar", this).removeClass("error");
-                $("label", this).removeClass("error").addClass("valid");
-            };
+        if ($("input", this).val() == '') {
+            // if false
+            $(".bar", this).addClass("error");
+            $("label", this).addClass("error");
+        } else {
+            // if true
+            $(".bar", this).removeClass("error");
+            $("label", this).removeClass("error").addClass("valid");
+        };
 
     });
 
     // RSS
     $("#edit-tile-rss").focusout(function () {
 
-            if ($("input", this).val() == '') {
-                // if false
-                $("label", this).removeClass("valid");
-            } else {
-                // if true
-                $(".bar", this).removeClass("error");
-                $("label", this).removeClass("error").addClass("valid");
-            };
+        if ($("input", this).val() == '') {
+            // if false
+            $("label", this).removeClass("valid");
+        } else {
+            // if true
+            $(".bar", this).removeClass("error");
+            $("label", this).removeClass("error").addClass("valid");
+        };
 
     });
 
     // Customise tile color
     $("#edit-tile-color-switch input").click(function () {
-        if ($(this).hasClass("active")) {
 
-            $("#edit-tile-color-switch input").removeClass("active");
+        if (this.hasClass("active")) {
 
-            $("#edit-tile-customise-color, #edit-tile-customise-font-color").addClass("fadeOutLeft").removeClass("fadeInLeft");
-
-            setTimeout(function () {
-                $("#edit-tile-customise-tile-divider").addClass("tile-divider-move-2");
-            }, 250);
-
-            setTimeout(function () {
-                $("#edit-tile-customise-color, #edit-tile-customise-font-color").addClass("hidden").removeClass("animated fadeOutLeft");
-                $("#edit-tile-customise-tile-divider").removeClass("tile-divider-move-2");
-            }, 600);
+            q("#edit-tile-color-switch input").removeClass("active");
+            q("#edit-tile-customise-color").fadeOutLeft();
+            q("#edit-tile-customise-font-color").fadeOutLeft();
 
         } else {
 
-            $("#edit-tile-customise-tile-divider").removeClass("tile-divider-move-2").addClass("tile-divider-move--2");
+            q("#edit-tile-color-switch input").addClass("active");
+            q("#edit-tile-customise-color").fadeInLeft();
+            q("#edit-tile-customise-font-color").fadeInLeft();
 
-            setTimeout(function () {
-                $("#edit-tile-color-switch input").addClass("active");
-                $("#edit-tile-customise-color, #edit-tile-customise-font-color").removeClass("fadeOutLeft hidden").addClass("animated fadeInLeft");
-                $("#edit-tile-customise-tile-divider").removeClass("tile-divider-move--2");
-            }, 350);
         }
 
     });
@@ -483,19 +473,7 @@ $(document).ready(function () {
 
     });
 
-    //Tile color
-    $("#edit-tile-customise-color input").change(function () {
 
-        $("#edit-tile-customise-color a.color-preview").css("background-color", $(this).val());
-
-    });
-
-    //Font color
-    $("#edit-tile-customise-font-color input").change(function () {
-
-        $("#edit-tile-customise-font-color a.color-preview").css("background-color", $(this).val());
-
-    });
 
 });
 
@@ -625,39 +603,14 @@ $(document).ready(function () {
 
             $("#new-tile-customise-color, #new-tile-customise-font-color").addClass("fadeOutLeft").removeClass("fadeInLeft");
 
-            setTimeout(function () {
-                $("#new-tile-customise-tile-divider").addClass("tile-divider-move-2");
-            }, 250);
-
-            setTimeout(function () {
-                $("#new-tile-customise-color, #new-tile-customise-font-color").addClass("hidden").removeClass("animated fadeOutLeft");
-                $("#new-tile-customise-tile-divider").removeClass("tile-divider-move-2");
-            }, 600);
-
         } else {
 
-            $("#new-tile-customise-tile-divider").removeClass("tile-divider-move-2").addClass("tile-divider-move--2");
 
-            setTimeout(function () {
-                $("#customise-tile-color-switch input").addClass("active");
-                $("#new-tile-customise-color, #new-tile-customise-font-color").removeClass("fadeOutLeft hidden").addClass("animated fadeInLeft");
-                $("#new-tile-customise-tile-divider").removeClass("tile-divider-move--2");
-            }, 350);
+            $("#customise-tile-color-switch input").addClass("active");
+            $("#new-tile-customise-color, #new-tile-customise-font-color").removeClass("fadeOutLeft").addClass("fadeInLeft");
+
+
         }
-
-    });
-
-    //Tile color
-    $("#new-tile-customise-color input").change(function () {
-
-        $("#new-tile-customise-color a.color-preview").css("background-color", $(this).val());
-
-    });
-
-    //Font color
-    $("#new-tile-customise-font-color input").change(function () {
-
-        $("#new-tile-customise-font-color a.color-preview").css("background-color", $(this).val());
 
     });
 
@@ -666,18 +619,14 @@ $(document).ready(function () {
 
         $("#new-tile-add-url-text").addClass("fadeOutLeft");
 
-        setTimeout(function () {
-            $("#new-tile-add-url-text").addClass("hidden").removeClass("fadeOutLeft");
-        }, 400);
-
     });
 
     // Tile Logo - Add URL
     $("#new-tile-add-url").click(function () {
 
-        $("#new-tile-add-url-text").removeClass("hidden").addClass("fadeInLeft animated");
+        q("#new-tile-add-url-text").toggleClass("fadeOutLeft", "fadeInLeft");
 
-        q("input[data-property='removeImage']", "#nav-new-tile-menu").val("true");
+        $("input[data-property='removeImage']", "#nav-new-tile-menu").val("true");
         $("input[data-property='image.data']", "#nav-new-tile-menu").val("");
 
         loadPreviewTile();
@@ -710,15 +659,10 @@ $(document).ready(function () {
             $("label", this).addClass("valid");
     });
 
-
     // Tile Logo - Upload
     $("#new-tile-upload-logo").click(function () {
 
         $("#new-tile-add-url-text").addClass("fadeOutLeft");
-
-        setTimeout(function () {
-            $("#new-tile-add-url-text").addClass("hidden").removeClass("fadeOutLeft");
-        }, 400);
 
     });
 
@@ -786,12 +730,8 @@ var newTileReset = function () {
     $("#customise-tile-color-switch").removeFadeIn();
     $("#customise-tile-color-switch input").removeClass("active").attr('checked', false);
 
-    $("#new-tile-customise-color").addClass("hidden fadeOut").removeFadeIn();
-    $("#new-tile-customise-font-color").addClass("hidden fadeOut").removeFadeIn();
-    setTimeout(function () {
-        $("#new-tile-customise-color").removeClass("animated fadeOut");
-        $("#new-tile-customise-font-color").removeClass("animated fadeOut");
-    }, 400);
+    $("#new-tile-customise-color").addClass("fadeOutLeft").removeFadeIn();
+    $("#new-tile-customise-font-color").addClass("fadeOutLeft").removeFadeIn();
 
     $("#new-tile-choice-title").makeHidden();
     $("#new-tile-choice-title").removeFadeIn();
@@ -808,7 +748,7 @@ var newTileReset = function () {
     if ($("#new-tile-add-url-text").hasClass("hidden")) {
         jQuery.noop();
     } else {
-        $("#new-tile-add-url-text").removeClass("tile-divider-move-1 fadeInLeft").addClass("hidden");
+        $("#new-tile-add-url-text").removeClass("tile-divider-move-1 fadeInLeft").addClass("fadeOutLeft");
     }
 
     $("#new-tile-add-url-text input").removeInput();
