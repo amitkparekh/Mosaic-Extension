@@ -74,7 +74,7 @@ MNTP.Config = (function () {
             //send data to sync web service
             MNTP.WebService.save("config", _config);
 
-            //get
+        //get
         } else if (key !== undefined && value === undefined) {
 
             return _config[key];
@@ -115,6 +115,13 @@ MNTP.Config = (function () {
 
             //send data to sync web service
             MNTP.WebService.save("config", _config);
+        },
+
+        setDefaultValue: function(option) {
+
+            if (defaultConfig[option]) 
+                MNTP.Config[option] = defaultConfig[option];
+
         },
 
         //BackgroundColor

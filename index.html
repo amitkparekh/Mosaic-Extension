@@ -309,7 +309,7 @@
                         </label>
                     </div>
                 </form>
-                <form action="#" id="animation-speed" class="form-slider fadeOutLeft">
+                <form id="animation-speed" class="form-slider fadeOutLeft">
                     <label id="text_animation_speed">Animation speed</label>
                     <p class="range-field">
                         <input type="range" min="0" max="3000" step="100" data-config="OpeningAnimationTime" data-config-type="int" />
@@ -346,6 +346,7 @@
                     </div>
                     <input type="color" data-config="AccentColor" style="position: relative; right: 12px; width: 90px; height: 32px; top: 7px; left: -46px; cursor: pointer; z-index: 2; opacity: 0;" />
                 </form>
+
                 <form class="tile-choice">
                     <span id="text_text_color"></span>
                     <div>
@@ -353,6 +354,7 @@
                     </div>
                     <input type="color" data-config="TileFontColor" style="position: relative; right: 12px; width: 90px; height: 32px; top: 7px; left: -46px; cursor: pointer; z-index: 2; opacity: 0;" />
                 </form>
+
                 <li class="divider"></li>
                 <div class="sidebar-text">
                     <span id="text_tile_positioning"></span>
@@ -366,50 +368,58 @@
                     </select>
                 </article>
 
-                <form action="#" class="form-slider">
-                    <label id="text_number_of_rows"></label>
-                    <p class="range-field">
-                        <input type="range" min="1" max="12" data-config="GroupRows" data-config-type="int" />
-                    </p>
-                </form>
-                <form action="#" class="form-slider">
-                    <label id="text_number_of_columns"></label>
-                    <p class="range-field">
-                        <input type="range" min="2" max="12" data-config="GroupColumns" data-config-type="int" />
-                    </p>
-                </form>
+                <div id="tile-grid-configs" style="height: 210px;">
 
-                <article>
-                    <label id="text_horizontal_align"></label>
-                    <select data-config="GroupLeft" data-config-type="int">
-                        <option value="120" id="text_left"></option>
-                        <option value="-1" selected id="text_centre"></option>
-                        <!--<option value="right" id="text_right"></option>-->
-                    </select>
-                </article>
-                <article>
-                    <label id="text_vertical_align"></label>
-                    <select data-config="GroupTop" data-config-type="int">
-                        <option value="120" id="text_top"></option>
-                        <option value="-1" selected id="text_centre_2"></option>
-                        <!--<option value="bottom" id="text_bottom"></option>-->
-                    </select>
-                </article>
-                <article>
-                    <label id="text_tile_flow_direction"></label>
-                    <select data-config="TileFlowDirection">
-                        <option value="vertical" selected id="text_top_to_bottom"></option>
-                        <option value="horizontal" id="text_left_to_right"></option>
-                    </select>
-                </article>
-                
+                    <form action="#" class="form-slider">
+                        <label id="text_number_of_rows"></label>
+                        <p class="range-field">
+                            <input type="range" min="1" max="12" data-config="GroupRows" data-config-type="int" />
+                        </p>
+                    </form>
+
+                    <form action="#" class="form-slider hidden">
+                        <label id="text_number_of_columns"></label>
+                        <p class="range-field">
+                            <input type="range" min="2" max="12" data-config="GroupColumns" data-config-type="int" />
+                        </p>
+                    </form>
+
+                    <article>
+                        <label id="text_horizontal_align"></label>
+                        <select data-config="GroupLeft" data-config-type="int">
+                            <option value="120" id="text_left"></option>
+                            <option value="-1" selected id="text_centre"></option>
+                            <!--<option value="right" id="text_right"></option>-->
+                        </select>
+                    </article>
+
+                    <article>
+                        <label id="text_vertical_align"></label>
+                        <select data-config="GroupTop" data-config-type="int">
+                            <option value="120" id="text_top"></option>
+                            <option value="-1" selected id="text_centre_2"></option>
+                            <!--<option value="bottom" id="text_bottom"></option>-->
+                        </select>
+                    </article>
+
+                    <article class="hidden">
+                        <label id="text_tile_flow_direction"></label>
+                        <select data-config="TileFlowDirection">
+                            <option value="vertical" selected id="text_top_to_bottom"></option>
+                            <option value="horizontal" id="text_left_to_right"></option>
+                        </select>
+                    </article>
+
+                </div>
+
                 <li class="divider"></li>
 
                 <form class="btn-container centered">
                     <div>
-                        <a class="waves-effect waves-red btn btn-inverse btn-inverse-red" id="text_reset_to_default"></a>
+                        <a class="waves-effect waves-red btn btn-inverse btn-inverse-red" id="btn-reset-tiles-config"></a>
                     </div>
                 </form>
+
             </ul>
 
             <!-- Customise theme menu -->
@@ -492,6 +502,33 @@
                         <a class="waves-effect waves-light btn btn-red" id="btn-remove-background"></a>
                     </div>
                 </form>
+
+                <div id="background-options" class="fadeOutLeft">
+                    
+                    <li class="divider"></li>
+
+                    <div class="sidebar-text">
+                        <span id="text_background_options">Background options</span>
+                    </div>
+
+                    <form class="form-slider">
+                        <label id="text_opacity_2">Opacity</label>
+                        <p class="range-field">
+                            <input type="range" min="0.1" max="1" step=".05" data-config="BackgroundOpacity" data-config-type="float" />
+                        </p>
+                    </form>
+
+                    <article>
+                        <label id="text_choose_fit">Choose a fit</label>
+                        <select id="select-background-fit">
+                            <option value="adjust" id="text_adjust">Adjust</option>
+                            <option value="fill" id="text_fill">Fill</option>
+                            <option value="original" id="text_original_size">Original size</option>
+                        </select>
+                    </article>
+
+                </div>
+
 
                 <li class="divider"></li>
 

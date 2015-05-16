@@ -157,12 +157,12 @@ function setLocalisedTopicList() {
     q("#text_left_to_right").innerText = getI18nMsg("left_to_right");
 
     if (getI18nMsg("reset_to_default".length < 24)) {
-        q("#text_reset_to_default").innerText = getI18nMsg("reset_to_default");
+        q("#btn-reset-tiles-config").innerText = getI18nMsg("reset_to_default");
     } else {
         if (getI18nMsg("reset_settings").length < 24) {
-            q("#text_reset_to_default").innerText = getI18nMsg("reset_settings");
+            q("#btn-reset-tiles-config").innerText = getI18nMsg("reset_settings");
         } else {
-            q("#text_reset_to_default").innerText = getI18nMsg("reset");
+            q("#btn-reset-tiles-config").innerText = getI18nMsg("reset");
         }
     }
 

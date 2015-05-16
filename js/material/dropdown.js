@@ -260,6 +260,9 @@
 
                     select[0].eventListeners.forEach(function (eventName) {
 
+                        if (eventName.indexOf("_") >= 0)
+                            eventName = eventName.substr(0, eventName.indexOf("_"));
+
                         var event = new Event(eventName);
                         select[0].dispatchEvent(event);
 

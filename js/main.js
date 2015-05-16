@@ -1196,6 +1196,27 @@ var MNTP;
 
             });
 
+            // -- background fit
+            q("#select-background-fit").addEventListener("change", function () {
+
+                var that = this;
+
+                setTimeout(function () {
+
+                    MNTP.Config.BackgroundFill = false;
+                    MNTP.Config.BackgroundAdjust = false;
+
+                    if (that.value == "adjust") 
+                        MNTP.Config.BackgroundAdjust = true;
+                    else if (that.value == "fill")
+                        MNTP.Config.BackgroundFill = true;
+                    
+                    loadConfig();
+
+                }, 0);
+
+            }, "fitChange");
+
             //-- remove background
             q("#btn-remove-background").addEventListener("click", function () {
 
@@ -1211,6 +1232,23 @@ var MNTP;
 
             });
 
+            //-- reset default setting (tiles)
+            q("#btn-reset-tiles-config").addEventListener("click", function () {
+
+                var inputs = q("[data-config]", "#nav-settings-tiles-menu");
+
+                for (var i = 0; i < inputs.length; i++) {
+
+                    var input = inputs[i];
+                    var config = input.data("config");
+
+                    MNTP.Config.setDefaultValue(config);
+
+                }
+
+                loadConfig();
+
+            });
 
             //change news view mode
             q("#news-btn-change-view").addEventListener("click", function () {
@@ -1605,10 +1643,24 @@ var MNTP;
                 var input = inputs[i];
                 var value = getPropertyValue(config, input.data("config"));
 
-                if (input.type == "checkbox" || input.type == "radio")
-                    input.checked = value || false;
-                else if (input.type != "file")
+                if (input.tagName.toLowerCase() == "select") {
+
                     input.value = (value !== undefined ? value : "");
+    
+                    var text = q("input[type=text]", input.parentElement)
+
+                    if (text)
+                        text.value = q("option[value='" + input.value + "']", input).innerText;
+
+                } else if (input.type == "checkbox" || input.type == "radio") {
+
+                    input.checked = value || false;
+
+                } else if (input.type != "file") {
+
+                    input.value = (value !== undefined ? value : "");
+
+                }
             }
 
             //show news
@@ -1700,10 +1752,12 @@ var MNTP;
 				
 			//tiles positioning
 			if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
-                q("#config-tiles-placement").style.display = "block";
+			    q("#tile-grid-configs").fadeInLeft();
             else
-                q("#config-tiles-placement").style.display = "none";
+			    q("#tile-grid-configs").fadeOutLeft();
 			
+
+
             //background color
             q("body").style.backgroundColor = config.BackgroundColor;
 
@@ -1721,6 +1775,7 @@ var MNTP;
 				loadBackground(config.BackgroundImage, config);
 
 				q("#remove-background").fadeInLeft();
+				q("#background-options").fadeInLeft();
 
             } else if (config.HasBackgroundImage) {
 
@@ -1734,6 +1789,7 @@ var MNTP;
                         loadBackground(image, config);
 
                         q("#remove-background").fadeInLeft();
+                        q("#background-options").fadeInLeft();
 
                     } else {
 
@@ -1762,6 +1818,7 @@ var MNTP;
 							loadBackground({ url: imageUrl }, config);
 
 							q("#remove-background").fadeInLeft();
+							q("#background-options").fadeInLeft();
 
 						});
 
@@ -1776,6 +1833,7 @@ var MNTP;
 							loadBackground({ url: imageUrl }, config);
 
 							q("#remove-background").fadeInLeft();
+							q("#background-options").fadeInLeft();
 
 						});
 						
@@ -1787,6 +1845,7 @@ var MNTP;
 					loadBackground(null, config);
 
 					q("#remove-background").fadeInLeft();
+					q("#background-options").fadeInLeft();
 
 				}
 					
@@ -1813,6 +1872,7 @@ var MNTP;
 
 
                 q("#remove-background").fadeOutLeft();
+                q("#background-options").fadeOutLeft();
 
             }
             //<--
