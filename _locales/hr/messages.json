@@ -86,7 +86,7 @@
     },
     
     "choose_from_the_database": {
-        "message": "Choose from the database"
+        "message": "Odaberi iz baze podataka"
     },
     
     "select": {
@@ -124,7 +124,7 @@
     
     "get": {
         // Max 7 characters (if possible)
-        "message": "Get"
+        "message": "Preuzmi"
     },
     
     "remove_image": {
@@ -143,11 +143,11 @@
     
     "cancel": {
         // Max 7 characters (if possible)
-        "message": "Cancel"
+        "message": "Odustani"
     },
     
     "add_tile": {
-        "message": "Add tile"
+        "message": "Dodaj pločicu"
     },
         
     /**
@@ -199,7 +199,7 @@
     },
     
     "show_tile_animation": {
-        "message": "Show tile animation"
+        "message": "Prikaži animaciju pločice"
     },
     
     "default_tile_color": {
@@ -369,10 +369,10 @@
     },
     
     "save": {
-        "message": "Save"
+        "message": "Spremi"
     },
     
     "confirm": {
-        "message": "Confirm"
+        "message": "Potvrdi"
     }
 }
