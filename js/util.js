@@ -300,6 +300,28 @@ var validateForms = function (container) {
 
 }
 
+function shuffleArray(array) {
+    var newArray = array;
+    var currentIndex = newArray.length;
+    var temporaryValue;
+    var randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = newArray[currentIndex];
+        newArray[currentIndex] = newArray[randomIndex];
+        newArray[randomIndex] = temporaryValue;
+    }
+
+    return newArray;
+}
+
 var JSONLocalStorage = {
 
     getItem: function (key) {
@@ -534,10 +556,13 @@ var JSONLocalStorage = {
 		return offset;
 	};
 
-	HTMLElement.prototype.data = function (key, value) {
+	HTMLElement.prototype.data = function (key, value, expose) {
 
-		if (key !== undefined && value !== undefined) {
-			this.attributes["data-" + key] = value;
+	    if (key !== undefined && value !== undefined) {
+	        if (expose)
+	            this.setAttribute("data-" + key, value);
+            else
+			    this.attributes["data-" + key] = value;
 		} else if (key !== undefined) {
 			var attr = this.attributes["data-" + key];
 			if (attr)

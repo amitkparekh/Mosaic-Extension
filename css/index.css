@@ -14317,6 +14317,13 @@ select {
       .context-menu ul li:hover {
         background: #ddd; }
 
+@-webkit-keyframes tileAnimation {
+  0% {
+    top: 0px; }
+  16.6%, 83.26% {
+    top: -100%; }
+  100% {
+    top: 0%; } }
 .tile-container {
   position: relative;
   float: left;
@@ -14360,14 +14367,16 @@ select {
   transition: all 0.3s ease-out;
   border: 0px solid;
   z-index: 1;
-  color: white; }
-  .tile:hover {
-    opacity: .9 !important; }
+  color: white;
+  /*&:hover .tile-background {
+      opacity: .9 !important;
+  }*/ }
   .tile:active {
-    opacity: 1;
-    z-index: 2; }
+    z-index: 2;
+    transform: scale(1.02); }
   .tile.dragging {
     z-index: 2;
+    transform: none;
     -webkit-transition: none;
     transition: none; }
   .tile.placeholder {
@@ -14386,18 +14395,45 @@ select {
     transition: background-image 1.5s; }
   .tile .tile-content {
     width: 100%;
-    height: 100%; }
-    .tile .tile-content.sm > div {
+    height: 100%;
+    position: relative;
+    transition: 2s;
+    top: 0; }
+    .tile .tile-content.sm > .logo {
       width: 100%;
       height: 100%;
+      position: relative;
       text-align: center; }
     .tile .tile-content.lg {
       width: 100%;
-      height: 200%; }
-      .tile .tile-content.lg > div {
-        text-align: center;
+      height: 200%;
+      /*-webkit-animation-name: tileAnimation;*/
+      -webkit-animation-duration: 10s;
+      -webkit-animation-iteration-count: 1; }
+      .tile .tile-content.lg .logo {
         width: 100%;
-        height: 50%; }
+        height: 50%;
+        position: relative;
+        text-align: center; }
+      .tile .tile-content.lg .feed {
+        width: 92%;
+        height: 42%;
+        position: relative;
+        text-align: center;
+        margin: 4%; }
+        .tile .tile-content.lg .feed h4 {
+          margin: 0;
+          font-size: 1.6em;
+          height: 1.6em;
+          text-align: center; }
+        .tile .tile-content.lg .feed p {
+          margin: 0;
+          text-align: left;
+          -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(black), to(rgba(0, 0, 0, 0.8)));
+          maax-height: calc(88% - 1.6em);
+          cursor: pointer; }
+          .tile .tile-content.lg .feed p:hover {
+            text-decoration: underline; }
     .tile .tile-content > div > img {
       margin: auto;
       position: absolute;

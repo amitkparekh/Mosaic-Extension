@@ -37,6 +37,18 @@ Feed.get = function (id) {
 
 };
 
+Feed.getByTile = function (idTile) {
+
+    return new Promise(function (success, fail) {
+
+        var request = MNTP.IDB.get(MNTP.IDB.OS.Feed, idTile, "idTile");
+
+        request.then(success, fail);
+
+    });
+
+};
+
 Feed.select = function () {
     return new Promise(function (success, fail) {
 
