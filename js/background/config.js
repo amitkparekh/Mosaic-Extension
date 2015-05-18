@@ -28,6 +28,8 @@ MNTP.Config = (function () {
         NewsViewMode: "list",
         NewsWidth: 392,
         NewsHeight: 626,
+        NewsLeft: -1,
+        NewsRight: -1,
         ShowImageNewsList: false,
         NoBackgroundImage: false,
         HasBackgroundImage: false,
