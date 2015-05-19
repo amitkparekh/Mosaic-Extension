@@ -14758,6 +14758,9 @@ select {
   display: inline;
   /* text-decoration: underline; */ }
 
+.news.list .items ul li .item div.item-description br + br {
+  display: none; }
+
 .news.list .items ul li .item div.item-description a:hover {
   border-bottom: 1px solid #FFFFFF; }
 

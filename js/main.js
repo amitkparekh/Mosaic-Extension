@@ -1694,7 +1694,8 @@ var MNTP;
             //show news
             var news = q("#news");
 
-            if (config.ShowNews) {
+            //if (config.ShowNews) {
+            if (false) {
 
                 news.removeClass("grid");
                 news.removeClass("list");
