@@ -15,7 +15,7 @@ var MNTP = MNTP || {};
             MNTP.IDB.proccessQueue.push(callback);
     };
 
-    MNTP.IDB.version = 3;
+    MNTP.IDB.version = 4;
     MNTP.IDB.OS = {
         Group: { objectStoreName: "Group" },
         Tile: { objectStoreName: "Tile", index: ["idGroup", "order"] },
@@ -32,7 +32,7 @@ var MNTP = MNTP || {};
             var request = indexedDB.open(shortName, MNTP.IDB.version);
 
             request.onupgradeneeded = function (event) {
-                console && console.log("Upgrading IdexedDB.");
+                console && console.log("Updating IdexedDB.");
                 console && console.log(event);
 
                 var db = event.target.result;
@@ -117,7 +117,7 @@ var MNTP = MNTP || {};
                         MNTP.IDB.firstLoad = true;
                     }
 
-                    console && console.log("IdexedDB upgraded to version " + MNTP.IDB.version + ".");
+                    console && console.log("IdexedDB updated to version " + MNTP.IDB.version + ".");
 
                 }
 
@@ -181,12 +181,17 @@ var MNTP = MNTP || {};
         });
     };
 
-    MNTP.IDB.get = function (os, key) {
+    MNTP.IDB.get = function (os, key, index) {
         return new Promise(function (success, error) {
             MNTP.IDB.process(function () {
                 var objectStore = MNTP.IDB.indexedDB.transaction(os.objectStoreName).objectStore(os.objectStoreName);
 
-                var getRequest = objectStore.get(key);
+                var getRequest;
+                
+                if (index)
+                    getRequest = objectStore.index(index).get(key);
+                else
+                    getRequest = objectStore.get(key);
 
                 getRequest.onsuccess = function (event) {
                     success(event.target.result);

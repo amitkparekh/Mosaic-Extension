@@ -24,10 +24,11 @@ var MNTP;
                 .then(loadGroups)
                 .then(loadTiles)
                 .then(loadConfig)
-                .then(loadFeeds)
+                .then(loadFeedsPanel)
                 .then(enableDrag)
                 .then(loadCustomComponents)
                 .then(bindEvents)
+                .then(loadTileFeeds)
                 .then(success)
                 .catch(function (error) {
 
@@ -163,43 +164,43 @@ var MNTP;
 
     }
 
-	var openingAnimation = true;
+    var openingAnimation = true;
     var reorder = function (config) {
-		
-		config = config || MNTP.Config;
-		
-		if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) 
-			return reorderFlow(config);
-		else
+
+        config = config || MNTP.Config;
+
+        if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
+            return reorderFlow(config);
+        else
             return reorderFree(config);
     }
-	
-	var reorderFlow = function(config) {
+
+    var reorderFlow = function (config) {
 
         return new Promise(function (success, fail) {
 
             config = config || MNTP.Config;
-			
-			openingAnimation = openingAnimation && config.OpeningAnimation;
+
+            openingAnimation = openingAnimation && config.OpeningAnimation;
 
             var container = q("#container");
             var news = q("#news");
-			var tiles = q(".tile", true);
-			
+            var tiles = q(".tile", true);
+
             container.style.height = "";
-			
-			if (openingAnimation) {
-			
-				for (var i = 0; i < tiles.length; i++)
-				    tiles[i].style.transition = "none";
-							
-				container.style.transition = "none";
-			
-			} else if (!config.OpeningAnimation) {
-			
-			    container.style.transition = "none";
-				
-			}
+
+            if (openingAnimation) {
+
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "none";
+
+                container.style.transition = "none";
+
+            } else if (!config.OpeningAnimation) {
+
+                container.style.transition = "none";
+
+            }
 
             var groupLeft = 0;
 
@@ -260,10 +261,10 @@ var MNTP;
 
                             top += currentHeight + config.TileMargin;
 
-							if (openingAnimation)
-								left = 0;
-							else
-								left = collumnLeft;
+                            if (openingAnimation)
+                                left = 0;
+                            else
+                                left = collumnLeft;
 
                             if (group.offsetHeight < top + nextHeight && i < tiles.length - 1)
                                 group.style.height = (top + nextHeight) + "px";
@@ -278,14 +279,14 @@ var MNTP;
                         if (top > group.offsetHeight && i < tiles.length - 1) {
                             top = 0;
                             row = 1;
-							
-							if (openingAnimation) {
-								collumnLeft = 0;
-							} else {
-								collumnLeft += (config.TileWidthLg + config.TileMargin);
-							}
-							
-							left = collumnLeft;
+
+                            if (openingAnimation) {
+                                collumnLeft = 0;
+                            } else {
+                                collumnLeft += (config.TileWidthLg + config.TileMargin);
+                            }
+
+                            left = collumnLeft;
                         }
 
                     }
@@ -302,7 +303,7 @@ var MNTP;
                 container.style.height = tallerGroup + "px";
 
 
-			//center verticaly
+            //center verticaly
             if (config.GroupTop == -1) {
                 var windowHeight = window.innerHeight;
                 var containerHeight = container.offsetHeight;
@@ -315,28 +316,28 @@ var MNTP;
             }
 
             //center horizontaly
-			if (!openingAnimation) {
-			
-				if (config.GroupLeft == -1) {
-				
-					var windowWidth = window.innerWidth;
-					var containerWidth = container.offsetWidth;
+            if (!openingAnimation) {
 
-					var containerLeft = (windowWidth - containerWidth) / 2;
-					
-					container.style.left = containerLeft + "px";
-					
-				} else {
-				
-					container.style.left = config.GroupLeft + "px";
-					
-				}
-				
-			} else {
-				
-				container.style.left = 0;
-			
-			}
+                if (config.GroupLeft == -1) {
+
+                    var windowWidth = window.innerWidth;
+                    var containerWidth = container.offsetWidth;
+
+                    var containerLeft = (windowWidth - containerWidth) / 2;
+
+                    container.style.left = containerLeft + "px";
+
+                } else {
+
+                    container.style.left = config.GroupLeft + "px";
+
+                }
+
+            } else {
+
+                container.style.left = 0;
+
+            }
 
 
             var containerOffset = container.getWindowOffset();
@@ -345,140 +346,140 @@ var MNTP;
             q("body").style.width = (containerOffset.left + containerOffset.width + news.offsetWidth + 50) + "px";
 
 
-			var tiles = q(".tile", true);
+            var tiles = q(".tile", true);
 
-			if (openingAnimation) {
-			
-				openingAnimation = false;
-				
-				for (var i = 0; i < tiles.length; i++)
-				    tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms";
-							
-				container.style.transition = "left " + config.OpeningAnimationTime + "ms";
-				
-				reorder(config).then(success);
-				
-			} else {
-			
-				for (var i = 0; i < tiles.length; i++)
-				    tiles[i].style.transition = "";
-							
-				container.style.transition = "";
-			
-				success();
-			}
+            if (openingAnimation) {
+
+                openingAnimation = false;
+
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms";
+
+                container.style.transition = "left " + config.OpeningAnimationTime + "ms";
+
+                reorder(config).then(success);
+
+            } else {
+
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "";
+
+                container.style.transition = "";
+
+                success();
+            }
 
         });
 
-	}
+    }
 
-	var reorderFree = function(config) {
+    var reorderFree = function (config) {
 
-		return new Promise(function (success, fail) {
+        return new Promise(function (success, fail) {
 
-	        config = config || MNTP.Config;
+            config = config || MNTP.Config;
 
-	        openingAnimation = openingAnimation && config.OpeningAnimation;
+            openingAnimation = openingAnimation && config.OpeningAnimation;
 
-	        var container = q("#container");
-	        var news = q("#news");
-	        var tiles = q(".tile", true);
+            var container = q("#container");
+            var news = q("#news");
+            var tiles = q(".tile", true);
 
-	        if (openingAnimation) {
+            if (openingAnimation) {
 
-	            for (var i = 0; i < tiles.length; i++)
-	                tiles[i].style.transition = "none";
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "none";
 
-	        }
+            }
 
-	        //container.style.transition = "none";
+            //container.style.transition = "none";
 
-	        container.style.left = "0";
-	        container.style.top = "0";
-	        container.style.height = "";
+            container.style.left = "0";
+            container.style.top = "0";
+            container.style.height = "";
 
-			var screenCenter = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+            var screenCenter = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
-	        if (openingAnimation) {
+            if (openingAnimation) {
 
-	            for (var i = 0; i < tiles.length; i++) {
+                for (var i = 0; i < tiles.length; i++) {
 
-	                var tileNode = tiles[i];
+                    var tileNode = tiles[i];
 
-	                tileNode.style.left = (screenCenter.x - (tileNode.offsetWidth / 2)) + "px";
-	                tileNode.style.top = (screenCenter.y - (tileNode.offsetHeight / 2)) + "px";
+                    tileNode.style.left = (screenCenter.x - (tileNode.offsetWidth / 2)) + "px";
+                    tileNode.style.top = (screenCenter.y - (tileNode.offsetHeight / 2)) + "px";
 
-	            }
+                }
 
-	        } else {
+            } else {
 
-	            for (var i = 0; i < tiles.length; i++) {
+                for (var i = 0; i < tiles.length; i++) {
 
-	                var tileNode = tiles[i];
-	                var position = tileNode.data("position");
+                    var tileNode = tiles[i];
+                    var position = tileNode.data("position");
 
-	                if (position) {
+                    if (position) {
 
-	                    tileNode.style.left = position.left + "px";
-	                    tileNode.style.top = position.top + "px";
+                        tileNode.style.left = position.left + "px";
+                        tileNode.style.top = position.top + "px";
 
-	                } else {
-					
-						tileNode.style.left = (screenCenter.x - (tileNode.offsetWidth / 2)) + "px";
-						tileNode.style.top = (screenCenter.y - (tileNode.offsetHeight / 2)) + "px";
-					
-					}
+                    } else {
 
-	            };
+                        tileNode.style.left = (screenCenter.x - (tileNode.offsetWidth / 2)) + "px";
+                        tileNode.style.top = (screenCenter.y - (tileNode.offsetHeight / 2)) + "px";
 
-	        }
+                    }
 
-	        if (openingAnimation) {
+                };
 
-	            setTimeout(function () {
+            }
 
-	                openingAnimation = false;
+            if (openingAnimation) {
 
-	                for (var i = 0; i < tiles.length; i++)
-	                    tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms, top " + config.OpeningAnimationTime + "ms";
+                setTimeout(function () {
 
-	                container.style.transition = "left " + config.OpeningAnimationTime + "ms, top " + config.OpeningAnimationTime + "ms";
+                    openingAnimation = false;
 
-	                reorder(config).then(success);
+                    for (var i = 0; i < tiles.length; i++)
+                        tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms, top " + config.OpeningAnimationTime + "ms";
 
-	            }, 10);
+                    container.style.transition = "left " + config.OpeningAnimationTime + "ms, top " + config.OpeningAnimationTime + "ms";
 
-	        } else {
+                    reorder(config).then(success);
 
-	            setTimeout(function () {
-	                for (var i = 0; i < tiles.length; i++)
-	                    tiles[i].style.transition = "";
+                }, 10);
 
-	                container.style.transition = "";
-	            }, config.OpeningAnimationTime);
+            } else {
 
-	            success();
-	        }
+                setTimeout(function () {
+                    for (var i = 0; i < tiles.length; i++)
+                        tiles[i].style.transition = "";
 
-	    });
+                    container.style.transition = "";
+                }, config.OpeningAnimationTime);
 
-	}
-	
+                success();
+            }
+
+        });
+
+    }
+
     var enableDrag = function () {
 
         return new Promise(function (success, fail) {
 
             //tiles drag
             var request;
-			
-			if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
-				request = q("body").enableCustomDragging(".tile:not(.placeholder)");
-			else
-				request = q("body").enableCustomDragging(".tile:not(.placeholder)", { translate: true });
 
-			var placeHolderTile = null;
-			var nextSibling = null;
-			var dragGroup = null;
+            if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
+                request = q("body").enableCustomDragging(".tile:not(.placeholder)");
+            else
+                request = q("body").enableCustomDragging(".tile:not(.placeholder)", { translate: true });
+
+            var placeHolderTile = null;
+            var nextSibling = null;
+            var dragGroup = null;
 
             request.dragstart(function (event) {
 
@@ -493,78 +494,78 @@ var MNTP;
                 nextSibling = event.dragElement.nextElementSibling;
                 dragGroup = event.dragElement.parentElement;
 
-				if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) {
+                if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) {
 
-					placeHolderTile = document.createElement("div");
-					placeHolderTile.addClass("tile");
-					placeHolderTile.addClass("placeholder");
-					placeHolderTile.addClass("size" + size);
-					placeHolderTile.style.width = (size == 1 ? MNTP.Config.TileWidthSm : MNTP.Config.TileWidthLg) + "px";
-					placeHolderTile.style.height = (size == 3 ? MNTP.Config.TileHeightLg : MNTP.Config.TileHeightSm) + "px";
-					placeHolderTile.data("size", size);
+                    placeHolderTile = document.createElement("div");
+                    placeHolderTile.addClass("tile");
+                    placeHolderTile.addClass("placeholder");
+                    placeHolderTile.addClass("size" + size);
+                    placeHolderTile.style.width = (size == 1 ? MNTP.Config.TileWidthSm : MNTP.Config.TileWidthLg) + "px";
+                    placeHolderTile.style.height = (size == 3 ? MNTP.Config.TileHeightLg : MNTP.Config.TileHeightSm) + "px";
+                    placeHolderTile.data("size", size);
 
-					event.dragElement.parentNode.insertBefore(placeHolderTile, event.dragElement);
+                    event.dragElement.parentNode.insertBefore(placeHolderTile, event.dragElement);
 
-					reorder();
-					
-				}
+                    reorder();
+
+                }
 
             });
 
             var lastTargetIndex = null;
             request.dragmove(function (event) {
-				
-				if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) {
-				
-					if (event.toElement && event.toElement.matches(".tile")) {
 
-						q(".tile-group.active-placeholder", true).forEach(function (element) {
-							element.removeClass("active-placeholder");
-							element.addClass("placeholder");
-							element.removeAttribute("style");
-						});
+                if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) {
 
-						var targetIndex = event.toElement.getIndex(".tile:not(.dragging)");
+                    if (event.toElement && event.toElement.matches(".tile")) {
 
-						if (targetIndex != lastTargetIndex) {
+                        q(".tile-group.active-placeholder", true).forEach(function (element) {
+                            element.removeClass("active-placeholder");
+                            element.addClass("placeholder");
+                            element.removeAttribute("style");
+                        });
 
-							lastTargetIndex = targetIndex;
+                        var targetIndex = event.toElement.getIndex(".tile:not(.dragging)");
 
-							var dragElementIndex;
+                        if (targetIndex != lastTargetIndex) {
 
-							if (placeHolderTile) {
-								dragElementIndex = placeHolderTile.getIndex(".tile:not(.dragging)")
+                            lastTargetIndex = targetIndex;
 
-								placeHolderTile.remove();
-								placeHolderTile = null;
-							}
+                            var dragElementIndex;
 
-							var size = event.dragElement.data("size");
+                            if (placeHolderTile) {
+                                dragElementIndex = placeHolderTile.getIndex(".tile:not(.dragging)")
 
-							placeHolderTile = document.createElement("div");
-							placeHolderTile.addClass("tile");
-							placeHolderTile.addClass("placeholder");
-							placeHolderTile.addClass("size" + size);
-							placeHolderTile.style.width = (size == 1 ? MNTP.Config.TileWidthSm : MNTP.Config.TileWidthLg) + "px";
-							placeHolderTile.style.height = (size == 3 ? MNTP.Config.TileHeightLg : MNTP.Config.TileHeightSm) + "px";
-							placeHolderTile.data("size", size);
+                                placeHolderTile.remove();
+                                placeHolderTile = null;
+                            }
+
+                            var size = event.dragElement.data("size");
+
+                            placeHolderTile = document.createElement("div");
+                            placeHolderTile.addClass("tile");
+                            placeHolderTile.addClass("placeholder");
+                            placeHolderTile.addClass("size" + size);
+                            placeHolderTile.style.width = (size == 1 ? MNTP.Config.TileWidthSm : MNTP.Config.TileWidthLg) + "px";
+                            placeHolderTile.style.height = (size == 3 ? MNTP.Config.TileHeightLg : MNTP.Config.TileHeightSm) + "px";
+                            placeHolderTile.data("size", size);
 
 
-							if (dragElementIndex > targetIndex) {
-								event.toElement.parentNode.insertBefore(placeHolderTile, event.toElement);
-								lastTargetIndex++;
-							} else {
-								event.toElement.parentNode.insertBefore(placeHolderTile, event.toElement.nextSibling);
-								lastTargetIndex--;
-							}
+                            if (dragElementIndex > targetIndex) {
+                                event.toElement.parentNode.insertBefore(placeHolderTile, event.toElement);
+                                lastTargetIndex++;
+                            } else {
+                                event.toElement.parentNode.insertBefore(placeHolderTile, event.toElement.nextSibling);
+                                lastTargetIndex--;
+                            }
 
-							reorder();
+                            reorder();
 
-						}
+                        }
 
-					}
-					
-				}
+                    }
+
+                }
             });
 
             request.dragend(function (event) {
@@ -613,7 +614,7 @@ var MNTP;
 
 
                     nextSibling = null;
-                    
+
                 }
 
                 reorder().then(function () {
@@ -625,17 +626,29 @@ var MNTP;
 
             //resize news drag
             var news = q("#news");
-            var request2 = q("body").enableCustomDragging("#news-resize", { translate: false, pixeldelay: 0 });
+            var request2 = q("body").enableCustomDragging(".news .resize", { translate: false, pixeldelay: 0 });
             var initialOffset;
 
             request2.dragstart(function (event) {
-                initialOffset = { width: news.offsetWidth, height: news.offsetHeight };
+                initialOffset = { width: news.offsetWidth, height: news.offsetHeight, left: news.offsetLeft };
             });
 
             request2.dragmove(function (event) {
 
-                news.style.width = (initialOffset.width - event.deltaX) + "px";
-                news.style.height = (initialOffset.height + (event.deltaY * 2)) + "px";
+                var direction = 1;
+
+                if (event.dragElement.hasClass("left")) {
+
+                    var width = news.offsetWidth;
+
+                    if (width > 340 && width < 800)
+                        news.style.left = (initialOffset.left + event.deltaX) + "px";
+
+                    direction = -1;
+                }
+
+                news.style.width = (initialOffset.width + (event.deltaX * direction)) + "px";
+                news.style.height = (initialOffset.height + event.deltaY) + "px";
 
                 resizeNews();
                 reorder();
@@ -644,7 +657,17 @@ var MNTP;
             request2.dragend(function (event) {
                 MNTP.Config.NewsWidth = news.offsetWidth;
                 MNTP.Config.NewsHeight = news.offsetHeight;
+                MNTP.Config.NewsLeft = news.offsetLeft;
+                MNTP.Config.NewsTop = news.offsetTop;
             });
+
+            //move news panel
+            var request3 = q("body").enableCustomDragging(".news", { dragInitiator: ".news .top-bar" });
+
+            request3.dragend(function (event) {
+                MNTP.Config.NewsLeft = news.offsetLeft;
+                MNTP.Config.NewsTop = news.offsetTop;
+            })
 
 
             //move configuration windows
@@ -789,7 +812,7 @@ var MNTP;
                     var contextMenu = q(".context-menu");
 
                     contextMenu.addClass("hidden");
-                    
+
                     setTimeout(function () {
 
                         contextMenu.removeClass("hidden");
@@ -850,11 +873,11 @@ var MNTP;
                     sidebar.removeClass("open");
                     menuButton.removeClass("active");
                     subMenuClose();
-                    
+
                     setTimeout(function () {
                         navMain.removeClass("open");
                     }, animaDelay);
-                    
+
                 }
             });
 
@@ -875,7 +898,6 @@ var MNTP;
                         tileNode.removeClass(["size1", "size2", "size3"]);
                         tileNode.addClass("size" + newSize);
                         tileNode.data("size", newSize);
-
 
                         Tile.get(id).then(function (tile) {
 
@@ -924,7 +946,7 @@ var MNTP;
 
             });
 
-            //-- edit tile
+            //-- edit tile (context menu)
             q("#context-edit-tile").addEventListener("click", function (event) {
 
                 closeAllSubmenus().then(function () {
@@ -942,7 +964,7 @@ var MNTP;
 
             });
 
-            //-- remove tile
+            //-- remove tile (context menu and sidebar)
             q("#context-remove-tile, #edit-tile-delete", true).forEach(function (element) {
 
                 element.addEventListener("click", function () {
@@ -979,7 +1001,7 @@ var MNTP;
 
             });
 
-            //-- add tile
+            //-- add tile (context menu)
             q("#context-add-tile").addEventListener("click", function () {
 
                 closeAllSubmenus().then(function () {
@@ -991,6 +1013,12 @@ var MNTP;
                     extSidebarOpen();
 
                     loadPreviewTile();
+
+                    q("#new-tile-customise-color a.color-preview").style.backgroundColor = MNTP.Config.AccentColor;
+                    q("#new-tile-customise-color input").value = MNTP.Config.AccentColor;
+
+                    q("#new-tile-customise-font-color a.color-preview").style.backgroundColor = MNTP.Config.TileFontColor;
+                    q("#new-tile-customise-font-color input").value = MNTP.Config.TileFontColor;
 
                     q(".context-menu").addClass("hidden");
 
@@ -1006,7 +1034,7 @@ var MNTP;
 
             });
 
-            //-- settings
+            //-- settings (context menu)
             q("#context-settings").addEventListener("click", function () {
 
                 closeAllSubmenus().then(function () {
@@ -1047,13 +1075,13 @@ var MNTP;
                 });
 
             });
-			
+
             //-- tiles animation preview
             var animationpreview;
-            q("[data-config='OpeningAnimationTime']").addEventListener("input", function() {
+            q("[data-config='OpeningAnimationTime']").addEventListener("input", function () {
 
                 var that = this;
-                				
+
                 animationpreview && clearTimeout(animationpreview);
 
                 animationpreview = setTimeout(function () {
@@ -1098,7 +1126,7 @@ var MNTP;
                 MNTP.Config.ReloadBackgroundImage = true;
 
                 q("#background-url").fadeOutLeft();
-                
+
                 loadConfig();
 
             });
@@ -1137,7 +1165,7 @@ var MNTP;
                                 MNTP.Config.ReloadBackgroundImage = true;
 
                                 q("#background-url").fadeOutLeft();
-                                
+
                                 loadConfig();
 
                             });
@@ -1206,11 +1234,11 @@ var MNTP;
                     MNTP.Config.BackgroundFill = false;
                     MNTP.Config.BackgroundAdjust = false;
 
-                    if (that.value == "adjust") 
+                    if (that.value == "adjust")
                         MNTP.Config.BackgroundAdjust = true;
                     else if (that.value == "fill")
                         MNTP.Config.BackgroundFill = true;
-                    
+
                     loadConfig();
 
                 }, 0);
@@ -1250,7 +1278,7 @@ var MNTP;
 
             });
 
-            //change news view mode
+            //-- change news view mode
             q("#news-btn-change-view").addEventListener("click", function () {
 
                 var news = q("#news");
@@ -1264,7 +1292,7 @@ var MNTP;
 
             });
 
-            //change show pictures on list mode 
+            //-- change show pictures on list mode 
             q("#news-btn-change-view-pictures").addEventListener("click", function () {
 
                 var news = q("#news");
@@ -1276,21 +1304,21 @@ var MNTP;
 
             });
 
-			//scroll through news titles
-			var newsTitleScrollAnimation;
-			q("#news-titles").addEventListener("mousewheel", function (e) {
-				
-				newsTitleScrollAnimation && clearInterval(newsTitleScrollAnimation);
-				newsTitleScrollAnimation = null;
-				
-				this.scrollLeft -= e.wheelDeltaY;
-				
-			});
-			
-			//click on news titles
-			q("#news-titles").addEventListener("click", function (e) {
-				
-				var p = event.target;
+            //-- scroll through news titles
+            var newsTitleScrollAnimation;
+            q("#news-titles").addEventListener("mousewheel", function (e) {
+
+                newsTitleScrollAnimation && clearInterval(newsTitleScrollAnimation);
+                newsTitleScrollAnimation = null;
+
+                this.scrollLeft -= e.wheelDeltaY;
+
+            });
+
+            //-- click on news titles
+            q("#news-titles").addEventListener("click", function (e) {
+
+                var p = event.target;
 
                 while (p && p.tagName.toLowerCase() != "p")
                     p = p.parentElement;
@@ -1298,39 +1326,39 @@ var MNTP;
                 if (p && !p.hasClass("active")) {
 
                     loadFeed(p.data("url"));
-					
-					var titles = q("p", this, true);
-					
-					for (var i = 0; i < titles.length; i++)
-						titles[i].removeClass("active");		
-					
-					p.addClass("active");
-					
-                    var left = p.offsetLeft;
-					
-					var that = this;
-					
-					newsTitleScrollAnimation && clearInterval(newsTitleScrollAnimation);
 
-					newsTitleScrollAnimation = setInterval(function() {
-						
-						var lastScroll = that.scrollLeft;
-						
-						if (left - 60 > that.scrollLeft)
-							that.scrollLeft += 1;
-						else if (left - 60 < that.scrollLeft)
-							that.scrollLeft -= 1;
-						
-						if (left - 60 == that.scrollLeft || that.scrollLeft == lastScroll)
-							clearInterval(newsTitleScrollAnimation);
-					
-					}, 1);
+                    var titles = q("p", this, true);
+
+                    for (var i = 0; i < titles.length; i++)
+                        titles[i].removeClass("active");
+
+                    p.addClass("active");
+
+                    var left = p.offsetLeft;
+
+                    var that = this;
+
+                    newsTitleScrollAnimation && clearInterval(newsTitleScrollAnimation);
+
+                    newsTitleScrollAnimation = setInterval(function () {
+
+                        var lastScroll = that.scrollLeft;
+
+                        if (left - 60 > that.scrollLeft)
+                            that.scrollLeft += 1;
+                        else if (left - 60 < that.scrollLeft)
+                            that.scrollLeft -= 1;
+
+                        if (left - 60 == that.scrollLeft || that.scrollLeft == lastScroll)
+                            clearInterval(newsTitleScrollAnimation);
+
+                    }, 1);
 
                 }
-				
-			});
-			
-            //click on news items
+
+            });
+
+            //-- click on news items
             q("#news").addEventListener("mousedown", function (event) {
 
                 var li = event.target;
@@ -1346,7 +1374,7 @@ var MNTP;
 
                         var url = li.data("url");
 
-						navigate(url, event);
+                        navigate(url, event);
 
                     } else if (event.button == 0) {
                         li.toggleClass("full");
@@ -1366,7 +1394,7 @@ var MNTP;
                     var ul = q("#bookmarks-list > ul");
 
                     var currentLeft = parseInt(ul.style.left) || 0;
-                    
+
                     if (currentLeft >= 0)
                         clearInterval(bkmPrevious);
                     else
@@ -1386,12 +1414,12 @@ var MNTP;
                 bkmNext = setInterval(function () {
 
                     var ul = q("#bookmarks-list > ul");
-                    
+
                     var currentLeft = parseInt(ul.style.left) || 0;
 
                     if (currentLeft + 440 < window.innerWidth * (-1))
                         clearInterval(bkmNext);
-                    else 
+                    else
                         ul.style.left = (currentLeft - 2) + "px";
 
                 }, 3);
@@ -1402,30 +1430,30 @@ var MNTP;
                 clearInterval(bkmNext);
             });
 
-			//scroll through bookmarks bar
-			q("#bookmarks-list").addEventListener("mousewheel", function (e) {
-				
-				var ul = q("#bookmarks-list > ul");
-                    
-				var currentLeft = parseInt(ul.style.left) || 0;
-				
-				var newLeft = 0;
-				
-				if ((currentLeft < 0) || (currentLeft + 440 >= window.innerWidth * (-1)))
-					newLeft = (currentLeft + e.wheelDeltaY);
-				
-				if (newLeft > 0)
-					newLeft = 0;
-					
-				if (newLeft + 440 < window.innerWidth * (-1))
-					newLeft = window.innerWidth * (-1) - 440;
-					
-				ul.style.left = newLeft + "px";
-						
-			});
-			
+            //scroll through bookmarks bar
+            q("#bookmarks-list").addEventListener("mousewheel", function (e) {
+
+                var ul = q("#bookmarks-list > ul");
+
+                var currentLeft = parseInt(ul.style.left) || 0;
+
+                var newLeft = 0;
+
+                if ((currentLeft < 0) || (currentLeft + 440 >= window.innerWidth * (-1)))
+                    newLeft = (currentLeft + e.wheelDeltaY);
+
+                if (newLeft > 0)
+                    newLeft = 0;
+
+                if (newLeft + 440 < window.innerWidth * (-1))
+                    newLeft = window.innerWidth * (-1) - 440;
+
+                ul.style.left = newLeft + "px";
+
+            });
+
             //click on bookmarks
-            q(".bookmarks li", true).forEach(function(element) {
+            q(".bookmarks li", true).forEach(function (element) {
                 element.addEventListener("click", function (event) {
 
                     var url = this.data("url");
@@ -1467,7 +1495,7 @@ var MNTP;
                         q("#feed-config").style.display = "none";
 
                         setTimeout(function () {
-                            loadFeeds().then(bindEvents);
+                            loadFeedsPanel().then(bindEvents);
                         }, 0);
 
                     });
@@ -1486,8 +1514,8 @@ var MNTP;
 
                     q("#feed-config").style.display = "none";
 
-                    setTimeout(function() {
-                        loadFeeds().then(bindEvents);
+                    setTimeout(function () {
+                        loadFeedsPanel().then(bindEvents);
                     }, 0);
 
                 });
@@ -1556,17 +1584,17 @@ var MNTP;
                         tile.order = i + 1;
                         tile.idGroup = idGroup;
 
-						if (!tile.position || MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
-						
-							var tileOffset = tileNode.getWindowOffset();
-						
-							tile.position = {};
-							tile.position.left = tileOffset.left;
-							tile.position.top = tileOffset.top;
+                        if (!tile.position || MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
 
-							tileNode.data("position", tile.position);
-							
-						}
+                            var tileOffset = tileNode.getWindowOffset();
+
+                            tile.position = {};
+                            tile.position.left = tileOffset.left;
+                            tile.position.top = tileOffset.top;
+
+                            tileNode.data("position", tile.position);
+
+                        }
 
                         tilesToSave.push(tile);
                     }
@@ -1646,7 +1674,7 @@ var MNTP;
                 if (input.tagName.toLowerCase() == "select") {
 
                     input.value = (value !== undefined ? value : "");
-    
+
                     var text = q("input[type=text]", input.parentElement)
 
                     if (text)
@@ -1666,13 +1694,26 @@ var MNTP;
             //show news
             var news = q("#news");
 
-            if (config.ShowNews) {
+            //if (config.ShowNews) {
+            if (false) {
 
                 news.removeClass("grid");
                 news.removeClass("list");
 
                 news.style.width = config.NewsWidth + "px";
                 news.style.height = config.NewsHeight + "px";
+
+                if (config.NewsLeft == -1 || config.NewsRight == -1) {
+
+                    news.style.right = "2em";
+                    news.style.top = "calc(50% - " + (config.NewsHeight / 2) + "px)";
+
+                } else {
+
+                    news.style.left = config.NewsLeft + "px";
+                    news.style.top = config.NewsTop + "px";
+
+                }
 
                 news.addClass(config.NewsViewMode);
 
@@ -1701,34 +1742,34 @@ var MNTP;
 
             }
 
-			//show bookmarks bar
-			if (config.ShowBookmarksBar) {
-				
-				q(".bookmark-bar").style.display = "block";
-				
-				if (q("#bookmarks-list > ul > li", true).length == 0) {
-					loadBookmarks().then(bindEvents);
-				}
-				
-			} else {
-			
-				q(".bookmark-bar").style.display = "none";
-			
-			}
-			
-			//show options button
-			if (config.ShowOptionsButton)
-				q("#button-options").style.display = "block";
-			else
-				q("#button-options").style.display = "none";
-			
+            //show bookmarks bar
+            if (config.ShowBookmarksBar) {
+
+                q(".bookmark-bar").style.display = "block";
+
+                if (q("#bookmarks-list > ul > li", true).length == 0) {
+                    loadBookmarks().then(bindEvents);
+                }
+
+            } else {
+
+                q(".bookmark-bar").style.display = "none";
+
+            }
+
+            //show options button
+            if (config.ShowOptionsButton)
+                q("#button-options").style.display = "block";
+            else
+                q("#button-options").style.display = "none";
+
             //tiles border radius, opacity & grayscale
             q(".tile", true).forEach(function (tileNode) {
 
                 tileNode.style.borderRadius = config.TileBorderRadius + "px";
                 tileNode.style.webkitFilter = "grayscale(" + config.TileGrayscale + ")";
-				
-				q(".tile-background", tileNode).style.opacity = config.TileOpacity;
+
+                q(".tile-background", tileNode).style.opacity = config.TileOpacity;
 
             });
 
@@ -1749,13 +1790,13 @@ var MNTP;
                 q("#animation-speed").fadeInLeft();
             else
                 q("#animation-speed").fadeOutLeft();
-				
-			//tiles positioning
-			if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
-			    q("#tile-grid-configs").fadeInLeft();
+
+            //tiles positioning
+            if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
+                q("#tile-grid-configs").fadeInLeft();
             else
-			    q("#tile-grid-configs").fadeOutLeft();
-			
+                q("#tile-grid-configs").fadeOutLeft();
+
 
 
             //background color
@@ -1770,17 +1811,17 @@ var MNTP;
             if (config.HasBackgroundImage && config.BackgroundImage && config.BackgroundImage.data) {
 
                 bingImagesSlider && clearInterval(bingImagesSlider);
-				bingImagesSlider = null;
+                bingImagesSlider = null;
 
-				loadBackground(config.BackgroundImage, config);
+                loadBackground(config.BackgroundImage, config);
 
-				q("#remove-background").fadeInLeft();
-				q("#background-options").fadeInLeft();
+                q("#remove-background").fadeInLeft();
+                q("#background-options").fadeInLeft();
 
             } else if (config.HasBackgroundImage) {
 
                 bingImagesSlider && clearInterval(bingImagesSlider);
-				bingImagesSlider = null;
+                bingImagesSlider = null;
 
                 Image.get(Image.Type.Background).then(function (image) {
 
@@ -1806,49 +1847,49 @@ var MNTP;
                 });
 
             } else if (config.BingBackgroundImage) {
-				
-				if ((config.ReloadBackgroundImage || !wallpaper.style.backgroundImage) && !bingImagesSlider) {
 
-					MNTP.BGUtils.getNextBingImage().then(function (image) {	
-							
-						getConfig().then(function (config) {
+                if ((config.ReloadBackgroundImage || !wallpaper.style.backgroundImage) && !bingImagesSlider) {
 
-							var imageUrl = image.url || dataURLtoObjectURL(image.data);
-							config.ReloadBackgroundImage = true;
-							loadBackground({ url: imageUrl }, config);
+                    MNTP.BGUtils.getNextBingImage().then(function (image) {
 
-							q("#remove-background").fadeInLeft();
-							q("#background-options").fadeInLeft();
+                        getConfig().then(function (config) {
 
-						});
+                            var imageUrl = image.url || dataURLtoObjectURL(image.data);
+                            config.ReloadBackgroundImage = true;
+                            loadBackground({ url: imageUrl }, config);
 
-					});
-				
-					bingImagesSlider = setInterval(function () {
+                            q("#remove-background").fadeInLeft();
+                            q("#background-options").fadeInLeft();
 
-						MNTP.BGUtils.getNextBingImage().then(function (image) {	
-							
-							var imageUrl = image.url || dataURLtoObjectURL(image.data);
-							config.ReloadBackgroundImage = true;
-							loadBackground({ url: imageUrl }, config);
+                        });
 
-							q("#remove-background").fadeInLeft();
-							q("#background-options").fadeInLeft();
+                    });
 
-						});
-						
-					}, 20000);
-				
-					
-				} else {
+                    bingImagesSlider = setInterval(function () {
 
-					loadBackground(null, config);
+                        MNTP.BGUtils.getNextBingImage().then(function (image) {
 
-					q("#remove-background").fadeInLeft();
-					q("#background-options").fadeInLeft();
+                            var imageUrl = image.url || dataURLtoObjectURL(image.data);
+                            config.ReloadBackgroundImage = true;
+                            loadBackground({ url: imageUrl }, config);
 
-				}
-					
+                            q("#remove-background").fadeInLeft();
+                            q("#background-options").fadeInLeft();
+
+                        });
+
+                    }, 20000);
+
+
+                } else {
+
+                    loadBackground(null, config);
+
+                    q("#remove-background").fadeInLeft();
+                    q("#background-options").fadeInLeft();
+
+                }
+
                 q("#config-loadBackgroundImage").style.display = "none";
 
                 q("#config-backgroundImage-options").style.display = "";
@@ -1856,7 +1897,7 @@ var MNTP;
             } else if (config.NoBackgroundImage) {
 
                 bingImagesSlider && clearInterval(bingImagesSlider);
-				bingImagesSlider = null;
+                bingImagesSlider = null;
 
                 q("#wallpaper").style.backgroundImage = "";
 
@@ -1897,24 +1938,24 @@ var MNTP;
 
         if (config.ReloadBackgroundImage && backgroundUrl) {
 
-			//pre-load the image for the fade effect to work
-			var img = document.createElement("img");
+            //pre-load the image for the fade effect to work
+            var img = document.createElement("img");
 
-			img.onload = function () {
+            img.onload = function () {
 
-				wallpaper.style.backgroundImage = "url('" + this.src + "')";
+                wallpaper.style.backgroundImage = "url('" + this.src + "')";
 
-				q(".tile .accentbg", true).forEach(function (bgNode) {
+                q(".tile .accentbg", true).forEach(function (bgNode) {
 
-					if (config.TileExtendBackground)
-						bgNode.style.backgroundImage = wallpaper.style.backgroundImage;
-					else
-						bgNode.style.backgroundImage = "";
+                    if (config.TileExtendBackground)
+                        bgNode.style.backgroundImage = wallpaper.style.backgroundImage;
+                    else
+                        bgNode.style.backgroundImage = "";
 
-				});
-			}
+                });
+            }
 
-			img.src = backgroundUrl;
+            img.src = backgroundUrl;
 
         }
 
@@ -1930,28 +1971,28 @@ var MNTP;
 
         q(".tile .accentbg", true).forEach(function (bgNode) {
 
-			if (config.TileExtendBackground) {
-            
-			    if (wallpaper.style.backgroundImage && !bgNode.style.backgroundImage)
-			        bgNode.style.backgroundImage = wallpaper.style.backgroundImage;
+            if (config.TileExtendBackground) {
 
-				if (config.BackgroundFill)
-					bgNode.style.backgroundSize = "100% 100%";
-				else if (config.BackgroundAdjust)
-					bgNode.style.backgroundSize = "100% auto";
-				else
-					bgNode.style.backgroundSize = "";
-				
-			} else {
+                if (wallpaper.style.backgroundImage && !bgNode.style.backgroundImage)
+                    bgNode.style.backgroundImage = wallpaper.style.backgroundImage;
 
-			    bgNode.style.backgroundImage = "";
+                if (config.BackgroundFill)
+                    bgNode.style.backgroundSize = "100% 100%";
+                else if (config.BackgroundAdjust)
+                    bgNode.style.backgroundSize = "100% auto";
+                else
+                    bgNode.style.backgroundSize = "";
 
-			}
+            } else {
 
-			if ((config.HasBackgroundImage || config.BingBackgroundImage) && config.TileExtendBackground)
-				bgNode.parentNode.style.backgroundColor = config.BackgroundColor;
-			else
-				bgNode.parentNode.style.backgroundColor = "";
+                bgNode.style.backgroundImage = "";
+
+            }
+
+            if ((config.HasBackgroundImage || config.BingBackgroundImage) && config.TileExtendBackground)
+                bgNode.parentNode.style.backgroundColor = config.BackgroundColor;
+            else
+                bgNode.parentNode.style.backgroundColor = "";
 
         });
 
@@ -2002,9 +2043,9 @@ var MNTP;
                 }
 
             }
-			
-			config.TileWidthSm = (config.TileWidthLg / 2) - (config.TileMargin / 2);
-			config.TileHeightSm = (config.TileHeightLg / 2) - (config.TileMargin / 2);
+
+            config.TileWidthSm = (config.TileWidthLg / 2) - (config.TileMargin / 2);
+            config.TileHeightSm = (config.TileHeightLg / 2) - (config.TileMargin / 2);
 
             //Background image -->
             if (config.ReloadBackgroundImage) {
@@ -2034,7 +2075,7 @@ var MNTP;
                 success(config);
             }
             //<--
-			
+
         });
 
     }
@@ -2113,7 +2154,7 @@ var MNTP;
                 loadTileConfig(tile);
             });
 
-        } 
+        }
     }
 
     var loadPreviewTile = function (tile, isEdit) {
@@ -2167,9 +2208,9 @@ var MNTP;
 
         var colorInputs = q("input[type=color]", "#edit-tile-menu", true);
 
-        for (var i = 0; i < colorInputs.length; i++) 
+        for (var i = 0; i < colorInputs.length; i++)
             q(".color-preview", colorInputs[i].parentNode).style.backgroundColor = colorInputs[i].value;
-        
+
 
         loadPreviewTile(null, true);
 
@@ -2244,14 +2285,14 @@ var MNTP;
             q("[id*=tile-remove-image]", idMenu).removeClass("fadeIn").addClass("fadeOut");
 
         if (!tile.position && MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
-		
-			tile.position = { 
-				left: (window.innerWidth / 2) - (MNTP.Config.TileWidthLg / 2), 
-				top: (window.innerHeight / 2) - (MNTP.Config.TileHeightSm / 2), 
-			};
-			
-		}
-			
+
+            tile.position = {
+                left: (window.innerWidth / 2) - (MNTP.Config.TileWidthLg / 2),
+                top: (window.innerHeight / 2) - (MNTP.Config.TileHeightSm / 2),
+            };
+
+        }
+
         return tile;
 
     }
@@ -2298,17 +2339,102 @@ var MNTP;
 
     }
 
-    var loadFeeds = function () {
+    var getTileNodeById = function (idTile) {
+
+        var tile = q(".tile", true).filter(function (element) { return element.data("id") == idTile; });
+
+        if (tile.length > 0)
+            return tile[0];
+        else
+            return null;
+
+    }
+
+    var loadTileFeeds = function () {
+
+        return new Promise(function (success, fail) {
+
+            Tile.select().then(function (tiles) {
+
+                var newArray = [];
+
+                for (var i = 0; i < tiles.length; i++) {
+
+                    var tile = tiles[i];
+
+                    if (tile.rss)
+                        newArray.push(tile);
+
+                }
+
+                tiles = shuffleArray(newArray);
+
+                for (var i = 0; i < tiles.length; i++) {
+
+                    var tile = tiles[i];
+
+                    var tileNode = getTileNodeById(tile.id);
+
+                    var showFeed = function (tile, tileNode) {
+
+                        MNTP.WebService.getContent(false, tile.rss, 1).then(function (feeds) {
+
+                            if (feeds.items && feeds.items.results && feeds.items.results.length > 0) {
+
+                                var feed = feeds.items.results[0];
+
+                                var p = q(".feed p", tileNode);
+
+                                if (p) {
+                                    p.innerText = feed.title;
+                                    p.data("url", feed.url);
+                                }
+
+                                q(".tile-content", tileNode).style.webkitAnimationName = "tileAnimation";
+
+                            }
+
+                        });
+
+                    }
+
+                    tileNode.feedTimeout && clearTimeout(tileNode.feedTimeout);
+                    tileNode.feedInterval && clearInterval(tileNode.feedInterval);
+
+                    tileNode.feedTimeout = setTimeout(function (tile, tileNode) {
+
+                        showFeed(tile, tileNode);
+
+                        tileNode.feedInterval = setInterval(function (tile, tileNode) {
+
+                            showFeed(tile, tileNode);
+
+                        }, 5000 * tiles.length, tile, tileNode);
+
+                    }, 5000 * i, tile, tileNode);
+
+                    q(".tile-content", tileNode).addEventListener("webkitAnimationEnd", function () {
+                        this.style.webkitAnimationName = "";
+                    });
+
+                }
+
+                success();
+
+            });
+
+        });
+
+    }
+
+    var loadFeedsPanel = function () {
 
         return new Promise(function (success, fail) {
 
             Feed.select().then(function (feeds) {
 
                 var newsTitles = q("#news #news-titles");
-                var divConfigFeeds = q("#config-feeds");
-
                 newsTitles.innerHTML = "";
-                divConfigFeeds.innerHTML = "";
 
                 var p = document.createElement("p");
                 p.innerHTML = "Featured";
@@ -2329,31 +2455,6 @@ var MNTP;
 
                         newsTitles.insertBefore(p, null);
 
-                        //config - feeds
-                        var divFeed = document.createElement("div");
-                        var spanName = document.createElement("span");
-                        var spanUrl = document.createElement("span");
-                        var btnEdit = document.createElement("a");
-                        var btnRemove = document.createElement("a");
-
-                        spanName.innerHTML = feed.name;
-
-                        spanUrl.innerHTML = feed.url;
-                        spanUrl.addClass("url");
-
-                        btnEdit.addClass("btn-edit-feed");
-                        btnEdit.data("id", feed.id);
-
-                        btnRemove.addClass("btn-remove-feed");
-                        btnRemove.data("id", feed.id);
-
-                        divFeed.insertBefore(spanName, null);
-                        divFeed.insertBefore(spanUrl, null);
-                        divFeed.insertBefore(btnEdit, null);
-                        divFeed.insertBefore(btnRemove, null);
-
-                        divConfigFeeds.insertBefore(divFeed, null);
-
                     }
 
                 }
@@ -2363,7 +2464,7 @@ var MNTP;
             }, fail);
 
         });
-        
+
     }
 
     var loadFeed = function (url) {
@@ -2394,11 +2495,12 @@ var MNTP;
 
             request.catch(function (error) {
 
-                if (!url) 
+                if (!url)
                     q("#news").style.display = "none";
 
                 console.error("Error loading news");
                 fail(error);
+
             });
 
         });
@@ -2516,27 +2618,27 @@ var MNTP;
         });
     }
 
-    var loadBookmarks = function() {
+    var loadBookmarks = function () {
         return new Promise(function (success, fail) {
-		
-			chrome.bookmarks.getTree(function (e) {
-				var list = e[0].children;
 
-				var bookmarkslist = q("#bookmarks-list > ul");
-				var bookmarksmenu = q("#bookmarks-menu > ul > li > ul");
+            chrome.bookmarks.getTree(function (e) {
+                var list = e[0].children;
 
-				bookmarkslist.innerHTML = "";
-				bookmarksmenu.innerHTML = "";
+                var bookmarkslist = q("#bookmarks-list > ul");
+                var bookmarksmenu = q("#bookmarks-menu > ul > li > ul");
 
-				appendBookmarkNodes(list[0].children, bookmarkslist);
-				appendBookmarkNodes(list, bookmarksmenu);
+                bookmarkslist.innerHTML = "";
+                bookmarksmenu.innerHTML = "";
 
-				q(".bookmark-bar").style.display = "block";
-				
-				success();
+                appendBookmarkNodes(list[0].children, bookmarkslist);
+                appendBookmarkNodes(list, bookmarksmenu);
 
-			});
-		
+                q(".bookmark-bar").style.display = "block";
+
+                success();
+
+            });
+
         });
     }
 
@@ -2577,11 +2679,12 @@ var MNTP;
 
             ul.insertBefore(li, null);
         });
+
     }
 
-    window.addEventListener("load", function() { load(); });
+    window.addEventListener("load", function () { load(); });
 
-    window.addEventListener("resize", function() { MNTP && resize(); });
+    window.addEventListener("resize", function () { MNTP && resize(); });
 
     window.addEventListener("mousewheel", function (e) {
         if (e.target == q("body")) {

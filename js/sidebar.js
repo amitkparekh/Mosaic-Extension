@@ -241,7 +241,9 @@ navChangelogClose.addEventListener("click", changelogClose);
 // -------------------
 
 var newTileOpen = function () {
+
     navMainClose();
+
     setTimeout(function () {
         navNewTileMenu.className += " open ext";
         extSidebarOpen();
@@ -250,8 +252,8 @@ var newTileOpen = function () {
     $("#new-tile-customise-color a.color-preview").css("background-color", MNTP.Config.AccentColor);
     $("#new-tile-customise-color input").val(MNTP.Config.AccentColor);
 
-    $("#new-tile-customise-font-color a.color-preview").css("background-color", "#FFFFFF");
-    $("#new-tile-customise-font-color input").val("#FFFFFF");
+    $("#new-tile-customise-font-color a.color-preview").css("background-color", MNTP.Config.TileFontColor);
+    $("#new-tile-customise-font-color input").val(MNTP.Config.TileFontColor);
 
     loadPreviewTile();
 

@@ -28,6 +28,8 @@ MNTP.Config = (function () {
         NewsViewMode: "list",
         NewsWidth: 392,
         NewsHeight: 626,
+        NewsLeft: -1,
+        NewsTop: -1,
         ShowImageNewsList: false,
         NoBackgroundImage: false,
         HasBackgroundImage: false,
@@ -329,6 +331,24 @@ MNTP.Config = (function () {
 
         set NewsHeight(value) {
             val("NewsHeight", value);
+        },
+
+        //NewsLeft
+        get NewsLeft() {
+            return val("NewsLeft");
+        },
+
+        set NewsLeft(value) {
+            val("NewsLeft", value);
+        },
+
+        //NewsTop
+        get NewsTop() {
+            return val("NewsTop");
+        },
+
+        set NewsTop(value) {
+            val("NewsTop", value);
         },
 
         //ShowImageNewsList
