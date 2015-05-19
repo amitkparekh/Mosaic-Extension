@@ -6,8 +6,10 @@ MNTP.WebService = (function () {
     var SWAYY_API_SECRET = "fa998fbbc5433c3ded156cd39d60cc68d01bc686";
     var SWAYY_API_URL = "https://api.swayy.co/v1/";
 
-    var MNTP2_API_URL = "http://localhost:53301/api/";
-    //var MNTP2_API_URL = "http://mntp2ws.azurewebsites.net/api/";
+    //Local
+    //var MNTP2_API_URL = "http://localhost:53301/api/";
+    //Production
+    var MNTP2_API_URL = "http://mosaicextensionws.azurewebsites.net/api/";
 
     var LAST_SYNC = "lastSyncDate";
 
