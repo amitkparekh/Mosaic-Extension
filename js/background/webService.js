@@ -25,19 +25,19 @@ MNTP.WebService = (function () {
 
                 var feedName = url || "featured";
 
-                if (!_feeds[feedName] || _feeds[feedName].items.results.length < count) {
+                if (!_feeds[feedName] || !_feeds[feedName].items || !_feeds[feedName].items.results || _feeds[feedName].items.results.length < count) {
 
                     getUserId().then(function (userId) {
 
                         var request;
 
-                        if (!url) {
+                        if (!url) { //Swayy
 
                             var query = "?user_id=" + userId + "&count=" + (count) + "&include_body=" + ((includeBody === undefined ? false : includeBody) ? "true" : "false");
 
                             request = sendRequest("GET", SWAYY_API_URL + "users/content" + query, null, SWAYY_API_KEY, SWAYY_API_SECRET);
 
-                        } else {
+                        } else { //Custom RSS
 
                             if (url.indexOf("feedburner") > 0 && url.indexOf("fmt=xml") < 0) {
                                 if (url.indexOf("?") > 0)

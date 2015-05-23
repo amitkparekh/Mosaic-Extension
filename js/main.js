@@ -2377,24 +2377,54 @@ var MNTP;
 
                     var showFeed = function (tile, tileNode) {
 
-                        MNTP.WebService.getContent(false, tile.rss, 1).then(function (feeds) {
+                        var feedCount = tileNode.hasClass("size3") ? 4 : 1;
 
-                            if (feeds.items && feeds.items.results && feeds.items.results.length > 0) {
+                        if (q(".feed p", tileNode, true).length != feedCount) {
 
-                                var feed = feeds.items.results[0];
+                            MNTP.WebService.getContent(false, tile.rss, feedCount).then(function (feeds) {
 
-                                var p = q(".feed p", tileNode);
+                                if (feeds.items && feeds.items.results && feeds.items.results.length > 0) {
 
-                                if (p) {
-                                    p.innerText = feed.title;
-                                    p.data("url", feed.url);
+                                    var feedNode = q(".tile-content .feed", tileNode);
+
+                                    feedNode.innerHTML = "";
+
+                                    var h4 = document.createElement("h4");
+
+                                    h4.innerText = tile.name;
+
+                                    feedNode.insertBefore(h4, null);
+
+                                    for (var i = 0; i < feeds.items.results.length && i < feedCount; i++) {
+
+                                        var feed = feeds.items.results[i];
+
+                                        var p = document.createElement("p");
+
+                                        p.innerText = feed.title;
+                                        p.data("url", feed.url);
+
+                                        p.addEventListener("click", function (event) {
+                                            navigate(this.data("url"), event);
+                                            event.stopPropagation();
+                                        });
+
+                                        feedNode.insertBefore(p, null);
+
+                                    }
+
+                                    q(".tile-content", tileNode).addClass("feed-loaded");
+                                    q(".tile-content", tileNode).style.webkitAnimationName = "tileAnimation";
+
                                 }
 
-                                q(".tile-content", tileNode).style.webkitAnimationName = "tileAnimation";
+                            });
 
-                            }
+                        } else {
 
-                        });
+                            q(".tile-content", tileNode).style.webkitAnimationName = "tileAnimation";
+
+                        }
 
                     }
 

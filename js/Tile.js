@@ -353,21 +353,6 @@ Tile.getNode = function (tile, preview) {
 
         feedNode.addClass("feed");
 
-        var titleNode = document.createElement("h4");
-
-        titleNode.innerText = tile.name;
-
-        feedNode.insertBefore(titleNode, null);
-
-        var pNode = document.createElement("p");
-
-        pNode.addEventListener("click", function (event) {
-            navigate(this.data("url"), event);
-            event.stopPropagation();
-        });
-
-        feedNode.insertBefore(pNode, null);
-
         tileContentNode.insertBefore(feedNode, null);
 
     }

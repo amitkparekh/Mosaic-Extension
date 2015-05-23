@@ -14475,12 +14475,12 @@ select {
         text-align: center;
         margin: 4%; }
         .tile .tile-content.lg .feed h4 {
-          margin: 0;
+          margin: 0 0 0.3em 0;
           font-size: 1.6em;
           height: 1.6em;
           text-align: center; }
         .tile .tile-content.lg .feed p {
-          margin: 0;
+          margin: 0 0 15px 0;
           text-align: left;
           -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(black), to(rgba(0, 0, 0, 0.8)));
           maax-height: calc(88% - 1.6em);
