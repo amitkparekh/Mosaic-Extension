@@ -102,7 +102,7 @@
         color: #ddd;
     }
 
-    .form-slider label{
+    .form-slider label {
         color: #fff;
     }
 
@@ -139,4 +139,36 @@
         color: #333;
     }
 
+
+    .bookmark-bar {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .bookmark-bar a.previous {
+        background: url('../imgs/icons/previous2.png') no-repeat center;
+    }
+
+    .bookmark-bar a.next {
+        background: url('../imgs/icons/next2.png') no-repeat center;
+    }
+
+    .bookmark-bar .bookmarks > ul > li {
+        color: #ddd;
+    }
+
+    .bookmark-bar .bookmarks > ul > li:hover {
+        background: #333;
+    }
+
+    .bookmark-bar .bookmarks > ul > li > ul {
+        background: #333;
+    }
+
+    .bookmark-bar .bookmarks ul > li:hover {
+        background: #222;
+    }
+
+    .bookmark-bar .bookmarks > ul > li > ul li ul {
+        background: #333;
+    }
 }

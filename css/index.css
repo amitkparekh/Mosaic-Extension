@@ -14738,5 +14738,21 @@ select {
   background-color: #fff; }
 .dark .form-slider p.range-field input[type=range] + .thumb .value {
   color: #333; }
+.dark .bookmark-bar {
+  background: rgba(0, 0, 0, 0.5); }
+.dark .bookmark-bar a.previous {
+  background: url("../imgs/icons/previous2.png") no-repeat center; }
+.dark .bookmark-bar a.next {
+  background: url("../imgs/icons/next2.png") no-repeat center; }
+.dark .bookmark-bar .bookmarks > ul > li {
+  color: #ddd; }
+.dark .bookmark-bar .bookmarks > ul > li:hover {
+  background: #333; }
+.dark .bookmark-bar .bookmarks > ul > li > ul {
+  background: #333; }
+.dark .bookmark-bar .bookmarks ul > li:hover {
+  background: #222; }
+.dark .bookmark-bar .bookmarks > ul > li > ul li ul {
+  background: #333; }
 
 /*# sourceMappingURL=index.css.map */
