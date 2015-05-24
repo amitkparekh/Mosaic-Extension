@@ -29,6 +29,7 @@ var MNTP;
                 .then(loadCustomComponents)
                 .then(bindEvents)
                 .then(loadTileFeeds)
+                .then(loadExternalResources)
                 .then(success)
                 .catch(function (error) {
 
@@ -2422,6 +2423,35 @@ var MNTP;
             }
 
             ul.insertBefore(li, null);
+        });
+
+    }
+
+    var loadExternalResources = function () {
+
+        return new Promise(function (success, fail) {
+
+            q("#paypal-pixel").setAttribute("src", "https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif");
+            q("#link-roboto").setAttribute("href", "http://fonts.googleapis.com/css?family=Roboto:500,300,400,400italic");
+
+            //analytics
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-61018966-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function () {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = 'https://ssl.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+
+            _gaq.push(['_trackPageview']);
+
+            success();
+
         });
 
     }
