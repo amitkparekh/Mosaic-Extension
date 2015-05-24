@@ -34,7 +34,7 @@
     },
     
     "show_recently_closed": {
-        "message": "Show 'Recently Closed"
+        "message": "Prikaži 'Nedavno zatvoreno"
     },
     
     "settings": {
@@ -96,7 +96,7 @@
     
     "choose": {
         // Max 7 characters (if possible)
-        "message": "Choose"
+        "message": "Odaberi"
     },
     
     "add_from_url": {
@@ -110,7 +110,7 @@
     
     "add": {
         // Max 7 characters
-        "message": "Add"
+        "message": "Dodaj"
     },
     
     "upload_from_computer": {
@@ -179,7 +179,7 @@
     },
     
     "backup_restore": {
-        "message": "Backup/Restore"
+        "message": "Spremi/Povrati"
     },
     
     "report_a_bug": {
