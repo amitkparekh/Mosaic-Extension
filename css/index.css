@@ -14711,12 +14711,23 @@ select {
   font-weight: normal; }
 .dark .sidebar form .btn-inverse {
   color: #333; }
+.dark .sidebar .text-chunk h3, .dark .sidebar .text-chunk p, .dark .sidebar .text-chunk ul, .dark .sidebar .text-chunk li, .dark .sidebar .text-chunk h4, .dark .sidebar .text-chunk h5 {
+  color: #ddd; }
+.dark .sidebar .text-chunk li:hover a {
+  background: none; }
+.dark .sidebar .text-chunk a {
+  color: #03a9f4 !important; }
+  .dark .sidebar .text-chunk a:hover {
+    color: #03a9f4 !important;
+    background: none; }
+.dark .sidebar .sidebar-header {
+  border-bottom: #555 1px solid; }
+.dark .sidebar-nav article label {
+  color: #fff; }
 .dark .text-field-group input[type=text] {
   background: #333; }
 .dark .text-field-group .bar:before, .dark .text-field-group .bar:after {
   bottom: 0px; }
-.dark .sidebar .sidebar-header {
-  border-bottom: #555 1px solid; }
 .dark .select-wrapper input.select-dropdown {
   color: #ddd; }
 .dark .form-slider label {
@@ -14730,14 +14741,16 @@ select {
   background: #555; }
 .dark .context-menu ul li:hover {
   background: #222; }
-.dark .sidebar-nav article label {
-  color: #fff; }
 .dark .form-slider [type=range]::-webkit-slider-thumb {
   background-color: #fff !important; }
 .dark .form-slider p.range-field input[type=range] + .thumb {
   background-color: #fff; }
 .dark .form-slider p.range-field input[type=range] + .thumb .value {
   color: #333; }
+.dark .dropdown-content {
+  background-color: #333; }
+.dark .dropdown-content li > a, .dark .dropdown-content li > span {
+  color: #ddd; }
 .dark .bookmark-bar {
   background: rgba(0, 0, 0, 0.5); }
 .dark .bookmark-bar a.previous {
