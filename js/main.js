@@ -139,6 +139,9 @@ var MNTP;
 
             config = config || MNTP.Config;
 
+            var fontSize = config.TileWidthLg * 0.004
+            fontSize = fontSize < 0.7 ? 0.7 : fontSize;
+
             var tiles1 = q(".tile.size1:not(.preview)", true);
             var tiles2 = q(".tile.size2:not(.preview)", true);
             var tiles3 = q(".tile.size3:not(.preview)", true);
@@ -146,16 +149,19 @@ var MNTP;
             tiles1.forEach(function (element, index) {
                 element.style.width = config.TileWidthSm + "px";
                 element.style.height = config.TileHeightSm + "px";
+                element.style.fontSize = fontSize + "em";
             });
 
             tiles2.forEach(function (element, index) {
                 element.style.width = config.TileWidthLg + "px";
                 element.style.height = config.TileHeightSm + "px";
+                element.style.fontSize = fontSize + "em";
             });
 
             tiles3.forEach(function (element, index) {
                 element.style.width = config.TileWidthLg + "px";
                 element.style.height = config.TileHeightLg + "px";
+                element.style.fontSize = fontSize + "em";
             });
 
             reorder(config).then(success);
@@ -270,7 +276,7 @@ var MNTP;
                                 group.style.height = (top + nextHeight) + "px";
 
                             if (group.offsetHeight < top + nextHeight || (row + (nextSize == 3 ? 1 : 0) > config.GroupRows && config.GroupRows > 0))
-                                group.style.height = (top - config.TileMargin) + "px";
+                                group.style.height = (top - (config.TileMargin || 1)) + "px";
 
                         }
 
@@ -559,6 +565,10 @@ var MNTP;
                                 lastTargetIndex--;
                             }
 
+                            setTimeout(function () {
+                                lastTargetIndex = null;
+                            }, 300);
+
                             reorder();
 
                         }
@@ -683,9 +693,6 @@ var MNTP;
 
         return new Promise(function (success, fail) {
 
-            //close popups
-            //q("#overlay").addEventListener("click", hideConfigs);
-
             //-- click on the preview tile does nothing
             q("#nav-new-tile-menu #tile-preview").addEventListener("click", function (event) {
                 event.preventDefault();
@@ -707,7 +714,6 @@ var MNTP;
 
                     saveTileConfig()
                         .then(function () {
-                            hideConfigs();
                             MNTP.Config.ReloadBackgroundImage = true;
                             sidebarToggle();
                             load().then(saveTilesOrder);
@@ -728,7 +734,6 @@ var MNTP;
 
                     saveTileConfig(true)
                         .then(function () {
-                            hideConfigs();
                             MNTP.Config.ReloadBackgroundImage = true;
                             sidebarToggle();
                             load().then(saveTilesOrder);
@@ -805,9 +810,9 @@ var MNTP;
 
                     this.addClass("selected");
 
-                    q("#context-edit-tile").style.display = "block";
-                    q("#context-remove-tile").style.display = "block";
-                    q("#context-separator").style.display = "block";
+                    q(".context-menu li", true).forEach(function (element) {
+                        element.style.display = "block";
+                    });
 
                     var contextMenu = q(".context-menu");
 
@@ -837,9 +842,9 @@ var MNTP;
                         tileNode.removeClass("selected");
                     });
 
-                    q("#context-edit-tile").style.display = "none";
-                    q("#context-remove-tile").style.display = "none";
-                    q("#context-separator").style.display = "none";
+                    q(".context-menu li", true).forEach(function (element) {
+                        element.style.display = element.hasClass("global") ? "block" : "none";
+                    });
 
                     var contextMenu = q(".context-menu");
 
@@ -882,67 +887,75 @@ var MNTP;
             });
 
             //-- resize tile - smaller
-            q("#edit-tile-make-smaller").addEventListener("click", function () {
+            q("#edit-tile-make-smaller, #context-make-tile-smaller", true).forEach(function(element) {
+               
+                element.addEventListener("click", function () {
 
-                var tiles = q(".tile.selected", true);
+                    var tiles = q(".tile.selected", true);
 
-                for (var i = 0; i < tiles.length; i++) {
+                    for (var i = 0; i < tiles.length; i++) {
 
-                    var tileNode = tiles[i];
-                    var id = tileNode.data("id");
-                    var size = tileNode.data("size");
+                        var tileNode = tiles[i];
+                        var id = tileNode.data("id");
+                        var size = tileNode.data("size");
 
-                    if (size > 1) {
-                        var newSize = size - 1;
+                        if (size > 1) {
+                            var newSize = size - 1;
 
-                        tileNode.removeClass(["size1", "size2", "size3"]);
-                        tileNode.addClass("size" + newSize);
-                        tileNode.data("size", newSize);
+                            tileNode.removeClass(["size1", "size2", "size3"]);
+                            tileNode.addClass("size" + newSize);
+                            tileNode.data("size", newSize);
 
-                        Tile.get(id).then(function (tile) {
+                            Tile.get(id).then(function (tile) {
 
-                            tile.size = tile.size - 1;
-                            Tile.save(tile);
+                                tile.size = tile.size - 1;
+                                Tile.save(tile);
 
-                        });
+                            });
+                        }
+
                     }
 
-                }
+                    resize();
 
-                resize();
+                });
 
             });
 
             //-- resize tile - bigger
-            q("#edit-tile-make-bigger").addEventListener("click", function () {
+            q("#edit-tile-make-bigger, #context-make-tile-bigger", true).forEach(function (element) {
 
-                var tiles = q(".tile.selected", true);
+                element.addEventListener("click", function () {
 
-                for (var i = 0; i < tiles.length; i++) {
+                    var tiles = q(".tile.selected", true);
 
-                    var tileNode = tiles[i];
-                    var id = tileNode.data("id");
-                    var size = tileNode.data("size");
+                    for (var i = 0; i < tiles.length; i++) {
 
-                    if (size < 3) {
-                        var newSize = size + 1;
+                        var tileNode = tiles[i];
+                        var id = tileNode.data("id");
+                        var size = tileNode.data("size");
 
-                        tileNode.removeClass(["size1", "size2", "size3"]);
-                        tileNode.addClass("size" + newSize);
-                        tileNode.data("size", newSize);
+                        if (size < 3) {
+                            var newSize = size + 1;
+
+                            tileNode.removeClass(["size1", "size2", "size3"]);
+                            tileNode.addClass("size" + newSize);
+                            tileNode.data("size", newSize);
 
 
-                        Tile.get(id).then(function (tile) {
+                            Tile.get(id).then(function (tile) {
 
-                            tile.size = tile.size + 1;
-                            Tile.save(tile);
+                                tile.size = tile.size + 1;
+                                Tile.save(tile);
 
-                        });
+                            });
+                        }
+
                     }
 
-                }
+                    resize();
 
-                resize();
+                });
 
             });
 
@@ -1384,9 +1397,9 @@ var MNTP;
 
             });
 
-            //navigate through bookmarks
+            //-- navigate through bookmarks
             var bkmPrevious, bkmNext;
-            //previous bookmarks
+            //-- previous bookmarks
             q("#btn-previous-bookmarks").addEventListener("mouseover", function () {
 
                 bkmPrevious = setInterval(function () {
@@ -1408,7 +1421,7 @@ var MNTP;
                 clearInterval(bkmPrevious);
             });
 
-            //next bookmarks
+            //-- next bookmarks
             q("#btn-next-bookmarks").addEventListener("mouseover", function () {
 
                 bkmNext = setInterval(function () {
@@ -1430,29 +1443,29 @@ var MNTP;
                 clearInterval(bkmNext);
             });
 
-            //scroll through bookmarks bar
+            //-- scroll through bookmarks bar
             q("#bookmarks-list").addEventListener("mousewheel", function (e) {
 
-                var ul = q("#bookmarks-list > ul");
+                //var ul = q("#bookmarks-list > ul");
 
-                var currentLeft = parseInt(ul.style.left) || 0;
+                //var currentLeft = parseInt(ul.style.left) || 0;
 
-                var newLeft = 0;
+                //var newLeft = 0;
 
-                if ((currentLeft < 0) || (currentLeft + 440 >= window.innerWidth * (-1)))
-                    newLeft = (currentLeft + e.wheelDeltaY);
+                //if ((currentLeft < 0) || (currentLeft + 440 >= window.innerWidth * (-1)))
+                //    newLeft = (currentLeft + e.wheelDeltaY);
 
-                if (newLeft > 0)
-                    newLeft = 0;
+                //if (newLeft > 0)
+                //    newLeft = 0;
 
-                if (newLeft + 440 < window.innerWidth * (-1))
-                    newLeft = window.innerWidth * (-1) - 440;
+                //if (newLeft + 440 < window.innerWidth * (-1))
+                //    newLeft = window.innerWidth * (-1) - 440;
 
-                ul.style.left = newLeft + "px";
+                //ul.style.left = newLeft + "px";
 
             });
 
-            //click on bookmarks
+            //-- click on bookmarks
             q(".bookmarks li", true).forEach(function (element) {
                 element.addEventListener("click", function (event) {
 
@@ -1462,75 +1475,6 @@ var MNTP;
                         navigate(url, event);
 
                 });
-            });
-
-            //new feed
-            q("#btn-add-feed").addEventListener("click", function () {
-                editFeed();
-            });
-
-            //edit feed
-            q(".btn-edit-feed", true).forEach(function (element) {
-                element.addEventListener("click", function (event) {
-
-                    var id = this.data("id");
-
-                    editFeed(id);
-
-                });
-            });
-
-            //delete feed
-            q(".btn-remove-feed", true).forEach(function (element) {
-                element.addEventListener("click", function (event) {
-
-                    var id = this.data("id");
-
-                    Feed.remove(id).then(function () {
-
-                        q("#hdn-feed-id").value = "";
-                        q("#txt-feed-name").value = "";
-                        q("#txt-feed-url").value = "";
-
-                        q("#feed-config").style.display = "none";
-
-                        setTimeout(function () {
-                            loadFeedsPanel().then(bindEvents);
-                        }, 0);
-
-                    });
-
-                });
-            });
-
-            //save feed
-            q("#feed-config-btn-ok").addEventListener("click", function (event) {
-
-                saveFeed().then(function () {
-
-                    q("#hdn-feed-id").value = "";
-                    q("#txt-feed-name").value = "";
-                    q("#txt-feed-url").value = "";
-
-                    q("#feed-config").style.display = "none";
-
-                    setTimeout(function () {
-                        loadFeedsPanel().then(bindEvents);
-                    }, 0);
-
-                });
-
-            });
-
-            //cancel feed edit
-            q("#feed-config-btn-cancel").addEventListener("click", function (event) {
-
-                q("#hdn-feed-id").value = "";
-                q("#txt-feed-name").value = "";
-                q("#txt-feed-url").value = "";
-
-                q("#feed-config").style.display = "none";
-
             });
 
             success();
@@ -1610,20 +1554,6 @@ var MNTP;
 
     }
 
-    var showConfig = function () {
-
-        q("[data-panel]", true).forEach(function (element) {
-            element.style.display = "none";
-        });
-
-        q("[data-panel='config-general']").style.display = "block";
-
-        q("#overlay").style.display = "block";
-        q("#config").style.display = "block";
-        q("#tile-config").style.display = "none";
-
-    }
-
     var setConfig = function (input) {
 
         var config = input.data("config");
@@ -1656,6 +1586,9 @@ var MNTP;
             }
 
         }
+
+        if (config == "TileWidthLg")
+            MNTP.Config.TileHeightLg = parseInt(input.value);
 
     }
 
@@ -1732,13 +1665,9 @@ var MNTP;
                 else
                     resizeNews();
 
-                q("a[data-panel-for='config-feeds']").style.display = "block";
-
             } else {
 
                 news.style.display = "none";
-
-                q("a[data-panel-for='config-feeds']").style.display = "none";
 
             }
 
@@ -1751,17 +1680,15 @@ var MNTP;
                     loadBookmarks().then(bindEvents);
                 }
 
+                q("#menu-button").style.top = "60px";
+
             } else {
 
                 q(".bookmark-bar").style.display = "none";
 
-            }
+                q("#menu-button").style.top = "";
 
-            //show options button
-            if (config.ShowOptionsButton)
-                q("#button-options").style.display = "block";
-            else
-                q("#button-options").style.display = "none";
+            }
 
             //tiles border radius, opacity & grayscale
             q(".tile", true).forEach(function (tileNode) {
@@ -1840,8 +1767,6 @@ var MNTP;
                             tileNode.style.backgroundImage = "";
                         });
 
-                        q("#config-backgroundImage-options").style.display = "none";
-
                     }
 
                 });
@@ -1890,10 +1815,6 @@ var MNTP;
 
                 }
 
-                q("#config-loadBackgroundImage").style.display = "none";
-
-                q("#config-backgroundImage-options").style.display = "";
-
             } else if (config.NoBackgroundImage) {
 
                 bingImagesSlider && clearInterval(bingImagesSlider);
@@ -1906,11 +1827,6 @@ var MNTP;
                     tileNode.style.backgroundImage = "";
 
                 });
-
-                q("#config-loadBackgroundImage").style.display = "none";
-
-                q("#config-backgroundImage-options").style.display = "none";
-
 
                 q("#remove-background").fadeOutLeft();
                 q("#background-options").fadeOutLeft();
@@ -1997,7 +1913,6 @@ var MNTP;
         });
 
         config.ReloadBackgroundImage = false;
-        q("input[data-property='ReloadBackgroundImage']", "#config").value = "false";
 
     }
 
@@ -2050,17 +1965,8 @@ var MNTP;
             //Background image -->
             if (config.ReloadBackgroundImage) {
 
-                if (config.HasBackgroundImage) {
-
+                if (config.HasBackgroundImage)
                     config.BackgroundImage = config.BackgroundImage || {};
-
-                    q("#config-loadBackgroundImage").style.display = "";
-
-                } else {
-
-                    q("#config-loadBackgroundImage").style.display = "none";
-
-                }
 
             }
 
@@ -2311,23 +2217,6 @@ var MNTP;
 
     }
 
-    var hideConfigs = function () {
-
-        q("#overlay").style.display = "none";
-        q("#config").style.display = "none";
-        q("#tile-config").style.display = "none";
-
-    }
-
-    var hideOptions = function () {
-
-        q(".tile.selected", true).forEach(function (element) {
-            element.removeClass("selected");
-        });
-
-        q("#options").addClass("hidden");
-    }
-
     var getGroupNodebyID = function (idGroup) {
 
         var group = q(".tile-group", true).filter(function (element) { return element.data("id") == idGroup; });
@@ -2532,46 +2421,6 @@ var MNTP;
                 fail(error);
 
             });
-
-        });
-
-    }
-
-    var editFeed = function (id) {
-
-        if (id) {
-
-            Feed.get(id).then(function (feed) {
-
-                if (feed) {
-
-                    q("#hdn-feed-id").value = feed.id;
-                    q("#txt-feed-name").value = feed.name;
-                    q("#txt-feed-url").value = feed.url;
-
-                }
-
-            })
-
-        }
-
-        q("#feed-config").style.display = "block";
-
-    }
-
-    var saveFeed = function () {
-
-        return new Promise(function (sucess, fail) {
-
-            var feed = {};
-
-            if (q("#hdn-feed-id").value)
-                feed.id = parseInt(q("#hdn-feed-id").value);
-
-            feed.name = q("#txt-feed-name").value;
-            feed.url = q("#txt-feed-url").value;
-
-            Feed.save(feed).then(sucess, fail);
 
         });
 

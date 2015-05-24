@@ -134,10 +134,14 @@
     "remove_image": {
         "message": "Remove image"
     },
-    
+
     "remove": {
         // Max 7 characters (if possible)
         "message": "Remove"
+    },
+
+    "remove_tile": {
+        "message": "Remove tile"
     },
     
     "reset": {
@@ -213,6 +217,10 @@
     "default_tile_color": {
         "message": "Default tile colour"
     },
+
+    "tiles_look": {
+        "message": "Tiles look"
+    },
     
     "opacity": {
         "message": "Opacity"
@@ -254,6 +262,14 @@
         "message": "Number of columns"
     },
     
+    "margin_between_tiles": {
+        "message": "Margin between tiles"
+    },
+    
+    "tiles_size": {
+        "message": "Tiles size"
+    },
+
     "horizontal_align": {
         "message": "Horizontal align"
     },
