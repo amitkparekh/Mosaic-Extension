@@ -1624,6 +1624,9 @@ var MNTP;
                 }
             }
 
+            //dark theme
+            q("body").toggleClass("dark", config.DarkTheme);
+
             //show news
             var news = q("#news");
 
@@ -1777,16 +1780,12 @@ var MNTP;
 
                     MNTP.BGUtils.getNextBingImage().then(function (image) {
 
-                        getConfig().then(function (config) {
-
                             var imageUrl = image.url || dataURLtoObjectURL(image.data);
-                            config.ReloadBackgroundImage = true;
-                            loadBackground({ url: imageUrl }, config);
+                            MNTP.Config.ReloadBackgroundImage = true;
+                            loadBackground({ url: imageUrl });
 
                             q("#remove-background").fadeInLeft();
                             q("#background-options").fadeInLeft();
-
-                        });
 
                     });
 
@@ -1913,140 +1912,6 @@ var MNTP;
         });
 
         config.ReloadBackgroundImage = false;
-
-    }
-
-    var getConfig = function () {
-
-        return new Promise(function (success, fail) {
-
-            var inputs = q("input[data-config], select[data-config]", true);
-
-            var config = {};
-
-            for (var i = 0; i < inputs.length; i++) {
-
-                var input = inputs[i];
-
-                if (input.type == "file" && input.files.length > 0) {
-
-                    assign(config, input.data("config"), input.files[0]);
-
-                } else if (input.type == "checkbox" || input.type == "radio") {
-
-                    assign(config, input.data("config"), input.checked);
-
-                } else if (input.value) {
-
-                    var configType = input.data("config-type") || "";
-
-                    switch (configType.toLowerCase()) {
-                        case "boolean":
-                            assign(config, input.data("config"), (input.value.toLowerCase() == "true"))
-                            break;
-                        case "float":
-                            assign(config, input.data("config"), parseFloat(input.value));
-                            break;
-                        case "int":
-                            assign(config, input.data("config"), parseInt(input.value));
-                            break;
-                        default:
-                            assign(config, input.data("config"), input.value);
-                            break;
-                    }
-
-                }
-
-            }
-
-            config.TileWidthSm = (config.TileWidthLg / 2) - (config.TileMargin / 2);
-            config.TileHeightSm = (config.TileHeightLg / 2) - (config.TileMargin / 2);
-
-            //Background image -->
-            if (config.ReloadBackgroundImage) {
-
-                if (config.HasBackgroundImage)
-                    config.BackgroundImage = config.BackgroundImage || {};
-
-            }
-
-            if (config.BackgroundImage && config.BackgroundImage.data) {
-
-                getDataUrlFromFile(config.BackgroundImage.data).then(function (dataURL) {
-                    config.BackgroundImage.data = dataURL;
-                    success(config);
-                });
-
-            } else {
-                success(config);
-            }
-            //<--
-
-        });
-
-    }
-
-    var saveConfig = function () {
-
-        return new Promise(function (success, fail) {
-
-            getConfig().then(function (config) {
-
-                new Promise(function (success, fail) {
-
-                    //Background image -->
-                    if (config.HasBackgroundImage && config.BackgroundImage) {
-
-                        if (config.BackgroundImage.data) {
-
-                            var image = config.BackgroundImage;
-                            image.type = Image.Type.Background;
-                            image.id = 1;
-                            image.data = config.BackgroundImage.data;
-
-                            config.BackgroundImage = undefined;
-
-                            Image.save(image).then(success);
-
-                        } else {
-
-                            Image.get(Image.Type.Background).then(function (image) {
-
-                                var data = image.data;
-
-                                image = config.BackgroundImage;
-                                image.type = Image.Type.Background;
-                                image.id = 1;
-                                image.data = data;
-
-                                config.BackgroundImage = undefined;
-
-                                Image.save(image).then(success);
-
-                            });
-
-                        }
-
-                    } else if (!config.HasBackgroundImage) {
-
-                        Image.remove(Image.Type.Background).then(success);
-
-                    } else {
-
-                        success();
-
-                    }
-                    //<--
-
-                }).then(function () {
-
-                    MNTP.Config.replace(config);
-
-                });
-
-            });
-
-        });
 
     }
 

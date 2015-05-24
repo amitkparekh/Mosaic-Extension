@@ -211,9 +211,9 @@ $link-disabled-color,
 $link-disabled-bg,
 $text-link-color) {
     background-color: $bg;
-    .sidebar-header {
+    /*.sidebar-header {
         background-color: $bg;
-    }
+    }*/
     .sidebar-toggle {
         color: $brand-hover-color;
         background-color: transparent;

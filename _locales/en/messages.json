@@ -230,6 +230,10 @@
         "message": "Extend background to tiles"
     },
 
+    "dark_theme": {
+        "message": "Dark theme"
+    },
+
     "background_color": {
         "message": "Background colour"
     },

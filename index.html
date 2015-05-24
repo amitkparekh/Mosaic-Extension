@@ -17,7 +17,7 @@
 
 </head>
 
-<body>
+<body class="dark">
 
     <!-- Menu button -->
     <button id="menu-button" class="menu-button">Toggle Menu</button>
@@ -442,25 +442,22 @@
             <!-- Customise theme menu -->
             <ul id="nav-settings-theme-menu" class="sidebar-nav">
 
-                <input type="hidden" data-config="LastBackgroundImageName" data-config-type="string" />
-                <input type="hidden" data-config="ReloadBackgroundImage" data-config-type="boolean" />
-
-                <input type="hidden" data-config="NewsViewMode" data-config-type="string" />
-                <input type="hidden" data-config="ShowImageNewsList" data-config-type="boolean" />
-                <input type="hidden" data-config="NewsWidth" data-config-type="int" />
-                <input type="hidden" data-config="NewsHeight" data-config-type="int" />
-
-                <input type="hidden" data-config="GroupMargin" data-config-type="int" />
-
-                <input type="hidden" data-config="BackgroundOpacity" data-config-type="float" />
-                
-                
                 <div class="sidebar-text">
                     <span data-message="customise_theme"></span>
                     <a id="nav-settings-theme-close">
                         <div class="sidebar-badge sidebar-icon-right md-close"></div>
                     </a>
                 </div>
+
+                <form class="sidebar-text">
+                    <span data-message="dark_theme"></span>
+                    <div class="switch sidebar-badge sidebar-icon-right">
+                        <label>
+                            <input type="checkbox" data-config="DarkTheme">
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                </form>
 
                 <form class="tile-choice">
                     <span data-message="background_color"></span>
