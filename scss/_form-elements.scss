@@ -179,7 +179,7 @@ select {
                     padding: 0;
                     -webkit-appearance: none;
                     // for FF
-                    border: 1px solid white;
+                    border: none;
 
                     &, & + .thumb {
                         @extend .no-select;
@@ -202,8 +202,8 @@ select {
                             display: block;
                             width: 30px;
                             text-align: center;
-                            color: $clr-light-blue;
-                            font-size: 0px;
+                            color: #fff;
+                            /*font-size: 0px;*/
 
                             @include prefix((transform: rotate(45deg)), webkit moz ms o);
                         }
@@ -362,8 +362,8 @@ select {
     background: #FFFFFF;
     text-align: left;
     z-index: 3;
-    max-width: 100px;
-    max-height: 122px;
+    max-width: 250px;
+    max-height: 200px;
     overflow: hidden;
     transition: max-width .2s, max-height .2s;
 
@@ -376,12 +376,12 @@ select {
 
     ul {
         margin: 0;
-        width: 100px;
 
         li {
             margin: 0;
             padding: 5px 15px;
             cursor: pointer;
+            white-space: nowrap;
 
             &.separator {
                 height: 1px;

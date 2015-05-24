@@ -1,4 +1,4 @@
-// English GB (en)
+// Portuguese BR (pt_BR)
 
 {
     "extName": {
@@ -14,39 +14,39 @@
      */
     
     "add_new_tile": {
-        "message": "Add new tile"
+        "message": "Adicionar novo tile"
     },
     
     "show_hide_sections": {
-        "message": "Show/Hide sections"
+        "message": "Mostrar/Esconder seções"
     },
     
     "show_apps": {
-        "message": "Show 'Apps'"
+        "message": "Mostrar 'Apps'"
     },
     
     "show_bookmarks_bar": {
-        "message": "Show 'Bookmarks Bar'"
+        "message": "Mostrar 'Barra de favoritos'"
     },
     
     "show_recently_closed_tabs": {
-        "message": "Show 'Recently Closed Tabs'"
+        "message": "Mostrar 'Guias recentemente fechadas'"
     },
     
     "show_recently_closed": {
-        "message": "Show 'Recently Closed'"
+        "message": "Mostrar 'Recentemente fechadas'"
     },
     
     "settings": {
-        "message": "Settings"
+        "message": "Configurações"
     },
     
     "help": {
-        "message": "Help"
+        "message": "Ajuda"
     },
     
     "donate": {
-        "message": "Donate"
+        "message": "Doar"
     },
     
     /**
@@ -54,71 +54,71 @@
      */
     
     "site_url": {
-        "message": "Site URL"
+        "message": "URL do site"
     },
     
     "site_name": {
-        "message": "Site name"
+        "message": "Nome do site"
     },
     
     "site_rss": {
-        "message": "Site RSS (optional)"
+        "message": "RSS do site (opcional)"
     },
     
     "customise_tile_color": {
-        "message": "Customize tile colour"
+        "message": "Alterar cores do tile"
     },
     
     "choose_tile_color": {
-        "message": "Choose tile colour"
+        "message": "Escolher cor dos tiles"
     },
     
     "tile_color": {
-        "message": "Tile colour"
+        "message": "Cor do tile"
     },
     
     "font_color": {
-        "message": "Font colour"
+        "message": "Cor da fonte"
     },
     
     "tile_image": {
-        "message": "Tile Image"
+        "message": "Imagem do tile"
     },
     
     "select_from_our_database": {
-        "message": "Select from our database"
+        "message": "Selecione da nossa lista"
     },
     
     "choose_from_the_database": {
-        "message": "Choose from the database"
+        "message": "Selecione da lista"
     },
     
     "select": {
         // Max 7 characters (if possible)
-        "message": "Select"
+        "message": "Selecione"
     },
     
     "choose": {
         // Max 7 characters (if possible)
-        "message": "Choose"
+        "message": "Selecione"
     },
     
     "add_from_url": {
-        "message": "Add from URL"
+        "message": "Adicionar de URL"
     },
     
     "add_url": {
         // Max 7 characters (if possible)
-        "message": "Add URL"
+        "message": "Adicionar URL"
     },
     
     "add": {
         // Max 7 characters
-        "message": "Add"
+        "message": "Adicionar"
     },
     
     "upload_from_computer": {
-        "message": "Upload from computer"
+        "message": "Upload do computador"
     },
     
     "upload": {
@@ -128,34 +128,34 @@
     
     "get": {
         // Max 7 characters (if possible)
-        "message": "Get"
+        "message": "Pegar"
     },
     
     "remove_image": {
-        "message": "Remove image"
+        "message": "Remover imagem"
     },
 
     "remove": {
         // Max 7 characters (if possible)
-        "message": "Remove"
+        "message": "Remover"
     },
 
     "remove_tile": {
-        "message": "Remove tile"
+        "message": "Remover tile"
     },
     
     "reset": {
         // Max 7 characters (if possible)
-        "message": "Reset"
+        "message": "Reiniciar"
     },
     
     "cancel": {
         // Max 7 characters (if possible)
-        "message": "Cancel"
+        "message": "Cancelar"
     },
     
     "add_tile": {
-        "message": "Add tile"
+        "message": "Adicionar tile"
     },
     
     /**
@@ -163,35 +163,35 @@
      */
     
     "customise_tiles": {
-        "message": "Customise tiles"
+        "message": "Customizar tiles"
     },
     
     "customise_theme": {
-        "message": "Customise theme"
+        "message": "Customizar tema"
     },
     
     "customise_rss_feed": {
-        "message": "Customise RSS feed"
+        "message": "Customizar feed RSS"
     },
     
     "profile_settings": {
-        "message": "Profile settings"
+        "message": "Configurações do perfil"
     },
     
     "change_language": {
-        "message": "Change language"
+        "message": "Selecionar idioma"
     },
     
     "backup_restore_settings": {
-        "message": "Backup/Restore settings"
+        "message": "Backup/Restaurar configurações"
     },
     
     "backup_restore": {
-        "message": "Backup/Restore"
+        "message": "Backup/Restaurar"
     },
     
     "report_a_bug": {
-        "message": "Report a bug"
+        "message": "Reportar um bug"
     },
     
     "changelog": {
@@ -203,51 +203,51 @@
      */    
     
     "show_tile_animation_on_load": {
-        "message": "Show tile animation on load"
+        "message": "Mostrar animação dos tiles ao carregar"
     },
     
     "show_tile_animation": {
-        "message": "Show tile animation"
+        "message": "Mostrar animação dos tiles"
     },
     
     "animation_speed": {
-        "message": "Animation speed"
+        "message": "Velocidade da animação"
     },
 
     "default_tile_color": {
-        "message": "Default tile colour"
+        "message": "Cor padrão dos tiles"
     },
 
     "tiles_look": {
-        "message": "Tiles look"
+        "message": "Aparência dos tiles"
     },
     
     "opacity": {
-        "message": "Opacity"
+        "message": "Opacidade"
     },
 
     "extend_background_to_tiles": {
-        "message": "Extend background to tiles"
+        "message": "Extender background para os tiles"
     },
 
     "dark_theme": {
-        "message": "Dark theme"
+        "message": "Tema escuro"
     },
 
     "background_color": {
-        "message": "Background colour"
+        "message": "Cor do fundo"
     },
     
     "text_color": {
-        "message": "Text colour"
+        "message": "Cor do texto"
     },
     
     "tile_positioning": {
-        "message": "Tile positioning"
+        "message": "Posicionamento dos tiles"
     },
     
     "tile_layout": {
-        "message": "Tile layout"
+        "message": "Layout dos tiles"
     },
     
     "grid": {
@@ -255,67 +255,67 @@
     },
     
     "free": {
-        "message": "Free"
+        "message": "Livre"
     },
     
     "number_of_rows": {
-        "message": "Number of rows"
+        "message": "Número de linhas"
     },
     
     "number_of_columns": {
-        "message": "Number of columns"
+        "message": "Número de colunas"
     },
     
     "margin_between_tiles": {
-        "message": "Margin between tiles"
+        "message": "Margem entre tiles"
     },
     
     "tiles_size": {
-        "message": "Tiles size"
+        "message": "Tamanho dos tiles"
     },
 
     "horizontal_align": {
-        "message": "Horizontal align"
+        "message": "Alinhamento horizontal"
     },
     
     "left": {
-        "message": "Left"
+        "message": "Esquerda"
     },
     
     "centre": {
-        "message": "Centre"
+        "message": "Centro"
     },
     
     "right": {
-        "message": "Right"
+        "message": "Direita"
     },
     
     "vertical_align": {
-        "message": "Vertical align"
+        "message": "Alinhamento vertical"
     },
     
     "top": {
-        "message": "Top"
+        "message": "Cima"
     },
     
     "bottom": {
-        "message": "Bottom"
+        "message": "Baixo"
     },
     
     "tile_flow_direction": {
-        "message": "Tile flow direction"
+        "message": "Direção do alinhamento dos tiles"
     }, 
     
     "top_to_bottom": {
-        "message": "Top to bottom"
+        "message": "Cima para baixo"
     },
     
     "left_to_right": {
-        "message": "Left to right"
+        "message": "Esquerda para direita"
     },
     
     "reset_to_default": {
-        "message": "Reset to default"
+        "message": "Restaurar padrão"
     },
     
     /**
@@ -323,35 +323,35 @@
      */ 
     
     "choose_background_image": {
-        "message": "Choose background image"
+        "message": "Selecionar imagem de fundo"
     },
 
     "get_from_wikimedia_commons": {
-        "message": "Get from 'Wikimedia Commons'"
+        "message": "Pegue da 'Wikimedia Commons'"
     },
 
     "get_from_bing": {
-        "message": "Get from Bing"
+        "message": "Pegue do Bing"
     },
     
     "background_options": {
-        "message": "Background options"
+        "message": "Opções do fundo"
     },
 
     "choose_fit": {
-        "message": "Choose fit"
+        "message": "Selecione o ajuste"
     },
 
     "adjust": {
-        "message": "Adjust"
+        "message": "Ajustar"
     },
 
     "fill": {
-        "message": "Fill"
+        "message": "Preencher"
     },
 
     "original_size": {
-        "message": "Original size"
+        "message": "Tamanho original"
     },
 
     /**
@@ -363,25 +363,25 @@
      */ 
     
     "import_settings": {
-        "message": "Import settings"
+        "message": "Importar configurações"
     },
     
     "import": {
         // Max 7 characters (if possible)
-        "message": "Import"
+        "message": "Importar"
     },
     
     "export_settings": {
-        "message": "Export settings"
+        "message": "Exportar configurações"
     },
     
     "export": {
         // Max 7 characters (if possible)
-        "message": "Export"
+        "message": "Exportar"
     },
     
     "reset_settings": {
-        "message": "Reset settings"
+        "message": "Restaurar configurações"
     },
     
     /**
@@ -397,42 +397,42 @@
      */ 
     
     "edit_tile": {
-        "message": "Edit tile"
+        "message": "Alterar tile"
     },
     
     "make_tile_bigger": {
-        "message": "Make tile bigger"
+        "message": "Deixar o tile maior"
     },
     
     "make_tile_smaller": {
-        "message": "Make tile smaller"
+        "message": "Deixar o tile menor"
     },
     
     "edit_tile_info": {
-        "message": "Edit tile info"
+        "message": "Alterar informações do tile"
     },
     
     "customise_tile_colours": {
-        "message": "Customise tile colours"
+        "message": "Customizar cores do tile"
     },
     
     "edit_tile_image": {
-        "message": "Edit tile image"
+        "message": "Alterar imagem do tile"
     },
     
     "delete": {
-        "message": "Delete"
+        "message": "Excluir"
     },
     
     "save_changes": {
-        "message": "Save changes"
+        "message": "Salvar alterações"
     },
     
     "save": {
-        "message": "Save"
+        "message": "Salvar"
     },
     
     "confirm": {
-        "message": "Confirm"
+        "message": "Confirmar"
     }
 }

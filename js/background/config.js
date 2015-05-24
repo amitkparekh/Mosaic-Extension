@@ -43,6 +43,7 @@ MNTP.Config = (function () {
 		ShowOptionsButton: true,
 		OpeningAnimation: true,
 		OpeningAnimationTime: 700,
+        DarkTheme: false,
         LastSyncDate: null
     };
 
@@ -468,6 +469,15 @@ MNTP.Config = (function () {
             val("OpeningAnimationTime", value);
         },
 				
+        //DarkTheme
+        get DarkTheme() {
+            return val("DarkTheme");
+        },
+
+        set DarkTheme(value) {
+            val("DarkTheme", value);
+        },
+
         //LastSyncDate
         get LastSyncDate() {
             return val("LastSyncDate");

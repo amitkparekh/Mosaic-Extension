@@ -1,0 +1,218 @@
+﻿.dark {
+
+    .switch label .lever:after {
+        /*height: 15px;*/
+        background-color: #ccc;
+        /*left: 0px;
+        top: 0px;*/
+    }
+
+    input[type=checkbox]:checked:not(:disabled) ~ .lever:active:after {
+        box-shadow: none;
+    }
+
+    input[type=checkbox]:not(:disabled) ~ .lever:active:after {
+        box-shadow: none;
+    }
+
+    .switch label input[type=checkbox]:checked + .lever:after {
+        left: 18px;
+    }
+
+    .sidebar {
+        &::-webkit-scrollbar-track {
+            border-radius: 2px;
+        }
+
+        &::-webkit-scrollbar {
+            width: 5px;
+            background-color: #333;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px black(.3);
+            background-color: #777;
+        }
+    }
+
+    .sidebar-default {
+        background-color: #333;
+    }
+
+    .sidebar-default .sidebar-icon-right {
+        color: #fff;
+    }
+
+    .sidebar-default .sidebar-nav .divider {
+        background-color: #555;
+    }
+
+    .sidebar-default .sidebar-text {
+        color: #aaa;
+    }
+
+    .sidebar-default .btn-inverse {
+        background-color: #ddd;
+    }
+
+    .sidebar-default .switch label input[type=checkbox]:checked + .lever {
+        background-color: #eee;
+    }
+
+    .sidebar-default .switch label input[type=checkbox]:checked + .lever:after {
+        background-color: #fff;
+    }
+
+    .sidebar-default .sidebar-nav li > a {
+        color: #fff;
+    }
+
+    .sidebar-default .sidebar-nav li > a:hover {
+        color: #fff;
+        background-color: #222;
+    }
+
+    .menu-button {
+        background: linear-gradient(0deg, rgba(33, 33, 33, 0), rgba(33, 33, 33, 0) 5px, #fff 5px, #fff 7px, rgba(33, 33, 33, 0) 7px, rgba(33, 33, 33, 0) 12px);
+    }
+
+    .menu-button::before, .menu-button::after {
+        background-color: #fff;
+    }
+
+    .sidebar form.tile-preview {
+        height: 152px;
+        position: relative;
+        border-top: 1px solid #555;
+        border-bottom: 1px solid #555;
+        padding: 5px 16px 5px;
+    }
+
+    .sidebar form.tile-choice > span {
+        color: #fff;
+        font-weight: normal;
+    }
+
+    .sidebar form.sidebar-text {
+        color: #fff;
+        font-weight: normal;
+    }
+
+    .sidebar form .btn-inverse {
+        color: #333;
+    }
+
+    .sidebar .text-chunk h3, .sidebar .text-chunk p, .sidebar .text-chunk ul, .sidebar .text-chunk li, .sidebar .text-chunk h4, .sidebar .text-chunk h5 {
+        color: #ddd;
+    }
+
+    .sidebar .text-chunk li {
+        &:hover a {
+            background: none;
+        }
+    }
+
+    .sidebar .text-chunk a {
+        color: $clr-light-blue !important;
+
+        &:hover {
+            color: $clr-light-blue !important;
+            background: none;
+        }
+    }
+
+    .sidebar .sidebar-header {
+        border-bottom: #555 1px solid;
+    }
+
+    .sidebar-nav article label {
+        color: #fff;
+    }
+
+    .text-field-group input[type=text] {
+        background: #333;
+        color: #fff;
+    }
+
+    .text-field-group .bar:before, .text-field-group .bar:after {
+        bottom: 0px;
+    }
+
+    .select-wrapper input.select-dropdown {
+        color: #ddd;
+    }
+
+    .form-slider label {
+        color: #fff;
+    }
+
+    .form-slider p.range-field input[type=range] {
+        border: none;
+    }
+
+    .context-menu {
+        background: #333;
+        color: #fff;
+    }
+
+    .context-menu ul li.separator {
+        background: #555;
+    }
+
+    .context-menu ul li:hover {
+        background: #222;
+    }
+
+    .form-slider [type=range]::-webkit-slider-thumb {
+        background-color: #fff !important;
+    }
+
+    .form-slider p.range-field input[type=range] + .thumb {
+        background-color: #fff;
+    }
+
+    .form-slider p.range-field input[type=range] + .thumb .value {
+        color: #333;
+    }
+
+    .dropdown-content {
+        background-color: #333;
+    }
+
+    .dropdown-content li > a, .dropdown-content li > span {
+        color: #ddd;
+    }
+
+    .bookmark-bar {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .bookmark-bar a.previous {
+        background: url('../imgs/icons/previous2.png') no-repeat center;
+    }
+
+    .bookmark-bar a.next {
+        background: url('../imgs/icons/next2.png') no-repeat center;
+    }
+
+    .bookmark-bar .bookmarks > ul > li {
+        color: #ddd;
+    }
+
+    .bookmark-bar .bookmarks > ul > li:hover {
+        background: #333;
+    }
+
+    .bookmark-bar .bookmarks > ul > li > ul {
+        background: #333;
+    }
+
+    .bookmark-bar .bookmarks ul > li:hover {
+        background: #222;
+    }
+
+    .bookmark-bar .bookmarks > ul > li > ul li ul {
+        background: #333;
+    }
+}

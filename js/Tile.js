@@ -234,15 +234,19 @@ Tile.getNode = function (tile, preview) {
         });
     }
 
-    if (tile.size == 1) {
-        tileNode.style.width = MNTP.Config.TileWidthSm + "px";
-        tileNode.style.height = MNTP.Config.TileHeightSm + "px";
-    } else if (tile.size == 2) {
-        tileNode.style.width = MNTP.Config.TileWidthLg + "px";
-        tileNode.style.height = MNTP.Config.TileHeightSm + "px";
-    } else if (tile.size == 3) {
-        tileNode.style.width = MNTP.Config.TileWidthLg + "px";
-        tileNode.style.height = MNTP.Config.TileHeightLg + "px";
+    if (!preview) {
+
+        if (tile.size == 1) {
+            tileNode.style.width = MNTP.Config.TileWidthSm + "px";
+            tileNode.style.height = MNTP.Config.TileHeightSm + "px";
+        } else if (tile.size == 2) {
+            tileNode.style.width = MNTP.Config.TileWidthLg + "px";
+            tileNode.style.height = MNTP.Config.TileHeightSm + "px";
+        } else if (tile.size == 3) {
+            tileNode.style.width = MNTP.Config.TileWidthLg + "px";
+            tileNode.style.height = MNTP.Config.TileHeightLg + "px";
+        }
+
     }
 
     //tile > background
