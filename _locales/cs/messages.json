@@ -1,0 +1,379 @@
+// Czech (cs)
+
+{
+    "extName": {
+        "message": "Mosaic ALPHA"
+    },
+    
+    "extDesc": {
+        "message": "Dìlá divi s dlaždicemi."
+    },
+    
+    /**
+     * Nav Main
+     */
+    
+    "add_new_tile": {
+        "message": "Pøidat novou dlaždici"
+    },
+    
+    "show_hide_sections": {
+        "message": "Zobrazit / Skrýt sekce"
+    },
+    
+    "show_apps": {
+        "message": "Zobrazit 'Aplikace'"
+    },
+    
+    "show_bookmarks_bar": {
+        "message": "Zobrazit 'lištu záložek'"
+    },
+    
+    "show_recently_closed_tabs": {
+        "message": "Zobrazit 'Nedávno zavøené karty'"
+    },
+    
+    "show_recently_closed": {
+        "message": "Zobrazit 'Nedávno zavøené"
+    },
+    
+    "settings": {
+        "message": "Nastavení"
+    },
+    
+    "help": {
+        "message": "Pomoc"
+    },
+    
+    "donate": {
+        "message": "Podpoøit"
+    },
+    
+    /**
+     * Add new tile menu
+     */
+    
+    "site_url": {
+        "message": "Adresa webu"
+    },
+    
+    "site_name": {
+        "message": "Název webu"
+    },
+    
+    "site_rss": {
+        "message": "RSS webu (volitelné)"
+    },
+    
+    
+    "choose_tile_color": {
+        "message": "Vybrat barvu dlaždice"
+    },
+    
+    "tile_color": {
+        "message": "Barva dlaždice"
+    },
+    
+    "font_color": {
+        "message": "Barva písma"
+    },
+    
+    "tile_image": {
+        "message": "Obrázek dlaždice"
+    },
+    
+    "select_from_our_database": {
+        "message": "Vybrat z naší databáze"
+    },
+    
+    "choose_from_the_database": {
+        "message": "Vybrat z databáze"
+    },
+    
+    "select": {
+        // Max 7 characters (if possible)
+        "message": "Vybrat"
+    },
+    
+    "choose": {
+        // Max 7 characters (if possible)
+        "message": "Vybrat"
+    },
+    
+    "add_from_url": {
+        "message": "Pøidat z URL"
+    },
+    
+    "add_url": {
+        // Max 7 characters (if possible)
+        "message": "Pøidat URL"
+    },
+    
+    "add": {
+        // Max 7 characters
+        "message": "Pøidat"
+    },
+    
+    "upload_from_computer": {
+        "message": "Nahrát z poèítaèe"
+    },
+    
+    "upload": {
+        // Max 7 characters (if possible)
+        "message": "Nahrát"
+    },
+    
+    "get": {
+        // Max 7 characters (if possible)
+        "message": "Získej"
+    },
+    
+    "remove_image": {
+        "message": "Odstranit obrázek"
+    },
+    
+    "remove": {
+        // Max 7 characters (if possible)
+        "message": "Odstranit"
+    },
+    
+    "reset": {
+        // Max 7 characters (if possible)
+        "message": "Resetovat"
+    },
+    
+    "cancel": {
+        // Max 7 characters (if possible)
+        "message": "Zrušit"
+    },
+    
+    "add_tile": {
+        "message": "Pøidat dlaždici"
+    },
+    
+    /**
+     * Settings menu
+     */
+    
+    "customise_tiles": {
+        "message": "Upravit dlaždici"
+    },
+    
+    "customise_theme": {
+        "message": "Upravit téma"
+    },
+    
+    "customise_rss_feed": {
+        "message": "Upravit RSS zdroje"
+    },
+    
+    "profile_settings": {
+        "message": "Nastavení profilu"
+    },
+    
+    "change_language": {
+        "message": "Zmìna jazyka"
+    },
+    
+    "backup_restore_settings": {
+        "message": "Zálohovat / Obnovit nastavení"
+    },
+    
+    "backup_restore": {
+        "message": "Zálohovat / Obnovit"
+    },
+    
+    "report_a_bug": {
+        "message": "Nahlásit problém"
+    },
+    
+    "changelog": {
+        "message": "Seznam zmìn"
+    },
+    
+    /**
+     * Customise tiles menu
+     */    
+    
+    "show_tile_animation_on_load": {
+        "message": "Zobrazit animaci dlaždic pøi spuštìní"
+    },
+    
+    "show_tile_animation": {
+        "message": "Zobrazit animaci dlaždic"
+    },
+    
+    "default_tile_color": {
+        "message": "Základní barva dlaždice"
+    },
+    
+    "background_color": {
+        "message": "Barva pozadí"
+    },
+    
+    "text_color": {
+        "message": "Barva textu"
+    },
+    
+    "tile_positioning": {
+        "message": "Poloha dlaždic"
+    },
+    
+    "tile_layout": {
+        "message": "Uspoøádání dlaždic"
+    },
+    
+    "grid": {
+        "message": "Møížka"
+    },
+    
+    "free": {
+        "message": "Volné"
+    },
+    
+    "number_of_rows": {
+        "message": "Poèet øádkù"
+    },
+    
+    "number_of_columns": {
+        "message": "Poèet sloupcù"
+    },
+    
+    "horizontal_align": {
+        "message": "Horizontální poloha"
+    },
+    
+    "left": {
+        "message": "Vlevo"
+    },
+    
+    "centre": {
+        "message": "Ve støedu"
+    },
+    
+    "right": {
+        "message": "Vpravo"
+    },
+    
+    "vertical_align": {
+        "message": "Vertikální poloha"
+    },
+    
+    "top": {
+        "message": "Vrch"
+    },
+    
+    "bottom": {
+        "message": "Spodek"
+    },
+    
+    "tile_flow_direction": {
+        "message": "Smìr dlaždic"
+    }, 
+    
+    "top_to_bottom": {
+        "message": "Z vrchu na spodek"
+    },
+    
+    "left_to_right": {
+        "message": "Z leva do prava"
+    },
+    
+    "reset_to_default": {
+        "message": "Pùvodní nastavení"
+    },
+    
+    /**
+     * Customise tiles menu
+     */ 
+    
+    "choose_background_image": {
+        "message": "Vybrat obrázek pozadí"
+    },
+    
+    "get_from_wikimedia_commons": {
+        "message": "Získat z 'Wikimedia Commons'"
+    },
+    
+    /**
+     * Customise RSS feed menu
+     */ 
+    
+    /**
+     * Backup / Restore menu
+     */ 
+    
+    "import_settings": {
+        "message": "Importovat nastavení"
+    },
+    
+    "import": {
+        // Max 7 characters (if possible)
+        "message": "Importovat"
+    },
+    
+    "export_settings": {
+        "message": "Exportovat nastavení"
+    },
+    
+    "export": {
+        // Max 7 characters (if possible)
+        "message": "Exportovat"
+    },
+    
+    "reset_settings": {
+        "message": "Resetovat nastavení"
+    },
+    
+    /**
+     * Report a bug
+     */ 
+    
+    /**
+     * Changelog
+     */ 
+    
+    /**
+     * Edit menu
+     */ 
+    
+    "edit_tile": {
+        "message": "Upravit dlaždici"
+    },
+    
+    "make_tile_bigger": {
+        "message": "Zvìtšit dlaždici"
+    },
+    
+    "make_tile_smaller": {
+        "message": "Zmenšit dlaždici"
+    },
+    
+    "edit_tile_info": {
+        "message": "Upravit info dlaždice"
+    },
+    
+    "customise_tile_colours": {
+        "message": "Upravit barvu dlaždice"
+    },
+    
+    "edit_tile_image": {
+        "message": "Zmìnit obrázek dlaždice"
+    },
+    
+    "delete": {
+        "message": "Zmazat"
+    },
+    
+    "save_changes": {
+        "message": "Uložit zmìny"
+    },
+    
+    "save": {
+        "message": "Uložit"
+    },
+    
+    "confirm": {
+        "message": "Potvrdit"
+    }
+}
