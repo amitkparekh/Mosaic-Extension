@@ -1300,8 +1300,6 @@ var MNTP;
 
                 MNTP.Config.NewsViewMode = news.hasClass("list") ? "list" : "grid";
 
-                q("[data-property='NewsViewMode']", "#config").value = MNTP.Config.NewsViewMode;
-
                 resizeNews();
 
             });
@@ -1313,8 +1311,6 @@ var MNTP;
                 news.toggleClass("hide-images");
 
                 MNTP.Config.ShowImageNewsList = !news.hasClass("hide-images");
-
-                q("[data-property='ShowImageNewsList']", "#config").value = (MNTP.Config.ShowImageNewsList ? "true" : "false");
 
             });
 
@@ -1733,11 +1729,6 @@ var MNTP;
             //background color
             q("body").style.backgroundColor = config.BackgroundColor;
 
-            //background image -->
-            if (config.HasBackgroundImage) {
-                q("#config-loadBackgroundImage").style.display = "block";
-                q("#config-backgroundImage-options").style.display = "block";
-            }
 
             if (config.HasBackgroundImage && config.BackgroundImage && config.BackgroundImage.data) {
 
