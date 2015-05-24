@@ -14734,7 +14734,8 @@ select {
 .dark .sidebar-nav article label {
   color: #fff; }
 .dark .text-field-group input[type=text] {
-  background: #333; }
+  background: #333;
+  color: #fff; }
 .dark .text-field-group .bar:before, .dark .text-field-group .bar:after {
   bottom: 0px; }
 .dark .select-wrapper input.select-dropdown {
