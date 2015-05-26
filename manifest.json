@@ -1,6 +1,6 @@
 {
     "name": "Mosaic ALPHA",
-    "description": "The most beautiful new tab page extension evah!",
+    "description": "Replace your new tab page with beautiful and highly customisable tiles.",
     "default_locale": "en",
     "version": "2015.5.25",
     "incognito": "split",
