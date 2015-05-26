@@ -30,6 +30,7 @@ var MNTP;
                 .then(bindEvents)
                 .then(loadTileFeeds)
                 .then(loadExternalResources)
+                .then(checkVersion)
                 .then(success)
                 .catch(function (error) {
 
@@ -2444,6 +2445,27 @@ var MNTP;
             success();
 
         });
+
+    }
+
+    var checkVersion = function () {
+
+        var key = "checkedVersion";
+        var checkedVersion = JSONLocalStorage.getItem(key);
+        var currentVersion = chrome.runtime.getManifest().version;
+
+
+        if (!checkedVersion || checkedVersion != currentVersion) {
+
+            JSONLocalStorage.setItem(key, currentVersion);
+
+            sidebar.addClass("open");
+            menuButton.addClass("active");
+
+            navChangelogMenu.addClass("open ext");
+            extSidebarOpen();
+
+        }
 
     }
 
