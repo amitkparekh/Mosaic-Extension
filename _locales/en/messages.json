@@ -4,133 +4,133 @@
     "extName": {
         "message": "Mosaic ALPHA"
     },
-    
+
     "extDesc": {
         "message": "Does stuff in tiles."
     },
-    
+
     /**
      * Nav Main
      */
-    
+
     "add_new_tile": {
         "message": "Add new tile"
     },
-    
+
     "show_hide_sections": {
         "message": "Show/Hide sections"
     },
-    
+
     "show_apps": {
         "message": "Show 'Apps'"
     },
-    
+
     "show_bookmarks_bar": {
         "message": "Show 'Bookmarks Bar'"
     },
-    
+
     "show_recently_closed_tabs": {
         "message": "Show 'Recently Closed Tabs'"
     },
-    
+
     "show_recently_closed": {
         "message": "Show 'Recently Closed'"
     },
-    
+
     "settings": {
         "message": "Settings"
     },
-    
+
     "help": {
         "message": "Help"
     },
-    
+
     "donate": {
         "message": "Donate"
     },
-    
+
     /**
      * Add new tile menu
      */
-    
+
     "site_url": {
         "message": "Site URL"
     },
-    
+
     "site_name": {
         "message": "Site name"
     },
-    
+
     "site_rss": {
         "message": "Site RSS (optional)"
     },
-    
+
     "customise_tile_color": {
         "message": "Customize tile colour"
     },
-    
+
     "choose_tile_color": {
         "message": "Choose tile colour"
     },
-    
+
     "tile_color": {
         "message": "Tile colour"
     },
-    
+
     "font_color": {
         "message": "Font colour"
     },
-    
+
     "tile_image": {
         "message": "Tile Image"
     },
-    
+
     "select_from_our_database": {
         "message": "Select from our database"
     },
-    
+
     "choose_from_the_database": {
         "message": "Choose from the database"
     },
-    
+
     "select": {
         // Max 7 characters (if possible)
         "message": "Select"
     },
-    
+
     "choose": {
         // Max 7 characters (if possible)
         "message": "Choose"
     },
-    
+
     "add_from_url": {
         "message": "Add from URL"
     },
-    
+
     "add_url": {
         // Max 7 characters (if possible)
         "message": "Add URL"
     },
-    
+
     "add": {
         // Max 7 characters
         "message": "Add"
     },
-    
+
     "upload_from_computer": {
         "message": "Upload from computer"
     },
-    
+
     "upload": {
         // Max 7 characters (if possible)
         "message": "Upload"
     },
-    
+
     "get": {
         // Max 7 characters (if possible)
         "message": "Get"
     },
-    
+
     "remove_image": {
         "message": "Remove image"
     },
@@ -143,73 +143,73 @@
     "remove_tile": {
         "message": "Remove tile"
     },
-    
+
     "reset": {
         // Max 7 characters (if possible)
         "message": "Reset"
     },
-    
+
     "cancel": {
         // Max 7 characters (if possible)
         "message": "Cancel"
     },
-    
+
     "add_tile": {
         "message": "Add tile"
     },
-    
+
     /**
      * Settings menu
      */
-    
+
     "customise_tiles": {
         "message": "Customise tiles"
     },
-    
+
     "customise_theme": {
         "message": "Customise theme"
     },
-    
+
     "customise_rss_feed": {
         "message": "Customise RSS feed"
     },
-    
+
     "profile_settings": {
         "message": "Profile settings"
     },
-    
+
     "change_language": {
         "message": "Change language"
     },
-    
+
     "backup_restore_settings": {
         "message": "Backup/Restore settings"
     },
-    
+
     "backup_restore": {
         "message": "Backup/Restore"
     },
-    
+
     "report_a_bug": {
         "message": "Report a bug"
     },
-    
+
     "changelog": {
         "message": "Changelog"
     },
-    
+
     /**
      * Customise tiles menu
-     */    
-    
+     */
+
     "show_tile_animation_on_load": {
         "message": "Show tile animation on load"
     },
-    
+
     "show_tile_animation": {
         "message": "Show tile animation"
     },
-    
+
     "animation_speed": {
         "message": "Animation speed"
     },
@@ -221,7 +221,7 @@
     "tiles_look": {
         "message": "Tiles look"
     },
-    
+
     "opacity": {
         "message": "Opacity"
     },
@@ -237,39 +237,39 @@
     "background_color": {
         "message": "Background colour"
     },
-    
+
     "text_color": {
         "message": "Text colour"
     },
-    
+
     "tile_positioning": {
         "message": "Tile positioning"
     },
-    
+
     "tile_layout": {
         "message": "Tile layout"
     },
-    
+
     "grid": {
         "message": "Grid"
     },
-    
+
     "free": {
         "message": "Free"
     },
-    
+
     "number_of_rows": {
         "message": "Number of rows"
     },
-    
+
     "number_of_columns": {
         "message": "Number of columns"
     },
-    
+
     "margin_between_tiles": {
         "message": "Margin between tiles"
     },
-    
+
     "tiles_size": {
         "message": "Tiles size"
     },
@@ -277,51 +277,51 @@
     "horizontal_align": {
         "message": "Horizontal align"
     },
-    
+
     "left": {
         "message": "Left"
     },
-    
+
     "centre": {
         "message": "Centre"
     },
-    
+
     "right": {
         "message": "Right"
     },
-    
+
     "vertical_align": {
         "message": "Vertical align"
     },
-    
+
     "top": {
         "message": "Top"
     },
-    
+
     "bottom": {
         "message": "Bottom"
     },
-    
+
     "tile_flow_direction": {
         "message": "Tile flow direction"
-    }, 
-    
+    },
+
     "top_to_bottom": {
         "message": "Top to bottom"
     },
-    
+
     "left_to_right": {
         "message": "Left to right"
     },
-    
+
     "reset_to_default": {
         "message": "Reset to default"
     },
-    
+
     /**
      * Customise theme menu
-     */ 
-    
+     */
+
     "choose_background_image": {
         "message": "Choose background image"
     },
@@ -333,7 +333,7 @@
     "get_from_bing": {
         "message": "Get from Bing"
     },
-    
+
     "background_options": {
         "message": "Background options"
     },
@@ -356,83 +356,92 @@
 
     /**
      * Customise RSS feed menu
-     */ 
-    
+     */
+
     /**
      * Backup / Restore menu
-     */ 
-    
+     */
+
     "import_settings": {
         "message": "Import settings"
     },
-    
+
     "import": {
         // Max 7 characters (if possible)
         "message": "Import"
     },
-    
+
     "export_settings": {
         "message": "Export settings"
     },
-    
+
     "export": {
         // Max 7 characters (if possible)
         "message": "Export"
     },
-    
+
     "reset_settings": {
         "message": "Reset settings"
     },
-    
+
     /**
      * Report a bug
-     */ 
-    
+     */
+
     /**
      * Changelog
-     */ 
-    
+     */
+
     /**
      * Edit menu
-     */ 
-    
+     */
+
     "edit_tile": {
         "message": "Edit tile"
     },
-    
+
     "make_tile_bigger": {
         "message": "Make tile bigger"
     },
-    
+
     "make_tile_smaller": {
         "message": "Make tile smaller"
     },
-    
+
     "edit_tile_info": {
         "message": "Edit tile info"
     },
-    
+
     "customise_tile_colours": {
         "message": "Customise tile colours"
     },
-    
+
     "edit_tile_image": {
         "message": "Edit tile image"
     },
-    
+
     "delete": {
         "message": "Delete"
     },
-    
+
     "save_changes": {
         "message": "Save changes"
     },
-    
+
     "save": {
         "message": "Save"
     },
-    
+
     "confirm": {
         "message": "Confirm"
+    },
+
+    /**
+     * Bookmarks bar
+     */
+
+    "all_bookmarks": { 
+        "message": "All bookmarks"
     }
+
 }
