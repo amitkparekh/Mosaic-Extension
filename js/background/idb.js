@@ -255,52 +255,58 @@ var MNTP = MNTP || {};
 
             if (MNTP.IDB.indexedDB) {
 
-                var saveCount = 0;
+                if (objs && objs.length > 0) {
 
-                for (var i = 0; i < objs.length; i++) {
+                    var saveCount = 0;
 
-                    var obj = objs[i];
+                    for (var i = 0; i < objs.length; i++) {
 
-                    var objectStore = MNTP.IDB.indexedDB.transaction(os.objectStoreName, "readwrite").objectStore(os.objectStoreName);
+                        var obj = objs[i];
 
-                    var request;
-                    var keyPath = objectStore.keyPath;
+                        var objectStore = MNTP.IDB.indexedDB.transaction(os.objectStoreName, "readwrite").objectStore(os.objectStoreName);
 
-                    var update = true;
+                        var request;
+                        var keyPath = objectStore.keyPath;
 
-                    if (keyPath instanceof DOMStringList) {
-                        for (var x = 0; x < keyPath.length; x++) {
-                            if (keyPath[x] === undefined) {
-                                update = false;
-                                break;
+                        var update = true;
+
+                        if (keyPath instanceof DOMStringList) {
+                            for (var x = 0; x < keyPath.length; x++) {
+                                if (keyPath[x] === undefined) {
+                                    update = false;
+                                    break;
+                                }
                             }
+                        } else if (obj[keyPath] === undefined) {
+                            update = false;
                         }
-                    } else if (obj[keyPath] === undefined) {
-                        update = false;
+
+                        if (update)
+                            request = objectStore.put(obj); //update
+                        else
+                            request = objectStore.add(obj); //new
+
+                        request.onerror = error || MNTP.IDB.genericErrorHandler;
+
+                        request.onsuccess = function (event) {
+
+                            saveCount++;
+
+                            if (saveCount >= objs.length)
+                                success && success();
+
+                        }
+
                     }
 
-                    if (update)
-                        request = objectStore.put(obj); //update
-                    else
-                        request = objectStore.add(obj); //new
+                    //send data to the sync web service
+                    if (MNTP.WebService && !noSync)
+                        MNTP.WebService.save(os.objectStoreName, objs);
+                    //<--
 
-                    request.onerror = error || MNTP.IDB.genericErrorHandler;
-
-                    request.onsuccess = function (event) {
-
-                        saveCount++;
-
-                        if (saveCount >= objs.length)
-                            success && success();
-
-                    }
-
+                } else {
+                    success && success();
                 }
-
-                //send data to the sync web service
-                if (MNTP.WebService && !noSync)
-                    MNTP.WebService.save(os.objectStoreName, objs);
-                //<--
 
             } else {
 
@@ -365,6 +371,9 @@ var MNTP = MNTP || {};
                         return MNTP.IDB.saveBatch(MNTP.IDB.OS.Image, data.Image);
                     })
                     .then(function () {
+                        return MNTP.IDB.saveBatch(MNTP.IDB.OS.Image, data.Feed);
+                    })
+                    .then(function () {
                         MNTP.IDB.firstLoad = false;
                         success();
                     });
@@ -377,102 +386,171 @@ var MNTP = MNTP || {};
 
     MNTP.IDB.importData = function (data) {
 
-        return new Promise(function (success, fail) {
+        var importFromMNTP = function () {
 
-            var newTiles = [];
-            var newImages = [];
-            var newFeeds = [];
+            return new Promise(function (success, fail) {
 
-            if (data.tiles) {
+                var newTiles = [];
+                var newImages = [];
+                var newFeeds = [];
 
-                for (var i = 0; i < data.tiles.length; i++) {
+                if (data.tiles) {
 
-                    var tile = data.tiles[i];
+                    for (var i = 0; i < data.tiles.length; i++) {
 
-                    var newTile = {};
+                        var tile = data.tiles[i];
 
-                    newTile.id = tile.Id;
-                    newTile.size = tile.Tamanho;
-                    newTile.url = tile.Url;
-                    newTile.name = tile.Nome;
-                    newTile.accentColor = tile.Cor ? false : true;
-                    newTile.backgroundColor = tile.Cor;
-                    newTile.hasImage = tile.Imagem ? true : false;
-                    newTile.idGroup = 1;
-                    newTile.order = i + 1;
+                        var newTile = {};
 
-                    newTiles.push(newTile);
+                        newTile.id = tile.Id;
+                        newTile.size = tile.Tamanho;
+                        newTile.url = tile.Url;
+                        newTile.name = tile.Nome;
+                        newTile.accentColor = tile.Cor ? false : true;
+                        newTile.backgroundColor = tile.Cor;
+                        newTile.hasImage = tile.Imagem ? true : false;
+                        newTile.idGroup = 1;
+                        newTile.order = i + 1;
 
-                    var newImage = {};
+                        newTiles.push(newTile);
 
-                    newImage.data = tile.Imagem;
-                    newImage.type = "Tile";
-                    newImage.id = tile.Id;
+                        var newImage = {};
 
-                    newImages.push(newImage);
+                        newImage.data = tile.Imagem;
+                        newImage.type = "Tile";
+                        newImage.id = tile.Id;
 
-                    var newFeed = {};
+                        newImages.push(newImage);
 
-                    newFeed.idTile = tile.Id;
-                    newFeed.name = tile.Nome;
-                    newFeed.url = tile.RssUrl;
+                        var newFeed = {};
 
-                    newFeeds.push(newFeed);
+                        newFeed.idTile = tile.Id;
+                        newFeed.name = tile.Nome;
+                        newFeed.url = tile.RssUrl;
+
+                        newFeeds.push(newFeed);
+
+                    }
 
                 }
 
-            }
+                if (data.backgroundImage) {
 
-            if (data.backgroundImage) {
+                    var newImage = {};
 
-                var newImage = {};
+                    newImage.data = data.backgroundImage;
+                    newImage.type = "Background";
+                    newImage.id = 1;
 
-                newImage.data = data.backgroundImage;
-                newImage.type = "Background";
-                newImage.id = 1;
+                    newImages.push(newImage);
 
-                newImages.push(newImage);
+                    MNTP.Config.NoBackgroundImage = false;
+                    MNTP.Config.BingBackgroundImage = false;
+                    MNTP.Config.HasBackgroundImage = true;
 
-                MNTP.Config.NoBackgroundImage = false;
-                MNTP.Config.BingBackgroundImage = false;
-                MNTP.Config.HasBackgroundImage = true;
+                }
 
-            }
+                MNTP.Config.OpeningAnimation = data.animacaoInicialTiles == "1";
+                MNTP.Config.TileOpacity = 1;
 
-            MNTP.Config.OpeningAnimation = data.animacaoInicialTiles == "1";
+                if (data.background) {
 
-            if (data.background) {
+                    MNTP.Config.BackgroundAdjust = data.background.Adjust;
+                    MNTP.Config.BackgroundFill = data.background.Fill;
+                    MNTP.Config.BackgroundNoRepeat = data.background.NoRepeat;
 
-                MNTP.Config.BackgroundAdjust = data.background.Adjust;
-                MNTP.Config.BackgroundFill = data.background.Fill;
-                MNTP.Config.BackgroundNoRepeat = data.background.NoRepeat;
+                    if (data.background.Opacity)
+                        MNTP.Config.BackgroundOpacity = parseFloat(data.background.Opacity);
 
-                if (data.background.Opacity)
-                    MNTP.Config.BackgroundOpacity = parseFloat(data.background.Opacity);
+                }
 
-            }
+                if (data.temaPadrao) {
 
-            if (data.temaPadrao) {
+                    MNTP.Config.BackgroundColor = data.temaPadrao.corPrimaria;
+                    MNTP.Config.AccentColor = data.temaPadrao.corSecundaria;
 
-                MNTP.Config.BackgroundColor = data.temaPadrao.corPrimaria;
-                MNTP.Config.AccentColor = data.temaPadrao.corSecundaria;
+                }
 
-            }
+                MNTP.IDB.removeAll(MNTP.IDB.OS.Tile);
+                MNTP.IDB.removeAll(MNTP.IDB.OS.Image);
 
-            MNTP.IDB.removeAll(MNTP.IDB.OS.Tile);
-            MNTP.IDB.removeAll(MNTP.IDB.OS.Image);
+                MNTP.IDB.saveBatch(MNTP.IDB.OS.Tile, newTiles)
+                    .then(function () {
+                        return MNTP.IDB.saveBatch(MNTP.IDB.OS.Image, newImages);
+                    })
+                    .then(function () {
+                        return MNTP.IDB.saveBatch(MNTP.IDB.OS.Feed, newFeeds);
+                    })
+                    .then(function () {
+                        success();
+                    })
+                    .catch(fail);
 
-            MNTP.IDB.saveBatch(MNTP.IDB.OS.Tile, newTiles)
+            });
+
+        };
+
+        var importFromMosaic = function () {
+
+            return new Promise(function (success, fail) {
+
+                MNTP.IDB.removeAll(MNTP.IDB.OS.Tile);
+                MNTP.IDB.removeAll(MNTP.IDB.OS.Image);
+                MNTP.IDB.removeAll(MNTP.IDB.OS.Group);
+                MNTP.IDB.removeAll(MNTP.IDB.OS.Feed);
+
+                MNTP.IDB.saveBatch(MNTP.IDB.OS.Tile, data.Tile)
+                    .then(function () {
+                        return MNTP.IDB.saveBatch(MNTP.IDB.OS.Image, data.Image);
+                    })
+                    .then(function () {
+                        return MNTP.IDB.saveBatch(MNTP.IDB.OS.Group, data.Group);
+                    })
+                    .then(function () {
+                        return MNTP.IDB.saveBatch(MNTP.IDB.OS.Feed, data.Feed);
+                    })
+                    .then(function () {
+                        MNTP.Config.replace(data.Config);
+                        success();
+                    })
+                    .catch(fail);
+
+            });
+
+        };
+                
+        return data.Mosaic ? importFromMosaic() : importFromMNTP();
+
+    }
+
+    MNTP.IDB.exportData = function () {
+
+        return new Promise(function (success, fail) {
+
+            var list = {};
+
+            var getOSData = function (os) {
+
+                return new Promise(function (success, fail) {
+
+                    MNTP.IDB.select(os).then(function (result) {
+                        list[os.objectStoreName] = result;
+                        success();
+                    });
+
+                });
+
+            };
+
+            getOSData(MNTP.IDB.OS.Group)
+                .then(function () { return getOSData(MNTP.IDB.OS.Tile); })
+                .then(function () { return getOSData(MNTP.IDB.OS.Image); })
+                .then(function () { return getOSData(MNTP.IDB.OS.Feed); })
                 .then(function () {
-                    return MNTP.IDB.saveBatch(MNTP.IDB.OS.Image, newImages);
+                    list.Config = MNTP.Config;
+                    list.Mosaic = true;
+                    success(list);
                 })
-                .then(function () {
-                    return MNTP.IDB.saveBatch(MNTP.IDB.OS.Feed, newFeeds);
-                })
-                .then(function () {
-                    success();
-                })
-                .catch(fail);
 
         });
 
