@@ -14692,7 +14692,7 @@ select {
 .dark .sidebar-default .sidebar-text {
   color: #aaa; }
 .dark .sidebar-default .btn-inverse {
-  background-color: #ddd; }
+  background-color: #aaa; }
 .dark .sidebar-default .switch label input[type=checkbox]:checked + .lever {
   background-color: #eee; }
 .dark .sidebar-default .switch label input[type=checkbox]:checked + .lever:after {
@@ -14721,7 +14721,7 @@ select {
 .dark .sidebar form .btn-inverse {
   color: #333; }
 .dark .sidebar .text-chunk h3, .dark .sidebar .text-chunk p, .dark .sidebar .text-chunk ul, .dark .sidebar .text-chunk li, .dark .sidebar .text-chunk h4, .dark .sidebar .text-chunk h5 {
-  color: #ddd; }
+  color: #aaa; }
 .dark .sidebar .text-chunk li:hover a {
   background: none; }
 .dark .sidebar .text-chunk a {
@@ -14739,7 +14739,7 @@ select {
 .dark .text-field-group .bar:before, .dark .text-field-group .bar:after {
   bottom: 0px; }
 .dark .select-wrapper input.select-dropdown {
-  color: #ddd; }
+  color: #aaa; }
 .dark .form-slider label {
   color: #fff; }
 .dark .form-slider p.range-field input[type=range] {
@@ -14760,7 +14760,7 @@ select {
 .dark .dropdown-content {
   background-color: #333; }
 .dark .dropdown-content li > a, .dark .dropdown-content li > span {
-  color: #ddd; }
+  color: #aaa; }
 .dark .bookmark-bar {
   background: rgba(0, 0, 0, 0.5); }
 .dark .bookmark-bar a.previous {
@@ -14768,7 +14768,7 @@ select {
 .dark .bookmark-bar a.next {
   background: url("../imgs/icons/next2.png") no-repeat center; }
 .dark .bookmark-bar .bookmarks > ul > li {
-  color: #ddd; }
+  color: #aaa; }
 .dark .bookmark-bar .bookmarks > ul > li:hover {
   background: #333; }
 .dark .bookmark-bar .bookmarks > ul > li > ul {

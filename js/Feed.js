@@ -1,5 +1,6 @@
-﻿/// <reference path="util.js" />
-/// <reference path="idb.js" />
+﻿/* global Promise */
+/// <reference path="util.js" />
+/// <reference path="background/idb.js" />
 
 var Feed = function () {
 

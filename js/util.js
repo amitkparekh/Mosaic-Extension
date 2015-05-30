@@ -300,20 +300,17 @@ var validateForms = function (container) {
 
 }
 
-function shuffleArray(array) {
+var shuffleArray = function(array) {
     var newArray = array;
     var currentIndex = newArray.length;
     var temporaryValue;
     var randomIndex;
 
-    // While there remain elements to shuffle...
     while (0 !== currentIndex) {
 
-        // Pick a remaining element...
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
 
-        // And swap it with the current element.
         temporaryValue = newArray[currentIndex];
         newArray[currentIndex] = newArray[randomIndex];
         newArray[randomIndex] = temporaryValue;

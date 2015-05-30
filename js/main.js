@@ -1,11 +1,9 @@
-/// <reference path="es6-promise-2.0.0.js" />
 /// <reference path="util.js" />
 /// <reference path="dragging.js" />
-/// <reference path="config.js" />
+/// <reference path="background/config.js" />
 /// <reference path="Tile.js" />
 /// <reference path="TileGroup.js" />
 /// <reference path="Image.js" />
-/// <reference path="swayy.js" />
 /// <reference path="Feed.js" />
 /// <reference path="background/backgroundutils.js" />
 /// <reference path="sidebar.js" />
@@ -1474,6 +1472,73 @@ var MNTP;
 
                 });
             });
+
+            //-- import tiles and configurations
+            q("#nav-settings-import-file").addEventListener("change", function (event) {
+
+                var file = this.files[0];
+
+                if (file) {
+
+                    var reader = new FileReader();
+
+                    reader.onload = (function (file) {
+
+                        return function (e) {
+
+                            var data = JSON.parse(e.target.result);
+
+                            if (data.tiles)
+                                data.tiles = JSON.parse(data.tiles);
+
+                            if (data.background)
+                                data.background = JSON.parse(data.background);
+
+                            if (data.temaPadrao)
+                                data.temaPadrao = JSON.parse(data.temaPadrao);
+
+                            MNTP.IDB.importData(data).then(function () { window.location.reload(); });
+
+                        };
+
+                    })(file);
+
+                    reader.readAsText(file);
+                }
+
+
+            });
+
+            //-- export tiles and configurations
+            q("#nav-settings-export-file").addEventListener("click", function (event) {
+
+                var that = this;
+
+                if (!that.href) {
+
+                    MNTP.IDB.exportData().then(function (data) {
+
+                        var blob = new Blob([JSON.stringify(data)]);
+                        that.href = window.URL.createObjectURL(blob);
+                        that.download = "data.mosaic";
+
+                        var clickEvent = new Event("click");
+                        that.dispatchEvent(clickEvent);
+
+                        console.log("teste");
+
+                    });
+
+                } else {
+
+                    setTimeout(function () {
+                        that.href = "";
+                    }, 0);
+
+                }
+
+            });
+
 
             success();
 
