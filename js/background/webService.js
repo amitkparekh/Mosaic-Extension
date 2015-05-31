@@ -140,35 +140,37 @@ MNTP.WebService = (function () {
 
             return new Promise(function (success, fail) {
 
-                getUserId().then(function (userId) {
+                //getUserId().then(function (userId) {
 
-                    var itemList = [];
+                //    var itemList = [];
 
-                    if (items instanceof Array)
-                        itemList = items;
-                    else
-                        itemList.push(items);
+                //    if (items instanceof Array)
+                //        itemList = items;
+                //    else
+                //        itemList.push(items);
 
-                    var data = [];
+                //    var data = [];
 
-                    for (var i = 0; i < itemList.length; i++) {
+                //    for (var i = 0; i < itemList.length; i++) {
 
-                        var item = itemList[i];
+                //        var item = itemList[i];
 
-                        data.push({
-                            user_id: userId,
-                            url: item.url,
-                            action: item.action || "click"
-                        });
+                //        data.push({
+                //            user_id: userId,
+                //            url: item.url,
+                //            action: item.action || "click"
+                //        });
 
-                    }
+                //    }
 
-                    if (data.length > 1)
-                        sendRequest("POST", SWAYY_API_URL + "users/events/bulk", data, SWAYY_API_KEY, SWAYY_API_SECRET).then(success, fail);
-                    else if (data.length == 1)
-                        sendRequest("POST", SWAYY_API_URL + "users/events", data[0], SWAYY_API_KEY, SWAYY_API_SECRET).then(success, fail);
+                //    if (data.length > 1)
+                //        sendRequest("POST", SWAYY_API_URL + "users/events/bulk", data, SWAYY_API_KEY, SWAYY_API_SECRET).then(success, fail);
+                //    else if (data.length == 1)
+                //        sendRequest("POST", SWAYY_API_URL + "users/events", data[0], SWAYY_API_KEY, SWAYY_API_SECRET).then(success, fail);
 
-                }, fail);
+                //}, fail);
+
+                success();
 
             });
 
@@ -178,19 +180,21 @@ MNTP.WebService = (function () {
 
             return new Promise(function (success, fail) {
 
-                getUserId().then(function (userId) {
+                //getUserId().then(function (userId) {
 
-                    var url = MNTP2_API_URL + userId + "/" + collection.toLowerCase();
+                //    var url = MNTP2_API_URL + userId + "/" + collection.toLowerCase();
 
-                    sendRequest("POST", url, documents).then(function (data) {
+                //    sendRequest("POST", url, documents).then(function (data) {
 
-                        JSONLocalStorage.setItem(LAST_SYNC, data.syncDate);
+                //        JSONLocalStorage.setItem(LAST_SYNC, data.syncDate);
 
-                        success(data);
+                //        success(data);
 
-                    }, fail);
+                //    }, fail);
 
-                }, fail);
+                //}, fail);
+
+                success();
 
             });
 
