@@ -247,6 +247,10 @@
         "message": "Tiles size"
     },
 
+    "border_radius": {
+        "message": "Border radius"
+    },
+
     "horizontal_align": {
         "message": "Horizontal align"
     },
