@@ -436,12 +436,7 @@ var MNTP;
 
                 q(".tile:not(.dragging)", group, true).forEach(function (tileNode) {
 
-                    var size = tileNode.data("size");
-
-                    if (size == 3)
-                        skipThese.push({ c: column, r: row + 1 });
-
-                    size = size == 1 ? 1 : 2
+                    var size = tileNode.data("size") == 1 ? 1 : 2;
 
                     if (column + size > columns) {
                         row++;
@@ -463,6 +458,8 @@ var MNTP;
 
                     }
 
+                    if (tileNode.data("size") == 3)
+                        skipThese.push({ c: column, r: row + 1 });
 
                     var left = openingAnimation ? 0 : column * t;
                     var top = row * t;
