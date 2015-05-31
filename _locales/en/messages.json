@@ -7,10 +7,6 @@
         "message": "Does stuff in tiles."
     },
 
-    /**
-     * Nav Main
-     */
-
     "add_new_tile": {
         "message": "Add new tile"
     },
@@ -46,10 +42,6 @@
     "donate": {
         "message": "Donate"
     },
-
-    /**
-     * Add new tile menu
-     */
 
     "site_url": {
         "message": "Site URL"
@@ -92,12 +84,10 @@
     },
 
     "select": {
-        // Max 7 characters (if possible)
         "message": "Select"
     },
 
     "choose": {
-        // Max 7 characters (if possible)
         "message": "Choose"
     },
 
@@ -106,12 +96,10 @@
     },
 
     "add_url": {
-        // Max 7 characters (if possible)
         "message": "Add URL"
     },
 
     "add": {
-        // Max 7 characters
         "message": "Add"
     },
 
@@ -120,12 +108,10 @@
     },
 
     "upload": {
-        // Max 7 characters (if possible)
         "message": "Upload"
     },
 
     "get": {
-        // Max 7 characters (if possible)
         "message": "Get"
     },
 
@@ -134,7 +120,6 @@
     },
 
     "remove": {
-        // Max 7 characters (if possible)
         "message": "Remove"
     },
 
@@ -143,22 +128,16 @@
     },
 
     "reset": {
-        // Max 7 characters (if possible)
         "message": "Reset"
     },
 
     "cancel": {
-        // Max 7 characters (if possible)
         "message": "Cancel"
     },
 
     "add_tile": {
         "message": "Add tile"
     },
-
-    /**
-     * Settings menu
-     */
 
     "customise_tiles": {
         "message": "Customise tiles"
@@ -195,10 +174,6 @@
     "changelog": {
         "message": "Changelog"
     },
-
-    /**
-     * Customise tiles menu
-     */
 
     "show_tile_animation_on_load": {
         "message": "Show tile animation on load"
@@ -316,10 +291,6 @@
         "message": "Reset to default"
     },
 
-    /**
-     * Customise theme menu
-     */
-
     "choose_background_image": {
         "message": "Choose background image"
     },
@@ -352,20 +323,11 @@
         "message": "Original size"
     },
 
-    /**
-     * Customise RSS feed menu
-     */
-
-    /**
-     * Backup / Restore menu
-     */
-
     "import_settings": {
         "message": "Import settings"
     },
 
     "import": {
-        // Max 7 characters (if possible)
         "message": "Import"
     },
 
@@ -374,25 +336,12 @@
     },
 
     "export": {
-        // Max 7 characters (if possible)
         "message": "Export"
     },
 
     "reset_settings": {
         "message": "Reset settings"
     },
-
-    /**
-     * Report a bug
-     */
-
-    /**
-     * Changelog
-     */
-
-    /**
-     * Edit menu
-     */
 
     "edit_tile": {
         "message": "Edit tile"
@@ -433,10 +382,6 @@
     "confirm": {
         "message": "Confirm"
     },
-
-    /**
-     * Bookmarks bar
-     */
 
     "all_bookmarks": { 
         "message": "All bookmarks"

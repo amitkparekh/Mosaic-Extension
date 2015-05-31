@@ -7,10 +7,6 @@
         "message": "Robí divi s dlaždicami."
     },
     
-    /**
-     * Nav Main
-     */
-    
     "add_new_tile": {
         "message": "Prida novú dlaždicu"
     },
@@ -46,10 +42,6 @@
     "donate": {
         "message": "Podpori"
     },
-    
-    /**
-     * Add new tile menu
-     */
     
     "site_url": {
         "message": "Adresa webu"
@@ -89,12 +81,10 @@
     },
     
     "select": {
-        // Max 7 characters (if possible)
         "message": "Vybra"
     },
     
     "choose": {
-        // Max 7 characters (if possible)
         "message": "Vybra"
     },
     
@@ -103,12 +93,10 @@
     },
     
     "add_url": {
-        // Max 7 characters (if possible)
         "message": "Prida URL"
     },
     
     "add": {
-        // Max 7 characters
         "message": "Prida"
     },
     
@@ -117,12 +105,10 @@
     },
     
     "upload": {
-        // Max 7 characters (if possible)
         "message": "Nahra"
     },
     
     "get": {
-        // Max 7 characters (if possible)
         "message": "Získaj"
     },
     
@@ -131,27 +117,20 @@
     },
     
     "remove": {
-        // Max 7 characters (if possible)
         "message": "Odstráni"
     },
     
     "reset": {
-        // Max 7 characters (if possible)
         "message": "Resetova"
     },
     
     "cancel": {
-        // Max 7 characters (if possible)
         "message": "Zruši"
     },
     
     "add_tile": {
         "message": "Prida dlaždicu"
     },
-    
-    /**
-     * Settings menu
-     */
     
     "customise_tiles": {
         "message": "Upravi dlaždicu"
@@ -188,10 +167,6 @@
     "changelog": {
         "message": "Zoznam zmien"
     },
-    
-    /**
-     * Customise tiles menu
-     */    
     
     "show_tile_animation_on_load": {
         "message": "Zobrazi animáciu dlaždíc pri spustení"
@@ -281,10 +256,6 @@
         "message": "Pôvodné nastavenia"
     },
     
-    /**
-     * Customise tiles menu
-     */ 
-    
     "choose_background_image": {
         "message": "Vybra obrázok pozadia"
     },
@@ -293,20 +264,11 @@
         "message": "Získa z 'Wikimedia Commons'"
     },
     
-    /**
-     * Customise RSS feed menu
-     */ 
-    
-    /**
-     * Backup / Restore menu
-     */ 
-    
     "import_settings": {
         "message": "Importova nastavenia"
     },
     
     "import": {
-        // Max 7 characters (if possible)
         "message": "Importova"
     },
     
@@ -315,25 +277,12 @@
     },
     
     "export": {
-        // Max 7 characters (if possible)
         "message": "Exportova"
     },
     
     "reset_settings": {
         "message": "Resetova nastavenia"
     },
-    
-    /**
-     * Report a bug
-     */ 
-    
-    /**
-     * Changelog
-     */ 
-    
-    /**
-     * Edit menu
-     */ 
     
     "edit_tile": {
         "message": "Upravi dlaždicu"

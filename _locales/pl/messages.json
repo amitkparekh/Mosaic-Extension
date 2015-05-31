@@ -7,10 +7,6 @@
         "message": "Does stuff in tiles."
     },
    
-    /**
-     * Nav Main
-     */
-   
     "add_new_tile": {
         "message": "Dodaj nowy kafelek"
     },
@@ -46,10 +42,6 @@
     "donate": {
         "message": "Wspomóż nas"
     },
-   
-    /**
-     * Add new tile menu
-     */
    
     "site_url": {
         "message": "Adres strony"
@@ -88,12 +80,10 @@
     },
     
     "select": {
-        // Max 7 characters (if possible)
         "message": "Wybierz"
     },
    
     "choose": {
-        // Max 7 characters (if possible)
         "message": "Wybierz"
     },
     
@@ -102,12 +92,10 @@
     },
    
     "add_url": {
-        // Max 7 characters (if possible)
         "message": "Dodaj URL"
     },
     
     "add": {
-        // Max 7 characters
         "message": "Dodaj"
     },
    
@@ -116,12 +104,10 @@
     },
    
     "upload": {
-        // Max 7 characters (if possible)
         "message": "Wgraj"
     },
    
     "get": {
-        // Max 7 characters (if possible)
         "message": "Pobierz"
     },
     
@@ -130,27 +116,20 @@
     },
    
     "remove": {
-        // Max 7 characters (if possible)
         "message": "Usuń"
     },
    
     "reset": {
-        // Max 7 characters (if possible)
         "message": "Resetuj"
     },
     
     "cancel": {
-        // Max 7 characters (if possible)
         "message": "Anuluj"
     },
     
     "add_tile": {
         "message": "Dodaj kafelek"
     },
-   
-    /**
-     * Settings menu
-     */
    
     "customise_tiles": {
         "message": "Dostosuj kafelki"
@@ -187,10 +166,6 @@
     "changelog": {
         "message": "Lista zmian"
     },
-   
-    /**
-     * Customise tiles menu
-     */    
    
     "show_tile_animation_on_load": {
         "message": "Pokaż początkową animację kafelków"
@@ -280,10 +255,6 @@
         "message": "Przywróć wartości domyślne"
     },
    
-    /**
-     * Customise tiles menu
-     */
-   
     "choose_background_image": {
         "message": "Wybierz obrazek tła"
     },
@@ -292,20 +263,11 @@
         "message": "Pobierz z 'Wikimedia Commons'"
     },
    
-    /**
-     * Customise RSS feed menu
-     */
-   
-    /**
-     * Backup / Restore menu
-     */
-   
     "import_settings": {
         "message": "Importuj ustawienia"
     },
    
     "import": {
-        // Max 7 characters (if possible)
         "message": "Import"
     },
    
@@ -314,25 +276,12 @@
     },
    
     "export": {
-        // Max 7 characters (if possible)
         "message": "Eksport"
     },
    
     "reset_settings": {
         "message": "Przywróć ustawienia"
     },
-   
-    /**
-     * Report a bug
-     */
-   
-    /**
-     * Changelog
-     */
-   
-    /**
-     * Edit menu
-     */
    
     "edit_tile": {
         "message": "Edytuj kafelek"

@@ -1,8 +1,4 @@
 {
-    /**
-     * Add new tile menu
-     */
-    
     "customise_tile_color": {
         "message": "Customize tile color"
     },
@@ -19,10 +15,6 @@
         "message": "Font color"
     },
     
-    /**
-     * Settings menu
-     */
-    
     "customise_tiles": {
         "message": "Customize tiles"
     },
@@ -34,10 +26,6 @@
     "customise_rss_feed": {
         "message": "Customize RSS feed"
     },
-    
-    /**
-     * Customise tiles menu
-     */
     
     "default_tile_color": {
         "message": "Default tile color"
@@ -54,10 +42,6 @@
     "centre": {
         "message": "Center"
     },
-    
-    /**
-     * Edit menu
-     */ 
     
     "customise_tile_colours": {
         "message": "Customise tile colors"

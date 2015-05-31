@@ -7,10 +7,6 @@
         "message": "Radi stvari s pločicama."
     },
     
-    /**
-     * Nav Main
-     */
-    
     "add_new_tile": {
         "message": "Dodaj novu pločicu"
     },
@@ -46,10 +42,6 @@
     "donate": {
         "message": "Doniraj"
     },
-    
-    /**
-     * Add new tile menu
-     */
     
     "site_url": {
         "message": "URL stranice"
@@ -88,12 +80,10 @@
     },
     
     "select": {
-        // Max 7 characters (if possible)
         "message": "Odaberi"
     },
     
     "choose": {
-        // Max 7 characters (if possible)
         "message": "Odaberi"
     },
     
@@ -102,12 +92,10 @@
     },
     
     "add_url": {
-        // Max 7 characters (if possible)
         "message": "Dodaj URL"
     },
     
     "add": {
-        // Max 7 characters
         "message": "Dodaj"
     },
     
@@ -116,12 +104,10 @@
     },
     
     "upload": {
-        // Max 7 characters (if possible)
         "message": "Prenesi"
     },
     
     "get": {
-        // Max 7 characters (if possible)
         "message": "Preuzmi"
     },
     
@@ -130,17 +116,14 @@
     },
     
     "remove": {
-        // Max 7 characters (if possible)
         "message": "Ukloni"
     },
     
     "reset": {
-        // Max 7 characters (if possible)
         "message": "Poništiti"
     },
     
     "cancel": {
-        // Max 7 characters (if possible)
         "message": "Odustani"
     },
     
@@ -148,10 +131,6 @@
         "message": "Dodaj pločicu"
     },
         
-    /**
-     * Settings menu
-     */
-    
     "customise_tiles": {
         "message": "Uredi pločice"
     },
@@ -187,10 +166,6 @@
     "changelog": {
         "message": "Dnevnik promjena"
     },
-    
-    /**
-     * Customise tiles menu
-     */    
     
     "show_tile_animation_on_load": {
         "message": "Prikaži animaciju pločice prilikom učitavanja"
@@ -280,10 +255,6 @@
         "message": "Vrati na zadano"
     },
     
-    /**
-     * Customise tiles menu
-     */ 
-    
     "choose_background_image": {
         "message": "Promjeni pozadinsku sliku"
     },
@@ -292,20 +263,11 @@
         "message": "Preuzmi s 'Wikimedia Commons'"
     },
     
-    /**
-     * Customise RSS feed menu
-     */ 
-    
-    /**
-     * Backup / Restore menu
-     */ 
-    
     "import_settings": {
         "message": "Uvezi postavke"
     },
     
     "import": {
-        // Max 7 characters (if possible)
         "message": "Uvezi"
     },
     
@@ -314,25 +276,12 @@
     },
     
     "export": {
-        // Max 7 characters (if possible)
         "message": "Izvezi"
     },
     
     "reset_settings": {
         "message": "Vrati zadane postavke"
     },
-    
-    /**
-     * Report a bug
-     */ 
-    
-    /**
-     * Changelog
-     */ 
-    
-    /**
-     * Edit menu
-     */ 
     
     "edit_tile": {
         "message": "Uredi pločicu"

@@ -7,10 +7,6 @@
         "message": "Hace cosas con los mosaicos."
     },
     
-    /**
-     * Nav Main
-     */
-    
     "add_new_tile": {
         "message": "Añadir nuevo mosaico"
     },
@@ -46,10 +42,6 @@
     "donate": {
         "message": "Donar"
     },
-    
-    /**
-     * Add new tile menu
-     */
     
     "site_url": {
         "message": "URL de la página"
@@ -92,12 +84,10 @@
     },
     
     "select": {
-        // Max 7 characters (if possible)
         "message": "Escoger"
     },
     
     "choose": {
-        // Max 7 characters (if possible)
         "message": "Elegir"
     },
     
@@ -106,7 +96,6 @@
     },
     
     "add_url": {
-        // Max 7 characters (if possible)
         "message": "Aña.URL"
     },
     
@@ -119,12 +108,10 @@
     },
     
     "upload": {
-        // Max 7 characters (if possible)
         "message": "Subir"
     },
     
     "get": {
-        // Max 7 characters (if possible)
         "message": "Obtener"
     },
     
@@ -133,27 +120,20 @@
     },
     
     "remove": {
-        // Max 7 characters (if possible)
         "message": "Eliminar"
     },
     
     "reset": {
-        // Max 7 characters (if possible)
         "message": "Resetear"
     },
     
     "cancel": {
-        // Max 7 characters (if possible)
         "message": "Cancelar"
     },
     
     "add_tile": {
         "message": "Añadir mosaico"
     },
-    
-    /**
-     * Settings menu
-     */
     
     "customise_tiles": {
         "message": "Personalizar mosaicos"
@@ -190,10 +170,6 @@
     "changelog": {
         "message": "Lista de cambios"
     },
-    
-    /**
-     * Customise tiles menu
-     */    
     
     "show_tile_animation_on_load": {
         "message": "Animación de mosaicos al cargar"
@@ -279,10 +255,6 @@
         "message": "Valores por defecto"
     },
     
-    /**
-     * Customise tiles menu
-     */ 
-    
     "choose_background_image": {
         "message": "Elegir imagen de fondo"
     },
@@ -291,20 +263,11 @@
         "message": "Obtener de 'Wikimedia Commons'"
     },
     
-    /**
-     * Customise RSS feed menu
-     */ 
-    
-    /**
-     * Backup / Restore menu
-     */ 
-    
     "import_settings": {
         "message": "Importar ajustes"
     },
     
     "import": {
-        // Max 7 characters (if possible)
         "message": "Importar"
     },
     
@@ -313,25 +276,12 @@
     },
     
     "export": {
-        // Max 7 characters (if possible)
         "message": "Exportar"
     },
     
     "reset_settings": {
         "message": "Resetear ajustes"
     },
-    
-    /**
-     * Report a bug
-     */ 
-    
-    /**
-     * Changelog
-     */ 
-    
-    /**
-     * Edit menu
-     */ 
     
     "edit_tile": {
         "message": "Editar título"

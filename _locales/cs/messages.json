@@ -7,10 +7,6 @@
         "message": "Dìlá divi s dlaždicemi."
     },
     
-    /**
-     * Nav Main
-     */
-    
     "add_new_tile": {
         "message": "Pøidat novou dlaždici"
     },
@@ -46,10 +42,6 @@
     "donate": {
         "message": "Podpoøit"
     },
-    
-    /**
-     * Add new tile menu
-     */
     
     "site_url": {
         "message": "Adresa webu"
@@ -89,12 +81,10 @@
     },
     
     "select": {
-        // Max 7 characters (if possible)
         "message": "Vybrat"
     },
     
     "choose": {
-        // Max 7 characters (if possible)
         "message": "Vybrat"
     },
     
@@ -103,12 +93,10 @@
     },
     
     "add_url": {
-        // Max 7 characters (if possible)
         "message": "Pøidat URL"
     },
     
     "add": {
-        // Max 7 characters
         "message": "Pøidat"
     },
     
@@ -117,12 +105,10 @@
     },
     
     "upload": {
-        // Max 7 characters (if possible)
         "message": "Nahrát"
     },
     
     "get": {
-        // Max 7 characters (if possible)
         "message": "Získej"
     },
     
@@ -131,27 +117,20 @@
     },
     
     "remove": {
-        // Max 7 characters (if possible)
         "message": "Odstranit"
     },
     
     "reset": {
-        // Max 7 characters (if possible)
         "message": "Resetovat"
     },
     
     "cancel": {
-        // Max 7 characters (if possible)
         "message": "Zrušit"
     },
     
     "add_tile": {
         "message": "Pøidat dlaždici"
     },
-    
-    /**
-     * Settings menu
-     */
     
     "customise_tiles": {
         "message": "Upravit dlaždici"
@@ -188,10 +167,6 @@
     "changelog": {
         "message": "Seznam zmìn"
     },
-    
-    /**
-     * Customise tiles menu
-     */    
     
     "show_tile_animation_on_load": {
         "message": "Zobrazit animaci dlaždic pøi spuštìní"
@@ -281,10 +256,6 @@
         "message": "Pùvodní nastavení"
     },
     
-    /**
-     * Customise tiles menu
-     */ 
-    
     "choose_background_image": {
         "message": "Vybrat obrázek pozadí"
     },
@@ -293,20 +264,11 @@
         "message": "Získat z 'Wikimedia Commons'"
     },
     
-    /**
-     * Customise RSS feed menu
-     */ 
-    
-    /**
-     * Backup / Restore menu
-     */ 
-    
     "import_settings": {
         "message": "Importovat nastavení"
     },
     
     "import": {
-        // Max 7 characters (if possible)
         "message": "Importovat"
     },
     
@@ -315,25 +277,12 @@
     },
     
     "export": {
-        // Max 7 characters (if possible)
         "message": "Exportovat"
     },
     
     "reset_settings": {
         "message": "Resetovat nastavení"
     },
-    
-    /**
-     * Report a bug
-     */ 
-    
-    /**
-     * Changelog
-     */ 
-    
-    /**
-     * Edit menu
-     */ 
     
     "edit_tile": {
         "message": "Upravit dlaždici"

@@ -7,10 +7,6 @@
         "message": "Un nouvel onglet en tuiles."
     },
     
-    /**
-     * Nav Main
-     */
-    
     "add_new_tile": {
         "message": "Ajouter une nouvelle tuile"
     },
@@ -46,10 +42,6 @@
     "donate": {
         "message": "Faire un don"
     },
-    
-    /**
-     * Add new tile menu
-     */
     
     "site_url": {
         "message": "URL du site"
@@ -92,12 +84,10 @@
     },
     
     "select": {
-        // Done
         "message": "Choisir"
     },
     
     "choose": {
-        // Done, same as the previous one though
         "message": "Choisir"
     },
     
@@ -106,7 +96,6 @@
     },
     
     "add_url": {
-        // Not possible but I still shortened this one
         "message": "Ajouter l'URL"
     },
     
@@ -115,12 +104,10 @@
     },
     
     "upload": {
-        // Upload is an english word but we can use it in french too
         "message": "Upload"
     },
     
     "get": {
-        // Done
         "message": "Obtenir"
     },
     
@@ -129,27 +116,20 @@
     },
     
     "remove": {
-        // Done
         "message": "Enlever"
     },
     
     "reset": {
-        // Done
         "message": "Remettre"
     },
     
     "cancel": {
-        // Done
         "message": "Annuler"
     },
     
      "add_tile": {
         "message": "Ajouter tuile"
     },
-    
-    /**
-     * Settings menu
-     */
     
     "customise_tiles": {
         "message": "Personnaliser les tuiles"
@@ -186,10 +166,6 @@
     "changelog": {
         "message": "Journal des modifications"
     },
-    
-    /**
-     * Customise tiles menu
-     */    
     
     "show_tile_animation_on_load": {
         "message": "Animation des tuiles au chargement"
@@ -279,10 +255,6 @@
         "message": "Rétablir les paramètres par défaut"
     },
     
-    /**
-     * Customise tiles menu
-     */ 
-    
     "choose_background_image": {
         "message": "Choisir une image d'arrière-plan"
     },
@@ -291,20 +263,11 @@
         "message": "Obtenir depuis 'Wikimedia Commons'"
     },
     
-    /**
-     * Customise RSS feed menu
-     */ 
-    
-    /**
-     * Backup / Restore menu
-     */ 
-    
     "import_settings": {
         "message": "Importer les paramètres"
     },
     
     "import": {
-        // Almost 7, sorry
         "message": "Importer"
     },
     
@@ -313,25 +276,12 @@
     },
     
     "export": {
-        // Same here
         "message": "Exporter"
     },
     
     "reset_settings": {
         "message": "Rétablir les paramètres"
     },
-    
-    /**
-     * Report a bug
-     */ 
-    
-    /**
-     * Changelog
-     */ 
-    
-    /**
-     * Edit menu
-     */ 
     
     "edit_tile": {
         "message": "Éditer une tuile"

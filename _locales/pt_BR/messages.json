@@ -7,10 +7,6 @@
         "message": "Does stuff in tiles."
     },
 
-    /**
-     * Nav Main
-     */
-
     "add_new_tile": {
         "message": "Adicionar novo tile"
     },
@@ -46,10 +42,6 @@
     "donate": {
         "message": "Doar"
     },
-
-    /**
-     * Add new tile menu
-     */
 
     "site_url": {
         "message": "URL do site"
@@ -92,12 +84,10 @@
     },
 
     "select": {
-        // Max 7 characters (if possible)
         "message": "Selecione"
     },
 
     "choose": {
-        // Max 7 characters (if possible)
         "message": "Selecione"
     },
 
@@ -106,12 +96,10 @@
     },
 
     "add_url": {
-        // Max 7 characters (if possible)
         "message": "Adicionar URL"
     },
 
     "add": {
-        // Max 7 characters
         "message": "Adicionar"
     },
 
@@ -120,12 +108,10 @@
     },
 
     "upload": {
-        // Max 7 characters (if possible)
         "message": "Upload"
     },
 
     "get": {
-        // Max 7 characters (if possible)
         "message": "Pegar"
     },
 
@@ -134,7 +120,6 @@
     },
 
     "remove": {
-        // Max 7 characters (if possible)
         "message": "Remover"
     },
 
@@ -143,22 +128,16 @@
     },
 
     "reset": {
-        // Max 7 characters (if possible)
         "message": "Reiniciar"
     },
 
     "cancel": {
-        // Max 7 characters (if possible)
         "message": "Cancelar"
     },
 
     "add_tile": {
         "message": "Adicionar tile"
     },
-
-    /**
-     * Settings menu
-     */
 
     "customise_tiles": {
         "message": "Customizar tiles"
@@ -195,10 +174,6 @@
     "changelog": {
         "message": "Changelog"
     },
-
-    /**
-     * Customise tiles menu
-     */
 
     "show_tile_animation_on_load": {
         "message": "Mostrar animação dos tiles ao carregar"
@@ -316,10 +291,6 @@
         "message": "Restaurar padrão"
     },
 
-    /**
-     * Customise theme menu
-     */
-
     "choose_background_image": {
         "message": "Selecionar imagem de fundo"
     },
@@ -352,20 +323,11 @@
         "message": "Tamanho original"
     },
 
-    /**
-     * Customise RSS feed menu
-     */
-
-    /**
-     * Backup / Restore menu
-     */
-
     "import_settings": {
         "message": "Importar configurações"
     },
 
     "import": {
-        // Max 7 characters (if possible)
         "message": "Importar"
     },
 
@@ -374,25 +336,12 @@
     },
 
     "export": {
-        // Max 7 characters (if possible)
         "message": "Exportar"
     },
 
     "reset_settings": {
         "message": "Restaurar configurações"
     },
-
-    /**
-     * Report a bug
-     */
-
-    /**
-     * Changelog
-     */
-
-    /**
-     * Edit menu
-     */
 
     "edit_tile": {
         "message": "Alterar tile"
@@ -433,10 +382,6 @@
     "confirm": {
         "message": "Confirmar"
     },
-
-    /**
-     * Bookmarks bar
-     */
 
     "all_bookmarks": { 
         "message": "Todos os favoritos"

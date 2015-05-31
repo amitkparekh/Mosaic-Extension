@@ -7,10 +7,6 @@
         "message": "Macht Sachen mit den Mosaiken."
     },
     
-    /**
-     * Nav Main
-     */
-    
     "add_new_tile": {
         "message": "Neues Mosaik hinzufügen"
     },
@@ -46,10 +42,6 @@
     "donate": {
         "message": "Spenden"
     },
-    
-    /**
-     * Add new tile menu
-     */
     
     "site_url": {
         "message": "URL"
@@ -89,12 +81,10 @@
     },
     
     "select": {
-        // Max 7 characters (if possible)
         "message": "Auswählen"
     },
     
     "choose": {
-        // Max 7 characters (if possible)
         "message": "Auswählen"
     },
     
@@ -103,12 +93,10 @@
     },
     
     "add_url": {
-        // Max 7 characters (if possible)
         "message": "URL hinzufügen"
     },
     
     "add": {
-        // Max 7 characters
         "message": "Hinzufügen"
     },
     
@@ -117,12 +105,10 @@
     },
     
     "upload": {
-        // Max 7 characters (if possible)
         "message": "Hochladen"
     },
     
     "get": {
-        // Max 7 characters (if possible)
         "message": "Laden"
     },
     
@@ -131,27 +117,20 @@
     },
     
     "remove": {
-        // Max 7 characters (if possible)
         "message": "Entfernen"
     },
     
     "reset": {
-        // Max 7 characters (if possible)
         "message": "In Grundstellung bringen"
     },
     
     "cancel": {
-        // Max 7 characters (if possible)
         "message": "Abbrechen"
     },
     
     "add_tile": {
         "message": "Mosaik hinzufügen"
     },
-    
-    /**
-     * Settings menu
-     */
     
     "customise_tiles": {
         "message": "Mosaike anpassen"
@@ -188,10 +167,6 @@
     "changelog": {
         "message": "Änderungslog"
     },
-    
-    /**
-     * Customise tiles menu
-     */    
     
     "show_tile_animation_on_load": {
         "message": "Zeige Mosaikanimation beim Laden"
@@ -281,10 +256,6 @@
         "message": "Standardeinstellungen wiederherstellen"
     },
     
-    /**
-     * Customise tiles menu
-     */ 
-    
     "choose_background_image": {
         "message": "Hintergrundfarbe wählen"
     },
@@ -293,20 +264,11 @@
         "message": "Aus 'Wikimedia Commons' laden"
     },
     
-    /**
-     * Customise RSS feed menu
-     */ 
-    
-    /**
-     * Backup / Restore menu
-     */ 
-    
     "import_settings": {
         "message": "Einstellungen importieren"
     },
     
     "import": {
-        // Max 7 characters (if possible)
         "message": "Importieren"
     },
     
@@ -315,25 +277,12 @@
     },
     
     "export": {
-        // Max 7 characters (if possible)
         "message": "Exportieren"
     },
     
     "reset_settings": {
         "message": "Grundeinstellungen wiederherstellen"
     },
-    
-    /**
-     * Report a bug
-     */ 
-    
-    /**
-     * Changelog
-     */ 
-    
-    /**
-     * Edit menu
-     */ 
     
     "edit_tile": {
         "message": "Mosaik bearbeiten"
