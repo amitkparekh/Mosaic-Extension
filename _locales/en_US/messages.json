@@ -1,0 +1,67 @@
+// English (US)
+
+{
+    /**
+     * Add new tile menu
+     */
+    
+    "customise_tile_color": {
+        "message": "Customize tile color"
+    },
+    
+    "choose_tile_color": {
+        "message": "Choose tile color"
+    },
+    
+    "tile_color": {
+        "message": "Tile color"
+    },
+    
+    "font_color": {
+        "message": "Font color"
+    },
+    
+    /**
+     * Settings menu
+     */
+    
+    "customise_tiles": {
+        "message": "Customize tiles"
+    },
+    
+    "customise_theme": {
+        "message": "Customize theme"
+    },
+    
+    "customise_rss_feed": {
+        "message": "Customize RSS feed"
+    },
+    
+    /**
+     * Customise tiles menu
+     */
+    
+    "default_tile_color": {
+        "message": "Default tile color"
+    },
+    
+    "background_color": {
+        "message": "Background color"
+    },
+    
+    "text_color": {
+        "message": "Text color"
+    },
+    
+    "centre": {
+        "message": "Center"
+    },
+    
+    /**
+     * Edit menu
+     */ 
+    
+    "customise_tile_colours": {
+        "message": "Customise tile colors"
+    }
+}

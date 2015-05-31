@@ -1,5 +1,6 @@
-﻿/// <reference path="util.js" />
-/// <reference path="idb.js" />
+﻿/* global Promise */
+/// <reference path="util.js" />
+/// <reference path="background/idb.js" />
 
 var Feed = function () {
 
@@ -30,6 +31,18 @@ Feed.get = function (id) {
     return new Promise(function (success, fail) {
 
         var request = MNTP.IDB.get(MNTP.IDB.OS.Feed, id);
+
+        request.then(success, fail);
+
+    });
+
+};
+
+Feed.getByTile = function (idTile) {
+
+    return new Promise(function (success, fail) {
+
+        var request = MNTP.IDB.get(MNTP.IDB.OS.Feed, idTile, "idTile");
 
         request.then(success, fail);
 

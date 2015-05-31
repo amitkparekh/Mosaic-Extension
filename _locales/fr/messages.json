@@ -1,0 +1,378 @@
+// French (fr)
+
+{
+    "extName": {
+        "message": "Mosaic ALPHA"
+    },
+    
+    "extDesc": {
+        "message": "Un nouvel onglet en tuiles."
+    },
+    
+    /**
+     * Nav Main
+     */
+    
+    "add_new_tile": {
+        "message": "Ajouter une nouvelle tuile"
+    },
+    
+    "show_hide_sections": {
+        "message": "Afficher/masquer les sections"
+    },
+    
+    "show_apps": {
+        "message": "Afficher les 'Applications'"
+    },
+    
+    "show_bookmarks_bar": {
+        "message": "Afficher la 'Barre de Favoris'"
+    },
+    
+    "show_recently_closed_tabs": {
+        "message": "Afficher les 'Onglets récemment fermés'"
+    },
+    
+    "show_recently_closed": {
+        "message": "Afficher 'Récemment fermés'"
+    },
+    
+    "settings": {
+        "message": "Paramètres"
+    },
+    
+    "help": {
+        "message": "Aide"
+    },
+    
+    "donate": {
+        "message": "Faire un don"
+    },
+    
+    /**
+     * Add new tile menu
+     */
+    
+    "site_url": {
+        "message": "URL du site"
+    },
+    
+    "site_name": {
+        "message": "Nom du site"
+    },
+    
+    "site_rss": {
+        "message": "Flux RSS du site (facultatif)"
+    },
+    
+    "customise_tile_color": {
+        "message": "Personnaliser la couleur de la tuile"
+    },
+    
+    "choose_tile_color": {
+        "message": "Choisir la couleur de tuiles"
+    },
+    
+    "tile_color": {
+        "message": "Couleur de la tuile"
+    },
+    
+    "font_color": {
+        "message": "Couleur de la police"
+    },
+    
+    "tile_image": {
+        "message": "Image de la tuile"
+    },
+    
+    "select_from_our_database": {
+        "message": "Sélectionner depuis notre base de données"
+    },
+    
+    "choose_from_the_database": {
+        "message": "Choisir la base de données"
+    },
+    
+    "select": {
+        // Done
+        "message": "Choisir"
+    },
+    
+    "choose": {
+        // Done, same as the previous one though
+        "message": "Choisir"
+    },
+    
+    "add_from_url": {
+        "message": "Ajouter depuis une URL"
+    },
+    
+    "add_url": {
+        // Not possible but I still shortened this one
+        "message": "Ajouter l'URL"
+    },
+    
+    "upload_from_computer": {
+        "message": "Télécharger depuis l'ordinateur"
+    },
+    
+    "upload": {
+        // Upload is an english word but we can use it in french too
+        "message": "Upload"
+    },
+    
+    "get": {
+        // Done
+        "message": "Obtenir"
+    },
+    
+    "remove_image": {
+        "message": "Enlever l'image"
+    },
+    
+    "remove": {
+        // Done
+        "message": "Enlever"
+    },
+    
+    "reset": {
+        // Done
+        "message": "Remettre"
+    },
+    
+    "cancel": {
+        // Done
+        "message": "Annuler"
+    },
+    
+     "add_tile": {
+        "message": "Ajouter tuile"
+    },
+    
+    /**
+     * Settings menu
+     */
+    
+    "customise_tiles": {
+        "message": "Personnaliser les tuiles"
+    },
+    
+    "customise_theme": {
+        "message": "Personnaliser le thème"
+    },
+    
+    "customise_rss_feed": {
+        "message": "Personnaliser le flux RSS"
+    },
+    
+    "profile_settings": {
+        "message": "Paramètres du profil"
+    },
+    
+    "change_language": {
+        "message": "Changer la langue"
+    },
+    
+    "backup_restore_settings": {
+        "message": "Sauvegarder/Restaurer les paramètres"
+    },
+    
+    "backup_restore": {
+        "message": "Sauvegarder/Restaurer"
+    },
+    
+    "report_a_bug": {
+        "message": "Signaler un bug"
+    },
+    
+    "changelog": {
+        "message": "Journal des modifications"
+    },
+    
+    /**
+     * Customise tiles menu
+     */    
+    
+    "show_tile_animation_on_load": {
+        "message": "Animation des tuiles au chargement"
+    },
+    
+    "show_tile_animation": {
+        "message": "Afficher l'animation des tuiles"
+    },
+    
+    "default_tile_color": {
+        "message": "Couleur des tuiles par défaut"
+    },
+    
+    "background_color": {
+        "message": "Couleur de l'arrière-plan"
+    },
+    
+    "text_color": {
+        "message": "Couleur du texte"
+    },
+    
+    "tile_positioning": {
+        "message": "Positionnement des tuiles"
+    },
+    
+    "tile_layout": {
+        "message": "Agencement des tuiles"
+    },
+    
+    "grid": {
+        "message": "Grille"
+    },
+    
+    "free": {
+        "message": "Libre"
+    },
+    
+    "number_of_rows": {
+        "message": "Nombre de rangées"
+    },
+    
+    "number_of_columns": {
+        "message": "Nombre de colonnes"
+    },
+    
+    "horizontal_align": {
+        "message": "Alignement horizontal"
+    },
+    
+    "left": {
+        "message": "Gauche"
+    },
+    
+    "centre": {
+        "message": "Centre"
+    },
+    
+    "right": {
+        "message": "Droit"
+    },
+    
+    "vertical_align": {
+        "message": "Alignement vertical"
+    },
+    
+    "top": {
+        "message": "Haut"
+    },
+    
+    "bottom": {
+        "message": "Bas"
+    },
+    
+    "tile_flow_direction": {
+        "message": "Direction du flux sur les tuiles"
+    }, 
+    
+    "top_to_bottom": {
+        "message": "Haut en bas"
+    },
+    
+    "left_to_right": {
+        "message": "Gauche à droite"
+    },
+    
+    "reset_to_default": {
+        "message": "Rétablir les paramètres par défaut"
+    },
+    
+    /**
+     * Customise tiles menu
+     */ 
+    
+    "choose_background_image": {
+        "message": "Choisir une image d'arrière-plan"
+    },
+    
+    "get_from_wikimedia_commons": {
+        "message": "Obtenir depuis 'Wikimedia Commons'"
+    },
+    
+    /**
+     * Customise RSS feed menu
+     */ 
+    
+    /**
+     * Backup / Restore menu
+     */ 
+    
+    "import_settings": {
+        "message": "Importer les paramètres"
+    },
+    
+    "import": {
+        // Almost 7, sorry
+        "message": "Importer"
+    },
+    
+    "export_settings": {
+        "message": "Exporter les paramètres"
+    },
+    
+    "export": {
+        // Same here
+        "message": "Exporter"
+    },
+    
+    "reset_settings": {
+        "message": "Rétablir les paramètres"
+    },
+    
+    /**
+     * Report a bug
+     */ 
+    
+    /**
+     * Changelog
+     */ 
+    
+    /**
+     * Edit menu
+     */ 
+    
+    "edit_tile": {
+        "message": "Éditer une tuile"
+    },
+    
+    "make_tile_bigger": {
+        "message": "Tuiles plus grandes"
+    },
+    
+    "make_tile_smaller": {
+        "message": "Tuiles plus petites"
+    },
+    
+    "edit_tile_info": {
+        "message": "Éditer l'info de la tuile"
+    },
+    
+    "customise_tile_colours": {
+        "message": "Personnaliser les couleurs des tuiles"
+    },
+    
+    "edit_tile_image": {
+        "message": "Éditer l'image de la tuile"
+    },
+    
+    "delete": {
+        "message": "Supprimer"
+    },
+    
+    "save_changes": {
+        "message": "Enregistrer les changements"
+    },
+    
+    "save": {
+        "message": "Sauvegarder"
+    },
+    
+    "confirm": {
+        "message": "Confirmer"
+    }
+    
+}

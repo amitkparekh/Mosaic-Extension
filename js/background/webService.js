@@ -6,8 +6,10 @@ MNTP.WebService = (function () {
     var SWAYY_API_SECRET = "fa998fbbc5433c3ded156cd39d60cc68d01bc686";
     var SWAYY_API_URL = "https://api.swayy.co/v1/";
 
-    var MNTP2_API_URL = "http://localhost:53301/api/";
-    //var MNTP2_API_URL = "http://mntp2ws.azurewebsites.net/api/";
+    //Local
+    //var MNTP2_API_URL = "http://localhost:53301/api/";
+    //Production
+    var MNTP2_API_URL = "http://mosaicextensionws.azurewebsites.net/api/";
 
     var LAST_SYNC = "lastSyncDate";
 
@@ -17,23 +19,25 @@ MNTP.WebService = (function () {
 
         getContent: function (includeBody, url, count) {
 
+            count = count || 20;
+
             return new Promise(function (success, fail) {
 
-                var feedIndex = url || "featured";
+                var feedName = url || "featured";
 
-                if (!_feeds[feedIndex]) {
+                if (!_feeds[feedName] || !_feeds[feedName].items || !_feeds[feedName].items.results || _feeds[feedName].items.results.length < count) {
 
                     getUserId().then(function (userId) {
 
                         var request;
 
-                        if (!url) {
+                        if (!url) { //Swayy
 
-                            var query = "?user_id=" + userId + "&count=" + (count || 20) + "&include_body=" + ((includeBody === undefined ? false : includeBody) ? "true" : "false");
+                            var query = "?user_id=" + userId + "&count=" + (count) + "&include_body=" + ((includeBody === undefined ? false : includeBody) ? "true" : "false");
 
                             request = sendRequest("GET", SWAYY_API_URL + "users/content" + query, null, SWAYY_API_KEY, SWAYY_API_SECRET);
 
-                        } else {
+                        } else { //Custom RSS
 
                             if (url.indexOf("feedburner") > 0 && url.indexOf("fmt=xml") < 0) {
                                 if (url.indexOf("?") > 0)
@@ -42,29 +46,16 @@ MNTP.WebService = (function () {
                                     url += "?fmt=xml";
                             }
 
-                            var newUrl = "";
-
-                            for (var i = 0; i < url.length; i++) {
-
-                                var charCode = url.charCodeAt(i);
-
-                                if ((charCode >= 48 && charCode <= 57) || (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122))
-                                    newUrl += url[i];
-                                else
-                                    newUrl += "&#" + charCode + ";";
-
-                            }
-
-                            request = sendRequest("POST", MNTP2_API_URL + userId + "/feed/", newUrl);
+                            request = sendRequest("POST", MNTP2_API_URL + userId + "/feed/", { url: url, count: count });
 
                         }
 
                         request.then(function (response) {
-                            _feeds[feedIndex] = response;
+                            _feeds[feedName] = response;
 
                             setTimeout(function (index) {
                                 _feeds[index] = null;
-                            }, 60 * 2000, feedIndex);
+                            }, 120 * 1000, feedName);
 
                             success(response);
                         });
@@ -78,7 +69,7 @@ MNTP.WebService = (function () {
 
                 } else {
 
-                    success(_feeds[feedIndex]);
+                    success(_feeds[feedName]);
 
                 }
 
@@ -86,7 +77,7 @@ MNTP.WebService = (function () {
 
         },
 
-        getContentNodes: function (includeBody, url, count) {
+        getContentNodes: function (includeBody, url, count, tile) {
 
             return new Promise(function (success, fail) {
 
@@ -109,18 +100,18 @@ MNTP.WebService = (function () {
                             var divContent = document.createElement("div");
 
                             li.attributes["data-url"] = feed.url;
-                            
+
                             divItem.classList.add("item");
 
-                            if (feed.images && feed.images.thumbnail &&  feed.images.thumbnail.url) {
+                            if (feed.images && feed.images.thumbnail && feed.images.thumbnail.url) {
                                 divImage.classList.add("image");
                                 divImage.style.backgroundImage = "url('" + feed.images.thumbnail.url + "')";
                             } else {
                                 divImage.classList.add("no-image");
                             }
 
-                            h4.innerHTML = feed.title;
-                            divContent.innerHTML = feed.body || "";
+                            h4.innerText = feed.title;
+                            divContent.innerText = feed.body || "";
                             divContent.classList.add("item-description");
 
                             divItem.insertBefore(h4, null);
@@ -149,35 +140,37 @@ MNTP.WebService = (function () {
 
             return new Promise(function (success, fail) {
 
-                getUserId().then(function (userId) {
+                //getUserId().then(function (userId) {
 
-                    var itemList = [];
+                //    var itemList = [];
 
-                    if (items instanceof Array)
-                        itemList = items;
-                    else
-                        itemList.push(items);
+                //    if (items instanceof Array)
+                //        itemList = items;
+                //    else
+                //        itemList.push(items);
 
-                    var data = [];
+                //    var data = [];
 
-                    for (var i = 0; i < itemList.length; i++) {
+                //    for (var i = 0; i < itemList.length; i++) {
 
-                        var item = itemList[i];
+                //        var item = itemList[i];
 
-                        data.push({
-                            user_id: userId,
-                            url: item.url,
-                            action: item.action || "click"
-                        });
+                //        data.push({
+                //            user_id: userId,
+                //            url: item.url,
+                //            action: item.action || "click"
+                //        });
 
-                    }
+                //    }
 
-                    if (data.length > 1)
-                        sendRequest("POST", SWAYY_API_URL + "users/events/bulk", data, SWAYY_API_KEY, SWAYY_API_SECRET).then(success, fail);
-                    else if (data.length == 1)
-                        sendRequest("POST", SWAYY_API_URL + "users/events", data[0], SWAYY_API_KEY, SWAYY_API_SECRET).then(success, fail);
+                //    if (data.length > 1)
+                //        sendRequest("POST", SWAYY_API_URL + "users/events/bulk", data, SWAYY_API_KEY, SWAYY_API_SECRET).then(success, fail);
+                //    else if (data.length == 1)
+                //        sendRequest("POST", SWAYY_API_URL + "users/events", data[0], SWAYY_API_KEY, SWAYY_API_SECRET).then(success, fail);
 
-                }, fail);
+                //}, fail);
+
+                success();
 
             });
 
@@ -187,19 +180,21 @@ MNTP.WebService = (function () {
 
             return new Promise(function (success, fail) {
 
-                getUserId().then(function (userId) {
+                //getUserId().then(function (userId) {
 
-                    var url = MNTP2_API_URL + userId + "/" + collection.toLowerCase();
+                //    var url = MNTP2_API_URL + userId + "/" + collection.toLowerCase();
 
-                    sendRequest("POST", url, documents).then(function (data) {
+                //    sendRequest("POST", url, documents).then(function (data) {
 
-                        JSONLocalStorage.setItem(LAST_SYNC, data.syncDate);
+                //        JSONLocalStorage.setItem(LAST_SYNC, data.syncDate);
 
-                        success(data);
+                //        success(data);
 
-                    }, fail);
+                //    }, fail);
 
-                }, fail);
+                //}, fail);
+
+                success();
 
             });
 

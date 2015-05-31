@@ -66,6 +66,13 @@ Tile.save = function (tile) {
                         success();
                     }, fail);
 
+                } else if (tile.image && tile.image.url) {
+
+                    getDataUrlFromUrl(tile.image.url).then(function (result) {
+                        tile.image.data = result.dataURL;
+                        success();
+                    }, fail);
+
                 } else {
                     success();
                 }
@@ -80,13 +87,17 @@ Tile.save = function (tile) {
                 var image;
 
                 if (tile.removeImage) {
+
                     Image.remove(Image.Type.Tile, tile.id);
                     tile.hasImage = false;
-                    tile.image = null;
+                    delete tile.image;
+
                 } else if (tile.image) {
+
                     image = tile.image;
-                    tile.image = null;
                     tile.hasImage = true;
+                    delete tile.image;
+
                 }
 
                 //**
@@ -148,10 +159,17 @@ Tile.remove = function (id) {
             if (tile) {
 
                 MNTP.IDB.remove(MNTP.IDB.OS.Tile, tile.id).then(function () {
+
+                    //remove tile image too
+                    Image.remove(Image.Type.Tile, tile.id);
+
                     //send swayy data -->
                     if (MNTP.WebService)
                         MNTP.WebService.sendSwayyEvent({ url: tile.url, action: "remove" });
                     //<--
+
+                    success();
+
                 }, fail);
 
 
@@ -190,38 +208,45 @@ Tile.select = function (ordered) {
 
 };
 
-Tile.selectbyGroup = function (idGroup) {
-
-    return new Promisse(function (success, fail) {
-
-        var keyRange = IDBKeyRange.only(idGroup);
-
-        var request = MNTP.IDB.select(MNTP.IDB.OS.Tile, "idGroup", keyRange);
-
-        request.then(success, fail);
-
-    });
-
-};
-
 Tile.getNode = function (tile, preview) {
 
     //tile
     var tileNode = document.createElement("div");
     tileNode.data("id", tile.id);
     tileNode.data("size", tile.size || 2);
-	tileNode.data("position", tile.position);
+    tileNode.data("position", tile.position);
 
     tileNode.addClass("tile");
 
     preview && tileNode.addClass("preview");
+    tile.hasFeed && tileNode.addClass("hasFeed");
 
     tileNode.addClass("size" + tile.size);
+
+    if (tile.fontColor && !tile.accentColor)
+        tileNode.style.color = tile.fontColor;
+    else
+        tileNode.style.color = MNTP.Config.TileFontColor;
 
     if (tile.url && !preview) {
         tileNode.addEventListener("click", function (event) {
             navigate(tile.url, event);
         });
+    }
+
+    if (!preview) {
+
+        if (tile.size == 1) {
+            tileNode.style.width = MNTP.Config.TileWidthSm + "px";
+            tileNode.style.height = MNTP.Config.TileHeightSm + "px";
+        } else if (tile.size == 2) {
+            tileNode.style.width = MNTP.Config.TileWidthLg + "px";
+            tileNode.style.height = MNTP.Config.TileHeightSm + "px";
+        } else if (tile.size == 3) {
+            tileNode.style.width = MNTP.Config.TileWidthLg + "px";
+            tileNode.style.height = MNTP.Config.TileHeightLg + "px";
+        }
+
     }
 
     //tile > background
@@ -248,17 +273,20 @@ Tile.getNode = function (tile, preview) {
 
     tileContentNode.addClass("tile-content");
 
-    if (tile.feed)
+    //if (tile.feed)
+    if (tile.rss)
         tileContentNode.addClass("lg");
     else
         tileContentNode.addClass("sm");
 
     tileNode.insertBefore(tileContentNode, null);
 
-    //tile > tile-content > cell 1
-    var tileContentCell1Node = document.createElement("div");
+    //tile > tile-content > logo
+    var logoNode = document.createElement("div");
 
-    tileContentNode.insertBefore(tileContentCell1Node, null);
+    logoNode.addClass("logo");
+
+    tileContentNode.insertBefore(logoNode, null);
 
     //tile > tile-content > cell 1 > image
     if (tile.hasImage && !tile.removeImage) {
@@ -266,18 +294,27 @@ Tile.getNode = function (tile, preview) {
         new Promise(function (success, fail) {
 
             if (tile.image && tile.image.data) {
+
                 getDataUrlFromFile(tile.image.data).then(function (dataURL) {
                     tile.image.data = dataURL;
                     success(tile.image);
                 }, fail);
-            } else {
-                Image.get(Image.Type.Tile, tile.id).then(function (obj) {
 
+            } else if (tile.image && tile.image.url) {
+
+                getDataUrlFromUrl(tile.image.url).then(function (result) {
+                    tile.image.data = result.dataURL;
+                    success(tile.image);
+                });
+
+            } else if (tile.id > 0) {
+
+                Image.get(Image.Type.Tile, tile.id).then(function (obj) {
                     var image = tile.image || obj;
                     image.data = obj.data;
                     success(image);
-
                 }, fail);
+
             }
 
         }).then(function (image) {
@@ -289,7 +326,6 @@ Tile.getNode = function (tile, preview) {
                 tileImageNode.style.width = tile.imageWidth.value + tile.imageWidth.unit;
             else if (image.width && image.width.value && image.width.unit)
                 tileImageNode.style.width = image.width.value + image.width.unit;
-            
 
             if (tile.imageHeight && tile.imageHeight.value && tile.imageHeight.unit)
                 tileImageNode.style.height = tile.imageHeight.value + tile.imageHeight.unit;
@@ -300,7 +336,7 @@ Tile.getNode = function (tile, preview) {
                 URL.revokeObjectURL(this.src);
             });
 
-            tileContentCell1Node.insertBefore(tileImageNode, null);
+            logoNode.insertBefore(tileImageNode, null);
 
         });
 
@@ -308,16 +344,21 @@ Tile.getNode = function (tile, preview) {
 
         //tile > tile-content > cell 1 > label
         var tileLabel = document.createElement("label");
-        tileLabel.innerHTML = tile.name;
+        tileLabel.innerText = tile.name;
 
-        tileContentCell1Node.insertBefore(tileLabel, null);
+        logoNode.insertBefore(tileLabel, null);
+
     }
 
-    //tile > tile-content > cell 2
-    if (tile.feed) {
-        var tileContentCell2Node = document.createElement("div");
+    //tile > tile-content > feed
+    if (tile.rss) {
 
-        tileContentNode.insertBefore(tileContentCell2Node, null);
+        var feedNode = document.createElement("div");
+
+        feedNode.addClass("feed");
+
+        tileContentNode.insertBefore(feedNode, null);
+
     }
 
     return tileNode;
@@ -328,11 +369,12 @@ Tile.createNewTile = function () {
 
     return {
         id: 0,
-        size: 2, //[1, 2]
+        size: 2, //[1, 2, 3]
         url: 'http://',
         name: '',
         accentColor: true,
         backgroundColor: '',
+        fontColor: '',
         hasImage: false,
         removeImage: false,
         opacity: 0.3,
@@ -344,10 +386,10 @@ Tile.createNewTile = function () {
             value: 0,
             unit: '' //['px', '%']
         },
-		position: {
-		    left: 0,
-		    right: 0
-		}
+        position: {
+            left: 0,
+            right: 0
+        }
     }
 
 }

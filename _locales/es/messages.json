@@ -1,0 +1,377 @@
+﻿// Spanish (es)
+
+{
+    "extName": {
+        "message": "Mosaic ALPHA"
+    },
+    
+    "extDesc": {
+        "message": "Hace cosas con los mosaicos."
+    },
+    
+    /**
+     * Nav Main
+     */
+    
+    "add_new_tile": {
+        "message": "Añadir nuevo mosaico"
+    },
+    
+    "show_hide_sections": {
+        "message": "Mostrar/Ocultar secciones"
+    },
+    
+    "show_apps": {
+        "message": "Mostrar 'Apps'"
+    },
+    
+    "show_bookmarks_bar": {
+        "message": "Mostrar 'Barra de marcadores'"
+    },
+    
+    "show_recently_closed_tabs": {
+        "message": "Mostrar 'Pestañas cerradas recientemente'"
+    },
+    
+    "show_recently_closed": {
+        "message": "Mostrar 'Cerrado Recientemente'"
+    },
+    
+    "settings": {
+        "message": "Ajustes"
+    },
+    
+    "help": {
+        "message": "Ayuda"
+    },
+    
+    "donate": {
+        "message": "Donar"
+    },
+    
+    /**
+     * Add new tile menu
+     */
+    
+    "site_url": {
+        "message": "URL de la página"
+    },
+    
+    "site_name": {
+        "message": "Nombre de la página"
+    },
+    
+    "site_rss": {
+        "message": "RSS de la página (opcional)"
+    },
+    
+    "customise_tile_color": {
+        "message": "Personalizar color del mosaico"
+    },
+    
+    "choose_tile_color": {
+        "message": "Elegir el color del mosaico"
+    },
+    
+    "tile_color": {
+        "message": "Color del mosaico"
+    },
+    
+    "font_color": {
+        "message": "Color de la fuente"
+    },
+    
+    "tile_image": {
+        "message": "Imagen del mosaico"
+    },
+    
+    "select_from_our_database": {
+        "message": "Seleccionar de nuestra base de datos"
+    },
+    
+    "choose_from_the_database": {
+        "message": "Elije de la base de datos"
+    },
+    
+    "select": {
+        // Max 7 characters (if possible)
+        "message": "Escoger"
+    },
+    
+    "choose": {
+        // Max 7 characters (if possible)
+        "message": "Elegir"
+    },
+    
+    "add_from_url": {
+        "message": "Añadir desde URL"
+    },
+    
+    "add_url": {
+        // Max 7 characters (if possible)
+        "message": "Aña.URL"
+    },
+    
+    "add": {
+        "message": "Añadir"
+    },
+    
+    "upload_from_computer": {
+        "message": "Subir desde el ordenador"
+    },
+    
+    "upload": {
+        // Max 7 characters (if possible)
+        "message": "Subir"
+    },
+    
+    "get": {
+        // Max 7 characters (if possible)
+        "message": "Obtener"
+    },
+    
+    "remove_image": {
+        "message": "Eliminar imagen"
+    },
+    
+    "remove": {
+        // Max 7 characters (if possible)
+        "message": "Eliminar"
+    },
+    
+    "reset": {
+        // Max 7 characters (if possible)
+        "message": "Resetear"
+    },
+    
+    "cancel": {
+        // Max 7 characters (if possible)
+        "message": "Cancelar"
+    },
+    
+    "add_tile": {
+        "message": "Añadir mosaico"
+    },
+    
+    /**
+     * Settings menu
+     */
+    
+    "customise_tiles": {
+        "message": "Personalizar mosaicos"
+    },
+    
+    "customise_theme": {
+        "message": "Personalizar tema"
+    },
+    
+    "customise_rss_feed": {
+        "message": "Personalizar fuente RSS"
+    },
+    
+    "profile_settings": {
+        "message": "Ajustes del perfil"
+    },
+    
+    "change_language": {
+        "message": "Cambiar idioma"
+    },
+    
+    "backup_restore_settings": {
+        "message": "Guardar/Restaurar ajustes"
+    },
+    
+    "backup_restore": {
+        "message": "Guardar/Restaurar"
+    },
+    
+    "report_a_bug": {
+        "message": "Reportar un error"
+    },
+    
+    "changelog": {
+        "message": "Lista de cambios"
+    },
+    
+    /**
+     * Customise tiles menu
+     */    
+    
+    "show_tile_animation_on_load": {
+        "message": "Animación de mosaicos al cargar"
+    },
+    
+    "default_tile_color": {
+        "message": "Color por defecto del mosaico"
+    },
+    
+    "background_color": {
+        "message": "Color del fondo"
+    },
+    
+    "text_color": {
+        "message": "Color del texto"
+    },
+    
+    "tile_positioning": {
+        "message": "Posición del mosaico"
+    },
+    
+    "tile_layout": {
+        "message": "Diseño del mosaico"
+    },
+    
+    "grid": {
+        "message": "Parrilla"
+    },
+    
+    "free": {
+        "message": "Libre"
+    },
+    
+    "number_of_rows": {
+        "message": "Número de filas"
+    },
+    
+    "number_of_columns": {
+        "message": "Número de columnas"
+    },
+    
+    "horizontal_align": {
+        "message": "Alineación horizontal"
+    },
+    
+    "left": {
+        "message": "Izquierda"
+    },
+    
+    "centre": {
+        "message": "Centro"
+    },
+    
+    "right": {
+        "message": "Derecha"
+    },
+    
+    "vertical_align": {
+        "message": "Alineación vertical"
+    },
+    
+    "top": {
+        "message": "Arriba"
+    },
+    
+    "bottom": {
+        "message": "Abajo"
+    },
+    
+    "tile_flow_direction": {
+        "message": "Dirección de los mosaicos"
+    }, 
+    
+    "top_to_bottom": {
+        "message": "Arriba a abajo"
+    },
+    
+    "left_to_right": {
+        "message": "Izquierda a derecha"
+    },
+    
+    "reset_to_default": {
+        "message": "Valores por defecto"
+    },
+    
+    /**
+     * Customise tiles menu
+     */ 
+    
+    "choose_background_image": {
+        "message": "Elegir imagen de fondo"
+    },
+    
+    "get_from_wikimedia_commons": {
+        "message": "Obtener de 'Wikimedia Commons'"
+    },
+    
+    /**
+     * Customise RSS feed menu
+     */ 
+    
+    /**
+     * Backup / Restore menu
+     */ 
+    
+    "import_settings": {
+        "message": "Importar ajustes"
+    },
+    
+    "import": {
+        // Max 7 characters (if possible)
+        "message": "Importar"
+    },
+    
+    "export_settings": {
+        "message": "Exportar ajustes"
+    },
+    
+    "export": {
+        // Max 7 characters (if possible)
+        "message": "Exportar"
+    },
+    
+    "reset_settings": {
+        "message": "Resetear ajustes"
+    },
+    
+    /**
+     * Report a bug
+     */ 
+    
+    /**
+     * Changelog
+     */ 
+    
+    /**
+     * Edit menu
+     */ 
+    
+    "edit_tile": {
+        "message": "Editar título"
+    },
+    
+    "make_tile_bigger": {
+        "message": "Agrandar mosaico"
+    },
+    
+    "make_tile_smaller": {
+        "message": "Reducir mosaico"
+    },
+    
+    "edit_tile_info": {
+        "message": "Editar información del mosaico"
+    },
+    
+    "customise_tile_colours": {
+        "message": "Personalizar color del mosaico"
+    },
+    
+    "edit_tile_image": {
+        "message": "Editar imagen del mosaico"
+    },
+    
+    "delete": {
+        "message": "Eliminar"
+    },
+    
+    "save_changes": {
+        "message": "Guardar cambios"
+    },
+    
+    "save": {
+        "message": "Guardar"
+    },
+    
+    "confirm": {
+        "message": "Confirmar"
+    }
+}

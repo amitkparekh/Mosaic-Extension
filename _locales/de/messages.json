@@ -1,0 +1,379 @@
+// German (de)
+
+{
+    "extName": {
+        "message": "Mosaic ALPHA"
+    },
+    
+    "extDesc": {
+        "message": "Macht Sachen mit den Mosaiken."
+    },
+    
+    /**
+     * Nav Main
+     */
+    
+    "add_new_tile": {
+        "message": "Neues Mosaik hinzufügen"
+    },
+    
+    "show_hide_sections": {
+        "message": "Bereiche ein-/ausblenden"
+    },
+    
+    "show_apps": {
+        "message": "Zeige 'Apps'"
+    },
+    
+    "show_bookmarks_bar": {
+        "message": "'Lesezeichenleiste' anzeigen"
+    },
+    
+    "show_recently_closed_tabs": {
+		"message": "'Kürzlich geschlossene Tabs' anzeigen"
+    },
+    
+    "show_recently_closed": {
+        "message": "'Kürzlich geschlossen"
+    },
+    
+    "settings": {
+        "message": "Einstellungen"
+    },
+    
+    "help": {
+        "message": "Hilfe"
+    },
+    
+    "donate": {
+        "message": "Spenden"
+    },
+    
+    /**
+     * Add new tile menu
+     */
+    
+    "site_url": {
+        "message": "URL"
+    },
+    
+    "site_name": {
+        "message": "Name"
+    },
+    
+    "site_rss": {
+        "message": "RSS (optional)"
+    },
+    
+    
+    "choose_tile_color": {
+        "message": "Mosaikfarbe wählen"
+    },
+    
+    "tile_color": {
+        "message": "Mosaikfarbe"
+    },
+    
+    "font_color": {
+        "message": "Textfarbe"
+    },
+    
+    "tile_image": {
+        "message": "Mosaikbild"
+    },
+    
+    "select_from_our_database": {
+        "message": "Aus unserer Datenbank auswählen"
+    },
+    
+    "choose_from_the_database": {
+        "message": "Aus der Datenbank auswählen"
+    },
+    
+    "select": {
+        // Max 7 characters (if possible)
+        "message": "Auswählen"
+    },
+    
+    "choose": {
+        // Max 7 characters (if possible)
+        "message": "Auswählen"
+    },
+    
+    "add_from_url": {
+        "message": "Aus URL hinzufügen"
+    },
+    
+    "add_url": {
+        // Max 7 characters (if possible)
+        "message": "URL hinzufügen"
+    },
+    
+    "add": {
+        // Max 7 characters
+        "message": "Hinzufügen"
+    },
+    
+    "upload_from_computer": {
+        "message": "Vom Computer hochladen"
+    },
+    
+    "upload": {
+        // Max 7 characters (if possible)
+        "message": "Hochladen"
+    },
+    
+    "get": {
+        // Max 7 characters (if possible)
+        "message": "Laden"
+    },
+    
+    "remove_image": {
+        "message": "Bild entfernen"
+    },
+    
+    "remove": {
+        // Max 7 characters (if possible)
+        "message": "Entfernen"
+    },
+    
+    "reset": {
+        // Max 7 characters (if possible)
+        "message": "In Grundstellung bringen"
+    },
+    
+    "cancel": {
+        // Max 7 characters (if possible)
+        "message": "Abbrechen"
+    },
+    
+    "add_tile": {
+        "message": "Mosaik hinzufügen"
+    },
+    
+    /**
+     * Settings menu
+     */
+    
+    "customise_tiles": {
+        "message": "Mosaike anpassen"
+    },
+    
+    "customise_theme": {
+        "message": "Thema anpassen"
+    },
+    
+    "customise_rss_feed": {
+        "message": "RSS feed anpassen"
+    },
+    
+    "profile_settings": {
+        "message": "Profileinstellungen"
+    },
+    
+    "change_language": {
+        "message": "Sprache ändern"
+    },
+    
+    "backup_restore_settings": {
+        "message": "Einstellungen wiederherstellen"
+    },
+    
+    "backup_restore": {
+        "message": "Wiederherstellen"
+    },
+    
+    "report_a_bug": {
+        "message": "Fehler melden"
+    },
+    
+    "changelog": {
+        "message": "Änderungslog"
+    },
+    
+    /**
+     * Customise tiles menu
+     */    
+    
+    "show_tile_animation_on_load": {
+        "message": "Zeige Mosaikanimation beim Laden"
+    },
+    
+    "show_tile_animation": {
+        "message": "Zeige Mosaikanimation"
+    },
+    
+    "default_tile_color": {
+        "message": "Voreingestellte Mosaikfarbe"
+    },
+    
+    "background_color": {
+        "message": "Hintergrundfarbe"
+    },
+    
+    "text_color": {
+        "message": "Textfarbe"
+    },
+    
+    "tile_positioning": {
+        "message": "Mosaikposition"
+    },
+    
+    "tile_layout": {
+        "message": "Mosaiklayout"
+    },
+    
+    "grid": {
+        "message": "Gitter"
+    },
+    
+    "free": {
+        "message": "Kostenlos"
+    },
+    
+    "number_of_rows": {
+        "message": "Anzahl der Zeilen"
+    },
+    
+    "number_of_columns": {
+        "message": "Anzahl der Spalten"
+    },
+    
+    "horizontal_align": {
+        "message": "Horizontal anordnen"
+    },
+    
+    "left": {
+        "message": "Links"
+    },
+    
+    "centre": {
+        "message": "Zentriert"
+    },
+    
+    "right": {
+        "message": "Rechts"
+    },
+    
+    "vertical_align": {
+        "message": "Vertikal anordnen"
+    },
+    
+    "top": {
+        "message": "Oben"
+    },
+    
+    "bottom": {
+        "message": "Unten"
+    },
+    
+    "tile_flow_direction": {
+        "message": "Mosaikflussrichtung"
+    }, 
+    
+    "top_to_bottom": {
+        "message": "Von oben nach unten"
+    },
+    
+    "left_to_right": {
+        "message": "Von links nach rechts"
+    },
+    
+    "reset_to_default": {
+        "message": "Standardeinstellungen wiederherstellen"
+    },
+    
+    /**
+     * Customise tiles menu
+     */ 
+    
+    "choose_background_image": {
+        "message": "Hintergrundfarbe wählen"
+    },
+    
+    "get_from_wikimedia_commons": {
+        "message": "Aus 'Wikimedia Commons' laden"
+    },
+    
+    /**
+     * Customise RSS feed menu
+     */ 
+    
+    /**
+     * Backup / Restore menu
+     */ 
+    
+    "import_settings": {
+        "message": "Einstellungen importieren"
+    },
+    
+    "import": {
+        // Max 7 characters (if possible)
+        "message": "Importieren"
+    },
+    
+    "export_settings": {
+        "message": "Einstellungen exportieren"
+    },
+    
+    "export": {
+        // Max 7 characters (if possible)
+        "message": "Exportieren"
+    },
+    
+    "reset_settings": {
+        "message": "Grundeinstellungen wiederherstellen"
+    },
+    
+    /**
+     * Report a bug
+     */ 
+    
+    /**
+     * Changelog
+     */ 
+    
+    /**
+     * Edit menu
+     */ 
+    
+    "edit_tile": {
+        "message": "Mosaik bearbeiten"
+    },
+    
+    "make_tile_bigger": {
+        "message": "Größere Mosaike"
+    },
+    
+    "make_tile_smaller": {
+        "message": "Kleinere Mosaike"
+    },
+    
+    "edit_tile_info": {
+        "message": "Mosaikinfo bearbeiten"
+    },
+    
+    "customise_tile_colours": {
+        "message": "Mosaikfarbe anpassen"
+    },
+    
+    "edit_tile_image": {
+        "message": "Mosaikbild bearbeiten"
+    },
+    
+    "delete": {
+        "message": "Löschen"
+    },
+    
+    "save_changes": {
+        "message": "Änderungen speichern"
+    },
+    
+    "save": {
+        "message": "Speichern"
+    },
+    
+    "confirm": {
+        "message": "Bestätigen"
+    }
+}

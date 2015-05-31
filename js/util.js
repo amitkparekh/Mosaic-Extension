@@ -1,4 +1,3 @@
-//ocho.js
 var q = function (query, context, array) {
 
     if (context === true && !array) {
@@ -67,20 +66,6 @@ var invertColor = function(hexColor) {
     return color;
 }
 
-var JSONLocalStorage = {
-
-    getItem: function (key) {
-        var value = localStorage.getItem(key);
-        return value ? JSON.parse(value) : null;
-    },
-
-    setItem: function (key, value) {
-        var string = JSON.stringify(value);
-        localStorage.setItem(key, string);
-    }
-
-};
-
 var createTab = function (url) {
 
     new Promise(function (success, fail) {
@@ -104,6 +89,10 @@ var createTab = function (url) {
 var navigate = function (url, mouseEvent) {
 
     if (url) {
+
+        if (url.indexOf("://") == -1)
+            url = "http://" + url;
+        
 
         //Swayy
         if (MNTP.WebService)
@@ -196,6 +185,7 @@ var getUserId = function () {
 };
 
 var getDataUrlFromFile = function (file) {
+
     return new Promise(function (success, fail) {
         try {
             var reader = new FileReader();
@@ -212,9 +202,11 @@ var getDataUrlFromFile = function (file) {
             fail(e);
         }
     });
+
 };
 
 var getDataUrlFromUrl = function (url, options) {
+
     return new Promise(function (success, fail) {
 
         try {
@@ -244,30 +236,102 @@ var getDataUrlFromUrl = function (url, options) {
         }
 
     });
+
 };
 
 var dataURLtoObjectURL = function (dataURI) {
-    // convert base64/URLEncoded data component to raw binary data held in a string
-    var byteString;
-    if (dataURI.split(',')[0].indexOf('base64') >= 0)
-        byteString = atob(dataURI.split(',')[1]);
-    else
-        byteString = unescape(dataURI.split(',')[1]);
 
-    // separate out the mime component
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    if (dataURI.indexOf("data:image/") > -1) {
 
-    // write the bytes of the string to a typed array
-    var ia = new Uint8Array(byteString.length);
-    for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
+        // convert base64/URLEncoded data component to raw binary data held in a string
+        var byteString;
+        if (dataURI.split(',')[0].indexOf('base64') >= 0)
+            byteString = atob(dataURI.split(',')[1]);
+        else
+            byteString = unescape(dataURI.split(',')[1]);
+
+        // separate out the mime component
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+        // write the bytes of the string to a typed array
+        var ia = new Uint8Array(byteString.length);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        var b = new Blob([ia], { type: mimeString });
+
+        return URL.createObjectURL(b);
+
+    } else {
+
+        return dataURI;
+
     }
-
-    var b = new Blob([ia], { type: mimeString });
-
-    return URL.createObjectURL(b);
 };
 
+var validateForms = function (container) {
+
+    var valid = true;
+
+    var forms = q("form", container, true);
+
+    for (var i = 0; i < forms.length; i++) {
+
+        var inputs = q("input, text", forms[i], true);
+
+        for (var x = 0; x < inputs.length; x++) {
+            
+            var input = inputs[x];
+
+            valid = input.validity.valid;
+
+            valid = valid && !q("span", input.parentNode).hasClass("error");
+
+            if (!valid) {
+                break;
+            }
+        }
+
+        if (!valid) break;
+    }
+
+    return valid;
+
+}
+
+var shuffleArray = function(array) {
+    var newArray = array;
+    var currentIndex = newArray.length;
+    var temporaryValue;
+    var randomIndex;
+
+    while (0 !== currentIndex) {
+
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        temporaryValue = newArray[currentIndex];
+        newArray[currentIndex] = newArray[randomIndex];
+        newArray[randomIndex] = temporaryValue;
+    }
+
+    return newArray;
+}
+
+var JSONLocalStorage = {
+
+    getItem: function (key) {
+        var value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : null;
+    },
+
+    setItem: function (key, value) {
+        var string = JSON.stringify(value);
+        localStorage.setItem(key, string);
+    }
+
+};
 
 (function() {
 
@@ -278,9 +342,13 @@ var dataURLtoObjectURL = function (dataURI) {
 
         if (cssClass instanceof Array)
             classList = cssClass;
-        else
-            classList.push(cssClass);
+        else {
+            var array = cssClass.split(" ");
 
+            for (var i = 0; i < array.length; i++) {
+                classList.push(array[i]);
+            }
+        }
 
         for (var i = 0; i < classList.length; i++) {
             if (this.classList.contains(classList[i])) {
@@ -296,10 +364,15 @@ var dataURLtoObjectURL = function (dataURI) {
 	HTMLElement.prototype.addClass = function (cssClass) {
 	    var classList = [];
 
-	    if (cssClass instanceof Array)
+	    if (cssClass instanceof Array) {
 	        classList = cssClass;
-	    else
-	        classList.push(cssClass);
+	    } else {
+	        var array = cssClass.split(" ");
+
+	        for (var i = 0; i < array.length; i++) {
+	            classList.push(array[i]);
+	        }
+	    }
 
 	    for (var i = 0; i < classList.length; i++)
 	        this.classList.add(classList[i]);
@@ -312,8 +385,13 @@ var dataURLtoObjectURL = function (dataURI) {
 
 	    if (cssClass instanceof Array)
 	        classList = cssClass;
-	    else
-	        classList.push(cssClass);
+	    else {
+	        var array = cssClass.split(" ");
+
+	        for (var i = 0; i < array.length; i++) {
+	            classList.push(array[i]);
+	        }
+	    }
 
 	    for (var i = 0; i < classList.length; i++)
 	        this.classList.remove(classList[i]);
@@ -351,6 +429,54 @@ var dataURLtoObjectURL = function (dataURI) {
 	    }
 
 	    return this;
+	};
+
+	HTMLElement.prototype.fadeIn = function () {
+
+	    this.removeClass("fadeOut").addClass("fadeIn");
+
+	    return this;
+
+	};
+
+	HTMLElement.prototype.fadeOut = function () {
+
+	    this.removeClass("fadeIn").addClass("fadeOut");
+
+	    return this;
+
+	};
+
+	HTMLElement.prototype.toggleFade = function () {
+
+	    this.toggleClass("fadeIn", "fadeOut");
+
+	    return this;
+
+	};
+
+	HTMLElement.prototype.fadeInLeft = function () {
+
+	    this.removeClass("fadeOutLeft").addClass("fadeInLeft");
+
+	    return this;
+
+	};
+
+	HTMLElement.prototype.fadeOutLeft = function () {
+
+	    this.removeClass("fadeInLeft").addClass("fadeOutLeft");
+
+	    return this;
+
+	};
+
+	HTMLElement.prototype.toggleFadeLeft = function () {
+
+	    this.toggleClass("fadeInLeft", "fadeOutLeft");
+
+	    return this;
+
 	};
 
 	HTMLElement.prototype.getIndex = function (cssClass) {
@@ -427,14 +553,19 @@ var dataURLtoObjectURL = function (dataURI) {
 		return offset;
 	};
 
-	HTMLElement.prototype.data = function (key, value) {
+	HTMLElement.prototype.data = function (key, value, expose) {
 
-		if (key !== undefined && value !== undefined) {
-			this.attributes["data-" + key] = value;
+	    if (key !== undefined && value !== undefined) {
+	        if (expose)
+	            this.setAttribute("data-" + key, value);
+            else
+			    this.attributes["data-" + key] = value;
 		} else if (key !== undefined) {
 			var attr = this.attributes["data-" + key];
-			if (attr) 
-				return attr.value || attr;
+			if (attr)
+			    return attr.value || attr;
+			else
+			    return "";
 		} else if (!key && !value) {
 			
 			var attrs = { };

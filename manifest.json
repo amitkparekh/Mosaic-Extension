@@ -1,7 +1,8 @@
 {
-    "name": "Modern New Tab Page 2 ALPHA",
-    "description": "The most beautiful new tab page extension evah!",
-    "version": "2015.3.13",
+    "name": "Mosaic ALPHA",
+    "description": "Replace your new tab page with beautiful and highly customisable tiles.",
+    "default_locale": "en",
+    "version": "2015.5.25",
     "incognito": "split",
     "icons": {
         "16": "icon16.png",
@@ -9,7 +10,7 @@
         "128": "icon128.png"
     },
     "chrome_url_overrides": {
-        "newtab": "Default.html"
+        "newtab": "index.html"
     },
     "permissions": [
         "http://*/*",
@@ -20,6 +21,7 @@
         "history",
         "bookmarks",
         "identity",
+        "identity.email",
         "tabs",
         "storage"
     ],
@@ -32,5 +34,6 @@
             "js/background/webService.js"
         ]
     },
+    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
     "manifest_version": 2
 }

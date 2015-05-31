@@ -1,4 +1,6 @@
-﻿var MNTP = MNTP || {};
+﻿/// <reference path="config.js" />
+
+var MNTP = MNTP || {};
 
 (function () {
     MNTP.IDB = {};
@@ -13,12 +15,12 @@
             MNTP.IDB.proccessQueue.push(callback);
     };
 
-    MNTP.IDB.version = 3;
+    MNTP.IDB.version = 4;
     MNTP.IDB.OS = {
         Group: { objectStoreName: "Group" },
-        Tile:  { objectStoreName: "Tile", index: ["idGroup", "order"] },
+        Tile: { objectStoreName: "Tile", index: ["idGroup", "order"] },
         Image: { objectStoreName: "Image", keyPath: ["type", "id"], index: ["type"], autoIncrement: false },
-        Feed:  { objectStoreName: "Feed" }
+        Feed: { objectStoreName: "Feed" }
     };
 
 
@@ -30,7 +32,7 @@
             var request = indexedDB.open(shortName, MNTP.IDB.version);
 
             request.onupgradeneeded = function (event) {
-                console && console.log("Upgrading IdexedDB.");
+                console && console.log("Updating IdexedDB.");
                 console && console.log(event);
 
                 var db = event.target.result;
@@ -115,7 +117,7 @@
                         MNTP.IDB.firstLoad = true;
                     }
 
-                    console && console.log("IdexedDB upgraded to version " + MNTP.IDB.version + ".");
+                    console && console.log("IdexedDB updated to version " + MNTP.IDB.version + ".");
 
                 }
 
@@ -137,7 +139,7 @@
 
                 if (MNTP.IDB.firstLoad)
                     MNTP.IDB.loadDefaultData().then(executeQueue);
-                else 
+                else
                     executeQueue();
 
             };
@@ -179,12 +181,17 @@
         });
     };
 
-    MNTP.IDB.get = function (os, key) {
+    MNTP.IDB.get = function (os, key, index) {
         return new Promise(function (success, error) {
             MNTP.IDB.process(function () {
                 var objectStore = MNTP.IDB.indexedDB.transaction(os.objectStoreName).objectStore(os.objectStoreName);
 
-                var getRequest = objectStore.get(key);
+                var getRequest;
+                
+                if (index)
+                    getRequest = objectStore.index(index).get(key);
+                else
+                    getRequest = objectStore.get(key);
 
                 getRequest.onsuccess = function (event) {
                     success(event.target.result);
@@ -248,52 +255,58 @@
 
             if (MNTP.IDB.indexedDB) {
 
-                var saveCount = 0;
+                if (objs && objs.length > 0) {
 
-                for (var i = 0; i < objs.length; i++) {
+                    var saveCount = 0;
 
-                    var obj = objs[i];
+                    for (var i = 0; i < objs.length; i++) {
 
-                    var objectStore = MNTP.IDB.indexedDB.transaction(os.objectStoreName, "readwrite").objectStore(os.objectStoreName);
+                        var obj = objs[i];
 
-                    var request;
-                    var keyPath = objectStore.keyPath;
+                        var objectStore = MNTP.IDB.indexedDB.transaction(os.objectStoreName, "readwrite").objectStore(os.objectStoreName);
 
-                    var update = true;
+                        var request;
+                        var keyPath = objectStore.keyPath;
 
-                    if (keyPath instanceof DOMStringList) {
-                        for (var x = 0; x < keyPath.length; x++) {
-                            if (keyPath[x] === undefined) {
-                                update = false;
-                                break;
+                        var update = true;
+
+                        if (keyPath instanceof DOMStringList) {
+                            for (var x = 0; x < keyPath.length; x++) {
+                                if (keyPath[x] === undefined) {
+                                    update = false;
+                                    break;
+                                }
                             }
+                        } else if (obj[keyPath] === undefined) {
+                            update = false;
                         }
-                    } else if (obj[keyPath] === undefined) {
-                        update = false;
+
+                        if (update)
+                            request = objectStore.put(obj); //update
+                        else
+                            request = objectStore.add(obj); //new
+
+                        request.onerror = error || MNTP.IDB.genericErrorHandler;
+
+                        request.onsuccess = function (event) {
+
+                            saveCount++;
+
+                            if (saveCount >= objs.length)
+                                success && success();
+
+                        }
+
                     }
 
-                    if (update)
-                        request = objectStore.put(obj); //update
-                    else
-                        request = objectStore.add(obj); //new
+                    //send data to the sync web service
+                    if (MNTP.WebService && !noSync)
+                        MNTP.WebService.save(os.objectStoreName, objs);
+                    //<--
 
-                    request.onerror = error || MNTP.IDB.genericErrorHandler;
-
-                    request.onsuccess = function (event) {
-
-                        saveCount++;
-
-                        if (saveCount >= objs.length)
-                            success && success();
-
-                    }
-
+                } else {
+                    success && success();
                 }
-
-                //send data to the sync web service
-                if (MNTP.WebService && !noSync)
-                    MNTP.WebService.save(os.objectStoreName, objs);
-                //<--
 
             } else {
 
@@ -358,6 +371,9 @@
                         return MNTP.IDB.saveBatch(MNTP.IDB.OS.Image, data.Image);
                     })
                     .then(function () {
+                        return MNTP.IDB.saveBatch(MNTP.IDB.OS.Image, data.Feed);
+                    })
+                    .then(function () {
                         MNTP.IDB.firstLoad = false;
                         success();
                     });
@@ -365,6 +381,187 @@
             });
 
         });
+
+    }
+
+    MNTP.IDB.importData = function (data) {
+
+        var importFromMNTP = function () {
+
+            return new Promise(function (success, fail) {
+
+                var newTiles = [];
+                var newImages = [];
+                var newFeeds = [];
+
+                if (data.tiles) {
+
+                    for (var i = 0; i < data.tiles.length; i++) {
+
+                        var tile = data.tiles[i];
+
+                        var newTile = {};
+
+                        newTile.id = tile.Id;
+                        newTile.size = tile.Tamanho;
+                        newTile.url = tile.Url;
+                        newTile.name = tile.Nome;
+                        newTile.accentColor = tile.Cor ? false : true;
+                        newTile.backgroundColor = tile.Cor;
+                        newTile.hasImage = tile.Imagem ? true : false;
+                        newTile.idGroup = 1;
+                        newTile.order = i + 1;
+
+                        newTiles.push(newTile);
+
+                        var newImage = {};
+
+                        newImage.data = tile.Imagem;
+                        newImage.type = "Tile";
+                        newImage.id = tile.Id;
+
+                        newImages.push(newImage);
+
+                        var newFeed = {};
+
+                        newFeed.idTile = tile.Id;
+                        newFeed.name = tile.Nome;
+                        newFeed.url = tile.RssUrl;
+
+                        newFeeds.push(newFeed);
+
+                    }
+
+                }
+
+                if (data.backgroundImage) {
+
+                    var newImage = {};
+
+                    newImage.data = data.backgroundImage;
+                    newImage.type = "Background";
+                    newImage.id = 1;
+
+                    newImages.push(newImage);
+
+                    MNTP.Config.NoBackgroundImage = false;
+                    MNTP.Config.BingBackgroundImage = false;
+                    MNTP.Config.HasBackgroundImage = true;
+
+                }
+
+                MNTP.Config.OpeningAnimation = data.animacaoInicialTiles == "1";
+
+                if (data.background) {
+
+                    MNTP.Config.BackgroundAdjust = data.background.Adjust;
+                    MNTP.Config.BackgroundFill = data.background.Fill;
+                    MNTP.Config.BackgroundNoRepeat = data.background.NoRepeat;
+
+                    if (data.background.Opacity)
+                        MNTP.Config.BackgroundOpacity = parseFloat(data.background.Opacity);
+
+                }
+
+                if (data.temaPadrao) {
+
+                    MNTP.Config.BackgroundColor = data.temaPadrao.corPrimaria;
+                    MNTP.Config.AccentColor = data.temaPadrao.corSecundaria;
+
+                }
+
+                MNTP.Config.TileOpacity = 1;
+                MNTP.Config.TileFlowDirection = MNTP.Config.FLOW_DIRECTION.HORIZONTAL;
+
+                if (data.rowNumber)
+                    MNTP.Config.GroupRows = data.rowNumber;
+
+                if (data.columnNumber)
+                    MNTP.Config.GroupColumns = data.columnNumber;
+
+                MNTP.IDB.removeAll(MNTP.IDB.OS.Tile);
+                MNTP.IDB.removeAll(MNTP.IDB.OS.Image);
+
+                MNTP.IDB.saveBatch(MNTP.IDB.OS.Tile, newTiles)
+                    .then(function () {
+                        return MNTP.IDB.saveBatch(MNTP.IDB.OS.Image, newImages);
+                    })
+                    .then(function () {
+                        return MNTP.IDB.saveBatch(MNTP.IDB.OS.Feed, newFeeds);
+                    })
+                    .then(function () {
+                        success();
+                    })
+                    .catch(fail);
+
+            });
+
+        };
+
+        var importFromMosaic = function () {
+
+            return new Promise(function (success, fail) {
+
+                MNTP.IDB.removeAll(MNTP.IDB.OS.Tile);
+                MNTP.IDB.removeAll(MNTP.IDB.OS.Image);
+                MNTP.IDB.removeAll(MNTP.IDB.OS.Group);
+                MNTP.IDB.removeAll(MNTP.IDB.OS.Feed);
+
+                MNTP.IDB.saveBatch(MNTP.IDB.OS.Tile, data.Tile)
+                    .then(function () {
+                        return MNTP.IDB.saveBatch(MNTP.IDB.OS.Image, data.Image);
+                    })
+                    .then(function () {
+                        return MNTP.IDB.saveBatch(MNTP.IDB.OS.Group, data.Group);
+                    })
+                    .then(function () {
+                        return MNTP.IDB.saveBatch(MNTP.IDB.OS.Feed, data.Feed);
+                    })
+                    .then(function () {
+                        MNTP.Config.replace(data.Config);
+                        success();
+                    })
+                    .catch(fail);
+
+            });
+
+        };
+                
+        return data.Mosaic ? importFromMosaic() : importFromMNTP();
+
+    }
+
+    MNTP.IDB.exportData = function () {
+
+        return new Promise(function (success, fail) {
+
+            var list = {};
+
+            var getOSData = function (os) {
+
+                return new Promise(function (success, fail) {
+
+                    MNTP.IDB.select(os).then(function (result) {
+                        list[os.objectStoreName] = result;
+                        success();
+                    });
+
+                });
+
+            };
+
+            getOSData(MNTP.IDB.OS.Group)
+                .then(function () { return getOSData(MNTP.IDB.OS.Tile); })
+                .then(function () { return getOSData(MNTP.IDB.OS.Image); })
+                .then(function () { return getOSData(MNTP.IDB.OS.Feed); })
+                .then(function () {
+                    list.Config = MNTP.Config;
+                    list.Mosaic = true;
+                    success(list);
+                })
+
+        });
+
     }
 
     MNTP.IDB.genericErrorHandler = function (event) {

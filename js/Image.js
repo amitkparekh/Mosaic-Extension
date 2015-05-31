@@ -1,7 +1,11 @@
 /// <reference path="util.js" />
 /// <reference path="idb.js" />
 
-var Image = {}
+var _Image = Image;
+
+var Image = function () {
+    return new _Image();
+}
 
 Image.Type = {};
 Image.Type.Tile = "Tile";

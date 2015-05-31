@@ -1,0 +1,398 @@
+$dropdown-height: 40px;
+
+
+// Select Field
+.select-label {
+    position: absolute;
+}
+
+.select-wrapper {
+    position: relative;
+    margin: 0;
+
+    input.select-dropdown {
+        position: relative;
+        cursor: pointer;
+        color: #444;
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid $clr-grey-400;
+        outline: none;
+        height: $dropdown-height;
+        line-height: $dropdown-height;
+        width: 100%;
+        font-size: 1em;
+        margin: 0;
+        padding: 0;
+        display: block;
+    }
+
+    .md-arrow-drop-down {
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 23px;
+        line-height: $dropdown-height;
+    }
+
+    input {
+        &.select-dropdown {
+            &:disabled {
+                color: $clr-grey-300;
+                border-bottom: 1px solid $clr-grey-300;
+            }
+
+            li {
+                &.disabled {
+                    color: $clr-grey-300;
+
+                    &:hover {
+                        background: transparent;
+                    }
+                }
+            }
+        }
+    }
+
+    i {
+        color: $clr-grey-400;
+    }
+}
+
+select {
+    display: none;
+
+    &.browser-default {
+        display: block;
+    }
+    // Disabled styles
+    &.disabled {
+        color: $clr-grey-300;
+    }
+}
+
+// Dropdown menu
+.dropdown-content {
+    display: none;
+    @extend .z-depth-1;
+    position: absolute;
+    background-color: #FFFFFF;
+    margin: 0px;
+    min-width: 100px;
+    max-height: 70%;
+    opacity: 0;
+    overflow-y: hidden;
+    z-index: 1200;
+    will-change: width, height;
+    //    width: $sidebar-desktop-width - ($sidebar-padding *2) !important;
+    // Scrollbar style for webkit browsers
+    &::-webkit-scrollbar-track {
+        border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar {
+        width: 5px;
+        background-color: #F7F7F7;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px black(.3);
+        background-color: #BFBFBF;
+    }
+
+    li {
+        cursor: pointer;
+        color: $off-black;
+        line-height: 1.5rem;
+        font-size: 1em;
+
+        &:hover, &.active {
+            background-color: rgba(0, 0, 0, .06);
+        }
+
+        & > a,
+        & > span {
+            display: block;
+            padding: 0 1rem;
+            line-height: 3em;
+            color: darken($clr-light-blue, 5%);
+        }
+    }
+}
+
+.sidebar-nav {
+    article {
+        padding: 0 $sidebar-padding;
+        margin-bottom: $sidebar-padding;
+
+        label {
+            font-size: 12px;
+            color: $clr-grey-500;
+            font-weight: 400;
+        }
+
+        input {
+            font-weight: 500;
+        }
+    }
+
+    &.ext {
+        width: auto;
+    }
+}
+
+/***************
+      Range
+***************/
+
+.form-slider {
+    line-height: normal !important;
+    height: 70px !important;
+
+    label {
+        font-weight: 400;
+        font-size: 12px;
+        color: $clr-grey-500;
+    }
+
+    p {
+        &.range-field {
+            margin: 0;
+            margin-top: 10px;
+            position: relative;
+
+            input {
+                height: 15px;
+
+                &[type=number] {
+                    display: none;
+                }
+
+                &[type=range] {
+                    position: relative;
+                    background-color: transparent;
+                    border: none;
+                    outline: none;
+                    width: 100%;
+                    margin: 15px 0;
+                    padding: 0;
+                    -webkit-appearance: none;
+                    // for FF
+                    border: none;
+
+                    &, & + .thumb {
+                        @extend .no-select;
+                        cursor: pointer;
+                    }
+
+                    & + .thumb {
+                        position: absolute;
+                        border: none;
+                        @include size(0);
+                        @include border-radius(50%);
+                        background-color: $clr-light-blue;
+                        top: 10px;
+                        margin-left: -6px;
+
+                        @include prefix((transform-origin: 50% 50%), webkit moz ms o);
+                        @include prefix((transform: rotate(-45deg)), webkit moz ms o);
+
+                        .value {
+                            display: block;
+                            width: 30px;
+                            text-align: center;
+                            color: #fff;
+                            /*font-size: 0px;*/
+
+                            @include prefix((transform: rotate(45deg)), webkit moz ms o);
+                        }
+                    }
+
+                    &:focus {
+                        outline: none;
+
+                        &::-webkit-slider-runnable-track {
+                            background: #cccccc;
+                        }
+
+                        &::-moz-range-track {
+                            background: #ccc;
+                        }
+
+                        &::-ms-fill-lower {
+                            background: #888;
+                        }
+
+                        &::-ms-fill-upper {
+                            background: #ccc;
+                        }
+                    }
+
+                    &::-webkit-slider-runnable-track {
+                        height: 3px;
+                        background: #c2c0c2;
+                        border: none;
+                    }
+
+                    &::-webkit-slider-thumb {
+                        -webkit-appearance: none;
+                        border: none;
+                        @include size(14px);
+                        @include border-radius(50%);
+                        background-color: $clr-light-blue;
+                        @include prefix((transform-origin: 50% 50%), webkit moz ms o);
+                        margin: -5px 0 0 0;
+                        @include transition(.3s);
+                    }
+
+                    &::-moz-range-track {
+                        height: 3px;
+                        background: #ddd;
+                        border: none;
+                    }
+
+                    &::-moz-range-thumb {
+                        border: none;
+                        @include size(14px);
+                        @include border-radius(50%);
+                        background: $clr-light-blue;
+                        margin-top: -5px;
+                    }
+
+                    &:-moz-focusring {
+                        outline: 1px solid white;
+                        outline-offset: -1px;
+                    }
+
+                    &::-ms-track {
+                        height: 3px;
+                        /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+                        background: transparent;
+                        /*leave room for the larger thumb to overflow with a transparent border */
+                        border-color: transparent;
+                        border-width: 6px 0;
+                        /*remove default tick marks*/
+                        color: transparent;
+                    }
+
+                    &::-ms-fill-lower {
+                        background: #777;
+                    }
+
+                    &::-ms-fill-upper {
+                        background: #ddd;
+                    }
+
+                    &::-ms-thumb {
+                        border: none;
+                        @include size(14px);
+                        @include border-radius(50%);
+                        background: $clr-light-blue;
+                    }
+                }
+            }
+
+            > span {
+                position: absolute;
+                border: none;
+                @include border-radius(50%);
+                background-color: $clr-light-blue;
+                @include prefix((transform-origin: 50% 50%), webkit moz ms o);
+                @include prefix((transform: rotate(-45deg)), webkit moz ms o);
+                cursor: pointer;
+
+                &.active {
+                    @include border-radius(50% 50% 50% 0);
+
+                    > span {
+                        color: white;
+                        margin-left: -1px;
+                        margin-top: 8px;
+                        font-size: 10px;
+                    }
+                }
+
+                > span {
+                    display: block;
+                    width: 30px;
+                    text-align: center;
+                    color: $clr-light-blue;
+                    @include prefix((transform: rotate(45deg)), webkit moz ms o);
+                    font-size: 0px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+// ------------
+// Input[file]
+
+.sidebar-nav {
+    .btn {
+        span {
+            cursor: pointer;
+        }
+    }
+
+    input[type=file] {
+        height: 100%;
+        line-height: 100%;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        margin: 0;
+        cursor: pointer;
+        opacity: 0;
+    }
+}
+
+
+// ------------
+// Context menu
+
+.context-menu {
+    position: absolute;
+    background: #FFFFFF;
+    text-align: left;
+    z-index: 3;
+    max-width: 250px;
+    max-height: 200px;
+    overflow: hidden;
+    transition: max-width .2s, max-height .2s;
+
+    &.hidden {
+        max-height: 0;
+        max-width: 0;
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    ul {
+        margin: 0;
+
+        li {
+            margin: 0;
+            padding: 5px 15px;
+            cursor: pointer;
+            white-space: nowrap;
+
+            &.separator {
+                height: 1px;
+                padding: 0;
+                margin: 0px;
+                background: #ddd;
+            }
+
+            &:hover {
+                background: #ddd;
+            }
+        }
+    }
+}

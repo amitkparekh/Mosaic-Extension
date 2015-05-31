@@ -1,13 +1,12 @@
-/// <reference path="es6-promise-2.0.0.js" />
 /// <reference path="util.js" />
 /// <reference path="dragging.js" />
-/// <reference path="config.js" />
+/// <reference path="background/config.js" />
 /// <reference path="Tile.js" />
 /// <reference path="TileGroup.js" />
 /// <reference path="Image.js" />
-/// <reference path="swayy.js" />
 /// <reference path="Feed.js" />
 /// <reference path="background/backgroundutils.js" />
+/// <reference path="sidebar.js" />
 
 var MNTP;
 
@@ -23,10 +22,13 @@ var MNTP;
                 .then(loadGroups)
                 .then(loadTiles)
                 .then(loadConfig)
-                .then(loadFeeds)
+                .then(loadFeedsPanel)
                 .then(enableDrag)
                 .then(loadCustomComponents)
                 .then(bindEvents)
+                .then(loadTileFeeds)
+                .then(loadExternalResources)
+                .then(checkVersion)
                 .then(success)
                 .catch(function (error) {
 
@@ -137,6 +139,9 @@ var MNTP;
 
             config = config || MNTP.Config;
 
+            var fontSize = config.TileWidthLg * 0.004
+            fontSize = fontSize < 0.7 ? 0.7 : fontSize;
+
             var tiles1 = q(".tile.size1:not(.preview)", true);
             var tiles2 = q(".tile.size2:not(.preview)", true);
             var tiles3 = q(".tile.size3:not(.preview)", true);
@@ -144,16 +149,19 @@ var MNTP;
             tiles1.forEach(function (element, index) {
                 element.style.width = config.TileWidthSm + "px";
                 element.style.height = config.TileHeightSm + "px";
+                element.style.fontSize = fontSize + "em";
             });
 
             tiles2.forEach(function (element, index) {
                 element.style.width = config.TileWidthLg + "px";
                 element.style.height = config.TileHeightSm + "px";
+                element.style.fontSize = fontSize + "em";
             });
 
             tiles3.forEach(function (element, index) {
                 element.style.width = config.TileWidthLg + "px";
                 element.style.height = config.TileHeightLg + "px";
+                element.style.fontSize = fontSize + "em";
             });
 
             reorder(config).then(success);
@@ -162,43 +170,47 @@ var MNTP;
 
     }
 
-	var openingAnimation = true;
+    var openingAnimation = true;
     var reorder = function (config) {
-		
-		config = config || MNTP.Config;
-		
-		if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) 
-			return reorderFlow(config);
-		else
+
+        config = config || MNTP.Config;
+
+        if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW &&
+            config.TileFlowDirection == MNTP.Config.FLOW_DIRECTION.VERTICAL)
+            return reorderFlowVeritical(config);
+        else if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW &&
+                config.TileFlowDirection == MNTP.Config.FLOW_DIRECTION.HORIZONTAL)
+            return reorderFlowHorizontal(config);
+        else
             return reorderFree(config);
     }
-	
-	var reorderFlow = function(config) {
+
+    var reorderFlowVeritical = function (config) {
 
         return new Promise(function (success, fail) {
 
             config = config || MNTP.Config;
-			
-			openingAnimation = openingAnimation && config.OpeningAnimation;
+
+            openingAnimation = openingAnimation && config.OpeningAnimation;
 
             var container = q("#container");
             var news = q("#news");
-			var tiles = q(".tile", true);
-			
-            container.style.height = "100%";
-			
-			if (openingAnimation) {
-			
-				for (var i = 0; i < tiles.length; i++)
-				    tiles[i].style.transition = "none";
-							
-				container.style.transition = "none";
-			
-			} else if (!config.OpeningAnimation) {
-			
-			    container.style.transition = "none";
-				
-			}
+            var tiles = q(".tile", true);
+
+            container.style.height = "";
+
+            if (openingAnimation) {
+
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "none";
+
+                container.style.transition = "none";
+
+            } else if (!config.OpeningAnimation) {
+
+                container.style.transition = "none";
+
+            }
 
             var groupLeft = 0;
 
@@ -212,7 +224,10 @@ var MNTP;
 
                 group = groups[g];
 
+                group.removeClass("horizontal");
+
                 group.style.marginLeft = groupLeft + "px";
+                group.style.height = "";
 
                 groupLeft = config.GroupMargin;
 
@@ -258,16 +273,16 @@ var MNTP;
 
                             top += currentHeight + config.TileMargin;
 
-							if (openingAnimation)
-								left = 0;
-							else
-								left = collumnLeft;
+                            if (openingAnimation)
+                                left = 0;
+                            else
+                                left = collumnLeft;
 
                             if (group.offsetHeight < top + nextHeight && i < tiles.length - 1)
                                 group.style.height = (top + nextHeight) + "px";
 
                             if (group.offsetHeight < top + nextHeight || (row + (nextSize == 3 ? 1 : 0) > config.GroupRows && config.GroupRows > 0))
-                                group.style.height = (top - config.TileMargin) + "px";
+                                group.style.height = (top - (config.TileMargin || 1)) + "px";
 
                         }
 
@@ -276,14 +291,14 @@ var MNTP;
                         if (top > group.offsetHeight && i < tiles.length - 1) {
                             top = 0;
                             row = 1;
-							
-							if (openingAnimation) {
-								collumnLeft = 0;
-							} else {
-								collumnLeft += (config.TileWidthLg + config.TileMargin);
-							}
-							
-							left = collumnLeft;
+
+                            if (openingAnimation) {
+                                collumnLeft = 0;
+                            } else {
+                                collumnLeft += (config.TileWidthLg + config.TileMargin);
+                            }
+
+                            left = collumnLeft;
                         }
 
                     }
@@ -300,7 +315,7 @@ var MNTP;
                 container.style.height = tallerGroup + "px";
 
 
-			//center verticaly
+            //center verticaly
             if (config.GroupTop == -1) {
                 var windowHeight = window.innerHeight;
                 var containerHeight = container.offsetHeight;
@@ -313,28 +328,28 @@ var MNTP;
             }
 
             //center horizontaly
-			if (!openingAnimation) {
-			
-				if (config.GroupLeft == -1) {
-				
-					var windowWidth = window.innerWidth;
-					var containerWidth = container.offsetWidth;
+            if (!openingAnimation) {
 
-					var containerLeft = (windowWidth - containerWidth) / 2;
-					
-					container.style.left = containerLeft + "px";
-					
-				} else {
-				
-					container.style.left = config.GroupLeft + "px";
-					
-				}
-				
-			} else {
-				
-				container.style.left = 0;
-			
-			}
+                if (config.GroupLeft == -1) {
+
+                    var windowWidth = window.innerWidth;
+                    var containerWidth = container.offsetWidth;
+
+                    var containerLeft = (windowWidth - containerWidth) / 2;
+
+                    container.style.left = containerLeft + "px";
+
+                } else {
+
+                    container.style.left = config.GroupLeft + "px";
+
+                }
+
+            } else {
+
+                container.style.left = 0;
+
+            }
 
 
             var containerOffset = container.getWindowOffset();
@@ -343,140 +358,310 @@ var MNTP;
             q("body").style.width = (containerOffset.left + containerOffset.width + news.offsetWidth + 50) + "px";
 
 
-			var tiles = q(".tile", true);
+            var tiles = q(".tile", true);
 
-			if (openingAnimation) {
-			
-				openingAnimation = false;
-				
-				for (var i = 0; i < tiles.length; i++)
-				    tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms";
-							
-				container.style.transition = "left " + config.OpeningAnimationTime + "ms";
-				
-				reorder(config).then(success);
-				
-			} else {
-			
-				for (var i = 0; i < tiles.length; i++)
-				    tiles[i].style.transition = "";
-							
-				container.style.transition = "";
-			
-				success();
-			}
+            if (openingAnimation) {
+
+                openingAnimation = false;
+
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms";
+
+                container.style.transition = "left " + config.OpeningAnimationTime + "ms";
+
+                reorder(config).then(success);
+
+            } else {
+
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "";
+
+                container.style.transition = "";
+
+                success();
+            }
 
         });
 
-	}
+    }
 
-	var reorderFree = function(config) {
+    var reorderFlowHorizontal = function (config) {
 
-		return new Promise(function (success, fail) {
+        return new Promise(function (success, fail) {
 
-	        config = config || MNTP.Config;
+            config = config || MNTP.Config;
 
-	        openingAnimation = openingAnimation && config.OpeningAnimation;
+            q("body").style.width = "";
+            
+            var container = q("#container");
+            var news = q("#news");
 
-	        var container = q("#container");
-	        var news = q("#news");
-	        var tiles = q(".tile", true);
+            container.style.height = "";
 
-	        if (openingAnimation) {
+            var tiles = q(".tile", true);
 
-	            for (var i = 0; i < tiles.length; i++)
-	                tiles[i].style.transition = "none";
+            if (openingAnimation) {
 
-	        }
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "none";
 
-	        //container.style.transition = "none";
+                container.style.transition = "none";
+                container.style.left = "0";
 
-	        container.style.left = "0";
-	        container.style.top = "0";
-	        container.style.height = "";
+            } else if (!config.OpeningAnimation) {
 
-			var screenCenter = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+                container.style.transition = "none";
 
-	        if (openingAnimation) {
+            }
 
-	            for (var i = 0; i < tiles.length; i++) {
+            var groupLeft = 0;
 
-	                var tileNode = tiles[i];
+            var groups = q(".tile-group:not(.placeholder)", true);
 
-	                tileNode.style.left = (screenCenter.x - (tileNode.offsetWidth / 2)) + "px";
-	                tileNode.style.top = (screenCenter.y - (tileNode.offsetHeight / 2)) + "px";
+            var tallerGroup = 0;
 
-	            }
+            groups.forEach(function (group) {
 
-	        } else {
+                group.addClass("horizontal");
 
-	            for (var i = 0; i < tiles.length; i++) {
+                var margin = config.TileMargin;
 
-	                var tileNode = tiles[i];
-	                var position = tileNode.data("position");
+                var t = config.TileWidthSm + margin;
 
-	                if (position) {
+                var columns = config.GroupColumns;
+                var rows = config.GroupRows;
 
-	                    tileNode.style.left = position.left + "px";
-	                    tileNode.style.top = position.top + "px";
+                var column = 0;
+                var row = 0;
+                var skipThese = [];
 
-	                } else {
-					
-						tileNode.style.left = (screenCenter.x - (tileNode.offsetWidth / 2)) + "px";
-						tileNode.style.top = (screenCenter.y - (tileNode.offsetHeight / 2)) + "px";
-					
-					}
+                q(".tile:not(.dragging)", group, true).forEach(function (tileNode) {
 
-	            };
+                    var size = tileNode.data("size") == 1 ? 1 : 2;
 
-	        }
+                    if (column + size > columns) {
+                        row++;
+                        column = 0;
+                    }
 
-	        if (openingAnimation) {
+                    for (var i = 0; i < skipThese.length; i++) {
 
-	            setTimeout(function () {
+                        var skip = skipThese[i];
 
-	                openingAnimation = false;
+                        if (row == skip.r && (column == skip.c || (size == 2 && column + 1 == skip.c))) {
+                            column = skip.c + 2;
+                        }
 
-	                for (var i = 0; i < tiles.length; i++)
-	                    tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms, top " + config.OpeningAnimationTime + "ms";
+                        if (column + size > columns) {
+                            row++;
+                            column = 0;
+                        }
 
-	                container.style.transition = "left " + config.OpeningAnimationTime + "ms, top " + config.OpeningAnimationTime + "ms";
+                    }
 
-	                reorder(config).then(success);
+                    if (tileNode.data("size") == 3)
+                        skipThese.push({ c: column, r: row + 1 });
 
-	            }, 10);
+                    var left = openingAnimation ? 0 : column * t;
+                    var top = row * t;
 
-	        } else {
+                    tileNode.style.left = left + "px";
+                    tileNode.style.top = top + "px";
 
-	            setTimeout(function () {
-	                for (var i = 0; i < tiles.length; i++)
-	                    tiles[i].style.transition = "";
+                    column += (size == 1 ? 1 : 2);
 
-	                container.style.transition = "";
-	            }, config.OpeningAnimationTime);
+                });
 
-	            success();
-	        }
+                group.style.width = ((columns * config.TileWidthSm) + ((columns - 1) * margin)) + "px";
+                group.style.height = ((rows * config.TileHeightSm) + ((rows - 1) * margin)) + "px";
 
-	    });
+            });
 
-	}
-	
+
+
+            //center verticaly
+            if (config.GroupTop == -1) {
+                var windowHeight = window.innerHeight;
+                var containerHeight = container.offsetHeight;
+
+                var containerTop = (windowHeight - containerHeight) / 2;
+
+                container.style.top = containerTop + "px";
+            } else {
+                container.style.top = config.GroupTop + "px";
+            }
+
+            //center horizontaly
+            if (!openingAnimation) {
+
+                if (config.GroupLeft == -1) {
+
+                    var windowWidth = window.innerWidth;
+                    var containerWidth = container.offsetWidth;
+
+                    var containerLeft = (windowWidth - containerWidth) / 2;
+
+                    container.style.left = containerLeft + "px";
+
+                } else {
+
+                    container.style.left = config.GroupLeft + "px";
+
+                }
+
+            } else {
+
+                container.style.left = 0;
+
+            }
+
+
+            if (openingAnimation) {
+
+                openingAnimation = false;
+
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms";
+
+                container.style.transition = "left " + config.OpeningAnimationTime + "ms";
+
+                reorder(config).then(success);
+
+            } else {
+
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "";
+
+                container.style.transition = "";
+
+                success();
+            }
+
+
+            success();
+
+        });
+
+    }
+
+    var reorderFree = function (config) {
+
+        return new Promise(function (success, fail) {
+
+            config = config || MNTP.Config;
+
+            openingAnimation = openingAnimation && config.OpeningAnimation;
+
+            var container = q("#container");
+            var news = q("#news");
+            var tiles = q(".tile", true);
+
+            if (openingAnimation) {
+
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "none";
+
+            }
+
+            container.style.left = "0";
+            container.style.top = "0";
+            container.style.height = "";
+
+            var groups = q(".tile-group:not(.placeholder)", true);
+
+            var tallerGroup = 0;
+
+            groups.forEach(function (group) {
+
+                group.removeClass("horizontal");
+
+                group.style.width = "";
+                group.style.height = "";
+
+            });
+
+            var screenCenter = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+            if (openingAnimation) {
+
+                for (var i = 0; i < tiles.length; i++) {
+
+                    var tileNode = tiles[i];
+
+                    tileNode.style.left = (screenCenter.x - (tileNode.offsetWidth / 2)) + "px";
+                    tileNode.style.top = (screenCenter.y - (tileNode.offsetHeight / 2)) + "px";
+
+                }
+
+            } else {
+
+                for (var i = 0; i < tiles.length; i++) {
+
+                    var tileNode = tiles[i];
+                    var position = tileNode.data("position");
+
+                    if (position) {
+
+                        tileNode.style.left = position.left + "px";
+                        tileNode.style.top = position.top + "px";
+
+                    } else {
+
+                        tileNode.style.left = (screenCenter.x - (tileNode.offsetWidth / 2)) + "px";
+                        tileNode.style.top = (screenCenter.y - (tileNode.offsetHeight / 2)) + "px";
+
+                    }
+
+                };
+
+            }
+
+            if (openingAnimation) {
+
+                setTimeout(function () {
+
+                    openingAnimation = false;
+
+                    for (var i = 0; i < tiles.length; i++)
+                        tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms, top " + config.OpeningAnimationTime + "ms";
+
+                    container.style.transition = "left " + config.OpeningAnimationTime + "ms, top " + config.OpeningAnimationTime + "ms";
+
+                    reorder(config).then(success);
+
+                }, 10);
+
+            } else {
+
+                setTimeout(function () {
+                    for (var i = 0; i < tiles.length; i++)
+                        tiles[i].style.transition = "";
+
+                    container.style.transition = "";
+                }, config.OpeningAnimationTime);
+
+                success();
+            }
+
+        });
+
+    }
+
     var enableDrag = function () {
 
         return new Promise(function (success, fail) {
 
             //tiles drag
             var request;
-			
-			if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
-				request = q("body").enableCustomDragging(".tile:not(.placeholder)");
-			else
-				request = q("body").enableCustomDragging(".tile:not(.placeholder)", { translate: true });
 
-			var placeHolderTile = null;
-			var nextSibling = null;
-			var dragGroup = null;
+            if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
+                request = q("body").enableCustomDragging(".tile:not(.placeholder)");
+            else
+                request = q("body").enableCustomDragging(".tile:not(.placeholder)", { translate: true });
+
+            var placeHolderTile = null;
+            var nextSibling = null;
+            var dragGroup = null;
 
             request.dragstart(function (event) {
 
@@ -491,78 +676,82 @@ var MNTP;
                 nextSibling = event.dragElement.nextElementSibling;
                 dragGroup = event.dragElement.parentElement;
 
-				if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) {
+                if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) {
 
-					placeHolderTile = document.createElement("div");
-					placeHolderTile.addClass("tile");
-					placeHolderTile.addClass("placeholder");
-					placeHolderTile.addClass("size" + size);
-					placeHolderTile.style.width = (size == 1 ? MNTP.Config.TileWidthSm : MNTP.Config.TileWidthLg) + "px";
-					placeHolderTile.style.height = (size == 3 ? MNTP.Config.TileHeightLg : MNTP.Config.TileHeightSm) + "px";
-					placeHolderTile.data("size", size);
+                    placeHolderTile = document.createElement("div");
+                    placeHolderTile.addClass("tile");
+                    placeHolderTile.addClass("placeholder");
+                    placeHolderTile.addClass("size" + size);
+                    placeHolderTile.style.width = (size == 1 ? MNTP.Config.TileWidthSm : MNTP.Config.TileWidthLg) + "px";
+                    placeHolderTile.style.height = (size == 3 ? MNTP.Config.TileHeightLg : MNTP.Config.TileHeightSm) + "px";
+                    placeHolderTile.data("size", size);
 
-					event.dragElement.parentNode.insertBefore(placeHolderTile, event.dragElement);
+                    event.dragElement.parentNode.insertBefore(placeHolderTile, event.dragElement);
 
-					reorder();
-					
-				}
+                    reorder();
+
+                }
 
             });
 
             var lastTargetIndex = null;
             request.dragmove(function (event) {
-				
-				if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) {
-				
-					if (event.toElement && event.toElement.matches(".tile")) {
 
-						q(".tile-group.active-placeholder", true).forEach(function (element) {
-							element.removeClass("active-placeholder");
-							element.addClass("placeholder");
-							element.removeAttribute("style");
-						});
+                if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) {
 
-						var targetIndex = event.toElement.getIndex(".tile:not(.dragging)");
+                    if (event.toElement && event.toElement.matches(".tile")) {
 
-						if (targetIndex != lastTargetIndex) {
+                        q(".tile-group.active-placeholder", true).forEach(function (element) {
+                            element.removeClass("active-placeholder");
+                            element.addClass("placeholder");
+                            element.removeAttribute("style");
+                        });
 
-							lastTargetIndex = targetIndex;
+                        var targetIndex = event.toElement.getIndex(".tile:not(.dragging)");
 
-							var dragElementIndex;
+                        if (targetIndex != lastTargetIndex) {
 
-							if (placeHolderTile) {
-								dragElementIndex = placeHolderTile.getIndex(".tile:not(.dragging)")
+                            lastTargetIndex = targetIndex;
 
-								placeHolderTile.remove();
-								placeHolderTile = null;
-							}
+                            var dragElementIndex;
 
-							var size = event.dragElement.data("size");
+                            if (placeHolderTile) {
+                                dragElementIndex = placeHolderTile.getIndex(".tile:not(.dragging)")
 
-							placeHolderTile = document.createElement("div");
-							placeHolderTile.addClass("tile");
-							placeHolderTile.addClass("placeholder");
-							placeHolderTile.addClass("size" + size);
-							placeHolderTile.style.width = (size == 1 ? MNTP.Config.TileWidthSm : MNTP.Config.TileWidthLg) + "px";
-							placeHolderTile.style.height = (size == 3 ? MNTP.Config.TileHeightLg : MNTP.Config.TileHeightSm) + "px";
-							placeHolderTile.data("size", size);
+                                placeHolderTile.remove();
+                                placeHolderTile = null;
+                            }
+
+                            var size = event.dragElement.data("size");
+
+                            placeHolderTile = document.createElement("div");
+                            placeHolderTile.addClass("tile");
+                            placeHolderTile.addClass("placeholder");
+                            placeHolderTile.addClass("size" + size);
+                            placeHolderTile.style.width = (size == 1 ? MNTP.Config.TileWidthSm : MNTP.Config.TileWidthLg) + "px";
+                            placeHolderTile.style.height = (size == 3 ? MNTP.Config.TileHeightLg : MNTP.Config.TileHeightSm) + "px";
+                            placeHolderTile.data("size", size);
 
 
-							if (dragElementIndex > targetIndex) {
-								event.toElement.parentNode.insertBefore(placeHolderTile, event.toElement);
-								lastTargetIndex++;
-							} else {
-								event.toElement.parentNode.insertBefore(placeHolderTile, event.toElement.nextSibling);
-								lastTargetIndex--;
-							}
+                            if (dragElementIndex > targetIndex) {
+                                event.toElement.parentNode.insertBefore(placeHolderTile, event.toElement);
+                                lastTargetIndex++;
+                            } else {
+                                event.toElement.parentNode.insertBefore(placeHolderTile, event.toElement.nextSibling);
+                                lastTargetIndex--;
+                            }
 
-							reorder();
+                            setTimeout(function () {
+                                lastTargetIndex = null;
+                            }, 300);
 
-						}
+                            reorder();
 
-					}
-					
-				}
+                        }
+
+                    }
+
+                }
             });
 
             request.dragend(function (event) {
@@ -611,7 +800,7 @@ var MNTP;
 
 
                     nextSibling = null;
-                    
+
                 }
 
                 reorder().then(function () {
@@ -623,17 +812,29 @@ var MNTP;
 
             //resize news drag
             var news = q("#news");
-            var request2 = q("body").enableCustomDragging("#news-resize", { translate: false, pixeldelay: 0 });
+            var request2 = q("body").enableCustomDragging(".news .resize", { translate: false, pixeldelay: 0 });
             var initialOffset;
 
             request2.dragstart(function (event) {
-                initialOffset = { width: news.offsetWidth, height: news.offsetHeight };
+                initialOffset = { width: news.offsetWidth, height: news.offsetHeight, left: news.offsetLeft };
             });
 
             request2.dragmove(function (event) {
 
-                news.style.width = (initialOffset.width - event.deltaX) + "px";
-                news.style.height = (initialOffset.height + (event.deltaY * 2)) + "px";
+                var direction = 1;
+
+                if (event.dragElement.hasClass("left")) {
+
+                    var width = news.offsetWidth;
+
+                    if (width > 340 && width < 800)
+                        news.style.left = (initialOffset.left + event.deltaX) + "px";
+
+                    direction = -1;
+                }
+
+                news.style.width = (initialOffset.width + (event.deltaX * direction)) + "px";
+                news.style.height = (initialOffset.height + event.deltaY) + "px";
 
                 resizeNews();
                 reorder();
@@ -642,7 +843,17 @@ var MNTP;
             request2.dragend(function (event) {
                 MNTP.Config.NewsWidth = news.offsetWidth;
                 MNTP.Config.NewsHeight = news.offsetHeight;
+                MNTP.Config.NewsLeft = news.offsetLeft;
+                MNTP.Config.NewsTop = news.offsetTop;
             });
+
+            //move news panel
+            var request3 = q("body").enableCustomDragging(".news", { dragInitiator: ".news .top-bar" });
+
+            request3.dragend(function (event) {
+                MNTP.Config.NewsLeft = news.offsetLeft;
+                MNTP.Config.NewsTop = news.offsetTop;
+            })
 
 
             //move configuration windows
@@ -658,72 +869,64 @@ var MNTP;
 
         return new Promise(function (success, fail) {
 
-            //close popups
-            //q("#overlay").addEventListener("click", hideConfigs);
-
-            //swith between configurations panels
-            q("[data-panel-for]", true).forEach(function (element) {
-
-                element.addEventListener("click", function () {
-
-                    q("[data-panel]", true).forEach(function (element) {
-                        element.style.display = "none";
-                    });
-
-                    q("[data-panel=" + element.data("panel-for") + "]", true).forEach(function (element) {
-                        element.style.display = "block";
-                    });
-
-                    if (element.data("panel-for") == "config-sync" && !q("#iframe-dropbox").attributes["src"]) {
-                        q("#iframe-dropbox").setAttribute("src", "http://localhost:63408/Dropbox/Default.aspx");
-                    }
-
-                });
-
-            });
-
-            //hides the loader when the iframe finishes loading
-            q("#iframe-dropbox").addEventListener("load", function () {
-                q("#dropbox-loader").style.display = "none";
-            });
-
-            //click on the preview tile does nothing
-            q("#tile-config-preview-tile").addEventListener("click", function (event) {
+            //-- click on the preview tile does nothing
+            q("#nav-new-tile-menu #tile-preview").addEventListener("click", function (event) {
                 event.preventDefault();
                 event.stopPropagation();
                 return false;
             });
 
-            //avoid dragging the preview tile
-            q("#tile-config-preview-tile").addEventListener("mousedown", function (event) {
+            //-- avoid dragging the preview tile
+            q("#nav-new-tile-menu #tile-preview").addEventListener("mousedown", function (event) {
                 event.preventDefault();
                 event.stopPropagation();
                 return false;
             });
 
-            //save tile configurations
-            q("#tile-config-btn-ok").addEventListener("click", function () {
-                saveTileConfig()
-                    .then(function () {
-                        hideConfigs();
-						MNTP.Config.ReloadBackgroundImage = true;
-                        load().then(saveTilesOrder);
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                        console.log(error.stack);
-                    });
+            //-- save tile configurations (new)
+            q("#new-tile-submit a").addEventListener("click", function () {
+
+                if (validateForms(q("#nav-new-tile-menu"))) {
+
+                    saveTileConfig()
+                        .then(function () {
+                            MNTP.Config.ReloadBackgroundImage = true;
+                            sidebarToggle();
+                            load().then(saveTilesOrder);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            console.log(error.stack);
+                        });
+
+                }
+
             });
 
-            //cancel tile configurations
-            q("#tile-config-btn-cancel").addEventListener("click", function () {
-                hideConfigs();
+            //-- save tile configurations (edit)
+            q("#edit-tile-submit a").addEventListener("click", function () {
+
+                if (validateForms(q("#edit-tile-menu"))) {
+
+                    saveTileConfig(true)
+                        .then(function () {
+                            MNTP.Config.ReloadBackgroundImage = true;
+                            sidebarToggle();
+                            load().then(saveTilesOrder);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            console.log(error.stack);
+                        });
+
+                }
+
             });
 
-            //live update the preview tile
-            q("#tile-config input, #tile-config select", true).forEach(function (element) {
+            //-- live update the preview tile (new)
+            q("#nav-new-tile-menu input, #nav-new-tile-menu select", true).forEach(function (element) {
 
-                element.addEventListener(["keypress", "change"], function () {
+                element.addEventListener(["keypress", "change", "input"], function () {
                     setTimeout(function () {
                         loadPreviewTile();
                     }, 0);
@@ -731,35 +934,73 @@ var MNTP;
 
             });
 
-            //remove tile image
-            q("#tile-config-btn-removeImage").addEventListener("click", function () {
+            //-- live update the preview tile (edit)
+            q("#edit-tile-menu input, #edit-tile-menu select", true).forEach(function (element) {
 
-                q("input[data-property='removeImage']", "#tile-config").value = "true";
-                q("input[data-property='image.data']", "#tile-config").value = ""
-
-                loadPreviewTile();
-
-                q("#tile-config-file-image").style.display = "";
-                q("#tile-config-btn-removeImage").style.display = "none";
+                element.addEventListener(["keypress", "change", "input"], function () {
+                    setTimeout(function () {
+                        loadPreviewTile(null, true);
+                    }, 0);
+                });
 
             });
 
-            //right click on tiles
+            //-- remove tile image (new)
+            q("#new-tile-remove-image a").addEventListener("click", function () {
+
+                q("input[data-property='removeImage']", "#nav-new-tile-menu").value = "true";
+                q("input[data-property='image.data']", "#nav-new-tile-menu").value = ""
+                q("input[data-property='image.url']", "#nav-new-tile-menu").value = ""
+
+                loadPreviewTile();
+
+                q("#new-tile-remove-image").removeClass("fadeIn").addClass("fadeOut");
+
+                q("#new-tile-add-url-text").removeClass("fadeInLeft").addClass("fadeOutLeft");
+
+            });
+
+            //-- remove tile image (edit)
+            q("#edit-tile-remove-image a").addEventListener("click", function () {
+
+                q("input[data-property='removeImage']", "#edit-tile-menu").value = "true";
+                q("input[data-property='image.data']", "#edit-tile-menu").value = ""
+                q("input[data-property='image.url']", "#edit-tile-menu").value = ""
+
+                loadPreviewTile(null, true);
+
+                q("#edit-tile-remove-image").removeClass("fadeIn").addClass("fadeOut");
+
+                q("#edit-tile-add-url-text").addClass("fadeOutLeft");
+
+            });
+
+            //-- right click on tiles
             q(".tile", true).forEach(function (element) {
 
                 element.addEventListener("contextmenu", function (event) {
 
-                    q("#options .context").style.display = "block";
+                    q(".tile.selected", true).forEach(function (tileNode) {
+                        tileNode.removeClass("selected");
+                    });
 
-                    this.toggleClass("selected");
+                    this.addClass("selected");
 
-                    var selectCount = q(".tile.selected", true).length;
+                    q(".context-menu li", true).forEach(function (element) {
+                        element.style.display = "block";
+                    });
 
-                    q("#options").toggleClass("hidden", selectCount == 0);
+                    var contextMenu = q(".context-menu");
 
-                    q("#options-btn-edit").style.display = selectCount == 1 ? "block" : "none";
+                    contextMenu.addClass("hidden");
 
-                    //this.style.borderColor = invertColor(MNTP.Config.AccentColor);
+                    setTimeout(function () {
+
+                        contextMenu.removeClass("hidden");
+                        contextMenu.style.top = event.y + "px";
+                        contextMenu.style.left = event.x + "px";
+
+                    }, 50);
 
                     event.stopPropagation();
                     event.preventDefault();
@@ -768,202 +1009,465 @@ var MNTP;
 
             });
 
-            //right anywhere else shows the global options
+            //-- right anywhere else shows the global options
             q("body").addEventListener("contextmenu", function (event) {
 
-                if (event.target == q("body") || event.target.hasClass(["tile-group", "container"])) {
+                if (event.target == q("body") || event.target.hasClass(["wrapper", "container", "wallpaper", "tile-group"])) {
 
-                    if (q(".tile.selected", true).length == 0) {
+                    q(".tile.selected", true).forEach(function (tileNode) {
+                        tileNode.removeClass("selected");
+                    });
 
-                        q("#options .context").style.display = "none";
+                    q(".context-menu li", true).forEach(function (element) {
+                        element.style.display = element.hasClass("global") ? "block" : "none";
+                    });
 
-                        q("#options").toggleClass("hidden");
-                        q("#options-btn-edit").style.display = "none";
+                    var contextMenu = q(".context-menu");
 
-                    }
+                    contextMenu.addClass("hidden");
+
+                    setTimeout(function () {
+
+                        contextMenu.removeClass("hidden");
+                        contextMenu.style.top = event.y + "px";
+                        contextMenu.style.left = event.x + "px";
+
+                    }, 50);
+
                 }
 
                 event.preventDefault();
-                //return false;
-
+                return false;
             });
 
-            //left click anywhere else closes the options popup
+            //-- left click anywhere else closes the context menu and the sidebar
             q("body").addEventListener("click", function (event) {
-                if (event.target == q("body") || event.target.hasClass(["tile-group", "container"])) {
-                    hideOptions();
+
+                if (event.target == q("body") || event.target.hasClass(["wrapper", "container", "wallpaper", "tile-group"])) {
+
+                    q(".context-menu").addClass("hidden");
+
+                    q(".tile.selected", true).forEach(function (tileNode) {
+                        tileNode.removeClass("selected");
+                    });
+
+                    sidebar.removeClass("open");
+                    menuButton.removeClass("active");
+                    subMenuClose();
+
+                    setTimeout(function () {
+                        navMain.removeClass("open");
+                    }, animaDelay);
+
                 }
             });
 
-            //click on options button shows global options
-            q("#button-options").addEventListener("click", function (event) {
+            //-- resize tile - smaller
+            q("#edit-tile-make-smaller, #context-make-tile-smaller", true).forEach(function(element) {
+               
+                element.addEventListener("click", function () {
 
-                q("#options .context").style.display = "none";
+                    var tiles = q(".tile.selected", true);
 
-                q("#options").toggleClass("hidden");
-                q("#options-btn-edit").style.display = "none";
+                    for (var i = 0; i < tiles.length; i++) {
 
-            });
+                        var tileNode = tiles[i];
+                        var id = tileNode.data("id");
+                        var size = tileNode.data("size");
 
-            //resize tile - smaller
-            q("#options-btn-resize-small").addEventListener("click", function () {
+                        if (size > 1) {
+                            var newSize = size - 1;
 
-                var tiles = q(".tile.selected", true);
+                            tileNode.removeClass(["size1", "size2", "size3"]);
+                            tileNode.addClass("size" + newSize);
+                            tileNode.data("size", newSize);
 
-                for (var i = 0; i < tiles.length; i++) {
+                            Tile.get(id).then(function (tile) {
 
-                    var tileNode = tiles[i];
-                    var id = tileNode.data("id");
-                    var size = tileNode.data("size");
+                                tile.size = tile.size - 1;
+                                Tile.save(tile);
 
-                    if (size > 1) {
-                        var newSize = size - 1;
+                            });
+                        }
 
-                        tileNode.removeClass(["size1", "size2", "size3"]);
-                        tileNode.addClass("size" + newSize);
-                        tileNode.data("size", newSize);
-
-
-                        Tile.get(id).then(function (tile) {
-
-                            tile.size = tile.size - 1;
-                            Tile.save(tile);
-
-                        });
                     }
 
-                }
+                    resize();
 
-                resize();
+                });
 
             });
 
-            //resize tile - bigger
-            q("#options-btn-resize-big").addEventListener("click", function () {
+            //-- resize tile - bigger
+            q("#edit-tile-make-bigger, #context-make-tile-bigger", true).forEach(function (element) {
 
-                var tiles = q(".tile.selected", true);
+                element.addEventListener("click", function () {
 
-                for (var i = 0; i < tiles.length; i++) {
+                    var tiles = q(".tile.selected", true);
 
-                    var tileNode = tiles[i];
-                    var id = tileNode.data("id");
-                    var size = tileNode.data("size");
+                    for (var i = 0; i < tiles.length; i++) {
 
-                    if (size < 3) {
-                        var newSize = size + 1;
+                        var tileNode = tiles[i];
+                        var id = tileNode.data("id");
+                        var size = tileNode.data("size");
 
-                        tileNode.removeClass(["size1", "size2", "size3"]);
-                        tileNode.addClass("size" + newSize);
-                        tileNode.data("size", newSize);
+                        if (size < 3) {
+                            var newSize = size + 1;
+
+                            tileNode.removeClass(["size1", "size2", "size3"]);
+                            tileNode.addClass("size" + newSize);
+                            tileNode.data("size", newSize);
 
 
-                        Tile.get(id).then(function (tile) {
+                            Tile.get(id).then(function (tile) {
 
-                            tile.size = tile.size + 1;
-                            Tile.save(tile);
+                                tile.size = tile.size + 1;
+                                Tile.save(tile);
 
-                        });
+                            });
+                        }
+
                     }
 
-                }
+                    resize();
 
-                resize();
-
-            });
-
-            //edit tile
-            q("#options-btn-edit").addEventListener("click", function () {
-                var id = q(".tile.selected").data("id");
-                showTileConfig(id);
-
-                hideOptions();
-            });
-
-            //remove tiles
-            q("#options-btn-remove").addEventListener("click", function () {
-
-                var tiles = q(".tile.selected", true);
-
-                for (var i = 0; i < tiles.length; i++) {
-
-                    var tileNode = tiles[i];
-                    var id = tileNode.data("id");
-
-                    tileNode.remove();
-                    Tile.remove(id);
-
-                }
-
-                reorder();
-
-                hideOptions();
+                });
 
             });
 
-            //add tile
-            q("#options-btn-add-tile").addEventListener("click", function () {
-                showTileConfig();
-                hideOptions();
+            //-- edit tile (context menu)
+            q("#context-edit-tile").addEventListener("click", function (event) {
+
+                closeAllSubmenus().then(function () {
+
+                    q(".context-menu").addClass("hidden");
+
+                    var id = q(".tile.selected").data("id");
+                    showTileConfig(id);
+
+                });
+
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+
             });
 
-            //settings
-            q("#options-btn-settings").addEventListener("click", function () {
-                loadConfig();
-                showConfig();
-                hideOptions();
+            //-- remove tile (context menu and sidebar)
+            q("#context-remove-tile, #edit-tile-delete", true).forEach(function (element) {
+
+                element.addEventListener("click", function () {
+
+                    q(".context-menu").addClass("hidden");
+
+                    var tiles = q(".tile.selected", true);
+
+                    for (var i = 0; i < tiles.length; i++) {
+
+                        var tileNode = tiles[i];
+                        var id = tileNode.data("id");
+
+                        tileNode.remove();
+                        Tile.remove(id);
+
+                    }
+
+                    reorder();
+
+                    sidebar.removeClass("open");
+                    menuButton.removeClass("active");
+                    subMenuClose();
+
+                    setTimeout(function () {
+                        navMain.removeClass("open");
+                    }, animaDelay);
+
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return false;
+
+                });
+
             });
 
-            //live update the configurations
-            q("#config input, #config select", true).forEach(function (element) {
+            //-- add tile (context menu)
+            q("#context-add-tile").addEventListener("click", function () {
+
+                closeAllSubmenus().then(function () {
+
+                    sidebar.addClass("open");
+                    menuButton.addClass("active");
+
+                    navNewTileMenu.addClass("open ext");
+                    extSidebarOpen();
+
+                    loadPreviewTile();
+
+                    q("#new-tile-customise-color a.color-preview").style.backgroundColor = MNTP.Config.AccentColor;
+                    q("#new-tile-customise-color input").value = MNTP.Config.AccentColor;
+
+                    q("#new-tile-customise-font-color a.color-preview").style.backgroundColor = MNTP.Config.TileFontColor;
+                    q("#new-tile-customise-font-color input").value = MNTP.Config.TileFontColor;
+
+                    q(".context-menu").addClass("hidden");
+
+                    q(".tile.selected", true).forEach(function (tileNode) {
+                        tileNode.removeClass("selected");
+                    });
+
+                });
+
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+
+            });
+
+            //-- settings (context menu)
+            q("#context-settings").addEventListener("click", function () {
+
+                closeAllSubmenus().then(function () {
+
+                    sidebar.addClass("open");
+                    menuButton.addClass("active");
+
+                    navMainOpen();
+
+                    q(".context-menu").addClass("hidden");
+
+                    q(".tile.selected", true).forEach(function (tileNode) {
+                        tileNode.removeClass("selected");
+                    });
+
+                });
+
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+
+            });
+
+            //-- live update the configurations
+            q("input[data-config], select[data-config]", true).forEach(function (element) {
 
                 element.addEventListener(["keypress", "change", "input"], function () {
+
+                    var that = this;
+
                     setTimeout(function () {
-                        getConfig().then(function (config) {
-                            loadConfig(config);
-                        });
+
+                        setConfig(that);
+
+                        loadConfig();
+
                     }, 0);
                 });
 
             });
-			
-			//reload background image only when changing the image
-            q("#config input[data-reload-background]", true).forEach(function (element) {
 
-                element.addEventListener("change", function () {
-					setTimeout(function () {
-						q("[data-property='ReloadBackgroundImage']").value = "true";
-					}, 0);
-                }, "reloadbg");
+            //-- tiles animation preview
+            var animationpreview;
+            q("[data-config='OpeningAnimationTime']").addEventListener("input", function () {
 
-            });
+                var that = this;
 
-			//tiles animation test
-			q("#btn-speed-test").addEventListener("click", function() {
-				
-				openingAnimation = true;
-				getConfig().then(function (config) {
-					reorder(config);
-				});
-				
-			});
-				
-            //save configurations changes and close popup
-            q("#config-btn-ok").addEventListener("click", function () {
-                saveConfig().then(hideConfigs());
-            });
+                animationpreview && clearTimeout(animationpreview);
 
-            //cancel configurations changes and close popup
-            q("#config-btn-cancel").addEventListener("click", function () {
-                hideConfigs();
+                animationpreview = setTimeout(function () {
+
+                    MNTP.Config.OpeningAnimationTime = parseInt(that.value);
+
+                    openingAnimation = true;
+
+                    reorder();
+
+                }, 500);
+
+            }, "animationPreview");
+
+            q("[data-config='OpeningAnimation']").addEventListener("change", function () {
+
+                var that = this;
+
+                setTimeout(function () {
+
+                    if (that.checked) {
+
+                        MNTP.Config.OpeningAnimation = true;
+
+                        openingAnimation = true;
+
+                        reorder();
+
+                    }
+
+                });
+
+            }, "animationPreview");
+
+            //-- get background from bing
+            q("#btn-bing-background").addEventListener("click", function () {
+
+                MNTP.Config.HasBackgroundImage = false;
+                MNTP.Config.BingBackgroundImage = true;
+                MNTP.Config.NoBackgroundImage = false;
+
+                MNTP.Config.ReloadBackgroundImage = true;
+
+                q("#background-url").fadeOutLeft();
+
                 loadConfig();
+
             });
 
-            //apply configurations changes
-            q("#config-btn-apply").addEventListener("click", function () {
-                saveConfig();
+            //-- add background from URL
+            q("#btn-background-url").addEventListener("click", function () {
+
+                q("#background-url").toggleFadeLeft();
+
             });
 
-            //change news view mode
+            //-- get background from URL
+            q("#txt-background-url").addEventListener("keydown", function () {
+
+                var that = this;
+
+                setTimeout(function () {
+
+                    var img = new Image();
+
+                    img.onload = function () {
+
+                        getDataUrlFromUrl(this.src).then(function (opt) {
+
+                            var image = {};
+                            image.type = Image.Type.Background;
+                            image.id = 1;
+                            image.data = opt.dataURL;
+
+                            Image.save(image).then(function () {
+
+                                MNTP.Config.HasBackgroundImage = true;
+                                MNTP.Config.BingBackgroundImage = false;
+                                MNTP.Config.NoBackgroundImage = false;
+
+                                MNTP.Config.ReloadBackgroundImage = true;
+
+                                q("#background-url").fadeOutLeft();
+
+                                loadConfig();
+
+                            });
+
+                        });
+
+                    }
+
+                    img.src = that.value;
+
+                }, 0);
+
+            });
+
+            q("#txt-background-url").addEventListener("blur", function () {
+
+                q("label", this.parentElement).toggleClass("valid", this.value.length > 0);
+
+            });
+
+            //-- upload background
+            q("#file-background").addEventListener("change", function () {
+
+                if (this.files) {
+
+                    var that = this;
+
+                    setTimeout(function () {
+
+                        getDataUrlFromFile(that.files[0]).then(function (dataURL) {
+
+                            var image = {};
+                            image.type = Image.Type.Background;
+                            image.id = 1;
+                            image.data = dataURL;
+
+                            Image.save(image).then(function () {
+
+                                MNTP.Config.HasBackgroundImage = true;
+                                MNTP.Config.BingBackgroundImage = false;
+                                MNTP.Config.NoBackgroundImage = false;
+
+                                MNTP.Config.ReloadBackgroundImage = true;
+
+                                q("#background-url").fadeOutLeft();
+
+                                loadConfig();
+
+                            });
+
+                        });
+
+                    }, 0);
+
+                }
+
+            });
+
+            // -- background fit
+            q("#select-background-fit").addEventListener("change", function () {
+
+                var that = this;
+
+                setTimeout(function () {
+
+                    MNTP.Config.BackgroundFill = false;
+                    MNTP.Config.BackgroundAdjust = false;
+
+                    if (that.value == "adjust")
+                        MNTP.Config.BackgroundAdjust = true;
+                    else if (that.value == "fill")
+                        MNTP.Config.BackgroundFill = true;
+
+                    loadConfig();
+
+                }, 0);
+
+            }, "fitChange");
+
+            //-- remove background
+            q("#btn-remove-background").addEventListener("click", function () {
+
+                MNTP.Config.HasBackgroundImage = false;
+                MNTP.Config.BingBackgroundImage = false;
+                MNTP.Config.NoBackgroundImage = true;
+
+                MNTP.Config.ReloadBackgroundImage = true;
+
+                q("#background-url").fadeOutLeft();
+
+                loadConfig();
+
+            });
+
+            //-- reset default setting (tiles)
+            q("#btn-reset-tiles-config").addEventListener("click", function () {
+
+                var inputs = q("[data-config]", "#nav-settings-tiles-menu");
+
+                for (var i = 0; i < inputs.length; i++) {
+
+                    var input = inputs[i];
+                    var config = input.data("config");
+
+                    MNTP.Config.setDefaultValue(config);
+
+                }
+
+                loadConfig();
+
+            });
+
+            //-- change news view mode
             q("#news-btn-change-view").addEventListener("click", function () {
 
                 var news = q("#news");
@@ -971,13 +1475,11 @@ var MNTP;
 
                 MNTP.Config.NewsViewMode = news.hasClass("list") ? "list" : "grid";
 
-                q("[data-property='NewsViewMode']", "#config").value = MNTP.Config.NewsViewMode;
-
                 resizeNews();
 
             });
 
-            //change show pictures on list mode 
+            //-- change show pictures on list mode 
             q("#news-btn-change-view-pictures").addEventListener("click", function () {
 
                 var news = q("#news");
@@ -985,25 +1487,23 @@ var MNTP;
 
                 MNTP.Config.ShowImageNewsList = !news.hasClass("hide-images");
 
-                q("[data-property='ShowImageNewsList']", "#config").value = (MNTP.Config.ShowImageNewsList ? "true" : "false");
+            });
+
+            //-- scroll through news titles
+            var newsTitleScrollAnimation;
+            q("#news-titles").addEventListener("mousewheel", function (e) {
+
+                newsTitleScrollAnimation && clearInterval(newsTitleScrollAnimation);
+                newsTitleScrollAnimation = null;
+
+                this.scrollLeft -= e.wheelDeltaY;
 
             });
 
-			//scroll through news titles
-			var newsTitleScrollAnimation;
-			q("#news-titles").addEventListener("mousewheel", function (e) {
-				
-				newsTitleScrollAnimation && clearInterval(newsTitleScrollAnimation);
-				newsTitleScrollAnimation = null;
-				
-				this.scrollLeft -= e.wheelDeltaY;
-				
-			});
-			
-			//click on news titles
-			q("#news-titles").addEventListener("click", function (e) {
-				
-				var p = event.target;
+            //-- click on news titles
+            q("#news-titles").addEventListener("click", function (e) {
+
+                var p = event.target;
 
                 while (p && p.tagName.toLowerCase() != "p")
                     p = p.parentElement;
@@ -1011,39 +1511,39 @@ var MNTP;
                 if (p && !p.hasClass("active")) {
 
                     loadFeed(p.data("url"));
-					
-					var titles = q("p", this, true);
-					
-					for (var i = 0; i < titles.length; i++)
-						titles[i].removeClass("active");		
-					
-					p.addClass("active");
-					
-                    var left = p.offsetLeft;
-					
-					var that = this;
-					
-					newsTitleScrollAnimation && clearInterval(newsTitleScrollAnimation);
 
-					newsTitleScrollAnimation = setInterval(function() {
-						
-						var lastScroll = that.scrollLeft;
-						
-						if (left - 60 > that.scrollLeft)
-							that.scrollLeft += 1;
-						else if (left - 60 < that.scrollLeft)
-							that.scrollLeft -= 1;
-						
-						if (left - 60 == that.scrollLeft || that.scrollLeft == lastScroll)
-							clearInterval(newsTitleScrollAnimation);
-					
-					}, 1);
+                    var titles = q("p", this, true);
+
+                    for (var i = 0; i < titles.length; i++)
+                        titles[i].removeClass("active");
+
+                    p.addClass("active");
+
+                    var left = p.offsetLeft;
+
+                    var that = this;
+
+                    newsTitleScrollAnimation && clearInterval(newsTitleScrollAnimation);
+
+                    newsTitleScrollAnimation = setInterval(function () {
+
+                        var lastScroll = that.scrollLeft;
+
+                        if (left - 60 > that.scrollLeft)
+                            that.scrollLeft += 1;
+                        else if (left - 60 < that.scrollLeft)
+                            that.scrollLeft -= 1;
+
+                        if (left - 60 == that.scrollLeft || that.scrollLeft == lastScroll)
+                            clearInterval(newsTitleScrollAnimation);
+
+                    }, 1);
 
                 }
-				
-			});
-			
-            //click on news items
+
+            });
+
+            //-- click on news items
             q("#news").addEventListener("mousedown", function (event) {
 
                 var li = event.target;
@@ -1059,7 +1559,7 @@ var MNTP;
 
                         var url = li.data("url");
 
-						navigate(url, event);
+                        navigate(url, event);
 
                     } else if (event.button == 0) {
                         li.toggleClass("full");
@@ -1069,9 +1569,9 @@ var MNTP;
 
             });
 
-            //navigate through bookmarks
+            //-- navigate through bookmarks
             var bkmPrevious, bkmNext;
-            //previous bookmarks
+            //-- previous bookmarks
             q("#btn-previous-bookmarks").addEventListener("mouseover", function () {
 
                 bkmPrevious = setInterval(function () {
@@ -1079,7 +1579,7 @@ var MNTP;
                     var ul = q("#bookmarks-list > ul");
 
                     var currentLeft = parseInt(ul.style.left) || 0;
-                    
+
                     if (currentLeft >= 0)
                         clearInterval(bkmPrevious);
                     else
@@ -1093,18 +1593,18 @@ var MNTP;
                 clearInterval(bkmPrevious);
             });
 
-            //next bookmarks
+            //-- next bookmarks
             q("#btn-next-bookmarks").addEventListener("mouseover", function () {
 
                 bkmNext = setInterval(function () {
 
                     var ul = q("#bookmarks-list > ul");
-                    
+
                     var currentLeft = parseInt(ul.style.left) || 0;
 
                     if (currentLeft + 440 < window.innerWidth * (-1))
                         clearInterval(bkmNext);
-                    else 
+                    else
                         ul.style.left = (currentLeft - 2) + "px";
 
                 }, 3);
@@ -1115,30 +1615,30 @@ var MNTP;
                 clearInterval(bkmNext);
             });
 
-			//scroll through bookmarks bar
-			q("#bookmarks-list").addEventListener("mousewheel", function (e) {
-				
-				var ul = q("#bookmarks-list > ul");
-                    
-				var currentLeft = parseInt(ul.style.left) || 0;
-				
-				var newLeft = 0;
-				
-				if ((currentLeft < 0) || (currentLeft + 440 >= window.innerWidth * (-1)))
-					newLeft = (currentLeft + e.wheelDeltaY);
-				
-				if (newLeft > 0)
-					newLeft = 0;
-					
-				if (newLeft + 440 < window.innerWidth * (-1))
-					newLeft = window.innerWidth * (-1) - 440;
-					
-				ul.style.left = newLeft + "px";
-						
-			});
-			
-            //click on bookmarks
-            q(".bookmarks li", true).forEach(function(element) {
+            //-- scroll through bookmarks bar
+            q("#bookmarks-list").addEventListener("mousewheel", function (e) {
+
+                //var ul = q("#bookmarks-list > ul");
+
+                //var currentLeft = parseInt(ul.style.left) || 0;
+
+                //var newLeft = 0;
+
+                //if ((currentLeft < 0) || (currentLeft + 440 >= window.innerWidth * (-1)))
+                //    newLeft = (currentLeft + e.wheelDeltaY);
+
+                //if (newLeft > 0)
+                //    newLeft = 0;
+
+                //if (newLeft + 440 < window.innerWidth * (-1))
+                //    newLeft = window.innerWidth * (-1) - 440;
+
+                //ul.style.left = newLeft + "px";
+
+            });
+
+            //-- click on bookmarks
+            q(".bookmarks li", true).forEach(function (element) {
                 element.addEventListener("click", function (event) {
 
                     var url = this.data("url");
@@ -1149,76 +1649,94 @@ var MNTP;
                 });
             });
 
-            //new feed
-            q("#btn-add-feed").addEventListener("click", function () {
-                editFeed();
+            //-- import tiles and configurations
+            q("#nav-settings-import-file").addEventListener("change", function (event) {
+
+                var file = this.files[0];
+
+                if (file) {
+
+                    var reader = new FileReader();
+
+                    reader.onload = (function (file) {
+
+                        return function (e) {
+
+                            var data = JSON.parse(e.target.result);
+
+                            if (data.tiles)
+                                data.tiles = JSON.parse(data.tiles);
+
+                            if (data.background)
+                                data.background = JSON.parse(data.background);
+
+                            if (data.temaPadrao)
+                                data.temaPadrao = JSON.parse(data.temaPadrao);
+
+                            MNTP.IDB.importData(data).then(function () { window.location.reload(); });
+
+                        };
+
+                    })(file);
+
+                    reader.readAsText(file);
+                }
+
+
             });
 
-            //edit feed
-            q(".btn-edit-feed", true).forEach(function (element) {
-                element.addEventListener("click", function (event) {
+            //-- export tiles and configurations
+            q("#nav-settings-export-file").addEventListener("click", function (event) {
 
-                    var id = this.data("id");
+                var that = this;
 
-                    editFeed(id);
+                if (!that.href) {
 
-                });
-            });
+                    MNTP.IDB.exportData().then(function (data) {
 
-            //delete feed
-            q(".btn-remove-feed", true).forEach(function (element) {
-                element.addEventListener("click", function (event) {
+                        var blob = new Blob([JSON.stringify(data)]);
+                        that.href = window.URL.createObjectURL(blob);
+                        that.download = "data.mosaic";
 
-                    var id = this.data("id");
+                        var clickEvent = new Event("click");
+                        that.dispatchEvent(clickEvent);
 
-                    Feed.remove(id).then(function () {
-
-                        q("#hdn-feed-id").value = "";
-                        q("#txt-feed-name").value = "";
-                        q("#txt-feed-url").value = "";
-
-                        q("#feed-config").style.display = "none";
-
-                        setTimeout(function () {
-                            loadFeeds().then(bindEvents);
-                        }, 0);
+                        console.log("teste");
 
                     });
 
-                });
-            });
+                } else {
 
-            //save feed
-            q("#feed-config-btn-ok").addEventListener("click", function (event) {
-
-                saveFeed().then(function () {
-
-                    q("#hdn-feed-id").value = "";
-                    q("#txt-feed-name").value = "";
-                    q("#txt-feed-url").value = "";
-
-                    q("#feed-config").style.display = "none";
-
-                    setTimeout(function() {
-                        loadFeeds().then(bindEvents);
+                    setTimeout(function () {
+                        that.href = "";
                     }, 0);
 
-                });
+                }
 
             });
 
-            //cancel feed edit
-            q("#feed-config-btn-cancel").addEventListener("click", function (event) {
-
-                q("#hdn-feed-id").value = "";
-                q("#txt-feed-name").value = "";
-                q("#txt-feed-url").value = "";
-
-                q("#feed-config").style.display = "none";
-
-            });
 
             success();
+
+        });
+
+    }
+
+    var closeAllSubmenus = function () {
+
+        return new Promise(function (success, fail) {
+
+            extSidebarClose();
+
+            var subMenus = q(".sidebar-nav.open", true);
+
+            for (var i = 0; i < subMenus.length; i++)
+                subMenus[i].removeClass("open ext");
+
+            if (subMenus.length > 0)
+                setTimeout(success, animaDelay);
+            else
+                success();
 
         });
 
@@ -1249,17 +1767,17 @@ var MNTP;
                         tile.order = i + 1;
                         tile.idGroup = idGroup;
 
-						if (!tile.position || MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
-						
-							var tileOffset = tileNode.getWindowOffset();
-						
-							tile.position = {};
-							tile.position.left = tileOffset.left;
-							tile.position.top = tileOffset.top;
+                        if (!tile.position || MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
 
-							tileNode.data("position", tile.position);
-							
-						}
+                            var tileOffset = tileNode.getWindowOffset();
+
+                            tile.position = {};
+                            tile.position.left = tileOffset.left;
+                            tile.position.top = tileOffset.top;
+
+                            tileNode.data("position", tile.position);
+
+                        }
 
                         tilesToSave.push(tile);
                     }
@@ -1275,17 +1793,41 @@ var MNTP;
 
     }
 
-    var showConfig = function () {
+    var setConfig = function (input) {
 
-        q("[data-panel]", true).forEach(function (element) {
-            element.style.display = "none";
-        });
+        var config = input.data("config");
 
-        q("[data-panel='config-general']").style.display = "block";
+        if (input.type == "file" && input.files.length > 0) {
 
-        q("#overlay").style.display = "block";
-        q("#config").style.display = "block";
-        q("#tile-config").style.display = "none";
+            //assign(config, config, input.files[0]);
+
+        } else if (input.type == "checkbox" || input.type == "radio") {
+
+            MNTP.Config[config] = input.checked;
+
+        } else if (input.value) {
+
+            var configType = input.data("config-type") || "";
+
+            switch (configType.toLowerCase()) {
+                case "boolean":
+                    MNTP.Config[config] = input.value.toLowerCase() == "true";
+                    break;
+                case "float":
+                    MNTP.Config[config] = parseFloat(input.value);
+                    break;
+                case "int":
+                    MNTP.Config[config] = parseInt(input.value);
+                    break;
+                default:
+                    MNTP.Config[config] = input.value;
+                    break;
+            }
+
+        }
+
+        if (config == "TileWidthLg")
+            MNTP.Config.TileHeightLg = parseInt(input.value);
 
     }
 
@@ -1295,28 +1837,58 @@ var MNTP;
 
         return new Promise(function (success, fail) {
 
-            var inputs = q("input[data-property], select[data-property]", "#config", true);
+            var inputs = q("input[data-config], select[data-config]", true);
 
             for (var i = 0; i < inputs.length; i++) {
                 var input = inputs[i];
-                var value = getPropertyValue(config, input.data("property"));
+                var value = getPropertyValue(config, input.data("config"));
 
-                if (input.type == "checkbox" || input.type == "radio")
-                    input.checked = value || false;
-                else if (input.type != "file")
+                if (input.tagName.toLowerCase() == "select") {
+
                     input.value = (value !== undefined ? value : "");
+
+                    var text = q("input[type=text]", input.parentElement)
+
+                    if (text)
+                        text.value = q("option[value='" + input.value + "']", input).innerText;
+
+                } else if (input.type == "checkbox" || input.type == "radio") {
+
+                    input.checked = value || false;
+
+                } else if (input.type != "file") {
+
+                    input.value = (value !== undefined ? value : "");
+
+                }
             }
+
+            //dark theme
+            q("body").toggleClass("dark", config.DarkTheme);
 
             //show news
             var news = q("#news");
 
-            if (config.ShowNews) {
+            //if (config.ShowNews) {
+            if (false) {
 
                 news.removeClass("grid");
                 news.removeClass("list");
 
                 news.style.width = config.NewsWidth + "px";
                 news.style.height = config.NewsHeight + "px";
+
+                if (config.NewsLeft == -1 || config.NewsRight == -1) {
+
+                    news.style.right = "2em";
+                    news.style.top = "calc(50% - " + (config.NewsHeight / 2) + "px)";
+
+                } else {
+
+                    news.style.left = config.NewsLeft + "px";
+                    news.style.top = config.NewsTop + "px";
+
+                }
 
                 news.addClass(config.NewsViewMode);
 
@@ -1335,44 +1907,38 @@ var MNTP;
                 else
                     resizeNews();
 
-                q("a[data-panel-for='config-feeds']").style.display = "block";
-
             } else {
 
                 news.style.display = "none";
 
-                q("a[data-panel-for='config-feeds']").style.display = "none";
+            }
+
+            //show bookmarks bar
+            if (config.ShowBookmarksBar) {
+
+                q(".bookmark-bar").style.display = "block";
+
+                if (q("#bookmarks-list > ul > li", true).length == 0) {
+                    loadBookmarks().then(bindEvents);
+                }
+
+                q("#menu-button").style.top = "60px";
+
+            } else {
+
+                q(".bookmark-bar").style.display = "none";
+
+                q("#menu-button").style.top = "";
 
             }
 
-			//show bookmarks bar
-			if (config.ShowBookmarksBar) {
-				
-				q(".bookmark-bar").style.display = "block";
-				
-				if (q("#bookmarks-list > ul > li", true).length == 0) {
-					loadBookmarks().then(bindEvents);
-				}
-				
-			} else {
-			
-				q(".bookmark-bar").style.display = "none";
-			
-			}
-			
-			//show options button
-			if (config.ShowOptionsButton)
-				q("#button-options").style.display = "block";
-			else
-				q("#button-options").style.display = "none";
-			
             //tiles border radius, opacity & grayscale
             q(".tile", true).forEach(function (tileNode) {
 
                 tileNode.style.borderRadius = config.TileBorderRadius + "px";
                 tileNode.style.webkitFilter = "grayscale(" + config.TileGrayscale + ")";
-				
-				q(".tile-background", tileNode).style.opacity = config.TileOpacity;
+
+                q(".tile-background", tileNode).style.opacity = config.TileOpacity;
 
             });
 
@@ -1381,45 +1947,59 @@ var MNTP;
                 element.style.backgroundColor = config.AccentColor;
             });
 
+            if (config.TileExtendBackground) {
+                q("#tile-background-color").fadeOutLeft();
+            } else {
+                q("#tile-background-color").fadeInLeft();
+            }
+
+
             //animation speed
             if (config.OpeningAnimation)
-                q("#config-animation-speed").style.display = "block";
+                q("#animation-speed").fadeInLeft();
             else
-                q("#config-animation-speed").style.display = "none";
-				
-			//tiles positioning
-			if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
-                q("#config-tiles-placement").style.display = "block";
+                q("#animation-speed").fadeOutLeft();
+
+            //tiles positioning
+            if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
+                q("#tile-grid-configs").fadeInLeft();
             else
-                q("#config-tiles-placement").style.display = "none";
-			
-				
+                q("#tile-grid-configs").fadeOutLeft();
+
+            //flow direction
+            if (config.TileFlowDirection == MNTP.Config.FLOW_DIRECTION.HORIZONTAL)
+                q("#tile-columns").fadeInLeft();
+            else
+                q("#tile-columns").fadeOutLeft();
+
+
             //background color
             q("body").style.backgroundColor = config.BackgroundColor;
 
-            //background image -->
-            if (config.HasBackgroundImage) {
-                q("#config-loadBackgroundImage").style.display = "block";
-                q("#config-backgroundImage-options").style.display = "block";
-            }
 
             if (config.HasBackgroundImage && config.BackgroundImage && config.BackgroundImage.data) {
 
                 bingImagesSlider && clearInterval(bingImagesSlider);
-				bingImagesSlider = null;
+                bingImagesSlider = null;
 
                 loadBackground(config.BackgroundImage, config);
+
+                q("#remove-background").fadeInLeft();
+                q("#background-options").fadeInLeft();
 
             } else if (config.HasBackgroundImage) {
 
                 bingImagesSlider && clearInterval(bingImagesSlider);
-				bingImagesSlider = null;
+                bingImagesSlider = null;
 
                 Image.get(Image.Type.Background).then(function (image) {
 
                     if (image) {
 
                         loadBackground(image, config);
+
+                        q("#remove-background").fadeInLeft();
+                        q("#background-options").fadeInLeft();
 
                     } else {
 
@@ -1429,58 +2009,54 @@ var MNTP;
                             tileNode.style.backgroundImage = "";
                         });
 
-                        q("#config-backgroundImage-options").style.display = "none";
-
                     }
 
                 });
 
             } else if (config.BingBackgroundImage) {
-				
-				if ((config.ReloadBackgroundImage || !wallpaper.style.backgroundImage) && !bingImagesSlider) {
 
-					MNTP.BGUtils.getNextBingImage().then(function (image) {	
-							
-						getConfig().then(function (config) {
+                if ((config.ReloadBackgroundImage || !wallpaper.style.backgroundImage) && !bingImagesSlider) {
 
-							var imageUrl = image.url || dataURLtoObjectURL(image.data);
-							config.ReloadBackgroundImage = true;
-							loadBackground({ url: imageUrl }, config);
+                    MNTP.BGUtils.getNextBingImage().then(function (image) {
 
-						});
+                            var imageUrl = image.url || dataURLtoObjectURL(image.data);
+                            MNTP.Config.ReloadBackgroundImage = true;
+                            loadBackground({ url: imageUrl });
 
-					});
-				
-					bingImagesSlider = setInterval(function () {
+                            q("#remove-background").fadeInLeft();
+                            q("#background-options").fadeInLeft();
 
-						MNTP.BGUtils.getNextBingImage().then(function (image) {	
-							
-							getConfig().then(function (config) {
+                    });
 
-								var imageUrl = image.url || dataURLtoObjectURL(image.data);
-								config.ReloadBackgroundImage = true;
-								loadBackground({ url: imageUrl }, config);
+                    bingImagesSlider = setInterval(function () {
 
-							});
-						});
-						
-					}, 10000);
-				
-					
-				} else {
+                        MNTP.BGUtils.getNextBingImage().then(function (image) {
 
-					loadBackground(null, config);
+                            var imageUrl = image.url || dataURLtoObjectURL(image.data);
+                            config.ReloadBackgroundImage = true;
+                            loadBackground({ url: imageUrl }, config);
 
-				}
-					
-                q("#config-loadBackgroundImage").style.display = "none";
+                            q("#remove-background").fadeInLeft();
+                            q("#background-options").fadeInLeft();
 
-                q("#config-backgroundImage-options").style.display = "";
+                        });
+
+                    }, 20000);
+
+
+                } else {
+
+                    loadBackground(null, config);
+
+                    q("#remove-background").fadeInLeft();
+                    q("#background-options").fadeInLeft();
+
+                }
 
             } else if (config.NoBackgroundImage) {
 
                 bingImagesSlider && clearInterval(bingImagesSlider);
-				bingImagesSlider = null;
+                bingImagesSlider = null;
 
                 q("#wallpaper").style.backgroundImage = "";
 
@@ -1490,9 +2066,8 @@ var MNTP;
 
                 });
 
-                q("#config-loadBackgroundImage").style.display = "none";
-
-                q("#config-backgroundImage-options").style.display = "none";
+                q("#remove-background").fadeOutLeft();
+                q("#background-options").fadeOutLeft();
 
             }
             //<--
@@ -1515,25 +2090,26 @@ var MNTP;
         if (!wallpaper.style.backgroundImage)
             config.ReloadBackgroundImage = true;
 
-        if (config.ReloadBackgroundImage) {
+        if (config.ReloadBackgroundImage && backgroundUrl) {
 
-			//pre-load the image for the fade effect to work
-			var img = document.createElement("img");
+            //pre-load the image for the fade effect to work
+            var img = document.createElement("img");
 
-			img.onload = function () {
-				wallpaper.style.backgroundImage = "url('" + this.src + "')";
+            img.onload = function () {
 
-				q(".tile .accentbg", true).forEach(function (bgNode) {
+                wallpaper.style.backgroundImage = "url('" + this.src + "')";
 
-					if (config.TileExtendBackground)
-						bgNode.style.backgroundImage = wallpaper.style.backgroundImage;
-					else if (!config.TileExtendBackground)
-						bgNode.style.backgroundImage = "";
+                q(".tile .accentbg", true).forEach(function (bgNode) {
 
-				});
-			}
+                    if (config.TileExtendBackground)
+                        bgNode.style.backgroundImage = wallpaper.style.backgroundImage;
+                    else
+                        bgNode.style.backgroundImage = "";
 
-			img.src = backgroundUrl;
+                });
+            }
+
+            img.src = backgroundUrl;
 
         }
 
@@ -1549,183 +2125,38 @@ var MNTP;
 
         q(".tile .accentbg", true).forEach(function (bgNode) {
 
-			if (config.TileExtendBackground) {
-            
-				if (config.BackgroundFill)
-					bgNode.style.backgroundSize = "100% 100%";
-				else if (config.BackgroundAdjust)
-					bgNode.style.backgroundSize = "100% auto";
-				else
-					bgNode.style.backgroundSize = "";
-				
-			}
+            if (config.TileExtendBackground) {
 
-			if ((config.HasBackgroundImage || config.BingBackgroundImage) && config.TileExtendBackground)
-				bgNode.parentNode.style.backgroundColor = config.BackgroundColor;
-			else
-				bgNode.parentNode.style.backgroundColor = "";
+                if (wallpaper.style.backgroundImage && !bgNode.style.backgroundImage)
+                    bgNode.style.backgroundImage = wallpaper.style.backgroundImage;
+
+                if (config.BackgroundFill)
+                    bgNode.style.backgroundSize = "100% 100%";
+                else if (config.BackgroundAdjust)
+                    bgNode.style.backgroundSize = "100% auto";
+                else
+                    bgNode.style.backgroundSize = "";
+
+            } else {
+
+                bgNode.style.backgroundImage = "";
+
+            }
+
+            if ((config.HasBackgroundImage || config.BingBackgroundImage) && config.TileExtendBackground)
+                bgNode.parentNode.style.backgroundColor = config.BackgroundColor;
+            else
+                bgNode.parentNode.style.backgroundColor = "";
 
         });
 
         config.ReloadBackgroundImage = false;
-        q("input[data-property='ReloadBackgroundImage']", "#config").value = "false";
-
-    }
-
-    var getConfig = function () {
-
-        return new Promise(function (success, fail) {
-
-            var inputs = q("input[data-property], select[data-property]", "#config", true);
-
-            var config = {};
-
-            for (var i = 0; i < inputs.length; i++) {
-
-                var input = inputs[i];
-
-                if (input.type == "file" && input.files.length > 0) {
-
-                    assign(config, input.data("property"), input.files[0]);
-
-                } else if (input.type == "checkbox" || input.type == "radio") {
-
-                    assign(config, input.data("property"), input.checked);
-
-                } else if (input.value) {
-
-                    var propertyType = input.data("property-type") || "";
-
-                    switch (propertyType.toLowerCase()) {
-                        case "boolean":
-                            assign(config, input.data("property"), (input.value.toLowerCase() == "true"))
-                            break;
-                        case "float":
-                            assign(config, input.data("property"), parseFloat(input.value));
-                            break;
-                        case "int":
-                            assign(config, input.data("property"), parseInt(input.value));
-                            break;
-                        default:
-                            assign(config, input.data("property"), input.value);
-                            break;
-                    }
-
-                }
-
-            }
-			
-			config.TileWidthSm = (config.TileWidthLg / 2) - (config.TileMargin / 2);
-			config.TileHeightSm = (config.TileHeightLg / 2) - (config.TileMargin / 2);
-
-            //Background image -->
-            if (config.ReloadBackgroundImage) {
-
-                if (config.HasBackgroundImage) {
-
-                    config.BackgroundImage = config.BackgroundImage || {};
-
-                    q("#config-loadBackgroundImage").style.display = "";
-
-                } else {
-
-                    q("#config-loadBackgroundImage").style.display = "none";
-
-                }
-
-            }
-
-            if (config.BackgroundImage && config.BackgroundImage.data) {
-
-                getDataUrlFromFile(config.BackgroundImage.data).then(function (dataURL) {
-                    config.BackgroundImage.data = dataURL;
-                    success(config);
-                });
-
-            } else {
-                success(config);
-            }
-            //<--
-			
-        });
-
-    }
-
-    var saveConfig = function () {
-
-        return new Promise(function (success, fail) {
-
-            getConfig().then(function (config) {
-
-                new Promise(function (success, fail) {
-
-                    //Background image -->
-                    if (config.HasBackgroundImage && config.BackgroundImage) {
-
-                        if (config.BackgroundImage.data) {
-
-                            var image = config.BackgroundImage;
-                            image.type = Image.Type.Background;
-                            image.id = 1;
-                            image.data = config.BackgroundImage.data;
-
-                            config.BackgroundImage = undefined;
-
-                            Image.save(image).then(success);
-
-                        } else {
-
-                            Image.get(Image.Type.Background).then(function (image) {
-
-                                var data = image.data;
-
-                                image = config.BackgroundImage;
-                                image.type = Image.Type.Background;
-                                image.id = 1;
-                                image.data = data;
-
-                                config.BackgroundImage = undefined;
-
-                                Image.save(image).then(success);
-
-                            });
-
-                        }
-
-                    } else if (!config.HasBackgroundImage) {
-
-                        Image.remove(Image.Type.Background).then(success);
-
-                    } else {
-
-                        success();
-
-                    }
-                    //<--
-
-                }).then(function () {
-
-                    MNTP.Config.replace(config);
-
-                });
-
-            });
-
-        });
 
     }
 
     var showTileConfig = function (idTile) {
 
-        q("#overlay").style.display = "block";
-        q("#config").style.display = "none";
-        q("#tile-config").style.display = "block";
-
-        q("[data-panel]", true).forEach(function (element) {
-            element.style.display = "none";
-        });
-
-        q("[data-panel='tile-config-general']").style.display = "block";
+        editMenuOpen();
 
         if (idTile) {
 
@@ -1733,41 +2164,75 @@ var MNTP;
                 loadTileConfig(tile);
             });
 
-        } else {
-            loadTileConfig(Tile.createNewTile());
         }
-
     }
 
-    var loadPreviewTile = function (tile) {
-        q("#tile-config-preview-tile").innerHTML = "";
+    var loadPreviewTile = function (tile, isEdit) {
 
-        var tile = tile || getTileConfig();
+        var idMenu = isEdit ? "#edit-tile-menu" : "#nav-new-tile-menu";
 
-        q("#tile-config-preview-tile").insertBefore(Tile.getNode(tile, true), null);
+        q(".tile-preview", idMenu).innerHTML = "";
+
+        var tile = tile || getTileConfig(isEdit);
+
+        q(".tile-preview", idMenu).insertBefore(Tile.getNode(tile, true), null);
+
+        if (q("#wallpaper").style.backgroundImage && MNTP.Config.TileExtendBackground && tile.accentColor) {
+            q(".tile-preview .tile-background", idMenu).style.backgroundImage = q("#wallpaper").style.backgroundImage;
+        }
     }
 
     var loadTileConfig = function (tile) {
 
-        var inputs = q("input[data-property], select[data-property]", "#tile-config", true);
+        var inputs = q("input[data-property], select[data-property]", "#edit-tile-menu", true);
 
         for (var i = 0; i < inputs.length; i++) {
             var input = inputs[i];
 
-            if (input.type == "checkbox" || input.type == "radio")
+            if (input.type == "checkbox" || input.type == "radio") {
+
                 input.checked = getPropertyValue(tile, input.data("property")) || false;
-            else
+
+            } else {
+
                 input.value = getPropertyValue(tile, input.data("property")) || "";
+
+                if (input.type == "text")
+                    q("label", input.parentNode).toggleClass("valid", input.value != "");
+
+            }
+
         }
 
+        q("input[data-property=accentColor]", "#edit-tile-menu").checked = !tile.accentColor;
+        q("input[data-property=accentColor]", "#edit-tile-menu").toggleClass("active", !tile.accentColor);
 
-        loadPreviewTile();
+
+        if (tile.accentColor) {
+            q("#edit-tile-customise-color").fadeOutLeft();
+            q("#edit-tile-customise-font-color").fadeOutLeft();
+        } else {
+            q("#edit-tile-customise-color").fadeInLeft();
+            q("#edit-tile-customise-font-color").fadeInLeft();
+        }
+
+        var colorInputs = q("input[type=color]", "#edit-tile-menu", true);
+
+        for (var i = 0; i < colorInputs.length; i++)
+            q(".color-preview", colorInputs[i].parentNode).style.backgroundColor = colorInputs[i].value;
+
+
+        loadPreviewTile(null, true);
 
     }
 
-    var getTileConfig = function () {
+    var getTileConfig = function (isEdit) {
 
-        var inputs = q("input[data-property], select[data-property]", "#tile-config", true);
+        var idMenu = isEdit ? "#edit-tile-menu" : "#nav-new-tile-menu";
+
+        q("#tile-preview", idMenu).innerHTML = "";
+
+        var inputs = q("input[data-property], select[data-property]", idMenu, true);
 
         var tile = {};
 
@@ -1775,91 +2240,78 @@ var MNTP;
 
             var input = inputs[i];
 
-            if (input.type.toLowerCase() != "color") {
 
-                if (input.type == "file" && input.files.length > 0) {
+            if (input.type == "file" && input.files.length > 0) {
 
-                    assign(tile, input.data("property"), input.files[0]);
+                assign(tile, input.data("property"), input.files[0]);
 
-                } else if (input.type == "checkbox" || input.type == "radio") {
+            } else if (input.type == "checkbox" || input.type == "radio") {
 
-                    assign(tile, input.data("property"), input.checked);
+                assign(tile, input.data("property"), input.checked);
 
-                } else if (input.value) {
+            } else if (input.value) {
 
-                    var propertyType = input.data("property-type") || "";
+                var propertyType = input.data("property-type") || "";
 
-                    switch (propertyType.toLowerCase()) {
-                        case "boolean":
-                            assign(tile, input.data("property"), (input.value.toLowerCase() == "true"))
-                            break;
-                        case "float":
-                            assign(tile, input.data("property"), parseFloat(input.value));
-                            break;
-                        case "int":
-                            assign(tile, input.data("property"), parseInt(input.value));
-                            break;
-                        default:
-                            assign(tile, input.data("property"), input.value);
-                            break;
-                    }
-
+                switch (propertyType.toLowerCase()) {
+                    case "boolean":
+                        assign(tile, input.data("property"), (input.value.toLowerCase() == "true"))
+                        break;
+                    case "float":
+                        assign(tile, input.data("property"), parseFloat(input.value));
+                        break;
+                    case "int":
+                        assign(tile, input.data("property"), parseInt(input.value));
+                        break;
+                    default:
+                        assign(tile, input.data("property"), input.value);
+                        break;
                 }
 
             }
 
         }
 
+        tile.accentColor = !tile.accentColor;
+
         if (tile.url && (tile.url.toLowerCase().indexOf("http://") < 0 && tile.url.toLowerCase().indexOf("https://") < 0)) {
             tile.url = "http://" + tile.url;
         }
 
-        if (tile.image && tile.image.data) {
+        if (tile.image && (tile.image.data || tile.image.url)) {
             tile.hasImage = true;
             tile.removeImage = false;
 
-            q("input[data-property='hasImage']", "#tile-config").value = "true";
-            q("input[data-property='removeImage']", "#tile-config").value = "false";
+            if (tile.image.data)
+                q("input[data-property='image.url']", idMenu).value = ""
+
+            q("input[data-property='hasImage']", idMenu).value = "true";
+            q("input[data-property='removeImage']", idMenu).value = "false";
         }
 
-        if (tile.hasImage && !tile.removeImage) {
-
-            tile.image = tile.image || {};
-
-            q("#tile-config-file-image").style.display = "none";
-
-            q("#tile-config-btn-removeImage").style.display = "";
-            q("#tile-config-imageSize").style.display = "";
-        } else {
-            q("#tile-config-file-image").style.display = "";
-
-            q("#tile-config-btn-removeImage").style.display = "none";
-            q("#tile-config-imageSize").style.display = "none";
-        }
-
-        if (tile.accentColor)
-            q("#tile-config-backgroundColor").style.display = "none";
+        if (tile.hasImage)
+            q("[id*=tile-remove-image]", idMenu).removeClass("fadeOut").addClass("fadeIn");
         else
-            q("#tile-config-backgroundColor").style.display = "block";
+            q("[id*=tile-remove-image]", idMenu).removeClass("fadeIn").addClass("fadeOut");
 
-		if (!tile.position && MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
-		
-			tile.position = { 
-				left: (window.innerWidth / 2) - (MNTP.Config.TileWidthLg / 2), 
-				top: (window.innerHeight / 2) - (MNTP.Config.TileHeightSm / 2), 
-			};
-			
-		}
-			
+        if (!tile.position && MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
+
+            tile.position = {
+                left: (window.innerWidth / 2) - (MNTP.Config.TileWidthLg / 2),
+                top: (window.innerHeight / 2) - (MNTP.Config.TileHeightSm / 2),
+            };
+
+        }
+
         return tile;
 
     }
 
-    var saveTileConfig = function () {
+    var saveTileConfig = function (isEdit) {
 
         return new Promise(function (success, fail) {
 
-            var tile = getTileConfig();
+            var tile = getTileConfig(isEdit);
 
             tile.size = tile.size || 2;
 
@@ -1867,23 +2319,6 @@ var MNTP;
 
         });
 
-    }
-
-    var hideConfigs = function () {
-
-        q("#overlay").style.display = "none";
-        q("#config").style.display = "none";
-        q("#tile-config").style.display = "none";
-
-    }
-
-    var hideOptions = function () {
-
-        q(".tile.selected", true).forEach(function (element) {
-            element.removeClass("selected");
-        });
-
-        q("#options").addClass("hidden");
     }
 
     var getGroupNodebyID = function (idGroup) {
@@ -1897,17 +2332,132 @@ var MNTP;
 
     }
 
-    var loadFeeds = function () {
+    var getTileNodeById = function (idTile) {
+
+        var tile = q(".tile", true).filter(function (element) { return element.data("id") == idTile; });
+
+        if (tile.length > 0)
+            return tile[0];
+        else
+            return null;
+
+    }
+
+    var loadTileFeeds = function () {
+
+        return new Promise(function (success, fail) {
+
+            Tile.select().then(function (tiles) {
+
+                var newArray = [];
+
+                for (var i = 0; i < tiles.length; i++) {
+
+                    var tile = tiles[i];
+
+                    if (tile.rss)
+                        newArray.push(tile);
+
+                }
+
+                tiles = shuffleArray(newArray);
+
+                for (var i = 0; i < tiles.length; i++) {
+
+                    var tile = tiles[i];
+
+                    var tileNode = getTileNodeById(tile.id);
+
+                    var showFeed = function (tile, tileNode) {
+
+                        var feedCount = tileNode.hasClass("size3") ? 4 : 1;
+
+                        if (q(".feed p", tileNode, true).length != feedCount) {
+
+                            MNTP.WebService.getContent(false, tile.rss, feedCount).then(function (feeds) {
+
+                                if (feeds.items && feeds.items.results && feeds.items.results.length > 0) {
+
+                                    var feedNode = q(".tile-content .feed", tileNode);
+
+                                    feedNode.innerHTML = "";
+
+                                    var h4 = document.createElement("h4");
+
+                                    h4.innerText = tile.name;
+
+                                    feedNode.insertBefore(h4, null);
+
+                                    for (var i = 0; i < feeds.items.results.length && i < feedCount; i++) {
+
+                                        var feed = feeds.items.results[i];
+
+                                        var p = document.createElement("p");
+
+                                        p.innerText = feed.title;
+                                        p.data("url", feed.url);
+
+                                        p.addEventListener("click", function (event) {
+                                            navigate(this.data("url"), event);
+                                            event.stopPropagation();
+                                        });
+
+                                        feedNode.insertBefore(p, null);
+
+                                    }
+
+                                    q(".tile-content", tileNode).addClass("feed-loaded");
+                                    q(".tile-content", tileNode).style.webkitAnimationName = "tileAnimation";
+
+                                }
+
+                            });
+
+                        } else {
+
+                            q(".tile-content", tileNode).style.webkitAnimationName = "tileAnimation";
+
+                        }
+
+                    }
+
+                    tileNode.feedTimeout && clearTimeout(tileNode.feedTimeout);
+                    tileNode.feedInterval && clearInterval(tileNode.feedInterval);
+
+                    tileNode.feedTimeout = setTimeout(function (tile, tileNode) {
+
+                        showFeed(tile, tileNode);
+
+                        tileNode.feedInterval = setInterval(function (tile, tileNode) {
+
+                            showFeed(tile, tileNode);
+
+                        }, 5000 * tiles.length, tile, tileNode);
+
+                    }, 5000 * i, tile, tileNode);
+
+                    q(".tile-content", tileNode).addEventListener("webkitAnimationEnd", function () {
+                        this.style.webkitAnimationName = "";
+                    });
+
+                }
+
+                success();
+
+            });
+
+        });
+
+    }
+
+    var loadFeedsPanel = function () {
 
         return new Promise(function (success, fail) {
 
             Feed.select().then(function (feeds) {
 
                 var newsTitles = q("#news #news-titles");
-                var divConfigFeeds = q("#config-feeds");
-
                 newsTitles.innerHTML = "";
-                divConfigFeeds.innerHTML = "";
 
                 var p = document.createElement("p");
                 p.innerHTML = "Featured";
@@ -1928,31 +2478,6 @@ var MNTP;
 
                         newsTitles.insertBefore(p, null);
 
-                        //config - feeds
-                        var divFeed = document.createElement("div");
-                        var spanName = document.createElement("span");
-                        var spanUrl = document.createElement("span");
-                        var btnEdit = document.createElement("a");
-                        var btnRemove = document.createElement("a");
-
-                        spanName.innerHTML = feed.name;
-
-                        spanUrl.innerHTML = feed.url;
-                        spanUrl.addClass("url");
-
-                        btnEdit.addClass("btn-edit-feed");
-                        btnEdit.data("id", feed.id);
-
-                        btnRemove.addClass("btn-remove-feed");
-                        btnRemove.data("id", feed.id);
-
-                        divFeed.insertBefore(spanName, null);
-                        divFeed.insertBefore(spanUrl, null);
-                        divFeed.insertBefore(btnEdit, null);
-                        divFeed.insertBefore(btnRemove, null);
-
-                        divConfigFeeds.insertBefore(divFeed, null);
-
                     }
 
                 }
@@ -1962,7 +2487,7 @@ var MNTP;
             }, fail);
 
         });
-        
+
     }
 
     var loadFeed = function (url) {
@@ -1993,52 +2518,13 @@ var MNTP;
 
             request.catch(function (error) {
 
-                if (!url) 
+                if (!url)
                     q("#news").style.display = "none";
 
                 console.error("Error loading news");
                 fail(error);
+
             });
-
-        });
-
-    }
-
-    var editFeed = function (id) {
-
-        if (id) {
-
-            Feed.get(id).then(function (feed) {
-
-                if (feed) {
-
-                    q("#hdn-feed-id").value = feed.id;
-                    q("#txt-feed-name").value = feed.name;
-                    q("#txt-feed-url").value = feed.url;
-
-                }
-
-            })
-
-        }
-
-        q("#feed-config").style.display = "block";
-
-    }
-
-    var saveFeed = function () {
-
-        return new Promise(function (sucess, fail) {
-
-            var feed = {};
-
-            if (q("#hdn-feed-id").value)
-                feed.id = parseInt(q("#hdn-feed-id").value);
-
-            feed.name = q("#txt-feed-name").value;
-            feed.url = q("#txt-feed-url").value;
-
-            Feed.save(feed).then(sucess, fail);
 
         });
 
@@ -2084,85 +2570,30 @@ var MNTP;
             //color inputs
             var colorInputs = q("input[type='color']", true);
 
+            var updateColor = function (colorInput) {
+
+                if (colorInput.previousElementSibling && colorInput.previousElementSibling.tagName.toLowerCase() == "div") {
+
+                    var a = q("a", colorInput.previousElementSibling);
+
+                    a && (a.style.backgroundColor = colorInput.value);
+
+                }
+
+            }
+
             for (var i = 0; i < colorInputs.length; i++) {
 
                 var colorInput = colorInputs[i];
 
-                if (!colorInput.data("customized")) {
+                colorInput.addEventListener("change", function () {
 
-                    var text = document.createElement("input");
+                    updateColor(this);
 
-                    text.type = "text";
-                    text.value = colorInput.value;
+                }, "customColorChange");
 
-                    text.addEventListener([/*"keydown", */"change"], function () {
-                        var that = this;
-                        setTimeout(function () {
-                            that.previousSibling.value = that.value;
-                        }, 0);
-                    }, "customColorInput");
+                updateColor(colorInput);
 
-                    colorInput.addEventListener("input", function () {
-                        this.nextSibling.value = this.value;
-                    }, "customColorInput");
-
-
-                    var property = colorInput.data("property");
-                    property && text.setAttribute("data-property", property);
-
-                    colorInput.parentElement.insertBefore(text, colorInput.nextSibling);
-
-                    colorInput.data("customized", true);
-
-                }
-            }
-
-            //range inputs
-            var rangeInputs = q("input[type='range']", true);
-
-            for (var i = 0; i < rangeInputs.length; i++) {
-
-                var rangeInput = rangeInputs[i];
-
-                if (!rangeInput.data("customized")) {
-
-                    var number = document.createElement("input");
-
-                    number.type = "number";
-                    number.value = rangeInput.value;
-
-                    if (rangeInput.getAttribute("min"))
-                        number.setAttribute("min", rangeInput.getAttribute("min"));
-
-                    if (rangeInput.getAttribute("max"))
-                        number.setAttribute("max", rangeInput.getAttribute("max"));
-
-                    if (rangeInput.getAttribute("step"))
-                        number.setAttribute("step", rangeInput.getAttribute("step"));
-
-                    number.addEventListener([/*"keydown", */"change"], function () {
-                        var that = this;
-                        setTimeout(function () {
-                            that.previousSibling.value = that.value;
-                        }, 0);
-                    }, "customRangeInput");
-
-                    rangeInput.addEventListener("input", function () {
-                        this.nextSibling.value = this.value;
-                    }, "customRangeInput");
-
-
-                    var property = rangeInput.data("property");
-                    property && number.setAttribute("data-property", property);
-
-                    var propertyType = rangeInput.data("property-type");
-                    propertyType && number.setAttribute("data-property-type", propertyType);
-
-                    rangeInput.parentElement.insertBefore(number, rangeInput.nextSibling);
-
-                    rangeInput.data("customized", true);
-
-                }
             }
 
             success();
@@ -2170,27 +2601,27 @@ var MNTP;
         });
     }
 
-    var loadBookmarks = function() {
+    var loadBookmarks = function () {
         return new Promise(function (success, fail) {
-		
-			chrome.bookmarks.getTree(function (e) {
-				var list = e[0].children;
 
-				var bookmarkslist = q("#bookmarks-list > ul");
-				var bookmarksmenu = q("#bookmarks-menu > ul > li > ul");
+            chrome.bookmarks.getTree(function (e) {
+                var list = e[0].children;
 
-				bookmarkslist.innerHTML = "";
-				bookmarksmenu.innerHTML = "";
+                var bookmarkslist = q("#bookmarks-list > ul");
+                var bookmarksmenu = q("#bookmarks-menu > ul > li > ul");
 
-				appendBookmarkNodes(list[0].children, bookmarkslist);
-				appendBookmarkNodes(list, bookmarksmenu);
+                bookmarkslist.innerHTML = "";
+                bookmarksmenu.innerHTML = "";
 
-				q(".bookmark-bar").style.display = "block";
-				
-				success();
+                appendBookmarkNodes(list[0].children, bookmarkslist);
+                appendBookmarkNodes(list, bookmarksmenu);
 
-			});
-		
+                q(".bookmark-bar").style.display = "block";
+
+                success();
+
+            });
+
         });
     }
 
@@ -2231,11 +2662,62 @@ var MNTP;
 
             ul.insertBefore(li, null);
         });
+
     }
 
-    window.addEventListener("load", function() { load(); });
+    var loadExternalResources = function () {
 
-    window.addEventListener("resize", function() { resize(); });
+        return new Promise(function (success, fail) {
+
+            q("#paypal-pixel").setAttribute("src", "https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif");
+            q("#link-roboto").setAttribute("href", "http://fonts.googleapis.com/css?family=Roboto:500,300,400,400italic");
+
+            //analytics
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-61018966-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function () {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = 'https://ssl.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+
+            _gaq.push(['_trackPageview']);
+
+            success();
+
+        });
+
+    }
+
+    var checkVersion = function () {
+
+        var key = "checkedVersion";
+        var checkedVersion = JSONLocalStorage.getItem(key);
+        var currentVersion = chrome.runtime.getManifest().version;
+
+
+        if (!checkedVersion || checkedVersion != currentVersion) {
+
+            JSONLocalStorage.setItem(key, currentVersion);
+
+            sidebar.addClass("open");
+            menuButton.addClass("active");
+
+            navChangelogMenu.addClass("open ext");
+            extSidebarOpen();
+
+        }
+
+    }
+
+    window.addEventListener("load", function () { load(); });
+
+    window.addEventListener("resize", function () { MNTP && resize(); });
 
     window.addEventListener("mousewheel", function (e) {
         if (e.target == q("body")) {
