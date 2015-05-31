@@ -406,6 +406,7 @@ var MNTP;
                     tiles[i].style.transition = "none";
 
                 container.style.transition = "none";
+                container.style.left = "0";
 
             } else if (!config.OpeningAnimation) {
 
