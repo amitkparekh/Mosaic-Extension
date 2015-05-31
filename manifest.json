@@ -2,7 +2,7 @@
     "name": "Mosaic ALPHA",
     "description": "Replace your new tab page with beautiful and highly customisable tiles.",
     "default_locale": "en",
-    "version": "2015.5.25",
+    "version": "2015.5.31",
     "incognito": "split",
     "icons": {
         "16": "icon16.png",
