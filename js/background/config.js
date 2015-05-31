@@ -22,7 +22,7 @@ MNTP.Config = (function () {
         GroupMargin: 250,
         GroupTop: -1,
         GroupLeft: 120,
-        GroupColumns: 0,
+        GroupColumns: 6,
         GroupRows: 3,
         ShowNews: true,
         NewsViewMode: "list",

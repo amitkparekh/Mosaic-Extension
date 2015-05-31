@@ -175,13 +175,17 @@ var MNTP;
 
         config = config || MNTP.Config;
 
-        if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
-            return reorderFlow(config);
+        if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW &&
+            config.TileFlowDirection == MNTP.Config.FLOW_DIRECTION.VERTICAL)
+            return reorderFlowVeritical(config);
+        else if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW &&
+                config.TileFlowDirection == MNTP.Config.FLOW_DIRECTION.HORIZONTAL)
+            return reorderFlowHorizontal(config);
         else
             return reorderFree(config);
     }
 
-    var reorderFlow = function (config) {
+    var reorderFlowVeritical = function (config) {
 
         return new Promise(function (success, fail) {
 
@@ -219,6 +223,8 @@ var MNTP;
             for (var g in groups) {
 
                 group = groups[g];
+
+                group.removeClass("horizontal");
 
                 group.style.marginLeft = groupLeft + "px";
                 group.style.height = "";
@@ -379,6 +385,164 @@ var MNTP;
 
     }
 
+    var reorderFlowHorizontal = function (config) {
+
+        return new Promise(function (success, fail) {
+
+            config = config || MNTP.Config;
+
+            q("body").style.width = "";
+            
+            var container = q("#container");
+            var news = q("#news");
+
+            container.style.height = "";
+
+            var tiles = q(".tile", true);
+
+            if (openingAnimation) {
+
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "none";
+
+                container.style.transition = "none";
+
+            } else if (!config.OpeningAnimation) {
+
+                container.style.transition = "none";
+
+            }
+
+            var groupLeft = 0;
+
+            var groups = q(".tile-group:not(.placeholder)", true);
+
+            var tallerGroup = 0;
+
+            groups.forEach(function (group) {
+
+                group.addClass("horizontal");
+
+                var margin = config.TileMargin;
+
+                var t = config.TileWidthSm + margin;
+
+                var columns = config.GroupColumns;
+                var rows = config.GroupRows;
+
+                var column = 0;
+                var row = 0;
+                var skipThese = [];
+
+                q(".tile:not(.dragging)", group, true).forEach(function (tileNode) {
+
+                    var size = tileNode.data("size") == 1 ? 1 : 2;
+
+                    if (column + size > columns) {
+                        row++;
+                        column = 0;
+                    }
+
+                    for (var i = 0; i < skipThese.length; i++) {
+
+                        var skip = skipThese[i];
+
+                        if (row == skip.r && (column == skip.c || (size == 2 && column + 1 == skip.c))) {
+                            column = skip.c + 2;
+                        }
+
+                        if (column + size > columns) {
+                            row++;
+                            column = 0;
+                        }
+
+                    }
+
+                    if (tileNode.data("size") == 3)
+                        skipThese.push({ c: column, r: row + 1 });
+
+                    var left = openingAnimation ? 0 : column * t;
+                    var top = row * t;
+
+                    tileNode.style.left = left + "px";
+                    tileNode.style.top = top + "px";
+
+                    column += (size == 1 ? 1 : 2);
+
+                });
+
+                group.style.width = ((columns * config.TileWidthSm) + ((columns - 1) * margin)) + "px";
+                group.style.height = ((rows * config.TileHeightSm) + ((rows - 1) * margin)) + "px";
+
+            });
+
+
+
+            //center verticaly
+            if (config.GroupTop == -1) {
+                var windowHeight = window.innerHeight;
+                var containerHeight = container.offsetHeight;
+
+                var containerTop = (windowHeight - containerHeight) / 2;
+
+                container.style.top = containerTop + "px";
+            } else {
+                container.style.top = config.GroupTop + "px";
+            }
+
+            //center horizontaly
+            if (!openingAnimation) {
+
+                if (config.GroupLeft == -1) {
+
+                    var windowWidth = window.innerWidth;
+                    var containerWidth = container.offsetWidth;
+
+                    var containerLeft = (windowWidth - containerWidth) / 2;
+
+                    container.style.left = containerLeft + "px";
+
+                } else {
+
+                    container.style.left = config.GroupLeft + "px";
+
+                }
+
+            } else {
+
+                container.style.left = 0;
+
+            }
+
+
+            if (openingAnimation) {
+
+                openingAnimation = false;
+
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms";
+
+                container.style.transition = "left " + config.OpeningAnimationTime + "ms";
+
+                reorder(config).then(success);
+
+            } else {
+
+                for (var i = 0; i < tiles.length; i++)
+                    tiles[i].style.transition = "";
+
+                container.style.transition = "";
+
+                success();
+            }
+
+
+            success();
+
+        });
+
+    }
+
     var reorderFree = function (config) {
 
         return new Promise(function (success, fail) {
@@ -398,11 +562,22 @@ var MNTP;
 
             }
 
-            //container.style.transition = "none";
-
             container.style.left = "0";
             container.style.top = "0";
             container.style.height = "";
+
+            var groups = q(".tile-group:not(.placeholder)", true);
+
+            var tallerGroup = 0;
+
+            groups.forEach(function (group) {
+
+                group.removeClass("horizontal");
+
+                group.style.width = "";
+                group.style.height = "";
+
+            });
 
             var screenCenter = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
@@ -1790,6 +1965,11 @@ var MNTP;
             else
                 q("#tile-grid-configs").fadeOutLeft();
 
+            //flow direction
+            if (config.TileFlowDirection == MNTP.Config.FLOW_DIRECTION.HORIZONTAL)
+                q("#tile-columns").fadeInLeft();
+            else
+                q("#tile-columns").fadeOutLeft();
 
 
             //background color

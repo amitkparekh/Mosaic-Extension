@@ -451,7 +451,6 @@ var MNTP = MNTP || {};
                 }
 
                 MNTP.Config.OpeningAnimation = data.animacaoInicialTiles == "1";
-                MNTP.Config.TileOpacity = 1;
 
                 if (data.background) {
 
@@ -470,6 +469,15 @@ var MNTP = MNTP || {};
                     MNTP.Config.AccentColor = data.temaPadrao.corSecundaria;
 
                 }
+
+                MNTP.Config.TileOpacity = 1;
+                MNTP.Config.TileFlowDirection = MNTP.Config.FLOW_DIRECTION.HORIZONTAL;
+
+                if (data.rowNumber)
+                    MNTP.Config.GroupRows = data.rowNumber;
+
+                if (data.columnNumber)
+                    MNTP.Config.GroupColumns = data.columnNumber;
 
                 MNTP.IDB.removeAll(MNTP.IDB.OS.Tile);
                 MNTP.IDB.removeAll(MNTP.IDB.OS.Image);
