@@ -374,7 +374,15 @@
                     </select>
                 </article>
 
-                <div id="tile-grid-configs" style="height: 280px;">
+                <div id="tile-grid-configs" style="height: 416px;">
+
+                    <article>
+                        <label data-message="tile_flow_direction"></label>
+                        <select data-config="TileFlowDirection">
+                            <option value="vertical" data-message="top_to_bottom"></option>
+                            <option value="horizontal" data-message="left_to_right"></option>
+                        </select>
+                    </article>
 
                     <form action="#" class="form-slider">
                         <label data-message="number_of_rows"></label>
@@ -383,14 +391,12 @@
                         </p>
                     </form>
 
-                    <!--
-                    <form action="#" class="form-slider hidden">
+                    <form action="#" class="form-slider" id="tile-columns">
                         <label data-message="number_of_columns"></label>
                         <p class="range-field">
                             <input type="range" min="2" max="12" data-config="GroupColumns" data-config-type="int" />
                         </p>
                     </form>
-                    -->
 
                     <form action="#" class="form-slider">
                         <label data-message="margin_between_tiles"></label>
@@ -414,14 +420,6 @@
                             <option value="120" data-message="top"></option>
                             <option value="-1" data-message="centre"></option>
                             <!--<option value="bottom" data-message="bottom"></option>-->
-                        </select>
-                    </article>
-
-                    <article class="hidden">
-                        <label data-message="tile_flow_direction"></label>
-                        <select data-config="TileFlowDirection">
-                            <option value="vertical" data-message="top_to_bottom"></option>
-                            <option value="horizontal" data-message="left_to_right"></option>
                         </select>
                     </article>
 
