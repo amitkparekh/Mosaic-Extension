@@ -432,15 +432,37 @@ var MNTP;
 
                 var column = 0;
                 var row = 0;
+                var skipThese = [];
 
                 q(".tile:not(.dragging)", group, true).forEach(function (tileNode) {
 
-                    var size = tileNode.data("size") == 1 ? 1 : 2;
+                    var size = tileNode.data("size");
+
+                    if (size == 3)
+                        skipThese.push({ c: column, r: row + 1 });
+
+                    size = size == 1 ? 1 : 2
 
                     if (column + size > columns) {
                         row++;
                         column = 0;
                     }
+
+                    for (var i = 0; i < skipThese.length; i++) {
+
+                        var skip = skipThese[i];
+
+                        if (row == skip.r && (column == skip.c || (size == 2 && column + 1 == skip.c))) {
+                            column = skip.c + 2;
+                        }
+
+                        if (column + size > columns) {
+                            row++;
+                            column = 0;
+                        }
+
+                    }
+
 
                     var left = openingAnimation ? 0 : column * t;
                     var top = row * t;
