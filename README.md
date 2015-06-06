@@ -60,8 +60,7 @@ Must merge back into: `develop` and `master`
 
 Branch naming convention: `release-*`
 
-- `release` branches are used for preparation for the next release, big OR small
-- 
+- `release` branches are used for preparation for the next release, big OR small.
 
 ###### Creating a `release` branch *(via Sourcetree)*
 1. 
