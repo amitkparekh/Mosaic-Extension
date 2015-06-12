@@ -1,6 +1,5 @@
 .sass-cache/
-css/*.map
-*.map
+*.css.map
 bootstrap3/
 material-bootstrap3/
 sass/
