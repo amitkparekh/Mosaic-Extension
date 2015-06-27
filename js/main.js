@@ -12,2717 +12,2717 @@ var MNTP;
 
 //(function () {
 
-    var bingImagesSlider;
+	var bingImagesSlider;
 
-    var load = function () {
+	var load = function () {
 
-        return new Promise(function (success, fail) {
+		return new Promise(function (success, fail) {
 
-            loadBackgroundPage()
-                .then(loadGroups)
-                .then(loadTiles)
-                .then(loadConfig)
-                .then(loadFeedsPanel)
-                .then(enableDrag)
-                .then(loadCustomComponents)
-                .then(bindEvents)
-                .then(loadTileFeeds)
-                .then(loadExternalResources)
-                .then(checkVersion)
-                .then(success)
-                .catch(function (error) {
+			loadBackgroundPage()
+				.then(loadGroups)
+				.then(loadTiles)
+				.then(loadConfig)
+				.then(loadFeedsPanel)
+				.then(enableDrag)
+				.then(loadCustomComponents)
+				.then(bindEvents)
+				.then(loadTileFeeds)
+				.then(loadExternalResources)
+				.then(checkVersion)
+				.then(success)
+				.catch(function (error) {
 
-                    console.error(error.stack);
+					console.error(error.stack);
 
-                });
+				});
 
-        });
+		});
 
-    }
+	}
 
-    var loadBackgroundPage = function () {
+	var loadBackgroundPage = function () {
 
-        return new Promise(function (success, fail) {
+		return new Promise(function (success, fail) {
 
-            var bgPage;
+			var bgPage;
 
-            var loadBgPage = function () {
+			var loadBgPage = function () {
 
-                bgPage = chrome.extension.getBackgroundPage();
+				bgPage = chrome.extension.getBackgroundPage();
 
-                if (bgPage &&
-                    bgPage.MNTP &&
-                    bgPage.MNTP.IDB &&
-                    bgPage.MNTP.WebService &&
-                    bgPage.MNTP.BGUtils &&
-                    bgPage.MNTP.Config) {
+				if (bgPage &&
+					bgPage.MNTP &&
+					bgPage.MNTP.IDB &&
+					bgPage.MNTP.WebService &&
+					bgPage.MNTP.BGUtils &&
+					bgPage.MNTP.Config) {
 
-                    MNTP = bgPage.MNTP;
-                    success();
+					MNTP = bgPage.MNTP;
+					success();
 
-                } else
-                    setTimeout(loadBgPage, 10);
-            }
+				} else
+					setTimeout(loadBgPage, 10);
+			}
 
-            if (MNTP)
-                success();
-            else
-                loadBgPage();
-        });
+			if (MNTP)
+				success();
+			else
+				loadBgPage();
+		});
 
-    }
+	}
 
-    var loadGroups = function () {
+	var loadGroups = function () {
 
-        return new Promise(function (success, fail) {
-            var request = TileGroup.select();
+		return new Promise(function (success, fail) {
+			var request = TileGroup.select();
 
-            request.then(function (data) {
+			request.then(function (data) {
 
-                q("#container").innerHTML = "";
+				q("#container").innerHTML = "";
 
-                for (var i = 0; i < data.length; i++) {
+				for (var i = 0; i < data.length; i++) {
 
-                    var group = data[i];
+					var group = data[i];
 
-                    var groupNode = TileGroup.getNode(group);
+					var groupNode = TileGroup.getNode(group);
 
-                    q("#container").insertBefore(groupNode, null);
+					q("#container").insertBefore(groupNode, null);
 
-                }
+				}
 
-                success();
+				success();
 
-            });
+			});
 
-            request.catch(fail);
+			request.catch(fail);
 
-        });
+		});
 
-    }
+	}
 
-    var loadTiles = function () {
+	var loadTiles = function () {
 
-        return new Promise(function (success, fail) {
+		return new Promise(function (success, fail) {
 
-            var request = Tile.select(true);
+			var request = Tile.select(true);
 
-            request.then(function (data) {
+			request.then(function (data) {
 
-                for (var x = 0; x < data.length; x++) {
+				for (var x = 0; x < data.length; x++) {
 
-                    var tile = data[x];
+					var tile = data[x];
 
-                    var tileNode = Tile.getNode(tile);
+					var tileNode = Tile.getNode(tile);
 
-                    var group = getGroupNodebyID(tile.idGroup);
+					var group = getGroupNodebyID(tile.idGroup);
 
-                    if (group) {
-                        group.insertBefore(tileNode, null);
-                    }
+					if (group) {
+						group.insertBefore(tileNode, null);
+					}
 
-                }
+				}
 
-                success();
+				success();
 
-            });
+			});
 
-            request.catch(fail);
+			request.catch(fail);
 
-        });
+		});
 
-    };
+	};
 
-    var resize = function (config) {
+	var resize = function (config) {
 
-        return new Promise(function (success, fail) {
+		return new Promise(function (success, fail) {
 
-            config = config || MNTP.Config;
+			config = config || MNTP.Config;
 
-            var fontSize = config.TileWidthLg * 0.004
-            fontSize = fontSize < 0.7 ? 0.7 : fontSize;
+			var fontSize = config.TileWidthLg * 0.004
+			fontSize = fontSize < 0.7 ? 0.7 : fontSize;
 
-            var tiles1 = q(".tile.size1:not(.preview)", true);
-            var tiles2 = q(".tile.size2:not(.preview)", true);
-            var tiles3 = q(".tile.size3:not(.preview)", true);
+			var tiles1 = q(".tile.size1:not(.preview)", true);
+			var tiles2 = q(".tile.size2:not(.preview)", true);
+			var tiles3 = q(".tile.size3:not(.preview)", true);
 
-            tiles1.forEach(function (element, index) {
-                element.style.width = config.TileWidthSm + "px";
-                element.style.height = config.TileHeightSm + "px";
-                element.style.fontSize = fontSize + "em";
-            });
+			tiles1.forEach(function (element, index) {
+				element.style.width = config.TileWidthSm + "px";
+				element.style.height = config.TileHeightSm + "px";
+				element.style.fontSize = fontSize + "em";
+			});
 
-            tiles2.forEach(function (element, index) {
-                element.style.width = config.TileWidthLg + "px";
-                element.style.height = config.TileHeightSm + "px";
-                element.style.fontSize = fontSize + "em";
-            });
+			tiles2.forEach(function (element, index) {
+				element.style.width = config.TileWidthLg + "px";
+				element.style.height = config.TileHeightSm + "px";
+				element.style.fontSize = fontSize + "em";
+			});
 
-            tiles3.forEach(function (element, index) {
-                element.style.width = config.TileWidthLg + "px";
-                element.style.height = config.TileHeightLg + "px";
-                element.style.fontSize = fontSize + "em";
-            });
+			tiles3.forEach(function (element, index) {
+				element.style.width = config.TileWidthLg + "px";
+				element.style.height = config.TileHeightLg + "px";
+				element.style.fontSize = fontSize + "em";
+			});
 
-            reorder(config).then(success);
+			reorder(config).then(success);
 
-        });
+		});
 
-    }
+	}
 
-    var openingAnimation = true;
-    var reorder = function (config) {
+	var openingAnimation = true;
+	var reorder = function (config) {
 
-        config = config || MNTP.Config;
+		config = config || MNTP.Config;
 
-        if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW &&
-            config.TileFlowDirection == MNTP.Config.FLOW_DIRECTION.VERTICAL)
-            return reorderFlowVeritical(config);
-        else if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW &&
-                config.TileFlowDirection == MNTP.Config.FLOW_DIRECTION.HORIZONTAL)
-            return reorderFlowHorizontal(config);
-        else
-            return reorderFree(config);
-    }
+		if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW &&
+			config.TileFlowDirection == MNTP.Config.FLOW_DIRECTION.VERTICAL)
+			return reorderFlowVeritical(config);
+		else if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW &&
+				config.TileFlowDirection == MNTP.Config.FLOW_DIRECTION.HORIZONTAL)
+			return reorderFlowHorizontal(config);
+		else
+			return reorderFree(config);
+	}
 
-    var reorderFlowVeritical = function (config) {
+	var reorderFlowVeritical = function (config) {
 
-        return new Promise(function (success, fail) {
+		return new Promise(function (success, fail) {
 
-            config = config || MNTP.Config;
+			config = config || MNTP.Config;
 
-            openingAnimation = openingAnimation && config.OpeningAnimation;
+			openingAnimation = openingAnimation && config.OpeningAnimation;
 
-            var container = q("#container");
-            var news = q("#news");
-            var tiles = q(".tile", true);
+			var container = q("#container");
+			var news = q("#news");
+			var tiles = q(".tile", true);
 
-            container.style.height = "";
+			container.style.height = "";
 
-            if (openingAnimation) {
+			if (openingAnimation) {
 
-                for (var i = 0; i < tiles.length; i++)
-                    tiles[i].style.transition = "none";
+				for (var i = 0; i < tiles.length; i++)
+					tiles[i].style.transition = "none";
 
-                container.style.transition = "none";
+				container.style.transition = "none";
 
-            } else if (!config.OpeningAnimation) {
+			} else if (!config.OpeningAnimation) {
 
-                container.style.transition = "none";
+				container.style.transition = "none";
 
-            }
+			}
 
-            var groupLeft = 0;
+			var groupLeft = 0;
 
-            var groups = q(".tile-group:not(.placeholder)", true);
+			var groups = q(".tile-group:not(.placeholder)", true);
 
-            var group;
+			var group;
 
-            var tallerGroup = 0;
+			var tallerGroup = 0;
 
-            for (var g in groups) {
+			for (var g in groups) {
 
-                group = groups[g];
+				group = groups[g];
 
-                group.removeClass("horizontal");
+				group.removeClass("horizontal");
 
-                group.style.marginLeft = groupLeft + "px";
-                group.style.height = "";
+				group.style.marginLeft = groupLeft + "px";
+				group.style.height = "";
 
-                groupLeft = config.GroupMargin;
+				groupLeft = config.GroupMargin;
 
-                tiles = q(".tile:not(.dragging)", group, true);
+				tiles = q(".tile:not(.dragging)", group, true);
 
-                if (tiles) {
+				if (tiles) {
 
-                    var top = 0;
-                    var left = 0;
+					var top = 0;
+					var left = 0;
 
-                    var collumnLeft = 0;
+					var collumnLeft = 0;
 
-                    var lastSize = 2;
-                    var nextSize = 0;
+					var lastSize = 2;
+					var nextSize = 0;
 
-                    var row = 1;
+					var row = 1;
 
-                    var tile;
+					var tile;
 
-                    for (var i = 0; i < tiles.length; i++) {
+					for (var i = 0; i < tiles.length; i++) {
 
-                        tile = tiles[i];
+						tile = tiles[i];
 
-                        var size = tile.data("size");
+						var size = tile.data("size");
 
-                        if (i < tiles.length - 1)
-                            nextSize = tiles[i + 1].data("size");
-                        else
-                            nextSize = 0;
+						if (i < tiles.length - 1)
+							nextSize = tiles[i + 1].data("size");
+						else
+							nextSize = 0;
 
-                        tile.style.top = top + "px";
-                        tile.style.left = left + "px";
+						tile.style.top = top + "px";
+						tile.style.left = left + "px";
 
 
-                        if (size == 1 && left == collumnLeft && nextSize == 1) {
-                            left += (config.TileWidthSm + config.TileMargin);
-                        } else {
+						if (size == 1 && left == collumnLeft && nextSize == 1) {
+							left += (config.TileWidthSm + config.TileMargin);
+						} else {
 
-                            var currentHeight = size == 3 ? config.TileHeightLg : config.TileHeightSm;
-                            var nextHeight = nextSize == 3 ? config.TileHeightLg : config.TileHeightSm;
+							var currentHeight = size == 3 ? config.TileHeightLg : config.TileHeightSm;
+							var nextHeight = nextSize == 3 ? config.TileHeightLg : config.TileHeightSm;
 
-                            row += size == 3 ? 2 : 1;
+							row += size == 3 ? 2 : 1;
 
-                            top += currentHeight + config.TileMargin;
+							top += currentHeight + config.TileMargin;
 
-                            if (openingAnimation)
-                                left = 0;
-                            else
-                                left = collumnLeft;
+							if (openingAnimation)
+								left = 0;
+							else
+								left = collumnLeft;
 
-                            if (group.offsetHeight < top + nextHeight && i < tiles.length - 1)
-                                group.style.height = (top + nextHeight) + "px";
+							if (group.offsetHeight < top + nextHeight && i < tiles.length - 1)
+								group.style.height = (top + nextHeight) + "px";
 
-                            if (group.offsetHeight < top + nextHeight || (row + (nextSize == 3 ? 1 : 0) > config.GroupRows && config.GroupRows > 0))
-                                group.style.height = (top - (config.TileMargin || 1)) + "px";
+							if (group.offsetHeight < top + nextHeight || (row + (nextSize == 3 ? 1 : 0) > config.GroupRows && config.GroupRows > 0))
+								group.style.height = (top - (config.TileMargin || 1)) + "px";
 
-                        }
+						}
 
-                        lastSize = size;
+						lastSize = size;
 
-                        if (top > group.offsetHeight && i < tiles.length - 1) {
-                            top = 0;
-                            row = 1;
+						if (top > group.offsetHeight && i < tiles.length - 1) {
+							top = 0;
+							row = 1;
 
-                            if (openingAnimation) {
-                                collumnLeft = 0;
-                            } else {
-                                collumnLeft += (config.TileWidthLg + config.TileMargin);
-                            }
+							if (openingAnimation) {
+								collumnLeft = 0;
+							} else {
+								collumnLeft += (config.TileWidthLg + config.TileMargin);
+							}
 
-                            left = collumnLeft;
-                        }
+							left = collumnLeft;
+						}
 
-                    }
+					}
 
-                    group.style.width = (collumnLeft + config.TileWidthLg) + "px";
+					group.style.width = (collumnLeft + config.TileWidthLg) + "px";
 
-                }
+				}
 
-                tallerGroup = Math.max(tallerGroup, group.offsetHeight);
+				tallerGroup = Math.max(tallerGroup, group.offsetHeight);
 
-            }
+			}
 
-            if (tallerGroup > 0)
-                container.style.height = tallerGroup + "px";
+			if (tallerGroup > 0)
+				container.style.height = tallerGroup + "px";
 
 
-            //center verticaly
-            if (config.GroupTop == -1) {
-                var windowHeight = window.innerHeight;
-                var containerHeight = container.offsetHeight;
+			//center verticaly
+			if (config.GroupTop == -1) {
+				var windowHeight = window.innerHeight;
+				var containerHeight = container.offsetHeight;
 
-                var containerTop = (windowHeight - containerHeight) / 2;
+				var containerTop = (windowHeight - containerHeight) / 2;
 
-                container.style.top = containerTop + "px";
-            } else {
-                container.style.top = config.GroupTop + "px";
-            }
+				container.style.top = containerTop + "px";
+			} else {
+				container.style.top = config.GroupTop + "px";
+			}
 
-            //center horizontaly
-            if (!openingAnimation) {
+			//center horizontaly
+			if (!openingAnimation) {
 
-                if (config.GroupLeft == -1) {
+				if (config.GroupLeft == -1) {
 
-                    var windowWidth = window.innerWidth;
-                    var containerWidth = container.offsetWidth;
+					var windowWidth = window.innerWidth;
+					var containerWidth = container.offsetWidth;
 
-                    var containerLeft = (windowWidth - containerWidth) / 2;
+					var containerLeft = (windowWidth - containerWidth) / 2;
 
-                    container.style.left = containerLeft + "px";
+					container.style.left = containerLeft + "px";
 
-                } else {
+				} else {
 
-                    container.style.left = config.GroupLeft + "px";
+					container.style.left = config.GroupLeft + "px";
 
-                }
+				}
 
-            } else {
+			} else {
 
-                container.style.left = 0;
+				container.style.left = 0;
 
-            }
+			}
 
 
-            var containerOffset = container.getWindowOffset();
-            var news = q("#news");
+			var containerOffset = container.getWindowOffset();
+			var news = q("#news");
 
-            q("body").style.width = (containerOffset.left + containerOffset.width + news.offsetWidth + 50) + "px";
+			q("body").style.width = (containerOffset.left + containerOffset.width + news.offsetWidth + 50) + "px";
 
 
-            var tiles = q(".tile", true);
+			var tiles = q(".tile", true);
 
-            if (openingAnimation) {
+			if (openingAnimation) {
 
-                openingAnimation = false;
+				openingAnimation = false;
 
-                for (var i = 0; i < tiles.length; i++)
-                    tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms";
+				for (var i = 0; i < tiles.length; i++)
+					tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms";
 
-                container.style.transition = "left " + config.OpeningAnimationTime + "ms";
+				container.style.transition = "left " + config.OpeningAnimationTime + "ms";
 
-                reorder(config).then(success);
+				reorder(config).then(success);
 
-            } else {
+			} else {
 
-                for (var i = 0; i < tiles.length; i++)
-                    tiles[i].style.transition = "";
+				for (var i = 0; i < tiles.length; i++)
+					tiles[i].style.transition = "";
 
-                container.style.transition = "";
+				container.style.transition = "";
 
-                success();
-            }
+				success();
+			}
 
-        });
+		});
 
-    }
+	}
 
-    var reorderFlowHorizontal = function (config) {
+	var reorderFlowHorizontal = function (config) {
 
-        return new Promise(function (success, fail) {
+		return new Promise(function (success, fail) {
 
-            config = config || MNTP.Config;
+			config = config || MNTP.Config;
 
-            q("body").style.width = "";
-            
-            var container = q("#container");
-            var news = q("#news");
+			q("body").style.width = "";
 
-            container.style.height = "";
+			var container = q("#container");
+			var news = q("#news");
 
-            var tiles = q(".tile", true);
+			container.style.height = "";
 
-            if (openingAnimation) {
+			var tiles = q(".tile", true);
 
-                for (var i = 0; i < tiles.length; i++)
-                    tiles[i].style.transition = "none";
+			if (openingAnimation) {
 
-                container.style.transition = "none";
-                container.style.left = "0";
+				for (var i = 0; i < tiles.length; i++)
+					tiles[i].style.transition = "none";
 
-            } else if (!config.OpeningAnimation) {
+				container.style.transition = "none";
+				container.style.left = "0";
 
-                container.style.transition = "none";
+			} else if (!config.OpeningAnimation) {
 
-            }
+				container.style.transition = "none";
 
-            var groupLeft = 0;
+			}
 
-            var groups = q(".tile-group:not(.placeholder)", true);
+			var groupLeft = 0;
 
-            var tallerGroup = 0;
+			var groups = q(".tile-group:not(.placeholder)", true);
 
-            groups.forEach(function (group) {
+			var tallerGroup = 0;
 
-                group.addClass("horizontal");
+			groups.forEach(function (group) {
 
-                var margin = config.TileMargin;
+				group.addClass("horizontal");
 
-                var t = config.TileWidthSm + margin;
+				var margin = config.TileMargin;
 
-                var columns = config.GroupColumns;
-                var rows = config.GroupRows;
+				var t = config.TileWidthSm + margin;
 
-                var column = 0;
-                var row = 0;
-                var skipThese = [];
+				var columns = config.GroupColumns;
+				var rows = config.GroupRows;
 
-                q(".tile:not(.dragging)", group, true).forEach(function (tileNode) {
+				var column = 0;
+				var row = 0;
+				var skipThese = [];
 
-                    var size = tileNode.data("size") == 1 ? 1 : 2;
+				q(".tile:not(.dragging)", group, true).forEach(function (tileNode) {
 
-                    if (column + size > columns) {
-                        row++;
-                        column = 0;
-                    }
+					var size = tileNode.data("size") == 1 ? 1 : 2;
 
-                    for (var i = 0; i < skipThese.length; i++) {
+					if (column + size > columns) {
+						row++;
+						column = 0;
+					}
 
-                        var skip = skipThese[i];
+					for (var i = 0; i < skipThese.length; i++) {
 
-                        if (row == skip.r && (column == skip.c || (size == 2 && column + 1 == skip.c))) {
-                            column = skip.c + 2;
-                        }
+						var skip = skipThese[i];
 
-                        if (column + size > columns) {
-                            row++;
-                            column = 0;
-                        }
+						if (row == skip.r && (column == skip.c || (size == 2 && column + 1 == skip.c))) {
+							column = skip.c + 2;
+						}
 
-                    }
+						if (column + size > columns) {
+							row++;
+							column = 0;
+						}
 
-                    if (tileNode.data("size") == 3)
-                        skipThese.push({ c: column, r: row + 1 });
+					}
 
-                    var left = openingAnimation ? 0 : column * t;
-                    var top = row * t;
+					if (tileNode.data("size") == 3)
+						skipThese.push({ c: column, r: row + 1 });
 
-                    tileNode.style.left = left + "px";
-                    tileNode.style.top = top + "px";
+					var left = openingAnimation ? 0 : column * t;
+					var top = row * t;
 
-                    column += (size == 1 ? 1 : 2);
+					tileNode.style.left = left + "px";
+					tileNode.style.top = top + "px";
 
-                });
+					column += (size == 1 ? 1 : 2);
 
-                group.style.width = ((columns * config.TileWidthSm) + ((columns - 1) * margin)) + "px";
-                group.style.height = ((rows * config.TileHeightSm) + ((rows - 1) * margin)) + "px";
+				});
 
-            });
+				group.style.width = ((columns * config.TileWidthSm) + ((columns - 1) * margin)) + "px";
+				group.style.height = ((rows * config.TileHeightSm) + ((rows - 1) * margin)) + "px";
 
+			});
 
 
-            //center verticaly
-            if (config.GroupTop == -1) {
-                var windowHeight = window.innerHeight;
-                var containerHeight = container.offsetHeight;
 
-                var containerTop = (windowHeight - containerHeight) / 2;
+			//center verticaly
+			if (config.GroupTop == -1) {
+				var windowHeight = window.innerHeight;
+				var containerHeight = container.offsetHeight;
 
-                container.style.top = containerTop + "px";
-            } else {
-                container.style.top = config.GroupTop + "px";
-            }
+				var containerTop = (windowHeight - containerHeight) / 2;
 
-            //center horizontaly
-            if (!openingAnimation) {
+				container.style.top = containerTop + "px";
+			} else {
+				container.style.top = config.GroupTop + "px";
+			}
 
-                if (config.GroupLeft == -1) {
+			//center horizontaly
+			if (!openingAnimation) {
 
-                    var windowWidth = window.innerWidth;
-                    var containerWidth = container.offsetWidth;
+				if (config.GroupLeft == -1) {
 
-                    var containerLeft = (windowWidth - containerWidth) / 2;
+					var windowWidth = window.innerWidth;
+					var containerWidth = container.offsetWidth;
 
-                    container.style.left = containerLeft + "px";
+					var containerLeft = (windowWidth - containerWidth) / 2;
 
-                } else {
+					container.style.left = containerLeft + "px";
 
-                    container.style.left = config.GroupLeft + "px";
+				} else {
 
-                }
+					container.style.left = config.GroupLeft + "px";
 
-            } else {
+				}
 
-                container.style.left = 0;
+			} else {
 
-            }
+				container.style.left = 0;
 
+			}
 
-            if (openingAnimation) {
 
-                openingAnimation = false;
+			if (openingAnimation) {
 
-                for (var i = 0; i < tiles.length; i++)
-                    tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms";
+				openingAnimation = false;
 
-                container.style.transition = "left " + config.OpeningAnimationTime + "ms";
+				for (var i = 0; i < tiles.length; i++)
+					tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms";
 
-                reorder(config).then(success);
+				container.style.transition = "left " + config.OpeningAnimationTime + "ms";
 
-            } else {
+				reorder(config).then(success);
 
-                for (var i = 0; i < tiles.length; i++)
-                    tiles[i].style.transition = "";
+			} else {
 
-                container.style.transition = "";
+				for (var i = 0; i < tiles.length; i++)
+					tiles[i].style.transition = "";
 
-                success();
-            }
+				container.style.transition = "";
 
+				success();
+			}
 
-            success();
 
-        });
+			success();
 
-    }
+		});
 
-    var reorderFree = function (config) {
+	}
 
-        return new Promise(function (success, fail) {
+	var reorderFree = function (config) {
 
-            config = config || MNTP.Config;
+		return new Promise(function (success, fail) {
 
-            openingAnimation = openingAnimation && config.OpeningAnimation;
+			config = config || MNTP.Config;
 
-            var container = q("#container");
-            var news = q("#news");
-            var tiles = q(".tile", true);
+			openingAnimation = openingAnimation && config.OpeningAnimation;
 
-            if (openingAnimation) {
+			var container = q("#container");
+			var news = q("#news");
+			var tiles = q(".tile", true);
 
-                for (var i = 0; i < tiles.length; i++)
-                    tiles[i].style.transition = "none";
+			if (openingAnimation) {
 
-            }
+				for (var i = 0; i < tiles.length; i++)
+					tiles[i].style.transition = "none";
 
-            container.style.left = "0";
-            container.style.top = "0";
-            container.style.height = "";
+			}
 
-            var groups = q(".tile-group:not(.placeholder)", true);
+			container.style.left = "0";
+			container.style.top = "0";
+			container.style.height = "";
 
-            var tallerGroup = 0;
+			var groups = q(".tile-group:not(.placeholder)", true);
 
-            groups.forEach(function (group) {
+			var tallerGroup = 0;
 
-                group.removeClass("horizontal");
+			groups.forEach(function (group) {
 
-                group.style.width = "";
-                group.style.height = "";
+				group.removeClass("horizontal");
 
-            });
+				group.style.width = "";
+				group.style.height = "";
 
-            var screenCenter = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+			});
 
-            if (openingAnimation) {
+			var screenCenter = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
-                for (var i = 0; i < tiles.length; i++) {
+			if (openingAnimation) {
 
-                    var tileNode = tiles[i];
+				for (var i = 0; i < tiles.length; i++) {
 
-                    tileNode.style.left = (screenCenter.x - (tileNode.offsetWidth / 2)) + "px";
-                    tileNode.style.top = (screenCenter.y - (tileNode.offsetHeight / 2)) + "px";
+					var tileNode = tiles[i];
 
-                }
+					tileNode.style.left = (screenCenter.x - (tileNode.offsetWidth / 2)) + "px";
+					tileNode.style.top = (screenCenter.y - (tileNode.offsetHeight / 2)) + "px";
 
-            } else {
+				}
 
-                for (var i = 0; i < tiles.length; i++) {
+			} else {
 
-                    var tileNode = tiles[i];
-                    var position = tileNode.data("position");
+				for (var i = 0; i < tiles.length; i++) {
 
-                    if (position) {
+					var tileNode = tiles[i];
+					var position = tileNode.data("position");
 
-                        tileNode.style.left = position.left + "px";
-                        tileNode.style.top = position.top + "px";
+					if (position) {
 
-                    } else {
+						tileNode.style.left = position.left + "px";
+						tileNode.style.top = position.top + "px";
 
-                        tileNode.style.left = (screenCenter.x - (tileNode.offsetWidth / 2)) + "px";
-                        tileNode.style.top = (screenCenter.y - (tileNode.offsetHeight / 2)) + "px";
+					} else {
 
-                    }
+						tileNode.style.left = (screenCenter.x - (tileNode.offsetWidth / 2)) + "px";
+						tileNode.style.top = (screenCenter.y - (tileNode.offsetHeight / 2)) + "px";
 
-                };
+					}
 
-            }
+				};
 
-            if (openingAnimation) {
+			}
 
-                setTimeout(function () {
+			if (openingAnimation) {
 
-                    openingAnimation = false;
+				setTimeout(function () {
 
-                    for (var i = 0; i < tiles.length; i++)
-                        tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms, top " + config.OpeningAnimationTime + "ms";
+					openingAnimation = false;
 
-                    container.style.transition = "left " + config.OpeningAnimationTime + "ms, top " + config.OpeningAnimationTime + "ms";
+					for (var i = 0; i < tiles.length; i++)
+						tiles[i].style.transition = "left " + config.OpeningAnimationTime + "ms, top " + config.OpeningAnimationTime + "ms";
 
-                    reorder(config).then(success);
+					container.style.transition = "left " + config.OpeningAnimationTime + "ms, top " + config.OpeningAnimationTime + "ms";
 
-                }, 10);
+					reorder(config).then(success);
 
-            } else {
+				}, 10);
 
-                setTimeout(function () {
-                    for (var i = 0; i < tiles.length; i++)
-                        tiles[i].style.transition = "";
+			} else {
 
-                    container.style.transition = "";
-                }, config.OpeningAnimationTime);
+				setTimeout(function () {
+					for (var i = 0; i < tiles.length; i++)
+						tiles[i].style.transition = "";
 
-                success();
-            }
+					container.style.transition = "";
+				}, config.OpeningAnimationTime);
 
-        });
+				success();
+			}
 
-    }
+		});
 
-    var enableDrag = function () {
+	}
 
-        return new Promise(function (success, fail) {
+	var enableDrag = function () {
 
-            //tiles drag
-            var request;
+		return new Promise(function (success, fail) {
 
-            if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
-                request = q("body").enableCustomDragging(".tile:not(.placeholder)");
-            else
-                request = q("body").enableCustomDragging(".tile:not(.placeholder)", { translate: true });
+			//tiles drag
+			var request;
 
-            var placeHolderTile = null;
-            var nextSibling = null;
-            var dragGroup = null;
+			if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
+				request = q("body").enableCustomDragging(".tile:not(.placeholder)");
+			else
+				request = q("body").enableCustomDragging(".tile:not(.placeholder)", { translate: true });
 
-            request.dragstart(function (event) {
+			var placeHolderTile = null;
+			var nextSibling = null;
+			var dragGroup = null;
 
-                q("#container").addClass("no-transition");
+			request.dragstart(function (event) {
 
-                event.dragElement.addClass("dragging");
+				q("#container").addClass("no-transition");
 
-                event.dragElement.style.transition = "";
+				event.dragElement.addClass("dragging");
 
-                var size = event.dragElement.data("size");
+				event.dragElement.style.transition = "";
 
-                nextSibling = event.dragElement.nextElementSibling;
-                dragGroup = event.dragElement.parentElement;
+				var size = event.dragElement.data("size");
 
-                if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) {
+				nextSibling = event.dragElement.nextElementSibling;
+				dragGroup = event.dragElement.parentElement;
 
-                    placeHolderTile = document.createElement("div");
-                    placeHolderTile.addClass("tile");
-                    placeHolderTile.addClass("placeholder");
-                    placeHolderTile.addClass("size" + size);
-                    placeHolderTile.style.width = (size == 1 ? MNTP.Config.TileWidthSm : MNTP.Config.TileWidthLg) + "px";
-                    placeHolderTile.style.height = (size == 3 ? MNTP.Config.TileHeightLg : MNTP.Config.TileHeightSm) + "px";
-                    placeHolderTile.data("size", size);
+				if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) {
 
-                    event.dragElement.parentNode.insertBefore(placeHolderTile, event.dragElement);
+					placeHolderTile = document.createElement("div");
+					placeHolderTile.addClass("tile");
+					placeHolderTile.addClass("placeholder");
+					placeHolderTile.addClass("size" + size);
+					placeHolderTile.style.width = (size == 1 ? MNTP.Config.TileWidthSm : MNTP.Config.TileWidthLg) + "px";
+					placeHolderTile.style.height = (size == 3 ? MNTP.Config.TileHeightLg : MNTP.Config.TileHeightSm) + "px";
+					placeHolderTile.data("size", size);
 
-                    reorder();
+					event.dragElement.parentNode.insertBefore(placeHolderTile, event.dragElement);
 
-                }
+					reorder();
 
-            });
+				}
 
-            var lastTargetIndex = null;
-            request.dragmove(function (event) {
+			});
 
-                if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) {
+			var lastTargetIndex = null;
+			request.dragmove(function (event) {
 
-                    if (event.toElement && event.toElement.matches(".tile")) {
+				if (MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW) {
 
-                        q(".tile-group.active-placeholder", true).forEach(function (element) {
-                            element.removeClass("active-placeholder");
-                            element.addClass("placeholder");
-                            element.removeAttribute("style");
-                        });
+					if (event.toElement && event.toElement.matches(".tile")) {
 
-                        var targetIndex = event.toElement.getIndex(".tile:not(.dragging)");
+						q(".tile-group.active-placeholder", true).forEach(function (element) {
+							element.removeClass("active-placeholder");
+							element.addClass("placeholder");
+							element.removeAttribute("style");
+						});
 
-                        if (targetIndex != lastTargetIndex) {
+						var targetIndex = event.toElement.getIndex(".tile:not(.dragging)");
 
-                            lastTargetIndex = targetIndex;
+						if (targetIndex != lastTargetIndex) {
 
-                            var dragElementIndex;
+							lastTargetIndex = targetIndex;
 
-                            if (placeHolderTile) {
-                                dragElementIndex = placeHolderTile.getIndex(".tile:not(.dragging)")
+							var dragElementIndex;
 
-                                placeHolderTile.remove();
-                                placeHolderTile = null;
-                            }
+							if (placeHolderTile) {
+								dragElementIndex = placeHolderTile.getIndex(".tile:not(.dragging)")
 
-                            var size = event.dragElement.data("size");
+								placeHolderTile.remove();
+								placeHolderTile = null;
+							}
 
-                            placeHolderTile = document.createElement("div");
-                            placeHolderTile.addClass("tile");
-                            placeHolderTile.addClass("placeholder");
-                            placeHolderTile.addClass("size" + size);
-                            placeHolderTile.style.width = (size == 1 ? MNTP.Config.TileWidthSm : MNTP.Config.TileWidthLg) + "px";
-                            placeHolderTile.style.height = (size == 3 ? MNTP.Config.TileHeightLg : MNTP.Config.TileHeightSm) + "px";
-                            placeHolderTile.data("size", size);
+							var size = event.dragElement.data("size");
 
+							placeHolderTile = document.createElement("div");
+							placeHolderTile.addClass("tile");
+							placeHolderTile.addClass("placeholder");
+							placeHolderTile.addClass("size" + size);
+							placeHolderTile.style.width = (size == 1 ? MNTP.Config.TileWidthSm : MNTP.Config.TileWidthLg) + "px";
+							placeHolderTile.style.height = (size == 3 ? MNTP.Config.TileHeightLg : MNTP.Config.TileHeightSm) + "px";
+							placeHolderTile.data("size", size);
 
-                            if (dragElementIndex > targetIndex) {
-                                event.toElement.parentNode.insertBefore(placeHolderTile, event.toElement);
-                                lastTargetIndex++;
-                            } else {
-                                event.toElement.parentNode.insertBefore(placeHolderTile, event.toElement.nextSibling);
-                                lastTargetIndex--;
-                            }
 
-                            setTimeout(function () {
-                                lastTargetIndex = null;
-                            }, 300);
+							if (dragElementIndex > targetIndex) {
+								event.toElement.parentNode.insertBefore(placeHolderTile, event.toElement);
+								lastTargetIndex++;
+							} else {
+								event.toElement.parentNode.insertBefore(placeHolderTile, event.toElement.nextSibling);
+								lastTargetIndex--;
+							}
 
-                            reorder();
+							setTimeout(function () {
+								lastTargetIndex = null;
+							}, 300);
 
-                        }
+							reorder();
 
-                    }
+						}
 
-                }
-            });
+					}
 
-            request.dragend(function (event) {
+				}
+			});
 
-                if (placeHolderTile) {
+			request.dragend(function (event) {
 
-                    q(".tile-group.placeholder", true).forEach(function (element) {
-                        element.remove();
-                    });
+				if (placeHolderTile) {
 
-                    q(".tile-group.active-placeholder", true).forEach(function (element) {
-                        element.removeClass("active-placeholder");
-                    });
+					q(".tile-group.placeholder", true).forEach(function (element) {
+						element.remove();
+					});
 
-                    var group = placeHolderTile.parentNode;
+					q(".tile-group.active-placeholder", true).forEach(function (element) {
+						element.removeClass("active-placeholder");
+					});
 
-                    var groupOffset = group.getWindowOffset();
-                    var elementOffset = event.dragElement.getWindowOffset();
+					var group = placeHolderTile.parentNode;
 
-                    event.dragElement.style.left = (elementOffset.left - groupOffset.left) + "px";
-                    event.dragElement.style.top = (elementOffset.top - groupOffset.top) + "px";
+					var groupOffset = group.getWindowOffset();
+					var elementOffset = event.dragElement.getWindowOffset();
 
-                    event.dragElement.removeClass("dragging");
+					event.dragElement.style.left = (elementOffset.left - groupOffset.left) + "px";
+					event.dragElement.style.top = (elementOffset.top - groupOffset.top) + "px";
 
-                    placeHolderTile.parentNode.insertBefore(event.dragElement, placeHolderTile);
+					event.dragElement.removeClass("dragging");
 
-                    placeHolderTile.remove();
-                    placeHolderTile = null;
+					placeHolderTile.parentNode.insertBefore(event.dragElement, placeHolderTile);
 
-                    lastTargetIndex = null;
+					placeHolderTile.remove();
+					placeHolderTile = null;
 
-                } else if (dragGroup) {
+					lastTargetIndex = null;
 
-                    event.dragElement.removeClass("dragging");
+				} else if (dragGroup) {
 
-                    dragGroup.insertBefore(event.dragElement, nextSibling || null);
+					event.dragElement.removeClass("dragging");
 
-                    var dragElementOffset = event.dragElement.getWindowOffset();
+					dragGroup.insertBefore(event.dragElement, nextSibling || null);
 
-                    var position = {};
+					var dragElementOffset = event.dragElement.getWindowOffset();
 
-                    position.left = dragElementOffset.left;
-                    position.top = dragElementOffset.top;
+					var position = {};
 
-                    event.dragElement.data("position", position);
+					position.left = dragElementOffset.left;
+					position.top = dragElementOffset.top;
 
+					event.dragElement.data("position", position);
 
-                    nextSibling = null;
 
-                }
+					nextSibling = null;
 
-                reorder().then(function () {
-                    q("#container").removeClass("no-transition");
-                    saveTilesOrder();
-                });
+				}
 
-            });
+				reorder().then(function () {
+					q("#container").removeClass("no-transition");
+					saveTilesOrder();
+				});
 
-            //resize news drag
-            var news = q("#news");
-            var request2 = q("body").enableCustomDragging(".news .resize", { translate: false, pixeldelay: 0 });
-            var initialOffset;
+			});
 
-            request2.dragstart(function (event) {
-                initialOffset = { width: news.offsetWidth, height: news.offsetHeight, left: news.offsetLeft };
-            });
+			//resize news drag
+			var news = q("#news");
+			var request2 = q("body").enableCustomDragging(".news .resize", { translate: false, pixeldelay: 0 });
+			var initialOffset;
 
-            request2.dragmove(function (event) {
+			request2.dragstart(function (event) {
+				initialOffset = { width: news.offsetWidth, height: news.offsetHeight, left: news.offsetLeft };
+			});
 
-                var direction = 1;
+			request2.dragmove(function (event) {
 
-                if (event.dragElement.hasClass("left")) {
+				var direction = 1;
 
-                    var width = news.offsetWidth;
+				if (event.dragElement.hasClass("left")) {
 
-                    if (width > 340 && width < 800)
-                        news.style.left = (initialOffset.left + event.deltaX) + "px";
+					var width = news.offsetWidth;
 
-                    direction = -1;
-                }
+					if (width > 340 && width < 800)
+						news.style.left = (initialOffset.left + event.deltaX) + "px";
 
-                news.style.width = (initialOffset.width + (event.deltaX * direction)) + "px";
-                news.style.height = (initialOffset.height + event.deltaY) + "px";
+					direction = -1;
+				}
 
-                resizeNews();
-                reorder();
-            });
+				news.style.width = (initialOffset.width + (event.deltaX * direction)) + "px";
+				news.style.height = (initialOffset.height + event.deltaY) + "px";
 
-            request2.dragend(function (event) {
-                MNTP.Config.NewsWidth = news.offsetWidth;
-                MNTP.Config.NewsHeight = news.offsetHeight;
-                MNTP.Config.NewsLeft = news.offsetLeft;
-                MNTP.Config.NewsTop = news.offsetTop;
-            });
+				resizeNews();
+				reorder();
+			});
 
-            //move news panel
-            var request3 = q("body").enableCustomDragging(".news", { dragInitiator: ".news .top-bar" });
+			request2.dragend(function (event) {
+				MNTP.Config.NewsWidth = news.offsetWidth;
+				MNTP.Config.NewsHeight = news.offsetHeight;
+				MNTP.Config.NewsLeft = news.offsetLeft;
+				MNTP.Config.NewsTop = news.offsetTop;
+			});
 
-            request3.dragend(function (event) {
-                MNTP.Config.NewsLeft = news.offsetLeft;
-                MNTP.Config.NewsTop = news.offsetTop;
-            })
+			//move news panel
+			var request3 = q("body").enableCustomDragging(".news", { dragInitiator: ".news .top-bar" });
 
+			request3.dragend(function (event) {
+				MNTP.Config.NewsLeft = news.offsetLeft;
+				MNTP.Config.NewsTop = news.offsetTop;
+			})
 
-            //move configuration windows
-            q("body").enableCustomDragging(".config", { dragInitiator: ".config .top-bar" });
 
-            success();
+			//move configuration windows
+			q("body").enableCustomDragging(".config", { dragInitiator: ".config .top-bar" });
 
-        });
+			success();
 
-    }
+		});
 
-    var bindEvents = function () {
+	}
 
-        return new Promise(function (success, fail) {
+	var bindEvents = function () {
 
-            //-- click on the preview tile does nothing
-            q("#nav-new-tile-menu #tile-preview").addEventListener("click", function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-                return false;
-            });
+		return new Promise(function (success, fail) {
 
-            //-- avoid dragging the preview tile
-            q("#nav-new-tile-menu #tile-preview").addEventListener("mousedown", function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-                return false;
-            });
+			//-- click on the preview tile does nothing
+			q("#nav-new-tile-menu #tile-preview").addEventListener("click", function (event) {
+				event.preventDefault();
+				event.stopPropagation();
+				return false;
+			});
 
-            //-- save tile configurations (new)
-            q("#new-tile-submit a").addEventListener("click", function () {
+			//-- avoid dragging the preview tile
+			q("#nav-new-tile-menu #tile-preview").addEventListener("mousedown", function (event) {
+				event.preventDefault();
+				event.stopPropagation();
+				return false;
+			});
 
-                if (validateForms(q("#nav-new-tile-menu"))) {
+			//-- save tile configurations (new)
+			q("#new-tile-submit a").addEventListener("click", function () {
 
-                    saveTileConfig()
-                        .then(function () {
-                            MNTP.Config.ReloadBackgroundImage = true;
-                            sidebarToggle();
-                            load().then(saveTilesOrder);
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                            console.log(error.stack);
-                        });
+				if (validateForms(q("#nav-new-tile-menu"))) {
 
-                }
+					saveTileConfig()
+						.then(function () {
+							MNTP.Config.ReloadBackgroundImage = true;
+							sidebarToggle();
+							load().then(saveTilesOrder);
+						})
+						.catch(function (error) {
+							console.log(error);
+							console.log(error.stack);
+						});
 
-            });
+				}
 
-            //-- save tile configurations (edit)
-            q("#edit-tile-submit a").addEventListener("click", function () {
+			});
 
-                if (validateForms(q("#edit-tile-menu"))) {
+			//-- save tile configurations (edit)
+			q("#edit-tile-submit a").addEventListener("click", function () {
 
-                    saveTileConfig(true)
-                        .then(function () {
-                            MNTP.Config.ReloadBackgroundImage = true;
-                            sidebarToggle();
-                            load().then(saveTilesOrder);
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                            console.log(error.stack);
-                        });
+				if (validateForms(q("#edit-tile-menu"))) {
 
-                }
+					saveTileConfig(true)
+						.then(function () {
+							MNTP.Config.ReloadBackgroundImage = true;
+							sidebarToggle();
+							load().then(saveTilesOrder);
+						})
+						.catch(function (error) {
+							console.log(error);
+							console.log(error.stack);
+						});
 
-            });
+				}
 
-            //-- live update the preview tile (new)
-            q("#nav-new-tile-menu input, #nav-new-tile-menu select", true).forEach(function (element) {
+			});
 
-                element.addEventListener(["keypress", "change", "input"], function () {
-                    setTimeout(function () {
-                        loadPreviewTile();
-                    }, 0);
-                });
+			//-- live update the preview tile (new)
+			q("#nav-new-tile-menu input, #nav-new-tile-menu select", true).forEach(function (element) {
 
-            });
+				element.addEventListener(["keypress", "change", "input"], function () {
+					setTimeout(function () {
+						loadPreviewTile();
+					}, 0);
+				});
 
-            //-- live update the preview tile (edit)
-            q("#edit-tile-menu input, #edit-tile-menu select", true).forEach(function (element) {
+			});
 
-                element.addEventListener(["keypress", "change", "input"], function () {
-                    setTimeout(function () {
-                        loadPreviewTile(null, true);
-                    }, 0);
-                });
+			//-- live update the preview tile (edit)
+			q("#edit-tile-menu input, #edit-tile-menu select", true).forEach(function (element) {
 
-            });
+				element.addEventListener(["keypress", "change", "input"], function () {
+					setTimeout(function () {
+						loadPreviewTile(null, true);
+					}, 0);
+				});
 
-            //-- remove tile image (new)
-            q("#new-tile-remove-image a").addEventListener("click", function () {
+			});
 
-                q("input[data-property='removeImage']", "#nav-new-tile-menu").value = "true";
-                q("input[data-property='image.data']", "#nav-new-tile-menu").value = ""
-                q("input[data-property='image.url']", "#nav-new-tile-menu").value = ""
+			//-- remove tile image (new)
+			q("#new-tile-remove-image a").addEventListener("click", function () {
 
-                loadPreviewTile();
+				q("input[data-property='removeImage']", "#nav-new-tile-menu").value = "true";
+				q("input[data-property='image.data']", "#nav-new-tile-menu").value = ""
+				q("input[data-property='image.url']", "#nav-new-tile-menu").value = ""
 
-                q("#new-tile-remove-image").removeClass("fadeIn").addClass("fadeOut");
+				loadPreviewTile();
 
-                q("#new-tile-add-url-text").removeClass("fadeInLeft").addClass("fadeOutLeft");
+				q("#new-tile-remove-image").removeClass("fadeIn").addClass("fadeOut");
 
-            });
+				q("#new-tile-add-url-text").removeClass("fadeInLeft").addClass("fadeOutLeft");
 
-            //-- remove tile image (edit)
-            q("#edit-tile-remove-image a").addEventListener("click", function () {
+			});
 
-                q("input[data-property='removeImage']", "#edit-tile-menu").value = "true";
-                q("input[data-property='image.data']", "#edit-tile-menu").value = ""
-                q("input[data-property='image.url']", "#edit-tile-menu").value = ""
+			//-- remove tile image (edit)
+			q("#edit-tile-remove-image a").addEventListener("click", function () {
 
-                loadPreviewTile(null, true);
+				q("input[data-property='removeImage']", "#edit-tile-menu").value = "true";
+				q("input[data-property='image.data']", "#edit-tile-menu").value = ""
+				q("input[data-property='image.url']", "#edit-tile-menu").value = ""
 
-                q("#edit-tile-remove-image").removeClass("fadeIn").addClass("fadeOut");
+				loadPreviewTile(null, true);
 
-                q("#edit-tile-add-url-text").addClass("fadeOutLeft");
+				q("#edit-tile-remove-image").removeClass("fadeIn").addClass("fadeOut");
 
-            });
+				q("#edit-tile-add-url-text").addClass("fadeOutLeft");
 
-            //-- right click on tiles
-            q(".tile", true).forEach(function (element) {
+			});
 
-                element.addEventListener("contextmenu", function (event) {
+			//-- right click on tiles
+			q(".tile", true).forEach(function (element) {
 
-                    q(".tile.selected", true).forEach(function (tileNode) {
-                        tileNode.removeClass("selected");
-                    });
+				element.addEventListener("contextmenu", function (event) {
 
-                    this.addClass("selected");
+					q(".tile.selected", true).forEach(function (tileNode) {
+						tileNode.removeClass("selected");
+					});
 
-                    q(".context-menu li", true).forEach(function (element) {
-                        element.style.display = "block";
-                    });
+					this.addClass("selected");
 
-                    var contextMenu = q(".context-menu");
+					q(".context-menu li", true).forEach(function (element) {
+						element.style.display = "block";
+					});
 
-                    contextMenu.addClass("hidden");
+					var contextMenu = q(".context-menu");
 
-                    setTimeout(function () {
+					contextMenu.addClass("hidden");
 
-                        contextMenu.removeClass("hidden");
-                        contextMenu.style.top = event.y + "px";
-                        contextMenu.style.left = event.x + "px";
+					setTimeout(function () {
 
-                    }, 50);
+						contextMenu.removeClass("hidden");
+						contextMenu.style.top = event.y + "px";
+						contextMenu.style.left = event.x + "px";
 
-                    event.stopPropagation();
-                    event.preventDefault();
-                    return false;
-                });
+					}, 50);
 
-            });
+					event.stopPropagation();
+					event.preventDefault();
+					return false;
+				});
 
-            //-- right anywhere else shows the global options
-            q("body").addEventListener("contextmenu", function (event) {
+			});
 
-                if (event.target == q("body") || event.target.hasClass(["wrapper", "container", "wallpaper", "tile-group"])) {
+			//-- right anywhere else shows the global options
+			q("body").addEventListener("contextmenu", function (event) {
 
-                    q(".tile.selected", true).forEach(function (tileNode) {
-                        tileNode.removeClass("selected");
-                    });
+				if (event.target == q("body") || event.target.hasClass(["wrapper", "container", "wallpaper", "tile-group"])) {
 
-                    q(".context-menu li", true).forEach(function (element) {
-                        element.style.display = element.hasClass("global") ? "block" : "none";
-                    });
+					q(".tile.selected", true).forEach(function (tileNode) {
+						tileNode.removeClass("selected");
+					});
 
-                    var contextMenu = q(".context-menu");
+					q(".context-menu li", true).forEach(function (element) {
+						element.style.display = element.hasClass("global") ? "block" : "none";
+					});
 
-                    contextMenu.addClass("hidden");
+					var contextMenu = q(".context-menu");
 
-                    setTimeout(function () {
+					contextMenu.addClass("hidden");
 
-                        contextMenu.removeClass("hidden");
-                        contextMenu.style.top = event.y + "px";
-                        contextMenu.style.left = event.x + "px";
+					setTimeout(function () {
 
-                    }, 50);
+						contextMenu.removeClass("hidden");
+						contextMenu.style.top = event.y + "px";
+						contextMenu.style.left = event.x + "px";
 
-                }
+					}, 50);
 
-                event.preventDefault();
-                return false;
-            });
+				}
 
-            //-- left click anywhere else closes the context menu and the sidebar
-            q("body").addEventListener("click", function (event) {
+				event.preventDefault();
+				return false;
+			});
 
-                if (event.target == q("body") || event.target.hasClass(["wrapper", "container", "wallpaper", "tile-group"])) {
+			//-- left click anywhere else closes the context menu and the sidebar
+			q("body").addEventListener("click", function (event) {
 
-                    q(".context-menu").addClass("hidden");
+				if (event.target == q("body") || event.target.hasClass(["wrapper", "container", "wallpaper", "tile-group"])) {
 
-                    q(".tile.selected", true).forEach(function (tileNode) {
-                        tileNode.removeClass("selected");
-                    });
+					q(".context-menu").addClass("hidden");
 
-                    sidebar.removeClass("open");
-                    menuButton.removeClass("active");
-                    subMenuClose();
+					q(".tile.selected", true).forEach(function (tileNode) {
+						tileNode.removeClass("selected");
+					});
 
-                    setTimeout(function () {
-                        navMain.removeClass("open");
-                    }, animaDelay);
+					sidebar.removeClass("open");
+					menuButton.removeClass("active");
+					subMenuClose();
 
-                }
-            });
+					setTimeout(function () {
+						navMain.removeClass("open");
+					}, animaDelay);
 
-            //-- resize tile - smaller
-            q("#edit-tile-make-smaller, #context-make-tile-smaller", true).forEach(function(element) {
-               
-                element.addEventListener("click", function () {
+				}
+			});
 
-                    var tiles = q(".tile.selected", true);
+			//-- resize tile - smaller
+			q("#edit-tile-make-smaller, #context-make-tile-smaller", true).forEach(function(element) {
 
-                    for (var i = 0; i < tiles.length; i++) {
+				element.addEventListener("click", function () {
 
-                        var tileNode = tiles[i];
-                        var id = tileNode.data("id");
-                        var size = tileNode.data("size");
+					var tiles = q(".tile.selected", true);
 
-                        if (size > 1) {
-                            var newSize = size - 1;
+					for (var i = 0; i < tiles.length; i++) {
 
-                            tileNode.removeClass(["size1", "size2", "size3"]);
-                            tileNode.addClass("size" + newSize);
-                            tileNode.data("size", newSize);
+						var tileNode = tiles[i];
+						var id = tileNode.data("id");
+						var size = tileNode.data("size");
 
-                            Tile.get(id).then(function (tile) {
+						if (size > 1) {
+							var newSize = size - 1;
 
-                                tile.size = tile.size - 1;
-                                Tile.save(tile);
+							tileNode.removeClass(["size1", "size2", "size3"]);
+							tileNode.addClass("size" + newSize);
+							tileNode.data("size", newSize);
 
-                            });
-                        }
+							Tile.get(id).then(function (tile) {
 
-                    }
+								tile.size = tile.size - 1;
+								Tile.save(tile);
 
-                    resize();
+							});
+						}
 
-                });
+					}
 
-            });
+					resize();
 
-            //-- resize tile - bigger
-            q("#edit-tile-make-bigger, #context-make-tile-bigger", true).forEach(function (element) {
+				});
 
-                element.addEventListener("click", function () {
+			});
 
-                    var tiles = q(".tile.selected", true);
+			//-- resize tile - bigger
+			q("#edit-tile-make-bigger, #context-make-tile-bigger", true).forEach(function (element) {
 
-                    for (var i = 0; i < tiles.length; i++) {
+				element.addEventListener("click", function () {
 
-                        var tileNode = tiles[i];
-                        var id = tileNode.data("id");
-                        var size = tileNode.data("size");
+					var tiles = q(".tile.selected", true);
 
-                        if (size < 3) {
-                            var newSize = size + 1;
+					for (var i = 0; i < tiles.length; i++) {
 
-                            tileNode.removeClass(["size1", "size2", "size3"]);
-                            tileNode.addClass("size" + newSize);
-                            tileNode.data("size", newSize);
+						var tileNode = tiles[i];
+						var id = tileNode.data("id");
+						var size = tileNode.data("size");
 
+						if (size < 3) {
+							var newSize = size + 1;
 
-                            Tile.get(id).then(function (tile) {
+							tileNode.removeClass(["size1", "size2", "size3"]);
+							tileNode.addClass("size" + newSize);
+							tileNode.data("size", newSize);
 
-                                tile.size = tile.size + 1;
-                                Tile.save(tile);
 
-                            });
-                        }
+							Tile.get(id).then(function (tile) {
 
-                    }
+								tile.size = tile.size + 1;
+								Tile.save(tile);
 
-                    resize();
+							});
+						}
 
-                });
+					}
 
-            });
+					resize();
 
-            //-- edit tile (context menu)
-            q("#context-edit-tile").addEventListener("click", function (event) {
+				});
 
-                closeAllSubmenus().then(function () {
+			});
 
-                    q(".context-menu").addClass("hidden");
+			//-- edit tile (context menu)
+			q("#context-edit-tile").addEventListener("click", function (event) {
 
-                    var id = q(".tile.selected").data("id");
-                    showTileConfig(id);
+				closeAllSubmenus().then(function () {
 
-                });
+					q(".context-menu").addClass("hidden");
 
-                event.preventDefault();
-                event.stopPropagation();
-                return false;
+					var id = q(".tile.selected").data("id");
+					showTileConfig(id);
 
-            });
+				});
 
-            //-- remove tile (context menu and sidebar)
-            q("#context-remove-tile, #edit-tile-delete", true).forEach(function (element) {
+				event.preventDefault();
+				event.stopPropagation();
+				return false;
 
-                element.addEventListener("click", function () {
+			});
 
-                    q(".context-menu").addClass("hidden");
+			//-- remove tile (context menu and sidebar)
+			q("#context-remove-tile, #edit-tile-delete", true).forEach(function (element) {
 
-                    var tiles = q(".tile.selected", true);
+				element.addEventListener("click", function () {
 
-                    for (var i = 0; i < tiles.length; i++) {
+					q(".context-menu").addClass("hidden");
 
-                        var tileNode = tiles[i];
-                        var id = tileNode.data("id");
+					var tiles = q(".tile.selected", true);
 
-                        tileNode.remove();
-                        Tile.remove(id);
+					for (var i = 0; i < tiles.length; i++) {
 
-                    }
+						var tileNode = tiles[i];
+						var id = tileNode.data("id");
 
-                    reorder();
+						tileNode.remove();
+						Tile.remove(id);
 
-                    sidebar.removeClass("open");
-                    menuButton.removeClass("active");
-                    subMenuClose();
+					}
 
-                    setTimeout(function () {
-                        navMain.removeClass("open");
-                    }, animaDelay);
+					reorder();
 
-                    event.preventDefault();
-                    event.stopPropagation();
-                    return false;
+					sidebar.removeClass("open");
+					menuButton.removeClass("active");
+					subMenuClose();
 
-                });
+					setTimeout(function () {
+						navMain.removeClass("open");
+					}, animaDelay);
 
-            });
+					event.preventDefault();
+					event.stopPropagation();
+					return false;
 
-            //-- add tile (context menu)
-            q("#context-add-tile").addEventListener("click", function () {
+				});
 
-                closeAllSubmenus().then(function () {
+			});
 
-                    sidebar.addClass("open");
-                    menuButton.addClass("active");
+			//-- add tile (context menu)
+			q("#context-add-tile").addEventListener("click", function () {
 
-                    navNewTileMenu.addClass("open ext");
-                    extSidebarOpen();
+				closeAllSubmenus().then(function () {
 
-                    loadPreviewTile();
+					sidebar.addClass("open");
+					menuButton.addClass("active");
 
-                    q("#new-tile-customise-color a.color-preview").style.backgroundColor = MNTP.Config.AccentColor;
-                    q("#new-tile-customise-color input").value = MNTP.Config.AccentColor;
+					navNewTileMenu.addClass("open ext");
+					extSidebarOpen();
 
-                    q("#new-tile-customise-font-color a.color-preview").style.backgroundColor = MNTP.Config.TileFontColor;
-                    q("#new-tile-customise-font-color input").value = MNTP.Config.TileFontColor;
+					loadPreviewTile();
 
-                    q(".context-menu").addClass("hidden");
+					q("#new-tile-customise-color a.color-preview").style.backgroundColor = MNTP.Config.AccentColor;
+					q("#new-tile-customise-color input").value = MNTP.Config.AccentColor;
 
-                    q(".tile.selected", true).forEach(function (tileNode) {
-                        tileNode.removeClass("selected");
-                    });
+					q("#new-tile-customise-font-color a.color-preview").style.backgroundColor = MNTP.Config.TileFontColor;
+					q("#new-tile-customise-font-color input").value = MNTP.Config.TileFontColor;
 
-                });
+					q(".context-menu").addClass("hidden");
 
-                event.preventDefault();
-                event.stopPropagation();
-                return false;
+					q(".tile.selected", true).forEach(function (tileNode) {
+						tileNode.removeClass("selected");
+					});
 
-            });
+				});
 
-            //-- settings (context menu)
-            q("#context-settings").addEventListener("click", function () {
+				event.preventDefault();
+				event.stopPropagation();
+				return false;
 
-                closeAllSubmenus().then(function () {
+			});
 
-                    sidebar.addClass("open");
-                    menuButton.addClass("active");
+			//-- settings (context menu)
+			q("#context-settings").addEventListener("click", function () {
 
-                    navMainOpen();
+				closeAllSubmenus().then(function () {
 
-                    q(".context-menu").addClass("hidden");
+					sidebar.addClass("open");
+					menuButton.addClass("active");
 
-                    q(".tile.selected", true).forEach(function (tileNode) {
-                        tileNode.removeClass("selected");
-                    });
+					navMainOpen();
 
-                });
+					q(".context-menu").addClass("hidden");
 
-                event.preventDefault();
-                event.stopPropagation();
-                return false;
+					q(".tile.selected", true).forEach(function (tileNode) {
+						tileNode.removeClass("selected");
+					});
 
-            });
+				});
 
-            //-- live update the configurations
-            q("input[data-config], select[data-config]", true).forEach(function (element) {
+				event.preventDefault();
+				event.stopPropagation();
+				return false;
 
-                element.addEventListener(["keypress", "change", "input"], function () {
+			});
 
-                    var that = this;
+			//-- live update the configurations
+			q("input[data-config], select[data-config]", true).forEach(function (element) {
 
-                    setTimeout(function () {
+				element.addEventListener(["keypress", "change", "input"], function () {
 
-                        setConfig(that);
+					var that = this;
 
-                        loadConfig();
+					setTimeout(function () {
 
-                    }, 0);
-                });
+						setConfig(that);
 
-            });
+						loadConfig();
 
-            //-- tiles animation preview
-            var animationpreview;
-            q("[data-config='OpeningAnimationTime']").addEventListener("input", function () {
+					}, 0);
+				});
 
-                var that = this;
+			});
 
-                animationpreview && clearTimeout(animationpreview);
+			//-- tiles animation preview
+			var animationpreview;
+			q("[data-config='OpeningAnimationTime']").addEventListener("input", function () {
 
-                animationpreview = setTimeout(function () {
+				var that = this;
 
-                    MNTP.Config.OpeningAnimationTime = parseInt(that.value);
+				animationpreview && clearTimeout(animationpreview);
 
-                    openingAnimation = true;
+				animationpreview = setTimeout(function () {
 
-                    reorder();
+					MNTP.Config.OpeningAnimationTime = parseInt(that.value);
 
-                }, 500);
+					openingAnimation = true;
 
-            }, "animationPreview");
+					reorder();
 
-            q("[data-config='OpeningAnimation']").addEventListener("change", function () {
+				}, 500);
 
-                var that = this;
+			}, "animationPreview");
 
-                setTimeout(function () {
+			q("[data-config='OpeningAnimation']").addEventListener("change", function () {
 
-                    if (that.checked) {
+				var that = this;
 
-                        MNTP.Config.OpeningAnimation = true;
+				setTimeout(function () {
 
-                        openingAnimation = true;
+					if (that.checked) {
 
-                        reorder();
+						MNTP.Config.OpeningAnimation = true;
 
-                    }
+						openingAnimation = true;
 
-                });
+						reorder();
 
-            }, "animationPreview");
+					}
 
-            //-- get background from bing
-            q("#btn-bing-background").addEventListener("click", function () {
+				});
 
-                MNTP.Config.HasBackgroundImage = false;
-                MNTP.Config.BingBackgroundImage = true;
-                MNTP.Config.NoBackgroundImage = false;
+			}, "animationPreview");
 
-                MNTP.Config.ReloadBackgroundImage = true;
+			//-- get background from bing
+			q("#btn-bing-background").addEventListener("click", function () {
 
-                q("#background-url").fadeOutLeft();
+				MNTP.Config.HasBackgroundImage = false;
+				MNTP.Config.BingBackgroundImage = true;
+				MNTP.Config.NoBackgroundImage = false;
 
-                loadConfig();
+				MNTP.Config.ReloadBackgroundImage = true;
 
-            });
+				q("#background-url").fadeOutLeft();
 
-            //-- add background from URL
-            q("#btn-background-url").addEventListener("click", function () {
+				loadConfig();
 
-                q("#background-url").toggleFadeLeft();
+			});
 
-            });
+			//-- add background from URL
+			q("#btn-background-url").addEventListener("click", function () {
 
-            //-- get background from URL
-            q("#txt-background-url").addEventListener("keydown", function () {
+				q("#background-url").toggleFadeLeft();
 
-                var that = this;
+			});
 
-                setTimeout(function () {
+			//-- get background from URL
+			q("#txt-background-url").addEventListener("keydown", function () {
 
-                    var img = new Image();
+				var that = this;
 
-                    img.onload = function () {
+				setTimeout(function () {
 
-                        getDataUrlFromUrl(this.src).then(function (opt) {
+					var img = new Image();
 
-                            var image = {};
-                            image.type = Image.Type.Background;
-                            image.id = 1;
-                            image.data = opt.dataURL;
+					img.onload = function () {
 
-                            Image.save(image).then(function () {
+						getDataUrlFromUrl(this.src).then(function (opt) {
 
-                                MNTP.Config.HasBackgroundImage = true;
-                                MNTP.Config.BingBackgroundImage = false;
-                                MNTP.Config.NoBackgroundImage = false;
+							var image = {};
+							image.type = Image.Type.Background;
+							image.id = 1;
+							image.data = opt.dataURL;
 
-                                MNTP.Config.ReloadBackgroundImage = true;
+							Image.save(image).then(function () {
 
-                                q("#background-url").fadeOutLeft();
+								MNTP.Config.HasBackgroundImage = true;
+								MNTP.Config.BingBackgroundImage = false;
+								MNTP.Config.NoBackgroundImage = false;
 
-                                loadConfig();
+								MNTP.Config.ReloadBackgroundImage = true;
 
-                            });
+								q("#background-url").fadeOutLeft();
 
-                        });
+								loadConfig();
 
-                    }
+							});
 
-                    img.src = that.value;
+						});
 
-                }, 0);
+					}
 
-            });
+					img.src = that.value;
 
-            q("#txt-background-url").addEventListener("blur", function () {
+				}, 0);
 
-                q("label", this.parentElement).toggleClass("valid", this.value.length > 0);
+			});
 
-            });
+			q("#txt-background-url").addEventListener("blur", function () {
 
-            //-- upload background
-            q("#file-background").addEventListener("change", function () {
+				q("label", this.parentElement).toggleClass("valid", this.value.length > 0);
 
-                if (this.files) {
+			});
 
-                    var that = this;
+			//-- upload background
+			q("#file-background").addEventListener("change", function () {
 
-                    setTimeout(function () {
+				if (this.files) {
 
-                        getDataUrlFromFile(that.files[0]).then(function (dataURL) {
+					var that = this;
 
-                            var image = {};
-                            image.type = Image.Type.Background;
-                            image.id = 1;
-                            image.data = dataURL;
+					setTimeout(function () {
 
-                            Image.save(image).then(function () {
+						getDataUrlFromFile(that.files[0]).then(function (dataURL) {
 
-                                MNTP.Config.HasBackgroundImage = true;
-                                MNTP.Config.BingBackgroundImage = false;
-                                MNTP.Config.NoBackgroundImage = false;
+							var image = {};
+							image.type = Image.Type.Background;
+							image.id = 1;
+							image.data = dataURL;
 
-                                MNTP.Config.ReloadBackgroundImage = true;
+							Image.save(image).then(function () {
 
-                                q("#background-url").fadeOutLeft();
+								MNTP.Config.HasBackgroundImage = true;
+								MNTP.Config.BingBackgroundImage = false;
+								MNTP.Config.NoBackgroundImage = false;
 
-                                loadConfig();
+								MNTP.Config.ReloadBackgroundImage = true;
 
-                            });
+								q("#background-url").fadeOutLeft();
 
-                        });
+								loadConfig();
 
-                    }, 0);
+							});
 
-                }
+						});
 
-            });
+					}, 0);
 
-            // -- background fit
-            q("#select-background-fit").addEventListener("change", function () {
+				}
 
-                var that = this;
+			});
 
-                setTimeout(function () {
+			// -- background fit
+			q("#select-background-fit").addEventListener("change", function () {
 
-                    MNTP.Config.BackgroundFill = false;
-                    MNTP.Config.BackgroundAdjust = false;
+				var that = this;
 
-                    if (that.value == "adjust")
-                        MNTP.Config.BackgroundAdjust = true;
-                    else if (that.value == "fill")
-                        MNTP.Config.BackgroundFill = true;
+				setTimeout(function () {
 
-                    loadConfig();
+					MNTP.Config.BackgroundFill = false;
+					MNTP.Config.BackgroundAdjust = false;
 
-                }, 0);
+					if (that.value == "adjust")
+						MNTP.Config.BackgroundAdjust = true;
+					else if (that.value == "fill")
+						MNTP.Config.BackgroundFill = true;
 
-            }, "fitChange");
+					loadConfig();
 
-            //-- remove background
-            q("#btn-remove-background").addEventListener("click", function () {
+				}, 0);
 
-                MNTP.Config.HasBackgroundImage = false;
-                MNTP.Config.BingBackgroundImage = false;
-                MNTP.Config.NoBackgroundImage = true;
+			}, "fitChange");
 
-                MNTP.Config.ReloadBackgroundImage = true;
+			//-- remove background
+			q("#btn-remove-background").addEventListener("click", function () {
 
-                q("#background-url").fadeOutLeft();
+				MNTP.Config.HasBackgroundImage = false;
+				MNTP.Config.BingBackgroundImage = false;
+				MNTP.Config.NoBackgroundImage = true;
 
-                loadConfig();
+				MNTP.Config.ReloadBackgroundImage = true;
 
-            });
+				q("#background-url").fadeOutLeft();
 
-            //-- reset default setting (tiles)
-            q("#btn-reset-tiles-config").addEventListener("click", function () {
+				loadConfig();
 
-                var inputs = q("[data-config]", "#nav-settings-tiles-menu");
+			});
 
-                for (var i = 0; i < inputs.length; i++) {
+			//-- reset default setting (tiles)
+			q("#btn-reset-tiles-config").addEventListener("click", function () {
 
-                    var input = inputs[i];
-                    var config = input.data("config");
+				var inputs = q("[data-config]", "#nav-settings-tiles-menu");
 
-                    MNTP.Config.setDefaultValue(config);
+				for (var i = 0; i < inputs.length; i++) {
 
-                }
+					var input = inputs[i];
+					var config = input.data("config");
 
-                loadConfig();
+					MNTP.Config.setDefaultValue(config);
 
-            });
+				}
 
-            //-- change news view mode
-            q("#news-btn-change-view").addEventListener("click", function () {
+				loadConfig();
 
-                var news = q("#news");
-                news.toggleClass("list", "grid");
+			});
 
-                MNTP.Config.NewsViewMode = news.hasClass("list") ? "list" : "grid";
+			//-- change news view mode
+			q("#news-btn-change-view").addEventListener("click", function () {
 
-                resizeNews();
+				var news = q("#news");
+				news.toggleClass("list", "grid");
 
-            });
+				MNTP.Config.NewsViewMode = news.hasClass("list") ? "list" : "grid";
 
-            //-- change show pictures on list mode 
-            q("#news-btn-change-view-pictures").addEventListener("click", function () {
+				resizeNews();
 
-                var news = q("#news");
-                news.toggleClass("hide-images");
+			});
 
-                MNTP.Config.ShowImageNewsList = !news.hasClass("hide-images");
+			//-- change show pictures on list mode
+			q("#news-btn-change-view-pictures").addEventListener("click", function () {
 
-            });
+				var news = q("#news");
+				news.toggleClass("hide-images");
 
-            //-- scroll through news titles
-            var newsTitleScrollAnimation;
-            q("#news-titles").addEventListener("mousewheel", function (e) {
+				MNTP.Config.ShowImageNewsList = !news.hasClass("hide-images");
 
-                newsTitleScrollAnimation && clearInterval(newsTitleScrollAnimation);
-                newsTitleScrollAnimation = null;
+			});
 
-                this.scrollLeft -= e.wheelDeltaY;
+			//-- scroll through news titles
+			var newsTitleScrollAnimation;
+			q("#news-titles").addEventListener("mousewheel", function (e) {
 
-            });
+				newsTitleScrollAnimation && clearInterval(newsTitleScrollAnimation);
+				newsTitleScrollAnimation = null;
 
-            //-- click on news titles
-            q("#news-titles").addEventListener("click", function (e) {
+				this.scrollLeft -= e.wheelDeltaY;
 
-                var p = event.target;
+			});
 
-                while (p && p.tagName.toLowerCase() != "p")
-                    p = p.parentElement;
+			//-- click on news titles
+			q("#news-titles").addEventListener("click", function (e) {
 
-                if (p && !p.hasClass("active")) {
+				var p = event.target;
 
-                    loadFeed(p.data("url"));
+				while (p && p.tagName.toLowerCase() != "p")
+					p = p.parentElement;
 
-                    var titles = q("p", this, true);
+				if (p && !p.hasClass("active")) {
 
-                    for (var i = 0; i < titles.length; i++)
-                        titles[i].removeClass("active");
+					loadFeed(p.data("url"));
 
-                    p.addClass("active");
+					var titles = q("p", this, true);
 
-                    var left = p.offsetLeft;
+					for (var i = 0; i < titles.length; i++)
+						titles[i].removeClass("active");
 
-                    var that = this;
+					p.addClass("active");
 
-                    newsTitleScrollAnimation && clearInterval(newsTitleScrollAnimation);
+					var left = p.offsetLeft;
 
-                    newsTitleScrollAnimation = setInterval(function () {
+					var that = this;
 
-                        var lastScroll = that.scrollLeft;
+					newsTitleScrollAnimation && clearInterval(newsTitleScrollAnimation);
 
-                        if (left - 60 > that.scrollLeft)
-                            that.scrollLeft += 1;
-                        else if (left - 60 < that.scrollLeft)
-                            that.scrollLeft -= 1;
+					newsTitleScrollAnimation = setInterval(function () {
 
-                        if (left - 60 == that.scrollLeft || that.scrollLeft == lastScroll)
-                            clearInterval(newsTitleScrollAnimation);
+						var lastScroll = that.scrollLeft;
 
-                    }, 1);
+						if (left - 60 > that.scrollLeft)
+							that.scrollLeft += 1;
+						else if (left - 60 < that.scrollLeft)
+							that.scrollLeft -= 1;
 
-                }
+						if (left - 60 == that.scrollLeft || that.scrollLeft == lastScroll)
+							clearInterval(newsTitleScrollAnimation);
 
-            });
+					}, 1);
 
-            //-- click on news items
-            q("#news").addEventListener("mousedown", function (event) {
+				}
 
-                var li = event.target;
+			});
 
-                while (li && li.tagName.toLowerCase() != "li")
-                    li = li.parentElement;
+			//-- click on news items
+			q("#news").addEventListener("mousedown", function (event) {
 
-                if (li) {
+				var li = event.target;
 
-                    var list = li.parentElement.parentElement.parentElement;
+				while (li && li.tagName.toLowerCase() != "li")
+					li = li.parentElement;
 
-                    if (event.target && event.target.tagName.toLowerCase() == "h4" || list.hasClass("grid")) {
+				if (li) {
 
-                        var url = li.data("url");
+					var list = li.parentElement.parentElement.parentElement;
 
-                        navigate(url, event);
+					if (event.target && event.target.tagName.toLowerCase() == "h4" || list.hasClass("grid")) {
 
-                    } else if (event.button == 0) {
-                        li.toggleClass("full");
-                    }
+						var url = li.data("url");
 
-                }
+						navigate(url, event);
 
-            });
+					} else if (event.button == 0) {
+						li.toggleClass("full");
+					}
 
-            //-- navigate through bookmarks
-            var bkmPrevious, bkmNext;
-            //-- previous bookmarks
-            q("#btn-previous-bookmarks").addEventListener("mouseover", function () {
+				}
 
-                bkmPrevious = setInterval(function () {
+			});
 
-                    var ul = q("#bookmarks-list > ul");
+			//-- navigate through bookmarks
+			var bkmPrevious, bkmNext;
+			//-- previous bookmarks
+			q("#btn-previous-bookmarks").addEventListener("mouseover", function () {
 
-                    var currentLeft = parseInt(ul.style.left) || 0;
+				bkmPrevious = setInterval(function () {
 
-                    if (currentLeft >= 0)
-                        clearInterval(bkmPrevious);
-                    else
-                        ul.style.left = (currentLeft + 2) + "px";
+					var ul = q("#bookmarks-list > ul");
 
-                }, 3);
+					var currentLeft = parseInt(ul.style.left) || 0;
 
-            });
+					if (currentLeft >= 0)
+						clearInterval(bkmPrevious);
+					else
+						ul.style.left = (currentLeft + 2) + "px";
 
-            q("#btn-previous-bookmarks").addEventListener("mouseout", function () {
-                clearInterval(bkmPrevious);
-            });
+				}, 3);
 
-            //-- next bookmarks
-            q("#btn-next-bookmarks").addEventListener("mouseover", function () {
+			});
 
-                bkmNext = setInterval(function () {
+			q("#btn-previous-bookmarks").addEventListener("mouseout", function () {
+				clearInterval(bkmPrevious);
+			});
 
-                    var ul = q("#bookmarks-list > ul");
+			//-- next bookmarks
+			q("#btn-next-bookmarks").addEventListener("mouseover", function () {
 
-                    var currentLeft = parseInt(ul.style.left) || 0;
+				bkmNext = setInterval(function () {
 
-                    if (currentLeft + 440 < window.innerWidth * (-1))
-                        clearInterval(bkmNext);
-                    else
-                        ul.style.left = (currentLeft - 2) + "px";
+					var ul = q("#bookmarks-list > ul");
 
-                }, 3);
+					var currentLeft = parseInt(ul.style.left) || 0;
 
-            });
+					if (currentLeft + 440 < window.innerWidth * (-1))
+						clearInterval(bkmNext);
+					else
+						ul.style.left = (currentLeft - 2) + "px";
 
-            q("#btn-next-bookmarks").addEventListener("mouseout", function () {
-                clearInterval(bkmNext);
-            });
+				}, 3);
 
-            //-- scroll through bookmarks bar
-            q("#bookmarks-list").addEventListener("mousewheel", function (e) {
+			});
 
-                //var ul = q("#bookmarks-list > ul");
+			q("#btn-next-bookmarks").addEventListener("mouseout", function () {
+				clearInterval(bkmNext);
+			});
 
-                //var currentLeft = parseInt(ul.style.left) || 0;
+			//-- scroll through bookmarks bar
+			q("#bookmarks-list").addEventListener("mousewheel", function (e) {
 
-                //var newLeft = 0;
+				//var ul = q("#bookmarks-list > ul");
 
-                //if ((currentLeft < 0) || (currentLeft + 440 >= window.innerWidth * (-1)))
-                //    newLeft = (currentLeft + e.wheelDeltaY);
+				//var currentLeft = parseInt(ul.style.left) || 0;
 
-                //if (newLeft > 0)
-                //    newLeft = 0;
+				//var newLeft = 0;
 
-                //if (newLeft + 440 < window.innerWidth * (-1))
-                //    newLeft = window.innerWidth * (-1) - 440;
+				//if ((currentLeft < 0) || (currentLeft + 440 >= window.innerWidth * (-1)))
+				//    newLeft = (currentLeft + e.wheelDeltaY);
 
-                //ul.style.left = newLeft + "px";
+				//if (newLeft > 0)
+				//    newLeft = 0;
 
-            });
+				//if (newLeft + 440 < window.innerWidth * (-1))
+				//    newLeft = window.innerWidth * (-1) - 440;
 
-            //-- click on bookmarks
-            q(".bookmarks li", true).forEach(function (element) {
-                element.addEventListener("click", function (event) {
+				//ul.style.left = newLeft + "px";
 
-                    var url = this.data("url");
+			});
 
-                    if (url)
-                        navigate(url, event);
+			//-- click on bookmarks
+			q(".bookmarks li", true).forEach(function (element) {
+				element.addEventListener("click", function (event) {
 
-                });
-            });
+					var url = this.data("url");
 
-            //-- import tiles and configurations
-            q("#nav-settings-import-file").addEventListener("change", function (event) {
+					if (url)
+						navigate(url, event);
 
-                var file = this.files[0];
+				});
+			});
 
-                if (file) {
+			//-- import tiles and configurations
+			q("#nav-settings-import-file").addEventListener("change", function (event) {
 
-                    var reader = new FileReader();
+				var file = this.files[0];
 
-                    reader.onload = (function (file) {
+				if (file) {
 
-                        return function (e) {
+					var reader = new FileReader();
 
-                            var data = JSON.parse(e.target.result);
+					reader.onload = (function (file) {
 
-                            if (data.tiles)
-                                data.tiles = JSON.parse(data.tiles);
+						return function (e) {
 
-                            if (data.background)
-                                data.background = JSON.parse(data.background);
+							var data = JSON.parse(e.target.result);
 
-                            if (data.temaPadrao)
-                                data.temaPadrao = JSON.parse(data.temaPadrao);
+							if (data.tiles)
+								data.tiles = JSON.parse(data.tiles);
 
-                            MNTP.IDB.importData(data).then(function () { window.location.reload(); });
+							if (data.background)
+								data.background = JSON.parse(data.background);
 
-                        };
+							if (data.temaPadrao)
+								data.temaPadrao = JSON.parse(data.temaPadrao);
 
-                    })(file);
+							MNTP.IDB.importData(data).then(function () { window.location.reload(); });
 
-                    reader.readAsText(file);
-                }
+						};
 
+					})(file);
 
-            });
+					reader.readAsText(file);
+				}
 
-            //-- export tiles and configurations
-            q("#nav-settings-export-file").addEventListener("click", function (event) {
 
-                var that = this;
+			});
 
-                if (!that.href) {
+			//-- export tiles and configurations
+			q("#nav-settings-export-file").addEventListener("click", function (event) {
 
-                    MNTP.IDB.exportData().then(function (data) {
+				var that = this;
 
-                        var blob = new Blob([JSON.stringify(data)]);
-                        that.href = window.URL.createObjectURL(blob);
-                        that.download = "data.mosaic";
+				if (!that.href) {
 
-                        var clickEvent = new Event("click");
-                        that.dispatchEvent(clickEvent);
+					MNTP.IDB.exportData().then(function (data) {
 
-                        console.log("teste");
+						var blob = new Blob([JSON.stringify(data)]);
+						that.href = window.URL.createObjectURL(blob);
+						that.download = "data.mosaic";
 
-                    });
+						var clickEvent = new Event("click");
+						that.dispatchEvent(clickEvent);
 
-                } else {
+						console.log("teste");
 
-                    setTimeout(function () {
-                        that.href = "";
-                    }, 0);
+					});
 
-                }
+				} else {
 
-            });
+					setTimeout(function () {
+						that.href = "";
+					}, 0);
 
+				}
 
-            success();
+			});
 
-        });
 
-    }
+			success();
 
-    var closeAllSubmenus = function () {
+		});
 
-        return new Promise(function (success, fail) {
+	}
 
-            extSidebarClose();
+	var closeAllSubmenus = function () {
 
-            var subMenus = q(".sidebar-nav.open", true);
+		return new Promise(function (success, fail) {
 
-            for (var i = 0; i < subMenus.length; i++)
-                subMenus[i].removeClass("open ext");
+			extSidebarClose();
 
-            if (subMenus.length > 0)
-                setTimeout(success, animaDelay);
-            else
-                success();
+			var subMenus = q(".sidebar-nav.open", true);
 
-        });
+			for (var i = 0; i < subMenus.length; i++)
+				subMenus[i].removeClass("open ext");
 
-    }
+			if (subMenus.length > 0)
+				setTimeout(success, animaDelay);
+			else
+				success();
 
-    var saveTilesOrder = function () {
+		});
 
-        return new Promise(function (success, fail) {
+	}
 
-            Tile.select().then(function (tiles) {
+	var saveTilesOrder = function () {
 
-                var tileNodes = q(".tile-group > .tile", true);
+		return new Promise(function (success, fail) {
 
-                var tilesToSave = [];
+			Tile.select().then(function (tiles) {
 
-                for (var i = 0; i < tileNodes.length; i++) {
+				var tileNodes = q(".tile-group > .tile", true);
 
-                    var tileNode = tileNodes[i];
-                    var idTile = tileNode.data("id");
+				var tilesToSave = [];
 
-                    var groupNode = tileNode.offsetParent;
-                    var idGroup = groupNode.data("id");
+				for (var i = 0; i < tileNodes.length; i++) {
 
-                    var tile = tiles.filter(function (e) { return e.id == idTile; });
-                    tile = tile && tile[0];
+					var tileNode = tileNodes[i];
+					var idTile = tileNode.data("id");
 
-                    if (tile) {
-                        tile.order = i + 1;
-                        tile.idGroup = idGroup;
+					var groupNode = tileNode.offsetParent;
+					var idGroup = groupNode.data("id");
 
-                        if (!tile.position || MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
+					var tile = tiles.filter(function (e) { return e.id == idTile; });
+					tile = tile && tile[0];
 
-                            var tileOffset = tileNode.getWindowOffset();
+					if (tile) {
+						tile.order = i + 1;
+						tile.idGroup = idGroup;
 
-                            tile.position = {};
-                            tile.position.left = tileOffset.left;
-                            tile.position.top = tileOffset.top;
+						if (!tile.position || MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
 
-                            tileNode.data("position", tile.position);
+							var tileOffset = tileNode.getWindowOffset();
 
-                        }
+							tile.position = {};
+							tile.position.left = tileOffset.left;
+							tile.position.top = tileOffset.top;
 
-                        tilesToSave.push(tile);
-                    }
+							tileNode.data("position", tile.position);
 
-                }
+						}
 
-                if (tilesToSave.length > 0)
-                    Tile.saveBatch(tilesToSave).then(success, fail);
+						tilesToSave.push(tile);
+					}
 
-            });
+				}
 
-        });
+				if (tilesToSave.length > 0)
+					Tile.saveBatch(tilesToSave).then(success, fail);
 
-    }
+			});
 
-    var setConfig = function (input) {
+		});
 
-        var config = input.data("config");
+	}
 
-        if (input.type == "file" && input.files.length > 0) {
+	var setConfig = function (input) {
 
-            //assign(config, config, input.files[0]);
+		var config = input.data("config");
 
-        } else if (input.type == "checkbox" || input.type == "radio") {
+		if (input.type == "file" && input.files.length > 0) {
 
-            MNTP.Config[config] = input.checked;
+			//assign(config, config, input.files[0]);
 
-        } else if (input.value) {
+		} else if (input.type == "checkbox" || input.type == "radio") {
 
-            var configType = input.data("config-type") || "";
+			MNTP.Config[config] = input.checked;
 
-            switch (configType.toLowerCase()) {
-                case "boolean":
-                    MNTP.Config[config] = input.value.toLowerCase() == "true";
-                    break;
-                case "float":
-                    MNTP.Config[config] = parseFloat(input.value);
-                    break;
-                case "int":
-                    MNTP.Config[config] = parseInt(input.value);
-                    break;
-                default:
-                    MNTP.Config[config] = input.value;
-                    break;
-            }
+		} else if (input.value) {
 
-        }
+			var configType = input.data("config-type") || "";
 
-        if (config == "TileWidthLg")
-            MNTP.Config.TileHeightLg = parseInt(input.value);
+			switch (configType.toLowerCase()) {
+				case "boolean":
+					MNTP.Config[config] = input.value.toLowerCase() == "true";
+					break;
+				case "float":
+					MNTP.Config[config] = parseFloat(input.value);
+					break;
+				case "int":
+					MNTP.Config[config] = parseInt(input.value);
+					break;
+				default:
+					MNTP.Config[config] = input.value;
+					break;
+			}
 
-    }
+		}
 
-    var loadConfig = function (conf) {
+		if (config == "TileWidthLg")
+			MNTP.Config.TileHeightLg = parseInt(input.value);
 
-        var config = conf || MNTP.Config;
+	}
 
-        return new Promise(function (success, fail) {
+	var loadConfig = function (conf) {
 
-            var inputs = q("input[data-config], select[data-config]", true);
+		var config = conf || MNTP.Config;
 
-            for (var i = 0; i < inputs.length; i++) {
-                var input = inputs[i];
-                var value = getPropertyValue(config, input.data("config"));
+		return new Promise(function (success, fail) {
 
-                if (input.tagName.toLowerCase() == "select") {
+			var inputs = q("input[data-config], select[data-config]", true);
 
-                    input.value = (value !== undefined ? value : "");
+			for (var i = 0; i < inputs.length; i++) {
+				var input = inputs[i];
+				var value = getPropertyValue(config, input.data("config"));
 
-                    var text = q("input[type=text]", input.parentElement)
+				if (input.tagName.toLowerCase() == "select") {
 
-                    if (text)
-                        text.value = q("option[value='" + input.value + "']", input).innerText;
+					input.value = (value !== undefined ? value : "");
 
-                } else if (input.type == "checkbox" || input.type == "radio") {
+					var text = q("input[type=text]", input.parentElement)
 
-                    input.checked = value || false;
+					if (text)
+						text.value = q("option[value='" + input.value + "']", input).innerText;
 
-                } else if (input.type != "file") {
+				} else if (input.type == "checkbox" || input.type == "radio") {
 
-                    input.value = (value !== undefined ? value : "");
+					input.checked = value || false;
 
-                }
-            }
+				} else if (input.type != "file") {
 
-            //dark theme
-            q("body").toggleClass("dark", config.DarkTheme);
+					input.value = (value !== undefined ? value : "");
 
-            //show news
-            var news = q("#news");
+				}
+			}
 
-            //if (config.ShowNews) {
-            if (false) {
+			//dark theme
+			q("body").toggleClass("dark", config.DarkTheme);
 
-                news.removeClass("grid");
-                news.removeClass("list");
+			//show news
+			var news = q("#news");
 
-                news.style.width = config.NewsWidth + "px";
-                news.style.height = config.NewsHeight + "px";
+			//if (config.ShowNews) {
+			if (false) {
 
-                if (config.NewsLeft == -1 || config.NewsRight == -1) {
+				news.removeClass("grid");
+				news.removeClass("list");
 
-                    news.style.right = "2em";
-                    news.style.top = "calc(50% - " + (config.NewsHeight / 2) + "px)";
+				news.style.width = config.NewsWidth + "px";
+				news.style.height = config.NewsHeight + "px";
 
-                } else {
+				if (config.NewsLeft == -1 || config.NewsRight == -1) {
 
-                    news.style.left = config.NewsLeft + "px";
-                    news.style.top = config.NewsTop + "px";
+					news.style.right = "2em";
+					news.style.top = "calc(50% - " + (config.NewsHeight / 2) + "px)";
 
-                }
+				} else {
 
-                news.addClass(config.NewsViewMode);
+					news.style.left = config.NewsLeft + "px";
+					news.style.top = config.NewsTop + "px";
 
-                news.style.display = "block";
+				}
 
-                if (config.ShowImageNewsList)
-                    news.removeClass("hide-images");
-                else
-                    news.addClass("hide-images");
+				news.addClass(config.NewsViewMode);
 
+				news.style.display = "block";
 
-                var liList = q("li", news);
+				if (config.ShowImageNewsList)
+					news.removeClass("hide-images");
+				else
+					news.addClass("hide-images");
 
-                if (!liList || liList.length == 0)
-                    loadFeed();
-                else
-                    resizeNews();
 
-            } else {
+				var liList = q("li", news);
 
-                news.style.display = "none";
+				if (!liList || liList.length == 0)
+					loadFeed();
+				else
+					resizeNews();
 
-            }
+			} else {
 
-            //show bookmarks bar
-            if (config.ShowBookmarksBar) {
+				news.style.display = "none";
 
-                q(".bookmark-bar").style.display = "block";
+			}
 
-                if (q("#bookmarks-list > ul > li", true).length == 0) {
-                    loadBookmarks().then(bindEvents);
-                }
+			//show bookmarks bar
+			if (config.ShowBookmarksBar) {
 
-                q("#menu-button").style.top = "60px";
+				q(".bookmark-bar").style.display = "block";
 
-            } else {
+				if (q("#bookmarks-list > ul > li", true).length == 0) {
+					loadBookmarks().then(bindEvents);
+				}
 
-                q(".bookmark-bar").style.display = "none";
+				q("#menu-button").style.top = "60px";
 
-                q("#menu-button").style.top = "";
+			} else {
 
-            }
+				q(".bookmark-bar").style.display = "none";
 
-            //tiles border radius, opacity & grayscale
-            q(".tile", true).forEach(function (tileNode) {
+				q("#menu-button").style.top = "";
 
-                tileNode.style.borderRadius = config.TileBorderRadius + "px";
-                tileNode.style.webkitFilter = "grayscale(" + config.TileGrayscale + ")";
+			}
 
-                q(".tile-background", tileNode).style.opacity = config.TileOpacity;
+			//tiles border radius, opacity & grayscale
+			q(".tile", true).forEach(function (tileNode) {
 
-            });
+				tileNode.style.borderRadius = config.TileBorderRadius + "px";
+				tileNode.style.webkitFilter = "grayscale(" + config.TileGrayscale + ")";
 
-            //tiles accent color
-            q(".accentbg", true).forEach(function (element) {
-                element.style.backgroundColor = config.AccentColor;
-            });
+				q(".tile-background", tileNode).style.opacity = config.TileOpacity;
 
-            if (config.TileExtendBackground) {
-                q("#tile-background-color").fadeOutLeft();
-            } else {
-                q("#tile-background-color").fadeInLeft();
-            }
+			});
 
+			//tiles accent color
+			q(".accentbg", true).forEach(function (element) {
+				element.style.backgroundColor = config.AccentColor;
+			});
 
-            //animation speed
-            if (config.OpeningAnimation)
-                q("#animation-speed").fadeInLeft();
-            else
-                q("#animation-speed").fadeOutLeft();
+			if (config.TileExtendBackground) {
+				q("#tile-background-color").fadeOutLeft();
+			} else {
+				q("#tile-background-color").fadeInLeft();
+			}
 
-            //tiles positioning
-            if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
-                q("#tile-grid-configs").fadeInLeft();
-            else
-                q("#tile-grid-configs").fadeOutLeft();
 
-            //flow direction
-            if (config.TileFlowDirection == MNTP.Config.FLOW_DIRECTION.HORIZONTAL)
-                q("#tile-columns").fadeInLeft();
-            else
-                q("#tile-columns").fadeOutLeft();
+			//animation speed
+			if (config.OpeningAnimation)
+				q("#animation-speed").fadeInLeft();
+			else
+				q("#animation-speed").fadeOutLeft();
 
+			//tiles positioning
+			if (config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FLOW)
+				q("#tile-grid-configs").fadeInLeft();
+			else
+				q("#tile-grid-configs").fadeOutLeft();
 
-            //background color
-            q("body").style.backgroundColor = config.BackgroundColor;
+			//flow direction
+			if (config.TileFlowDirection == MNTP.Config.FLOW_DIRECTION.HORIZONTAL)
+				q("#tile-columns").fadeInLeft();
+			else
+				q("#tile-columns").fadeOutLeft();
 
 
-            if (config.HasBackgroundImage && config.BackgroundImage && config.BackgroundImage.data) {
+			//background color
+			q("body").style.backgroundColor = config.BackgroundColor;
 
-                bingImagesSlider && clearInterval(bingImagesSlider);
-                bingImagesSlider = null;
 
-                loadBackground(config.BackgroundImage, config);
+			if (config.HasBackgroundImage && config.BackgroundImage && config.BackgroundImage.data) {
 
-                q("#remove-background").fadeInLeft();
-                q("#background-options").fadeInLeft();
+				bingImagesSlider && clearInterval(bingImagesSlider);
+				bingImagesSlider = null;
 
-            } else if (config.HasBackgroundImage) {
+				loadBackground(config.BackgroundImage, config);
 
-                bingImagesSlider && clearInterval(bingImagesSlider);
-                bingImagesSlider = null;
+				q("#remove-background").fadeInLeft();
+				q("#background-options").fadeInLeft();
 
-                Image.get(Image.Type.Background).then(function (image) {
+			} else if (config.HasBackgroundImage) {
 
-                    if (image) {
+				bingImagesSlider && clearInterval(bingImagesSlider);
+				bingImagesSlider = null;
 
-                        loadBackground(image, config);
+				Image.get(Image.Type.Background).then(function (image) {
 
-                        q("#remove-background").fadeInLeft();
-                        q("#background-options").fadeInLeft();
+					if (image) {
 
-                    } else {
+						loadBackground(image, config);
 
-                        q("#wallpaper").style.backgroundImage = "";
+						q("#remove-background").fadeInLeft();
+						q("#background-options").fadeInLeft();
 
-                        q(".tile .accentbg", true).forEach(function (tileNode) {
-                            tileNode.style.backgroundImage = "";
-                        });
+					} else {
 
-                    }
+						q("#wallpaper").style.backgroundImage = "";
 
-                });
+						q(".tile .accentbg", true).forEach(function (tileNode) {
+							tileNode.style.backgroundImage = "";
+						});
 
-            } else if (config.BingBackgroundImage) {
+					}
 
-                if ((config.ReloadBackgroundImage || !wallpaper.style.backgroundImage) && !bingImagesSlider) {
+				});
 
-                    MNTP.BGUtils.getNextBingImage().then(function (image) {
+			} else if (config.BingBackgroundImage) {
 
-                            var imageUrl = image.url || dataURLtoObjectURL(image.data);
-                            MNTP.Config.ReloadBackgroundImage = true;
-                            loadBackground({ url: imageUrl });
+				if ((config.ReloadBackgroundImage || !wallpaper.style.backgroundImage) && !bingImagesSlider) {
 
-                            q("#remove-background").fadeInLeft();
-                            q("#background-options").fadeInLeft();
+					MNTP.BGUtils.getNextBingImage().then(function (image) {
 
-                    });
+							var imageUrl = image.url || dataURLtoObjectURL(image.data);
+							MNTP.Config.ReloadBackgroundImage = true;
+							loadBackground({ url: imageUrl });
 
-                    bingImagesSlider = setInterval(function () {
+							q("#remove-background").fadeInLeft();
+							q("#background-options").fadeInLeft();
 
-                        MNTP.BGUtils.getNextBingImage().then(function (image) {
+					});
 
-                            var imageUrl = image.url || dataURLtoObjectURL(image.data);
-                            config.ReloadBackgroundImage = true;
-                            loadBackground({ url: imageUrl }, config);
+					bingImagesSlider = setInterval(function () {
 
-                            q("#remove-background").fadeInLeft();
-                            q("#background-options").fadeInLeft();
+						MNTP.BGUtils.getNextBingImage().then(function (image) {
 
-                        });
+							var imageUrl = image.url || dataURLtoObjectURL(image.data);
+							config.ReloadBackgroundImage = true;
+							loadBackground({ url: imageUrl }, config);
 
-                    }, 20000);
+							q("#remove-background").fadeInLeft();
+							q("#background-options").fadeInLeft();
 
+						});
 
-                } else {
+					}, 20000);
 
-                    loadBackground(null, config);
 
-                    q("#remove-background").fadeInLeft();
-                    q("#background-options").fadeInLeft();
+				} else {
 
-                }
+					loadBackground(null, config);
 
-            } else if (config.NoBackgroundImage) {
+					q("#remove-background").fadeInLeft();
+					q("#background-options").fadeInLeft();
 
-                bingImagesSlider && clearInterval(bingImagesSlider);
-                bingImagesSlider = null;
+				}
 
-                q("#wallpaper").style.backgroundImage = "";
+			} else if (config.NoBackgroundImage) {
 
-                q(".tile .accentbg", true).forEach(function (tileNode) {
+				bingImagesSlider && clearInterval(bingImagesSlider);
+				bingImagesSlider = null;
 
-                    tileNode.style.backgroundImage = "";
+				q("#wallpaper").style.backgroundImage = "";
 
-                });
+				q(".tile .accentbg", true).forEach(function (tileNode) {
 
-                q("#remove-background").fadeOutLeft();
-                q("#background-options").fadeOutLeft();
+					tileNode.style.backgroundImage = "";
 
-            }
-            //<--
+				});
 
+				q("#remove-background").fadeOutLeft();
+				q("#background-options").fadeOutLeft();
 
-            resize(config).then(success);
+			}
+			//<--
 
-        });
 
-    }
+			resize(config).then(success);
 
-    var loadBackground = function (image, config) {
+		});
 
-        config = config || MNTP.Config;
+	}
 
-        var wallpaper = q("#wallpaper");
+	var loadBackground = function (image, config) {
 
-        var backgroundUrl = image && (image.url || dataURLtoObjectURL(image.data));
+		config = config || MNTP.Config;
 
-        if (!wallpaper.style.backgroundImage)
-            config.ReloadBackgroundImage = true;
+		var wallpaper = q("#wallpaper");
 
-        if (config.ReloadBackgroundImage && backgroundUrl) {
+		var backgroundUrl = image && (image.url || dataURLtoObjectURL(image.data));
 
-            //pre-load the image for the fade effect to work
-            var img = document.createElement("img");
+		if (!wallpaper.style.backgroundImage)
+			config.ReloadBackgroundImage = true;
 
-            img.onload = function () {
+		if (config.ReloadBackgroundImage && backgroundUrl) {
 
-                wallpaper.style.backgroundImage = "url('" + this.src + "')";
+			//pre-load the image for the fade effect to work
+			var img = document.createElement("img");
 
-                q(".tile .accentbg", true).forEach(function (bgNode) {
+			img.onload = function () {
 
-                    if (config.TileExtendBackground)
-                        bgNode.style.backgroundImage = wallpaper.style.backgroundImage;
-                    else
-                        bgNode.style.backgroundImage = "";
+				wallpaper.style.backgroundImage = "url('" + this.src + "')";
 
-                });
-            }
+				q(".tile .accentbg", true).forEach(function (bgNode) {
 
-            img.src = backgroundUrl;
+					if (config.TileExtendBackground)
+						bgNode.style.backgroundImage = wallpaper.style.backgroundImage;
+					else
+						bgNode.style.backgroundImage = "";
 
-        }
+				});
+			}
 
-        wallpaper.style.opacity = config.BackgroundOpacity || "";
-        wallpaper.style.webkitFilter = config.BackgroundGrayscale > 0 ? "grayscale(" + config.BackgroundGrayscale + ")" : "";
+			img.src = backgroundUrl;
 
-        if (config.BackgroundFill)
-            wallpaper.style.backgroundSize = "100% 100%";
-        else if (config.BackgroundAdjust)
-            wallpaper.style.backgroundSize = "100% auto";
-        else
-            wallpaper.style.backgroundSize = "";
+		}
 
-        q(".tile .accentbg", true).forEach(function (bgNode) {
+		wallpaper.style.opacity = config.BackgroundOpacity || "";
+		wallpaper.style.webkitFilter = config.BackgroundGrayscale > 0 ? "grayscale(" + config.BackgroundGrayscale + ")" : "";
 
-            if (config.TileExtendBackground) {
+		if (config.BackgroundFill)
+			wallpaper.style.backgroundSize = "100% 100%";
+		else if (config.BackgroundAdjust)
+			wallpaper.style.backgroundSize = "100% auto";
+		else
+			wallpaper.style.backgroundSize = "";
 
-                if (wallpaper.style.backgroundImage && !bgNode.style.backgroundImage)
-                    bgNode.style.backgroundImage = wallpaper.style.backgroundImage;
+		q(".tile .accentbg", true).forEach(function (bgNode) {
 
-                if (config.BackgroundFill)
-                    bgNode.style.backgroundSize = "100% 100%";
-                else if (config.BackgroundAdjust)
-                    bgNode.style.backgroundSize = "100% auto";
-                else
-                    bgNode.style.backgroundSize = "";
+			if (config.TileExtendBackground) {
 
-            } else {
+				if (wallpaper.style.backgroundImage && !bgNode.style.backgroundImage)
+					bgNode.style.backgroundImage = wallpaper.style.backgroundImage;
 
-                bgNode.style.backgroundImage = "";
+				if (config.BackgroundFill)
+					bgNode.style.backgroundSize = "100% 100%";
+				else if (config.BackgroundAdjust)
+					bgNode.style.backgroundSize = "100% auto";
+				else
+					bgNode.style.backgroundSize = "";
 
-            }
+			} else {
 
-            if ((config.HasBackgroundImage || config.BingBackgroundImage) && config.TileExtendBackground)
-                bgNode.parentNode.style.backgroundColor = config.BackgroundColor;
-            else
-                bgNode.parentNode.style.backgroundColor = "";
+				bgNode.style.backgroundImage = "";
 
-        });
+			}
 
-        config.ReloadBackgroundImage = false;
+			if ((config.HasBackgroundImage || config.BingBackgroundImage) && config.TileExtendBackground)
+				bgNode.parentNode.style.backgroundColor = config.BackgroundColor;
+			else
+				bgNode.parentNode.style.backgroundColor = "";
 
-    }
+		});
 
-    var showTileConfig = function (idTile) {
+		config.ReloadBackgroundImage = false;
 
-        editMenuOpen();
+	}
 
-        if (idTile) {
+	var showTileConfig = function (idTile) {
 
-            Tile.get(idTile).then(function (tile) {
-                loadTileConfig(tile);
-            });
+		editMenuOpen();
 
-        }
-    }
+		if (idTile) {
 
-    var loadPreviewTile = function (tile, isEdit) {
+			Tile.get(idTile).then(function (tile) {
+				loadTileConfig(tile);
+			});
 
-        var idMenu = isEdit ? "#edit-tile-menu" : "#nav-new-tile-menu";
+		}
+	}
 
-        q(".tile-preview", idMenu).innerHTML = "";
+	var loadPreviewTile = function (tile, isEdit) {
 
-        var tile = tile || getTileConfig(isEdit);
+		var idMenu = isEdit ? "#edit-tile-menu" : "#nav-new-tile-menu";
 
-        q(".tile-preview", idMenu).insertBefore(Tile.getNode(tile, true), null);
+		q(".tile-preview", idMenu).innerHTML = "";
 
-        if (q("#wallpaper").style.backgroundImage && MNTP.Config.TileExtendBackground && tile.accentColor) {
-            q(".tile-preview .tile-background", idMenu).style.backgroundImage = q("#wallpaper").style.backgroundImage;
-        }
-    }
+		var tile = tile || getTileConfig(isEdit);
 
-    var loadTileConfig = function (tile) {
+		q(".tile-preview", idMenu).insertBefore(Tile.getNode(tile, true), null);
 
-        var inputs = q("input[data-property], select[data-property]", "#edit-tile-menu", true);
+		if (q("#wallpaper").style.backgroundImage && MNTP.Config.TileExtendBackground && tile.accentColor) {
+			q(".tile-preview .tile-background", idMenu).style.backgroundImage = q("#wallpaper").style.backgroundImage;
+		}
+	}
 
-        for (var i = 0; i < inputs.length; i++) {
-            var input = inputs[i];
+	var loadTileConfig = function (tile) {
 
-            if (input.type == "checkbox" || input.type == "radio") {
+		var inputs = q("input[data-property], select[data-property]", "#edit-tile-menu", true);
 
-                input.checked = getPropertyValue(tile, input.data("property")) || false;
+		for (var i = 0; i < inputs.length; i++) {
+			var input = inputs[i];
 
-            } else {
+			if (input.type == "checkbox" || input.type == "radio") {
 
-                input.value = getPropertyValue(tile, input.data("property")) || "";
+				input.checked = getPropertyValue(tile, input.data("property")) || false;
 
-                if (input.type == "text")
-                    q("label", input.parentNode).toggleClass("valid", input.value != "");
+			} else {
 
-            }
+				input.value = getPropertyValue(tile, input.data("property")) || "";
 
-        }
+				if (input.type == "text")
+					q("label", input.parentNode).toggleClass("valid", input.value != "");
 
-        q("input[data-property=accentColor]", "#edit-tile-menu").checked = !tile.accentColor;
-        q("input[data-property=accentColor]", "#edit-tile-menu").toggleClass("active", !tile.accentColor);
+			}
 
+		}
 
-        if (tile.accentColor) {
-            q("#edit-tile-customise-color").fadeOutLeft();
-            q("#edit-tile-customise-font-color").fadeOutLeft();
-        } else {
-            q("#edit-tile-customise-color").fadeInLeft();
-            q("#edit-tile-customise-font-color").fadeInLeft();
-        }
+		q("input[data-property=accentColor]", "#edit-tile-menu").checked = !tile.accentColor;
+		q("input[data-property=accentColor]", "#edit-tile-menu").toggleClass("active", !tile.accentColor);
 
-        var colorInputs = q("input[type=color]", "#edit-tile-menu", true);
 
-        for (var i = 0; i < colorInputs.length; i++)
-            q(".color-preview", colorInputs[i].parentNode).style.backgroundColor = colorInputs[i].value;
+		if (tile.accentColor) {
+			q("#edit-tile-customise-color").fadeOutLeft();
+			q("#edit-tile-customise-font-color").fadeOutLeft();
+		} else {
+			q("#edit-tile-customise-color").fadeInLeft();
+			q("#edit-tile-customise-font-color").fadeInLeft();
+		}
 
+		var colorInputs = q("input[type=color]", "#edit-tile-menu", true);
 
-        loadPreviewTile(null, true);
+		for (var i = 0; i < colorInputs.length; i++)
+			q(".color-preview", colorInputs[i].parentNode).style.backgroundColor = colorInputs[i].value;
 
-    }
 
-    var getTileConfig = function (isEdit) {
+		loadPreviewTile(null, true);
 
-        var idMenu = isEdit ? "#edit-tile-menu" : "#nav-new-tile-menu";
+	}
 
-        q("#tile-preview", idMenu).innerHTML = "";
+	var getTileConfig = function (isEdit) {
 
-        var inputs = q("input[data-property], select[data-property]", idMenu, true);
+		var idMenu = isEdit ? "#edit-tile-menu" : "#nav-new-tile-menu";
 
-        var tile = {};
+		q("#tile-preview", idMenu).innerHTML = "";
 
-        for (var i = 0; i < inputs.length; i++) {
+		var inputs = q("input[data-property], select[data-property]", idMenu, true);
 
-            var input = inputs[i];
+		var tile = {};
 
+		for (var i = 0; i < inputs.length; i++) {
 
-            if (input.type == "file" && input.files.length > 0) {
+			var input = inputs[i];
 
-                assign(tile, input.data("property"), input.files[0]);
 
-            } else if (input.type == "checkbox" || input.type == "radio") {
+			if (input.type == "file" && input.files.length > 0) {
 
-                assign(tile, input.data("property"), input.checked);
+				assign(tile, input.data("property"), input.files[0]);
 
-            } else if (input.value) {
+			} else if (input.type == "checkbox" || input.type == "radio") {
 
-                var propertyType = input.data("property-type") || "";
+				assign(tile, input.data("property"), input.checked);
 
-                switch (propertyType.toLowerCase()) {
-                    case "boolean":
-                        assign(tile, input.data("property"), (input.value.toLowerCase() == "true"))
-                        break;
-                    case "float":
-                        assign(tile, input.data("property"), parseFloat(input.value));
-                        break;
-                    case "int":
-                        assign(tile, input.data("property"), parseInt(input.value));
-                        break;
-                    default:
-                        assign(tile, input.data("property"), input.value);
-                        break;
-                }
+			} else if (input.value) {
 
-            }
+				var propertyType = input.data("property-type") || "";
 
-        }
+				switch (propertyType.toLowerCase()) {
+					case "boolean":
+						assign(tile, input.data("property"), (input.value.toLowerCase() == "true"))
+						break;
+					case "float":
+						assign(tile, input.data("property"), parseFloat(input.value));
+						break;
+					case "int":
+						assign(tile, input.data("property"), parseInt(input.value));
+						break;
+					default:
+						assign(tile, input.data("property"), input.value);
+						break;
+				}
 
-        tile.accentColor = !tile.accentColor;
+			}
 
-        if (tile.url && (tile.url.toLowerCase().indexOf("http://") < 0 && tile.url.toLowerCase().indexOf("https://") < 0)) {
-            tile.url = "http://" + tile.url;
-        }
+		}
 
-        if (tile.image && (tile.image.data || tile.image.url)) {
-            tile.hasImage = true;
-            tile.removeImage = false;
+		tile.accentColor = !tile.accentColor;
 
-            if (tile.image.data)
-                q("input[data-property='image.url']", idMenu).value = ""
+		if (tile.url && (tile.url.toLowerCase().indexOf("http://") < 0 && tile.url.toLowerCase().indexOf("https://") < 0)) {
+			tile.url = "http://" + tile.url;
+		}
 
-            q("input[data-property='hasImage']", idMenu).value = "true";
-            q("input[data-property='removeImage']", idMenu).value = "false";
-        }
+		if (tile.image && (tile.image.data || tile.image.url)) {
+			tile.hasImage = true;
+			tile.removeImage = false;
 
-        if (tile.hasImage)
-            q("[id*=tile-remove-image]", idMenu).removeClass("fadeOut").addClass("fadeIn");
-        else
-            q("[id*=tile-remove-image]", idMenu).removeClass("fadeIn").addClass("fadeOut");
+			if (tile.image.data)
+				q("input[data-property='image.url']", idMenu).value = ""
 
-        if (!tile.position && MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
+			q("input[data-property='hasImage']", idMenu).value = "true";
+			q("input[data-property='removeImage']", idMenu).value = "false";
+		}
 
-            tile.position = {
-                left: (window.innerWidth / 2) - (MNTP.Config.TileWidthLg / 2),
-                top: (window.innerHeight / 2) - (MNTP.Config.TileHeightSm / 2),
-            };
+		if (tile.hasImage)
+			q("[id*=tile-remove-image]", idMenu).removeClass("fadeOut").addClass("fadeIn");
+		else
+			q("[id*=tile-remove-image]", idMenu).removeClass("fadeIn").addClass("fadeOut");
 
-        }
+		if (!tile.position && MNTP.Config.TilePlacementMode == MNTP.Config.PLACEMENT_MODE.FREE) {
 
-        return tile;
+			tile.position = {
+				left: (window.innerWidth / 2) - (MNTP.Config.TileWidthLg / 2),
+				top: (window.innerHeight / 2) - (MNTP.Config.TileHeightSm / 2),
+			};
 
-    }
+		}
 
-    var saveTileConfig = function (isEdit) {
+		return tile;
 
-        return new Promise(function (success, fail) {
+	}
 
-            var tile = getTileConfig(isEdit);
+	var saveTileConfig = function (isEdit) {
 
-            tile.size = tile.size || 2;
+		return new Promise(function (success, fail) {
 
-            Tile.save(tile).then(success, fail);
+			var tile = getTileConfig(isEdit);
 
-        });
+			tile.size = tile.size || 2;
 
-    }
+			Tile.save(tile).then(success, fail);
 
-    var getGroupNodebyID = function (idGroup) {
+		});
 
-        var group = q(".tile-group", true).filter(function (element) { return element.data("id") == idGroup; });
+	}
 
-        if (group.length > 0)
-            return group[0];
-        else
-            return null;
+	var getGroupNodebyID = function (idGroup) {
 
-    }
+		var group = q(".tile-group", true).filter(function (element) { return element.data("id") == idGroup; });
 
-    var getTileNodeById = function (idTile) {
+		if (group.length > 0)
+			return group[0];
+		else
+			return null;
 
-        var tile = q(".tile", true).filter(function (element) { return element.data("id") == idTile; });
+	}
 
-        if (tile.length > 0)
-            return tile[0];
-        else
-            return null;
+	var getTileNodeById = function (idTile) {
 
-    }
+		var tile = q(".tile", true).filter(function (element) { return element.data("id") == idTile; });
 
-    var loadTileFeeds = function () {
+		if (tile.length > 0)
+			return tile[0];
+		else
+			return null;
 
-        return new Promise(function (success, fail) {
+	}
 
-            Tile.select().then(function (tiles) {
+	var loadTileFeeds = function () {
 
-                var newArray = [];
+		return new Promise(function (success, fail) {
 
-                for (var i = 0; i < tiles.length; i++) {
+			Tile.select().then(function (tiles) {
 
-                    var tile = tiles[i];
+				var newArray = [];
 
-                    if (tile.rss)
-                        newArray.push(tile);
+				for (var i = 0; i < tiles.length; i++) {
 
-                }
+					var tile = tiles[i];
 
-                tiles = shuffleArray(newArray);
+					if (tile.rss)
+						newArray.push(tile);
 
-                for (var i = 0; i < tiles.length; i++) {
+				}
 
-                    var tile = tiles[i];
+				tiles = shuffleArray(newArray);
 
-                    var tileNode = getTileNodeById(tile.id);
+				for (var i = 0; i < tiles.length; i++) {
 
-                    var showFeed = function (tile, tileNode) {
+					var tile = tiles[i];
 
-                        var feedCount = tileNode.hasClass("size3") ? 4 : 1;
+					var tileNode = getTileNodeById(tile.id);
 
-                        if (q(".feed p", tileNode, true).length != feedCount) {
+					var showFeed = function (tile, tileNode) {
 
-                            MNTP.WebService.getContent(false, tile.rss, feedCount).then(function (feeds) {
+						var feedCount = tileNode.hasClass("size3") ? 4 : 1;
 
-                                if (feeds.items && feeds.items.results && feeds.items.results.length > 0) {
+						if (q(".feed p", tileNode, true).length != feedCount) {
 
-                                    var feedNode = q(".tile-content .feed", tileNode);
+							MNTP.WebService.getContent(false, tile.rss, feedCount).then(function (feeds) {
 
-                                    feedNode.innerHTML = "";
+								if (feeds.items && feeds.items.results && feeds.items.results.length > 0) {
 
-                                    var h4 = document.createElement("h4");
+									var feedNode = q(".tile-content .feed", tileNode);
 
-                                    h4.innerText = tile.name;
+									feedNode.innerHTML = "";
 
-                                    feedNode.insertBefore(h4, null);
+									var h4 = document.createElement("h4");
 
-                                    for (var i = 0; i < feeds.items.results.length && i < feedCount; i++) {
+									h4.innerText = tile.name;
 
-                                        var feed = feeds.items.results[i];
+									feedNode.insertBefore(h4, null);
 
-                                        var p = document.createElement("p");
+									for (var i = 0; i < feeds.items.results.length && i < feedCount; i++) {
 
-                                        p.innerText = feed.title;
-                                        p.data("url", feed.url);
+										var feed = feeds.items.results[i];
 
-                                        p.addEventListener("click", function (event) {
-                                            navigate(this.data("url"), event);
-                                            event.stopPropagation();
-                                        });
+										var p = document.createElement("p");
 
-                                        feedNode.insertBefore(p, null);
+										p.innerText = feed.title;
+										p.data("url", feed.url);
 
-                                    }
+										p.addEventListener("click", function (event) {
+											navigate(this.data("url"), event);
+											event.stopPropagation();
+										});
 
-                                    q(".tile-content", tileNode).addClass("feed-loaded");
-                                    q(".tile-content", tileNode).style.webkitAnimationName = "tileAnimation";
+										feedNode.insertBefore(p, null);
 
-                                }
+									}
 
-                            });
+									q(".tile-content", tileNode).addClass("feed-loaded");
+									q(".tile-content", tileNode).style.webkitAnimationName = "tileAnimation";
 
-                        } else {
+								}
 
-                            q(".tile-content", tileNode).style.webkitAnimationName = "tileAnimation";
+							});
 
-                        }
+						} else {
 
-                    }
+							q(".tile-content", tileNode).style.webkitAnimationName = "tileAnimation";
 
-                    tileNode.feedTimeout && clearTimeout(tileNode.feedTimeout);
-                    tileNode.feedInterval && clearInterval(tileNode.feedInterval);
+						}
 
-                    tileNode.feedTimeout = setTimeout(function (tile, tileNode) {
+					}
 
-                        showFeed(tile, tileNode);
+					tileNode.feedTimeout && clearTimeout(tileNode.feedTimeout);
+					tileNode.feedInterval && clearInterval(tileNode.feedInterval);
 
-                        tileNode.feedInterval = setInterval(function (tile, tileNode) {
+					tileNode.feedTimeout = setTimeout(function (tile, tileNode) {
 
-                            showFeed(tile, tileNode);
+						showFeed(tile, tileNode);
 
-                        }, 5000 * tiles.length, tile, tileNode);
+						tileNode.feedInterval = setInterval(function (tile, tileNode) {
 
-                    }, 5000 * i, tile, tileNode);
+							showFeed(tile, tileNode);
 
-                    q(".tile-content", tileNode).addEventListener("webkitAnimationEnd", function () {
-                        this.style.webkitAnimationName = "";
-                    });
+						}, 5000 * tiles.length, tile, tileNode);
 
-                }
+					}, 5000 * i, tile, tileNode);
 
-                success();
+					q(".tile-content", tileNode).addEventListener("webkitAnimationEnd", function () {
+						this.style.webkitAnimationName = "";
+					});
 
-            });
+				}
 
-        });
+				success();
 
-    }
+			});
 
-    var loadFeedsPanel = function () {
+		});
 
-        return new Promise(function (success, fail) {
+	}
 
-            Feed.select().then(function (feeds) {
+	var loadFeedsPanel = function () {
 
-                var newsTitles = q("#news #news-titles");
-                newsTitles.innerHTML = "";
+		return new Promise(function (success, fail) {
 
-                var p = document.createElement("p");
-                p.innerHTML = "Featured";
-                p.addClass("active");
+			Feed.select().then(function (feeds) {
 
-                newsTitles.insertBefore(p, null);
+				var newsTitles = q("#news #news-titles");
+				newsTitles.innerHTML = "";
 
-                if (feeds) {
+				var p = document.createElement("p");
+				p.innerHTML = "Featured";
+				p.addClass("active");
 
-                    for (var i = 0; i < feeds.length; i++) {
+				newsTitles.insertBefore(p, null);
 
-                        var feed = feeds[i];
+				if (feeds) {
 
-                        //news panel
-                        var p = document.createElement("p");
-                        p.innerHTML = feed.name;
-                        p.data("url", feed.url);
+					for (var i = 0; i < feeds.length; i++) {
 
-                        newsTitles.insertBefore(p, null);
+						var feed = feeds[i];
 
-                    }
+						//news panel
+						var p = document.createElement("p");
+						p.innerHTML = feed.name;
+						p.data("url", feed.url);
 
-                }
+						newsTitles.insertBefore(p, null);
 
-                success();
+					}
 
-            }, fail);
+				}
 
-        });
+				success();
 
-    }
+			}, fail);
 
-    var loadFeed = function (url) {
+		});
 
-        return new Promise(function (success, fail) {
+	}
 
-            q("#news .loader").style.display = "block";
-            q("#news .items").style.display = "none";
+	var loadFeed = function (url) {
 
-            var request = MNTP.WebService.getContentNodes(true, url);
+		return new Promise(function (success, fail) {
 
-            request.then(function (list) {
+			q("#news .loader").style.display = "block";
+			q("#news .items").style.display = "none";
 
-                var divNews = q("#news-items");
+			var request = MNTP.WebService.getContentNodes(true, url);
 
-                divNews.innerHTML = "";
-                divNews.insertBefore(list, null);
+			request.then(function (list) {
 
-                resizeNews();
+				var divNews = q("#news-items");
 
-                q("#news .loader").style.display = "none";
-                q("#news .header").style.display = "block";
-                q("#news .items").style.display = "block";
+				divNews.innerHTML = "";
+				divNews.insertBefore(list, null);
 
-                success();
+				resizeNews();
 
-            });
+				q("#news .loader").style.display = "none";
+				q("#news .header").style.display = "block";
+				q("#news .items").style.display = "block";
 
-            request.catch(function (error) {
+				success();
 
-                if (!url)
-                    q("#news").style.display = "none";
+			});
 
-                console.error("Error loading news");
-                fail(error);
+			request.catch(function (error) {
 
-            });
+				if (!url)
+					q("#news").style.display = "none";
 
-        });
+				console.error("Error loading news");
+				fail(error);
 
-    }
+			});
 
-    var resizeNews = function () {
+		});
 
-        var news = q("#news");
+	}
 
-        var liList = q("li", news);
+	var resizeNews = function () {
 
-        if (liList && liList.length > 0) {
+		var news = q("#news");
 
-            var minGridItemSize = 145;
+		var liList = q("li", news);
 
-            if (news.hasClass("grid")) {
+		if (liList && liList.length > 0) {
 
-                var colunas = Math.floor((news.offsetWidth - 26) / (minGridItemSize + 10));
-                var size = Math.floor((news.offsetWidth - 26) / colunas) - 10;
+			var minGridItemSize = 145;
 
-                for (var i = 0; i < liList.length; i++) {
-                    liList[i].style.width = size + "px";
-                    liList[i].style.height = size + "px";
-                }
+			if (news.hasClass("grid")) {
 
-            } else {
+				var colunas = Math.floor((news.offsetWidth - 26) / (minGridItemSize + 10));
+				var size = Math.floor((news.offsetWidth - 26) / colunas) - 10;
 
-                for (var i = 0; i < liList.length; i++) {
-                    liList[i].style.width = "";
-                    liList[i].style.height = "";
-                }
+				for (var i = 0; i < liList.length; i++) {
+					liList[i].style.width = size + "px";
+					liList[i].style.height = size + "px";
+				}
 
-            }
+			} else {
 
-        }
+				for (var i = 0; i < liList.length; i++) {
+					liList[i].style.width = "";
+					liList[i].style.height = "";
+				}
 
-    }
+			}
 
-    var loadCustomComponents = function () {
+		}
 
-        return new Promise(function (success, fail) {
+	}
 
-            //color inputs
-            var colorInputs = q("input[type='color']", true);
+	var loadCustomComponents = function () {
 
-            var updateColor = function (colorInput) {
+		return new Promise(function (success, fail) {
 
-                if (colorInput.previousElementSibling && colorInput.previousElementSibling.tagName.toLowerCase() == "div") {
+			//color inputs
+			var colorInputs = q("input[type='color']", true);
 
-                    var a = q("a", colorInput.previousElementSibling);
+			var updateColor = function (colorInput) {
 
-                    a && (a.style.backgroundColor = colorInput.value);
+				if (colorInput.previousElementSibling && colorInput.previousElementSibling.tagName.toLowerCase() == "div") {
 
-                }
+					var a = q("a", colorInput.previousElementSibling);
 
-            }
+					a && (a.style.backgroundColor = colorInput.value);
 
-            for (var i = 0; i < colorInputs.length; i++) {
+				}
 
-                var colorInput = colorInputs[i];
+			}
 
-                colorInput.addEventListener("change", function () {
+			for (var i = 0; i < colorInputs.length; i++) {
 
-                    updateColor(this);
+				var colorInput = colorInputs[i];
 
-                }, "customColorChange");
+				colorInput.addEventListener("change", function () {
 
-                updateColor(colorInput);
+					updateColor(this);
 
-            }
+				}, "customColorChange");
 
-            success();
+				updateColor(colorInput);
 
-        });
-    }
+			}
 
-    var loadBookmarks = function () {
-        return new Promise(function (success, fail) {
+			success();
 
-            chrome.bookmarks.getTree(function (e) {
-                var list = e[0].children;
+		});
+	}
 
-                var bookmarkslist = q("#bookmarks-list > ul");
-                var bookmarksmenu = q("#bookmarks-menu > ul > li > ul");
+	var loadBookmarks = function () {
+		return new Promise(function (success, fail) {
 
-                bookmarkslist.innerHTML = "";
-                bookmarksmenu.innerHTML = "";
+			chrome.bookmarks.getTree(function (e) {
+				var list = e[0].children;
 
-                appendBookmarkNodes(list[0].children, bookmarkslist);
-                appendBookmarkNodes(list, bookmarksmenu);
+				var bookmarkslist = q("#bookmarks-list > ul");
+				var bookmarksmenu = q("#bookmarks-menu > ul > li > ul");
 
-                q(".bookmark-bar").style.display = "block";
+				bookmarkslist.innerHTML = "";
+				bookmarksmenu.innerHTML = "";
 
-                success();
+				appendBookmarkNodes(list[0].children, bookmarkslist);
+				appendBookmarkNodes(list, bookmarksmenu);
 
-            });
+				q(".bookmark-bar").style.display = "block";
 
-        });
-    }
+				success();
 
-    var appendBookmarkNodes = function (list, ul) {
+			});
 
-        list.forEach(function (bookmark) {
-            var li = document.createElement("li");
-            var img = document.createElement("img");
-            var span = document.createElement("span");
+		});
+	}
 
-            img.setAttribute("src", "chrome://favicon/size/16@1x/" + bookmark.url);
+	var appendBookmarkNodes = function (list, ul) {
 
-            if (bookmark.url)
-                li.data("url", bookmark.url);
+		list.forEach(function (bookmark) {
+			var li = document.createElement("li");
+			var img = document.createElement("img");
+			var span = document.createElement("span");
 
-            if (bookmark.title != "") {
-                span.innerHTML = bookmark.title;
-            } else {
-                span.innerHTML = bookmark.url;
-            }
+			img.setAttribute("src", "chrome://favicon/size/16@1x/" + bookmark.url);
 
-            li.setAttribute("title", bookmark.title);
+			if (bookmark.url)
+				li.data("url", bookmark.url);
 
-            li.insertBefore(img, null);
-            li.insertBefore(span, null);
+			if (bookmark.title != "") {
+				span.innerHTML = bookmark.title;
+			} else {
+				span.innerHTML = bookmark.url;
+			}
 
-            if (bookmark.children) {
+			li.setAttribute("title", bookmark.title);
 
-                var ulChildren = document.createElement("ul");
+			li.insertBefore(img, null);
+			li.insertBefore(span, null);
 
-                appendBookmarkNodes(bookmark.children, ulChildren);
+			if (bookmark.children) {
 
-                li.addClass("folder");
+				var ulChildren = document.createElement("ul");
 
-                li.insertBefore(ulChildren, null);
+				appendBookmarkNodes(bookmark.children, ulChildren);
 
-            }
+				li.addClass("folder");
 
-            ul.insertBefore(li, null);
-        });
+				li.insertBefore(ulChildren, null);
 
-    }
+			}
 
-    var loadExternalResources = function () {
+			ul.insertBefore(li, null);
+		});
 
-        return new Promise(function (success, fail) {
+	}
 
-            q("#paypal-pixel").setAttribute("src", "https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif");
-            q("#link-roboto").setAttribute("href", "http://fonts.googleapis.com/css?family=Roboto:500,300,400,400italic");
+	var loadExternalResources = function () {
 
-            //analytics
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-61018966-1']);
-            _gaq.push(['_trackPageview']);
+		return new Promise(function (success, fail) {
 
-            (function () {
-                var ga = document.createElement('script');
-                ga.type = 'text/javascript';
-                ga.async = true;
-                ga.src = 'https://ssl.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(ga, s);
-            })();
+			q("#paypal-pixel").setAttribute("src", "https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif");
+			q("#link-roboto").setAttribute("href", "http://fonts.googleapis.com/css?family=Roboto:500,300,400,400italic");
 
-            _gaq.push(['_trackPageview']);
+			//analytics
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-61018966-1']);
+			_gaq.push(['_trackPageview']);
 
-            success();
+			(function () {
+				var ga = document.createElement('script');
+				ga.type = 'text/javascript';
+				ga.async = true;
+				ga.src = 'https://ssl.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(ga, s);
+			})();
 
-        });
+			_gaq.push(['_trackPageview']);
 
-    }
+			success();
 
-    var checkVersion = function () {
+		});
 
-        var key = "checkedVersion";
-        var checkedVersion = JSONLocalStorage.getItem(key);
-        var currentVersion = chrome.runtime.getManifest().version;
+	}
 
+	var checkVersion = function () {
 
-        if (!checkedVersion || checkedVersion != currentVersion) {
+		var key = "checkedVersion";
+		var checkedVersion = JSONLocalStorage.getItem(key);
+		var currentVersion = chrome.runtime.getManifest().version;
 
-            JSONLocalStorage.setItem(key, currentVersion);
 
-            sidebar.addClass("open");
-            menuButton.addClass("active");
+		if (!checkedVersion || checkedVersion != currentVersion) {
 
-            navChangelogMenu.addClass("open ext");
-            extSidebarOpen();
+			JSONLocalStorage.setItem(key, currentVersion);
 
-        }
+			sidebarToggle();
+			extSidebarOpen2();
+			navMainClose();
 
-    }
+			navChangelogMenu.addClass("open ext2");
 
-    window.addEventListener("load", function () { load(); });
+		}
 
-    window.addEventListener("resize", function () { MNTP && resize(); });
+	}
 
-    window.addEventListener("mousewheel", function (e) {
-        if (e.target == q("body")) {
-            document.body.scrollLeft -= e.wheelDeltaY;
-        }
-    });
+	window.addEventListener("load", function () { load(); });
+
+	window.addEventListener("resize", function () { MNTP && resize(); });
+
+	window.addEventListener("mousewheel", function (e) {
+		if (e.target == q("body")) {
+			document.body.scrollLeft -= e.wheelDeltaY;
+		}
+	});
 
 //})();
