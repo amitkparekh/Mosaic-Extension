@@ -1849,8 +1849,10 @@ var MNTP;
 
 					var text = q("input[type=text]", input.parentElement)
 
-					if (text)
-						text.value = q("option[value='" + input.value + "']", input).innerText;
+					if (text) {
+					    var option = q("option[value='" + input.value + "']", input);
+					    text.value = option ? option.innerText : "";
+					}
 
 				} else if (input.type == "checkbox" || input.type == "radio") {
 
