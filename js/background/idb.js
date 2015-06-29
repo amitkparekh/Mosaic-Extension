@@ -473,11 +473,11 @@ var MNTP = MNTP || {};
                 MNTP.Config.TileOpacity = 1;
                 MNTP.Config.TileFlowDirection = MNTP.Config.FLOW_DIRECTION.HORIZONTAL;
 
-                if (data.rowNumber)
-                    MNTP.Config.GroupRows = data.rowNumber;
+                if (data.rowNumber && data.rowNumber != "0")
+                    MNTP.Config.GroupRows = parseInt(data.rowNumber);
 
-                if (data.columnNumber)
-                    MNTP.Config.GroupColumns = data.columnNumber;
+                if (data.columnNumber && data.columnNumber != "0")
+                    MNTP.Config.GroupColumns = parseInt(data.columnNumber);
 
                 MNTP.IDB.removeAll(MNTP.IDB.OS.Tile);
                 MNTP.IDB.removeAll(MNTP.IDB.OS.Image);
