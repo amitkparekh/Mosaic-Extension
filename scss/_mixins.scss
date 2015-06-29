@@ -1,0 +1,64 @@
+@mixin prefix($map, $vendors: webkit khtml moz ms o) {
+  @each $prop, $value in $map {
+        @if $vendors {
+          @each $vendor in $vendors {
+            #{"-" + $vendor + "-" + $prop}: #{$value};
+          }
+        }
+        // Dump regular property anyway
+        #{$prop}: #{$value};
+  }
+}
+
+@mixin box-shadow($box-shadow) {
+    @include prefix((box-shadow: $box-shadow), webkit moz ms o);
+    /*    box-shadow: x: 0, y: 1px, blur: 2px, spread: 0, alpha: 0.25 */
+}
+
+@mixin border-radius($radius) {
+    @include prefix((border-radius: $radius), webkit moz ms o);
+}
+
+@mixin box-sizing($boxType) {
+    -o-box-sizing:$boxType;
+    -ms-box-sizing:$boxType;
+    -moz-box-sizing:$boxType;
+    -webkit-box-sizing:$boxType;
+    box-sizing:$boxType;
+}
+
+@mixin transition($transition) {
+    @include prefix((transition: $transition), webkit moz ms o);
+}
+
+@mixin animation-delay($delay) {
+    @include prefix((animation-delay: $delay), webkit moz ms o);
+}
+
+@mixin transition-delay($delay) {
+    @include prefix((transition-delay: $delay), webkit moz ms o);
+}
+
+@mixin animation-duration($duration) {
+    @include prefix((animation-duration: $duration), webkit ms moz o);
+}
+
+@mixin translate3d($x, $y, $z) {
+    @include prefix((transform: translate3d($x, $y, $z)), webkit moz ms o);
+}
+
+@mixin background-size($size) {
+    @include prefix((background-size: $size), webkit moz ms o)
+}
+
+@function black($opacity){
+    @return rgba(0,0,0,$opacity);
+}
+@function white($opacity){
+    @return rgba(255,255,255,$opacity);
+}
+
+@mixin size($width, $height: $width) {
+      width: $width;
+      height: $height;
+}
