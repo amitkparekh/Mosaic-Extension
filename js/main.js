@@ -18,7 +18,8 @@ var MNTP;
 
 		return new Promise(function (success, fail) {
 
-			loadBackgroundPage()
+		    loadBackgroundPage()
+                .then(loadBackgroundConfig)
 				.then(loadGroups)
 				.then(loadTiles)
 				.then(loadConfig)
@@ -1975,110 +1976,119 @@ var MNTP;
 				q("#tile-columns").fadeOutLeft();
 
 
-			//background color
-			q("body").style.backgroundColor = config.BackgroundColor;
-
-
-			if (config.HasBackgroundImage && config.BackgroundImage && config.BackgroundImage.data) {
-
-				bingImagesSlider && clearInterval(bingImagesSlider);
-				bingImagesSlider = null;
-
-				loadBackground(config.BackgroundImage, config);
-
-				q("#remove-background").fadeInLeft();
-				q("#background-options").fadeInLeft();
-
-			} else if (config.HasBackgroundImage) {
-
-				bingImagesSlider && clearInterval(bingImagesSlider);
-				bingImagesSlider = null;
-
-				Image.get(Image.Type.Background).then(function (image) {
-
-					if (image) {
-
-						loadBackground(image, config);
-
-						q("#remove-background").fadeInLeft();
-						q("#background-options").fadeInLeft();
-
-					} else {
-
-						q("#wallpaper").style.backgroundImage = "";
-
-						q(".tile .accentbg", true).forEach(function (tileNode) {
-							tileNode.style.backgroundImage = "";
-						});
-
-					}
-
-				});
-
-			} else if (config.BingBackgroundImage) {
-
-				if ((config.ReloadBackgroundImage || !wallpaper.style.backgroundImage) && !bingImagesSlider) {
-
-					MNTP.BGUtils.getNextBingImage().then(function (image) {
-
-							var imageUrl = image.url || dataURLtoObjectURL(image.data);
-							MNTP.Config.ReloadBackgroundImage = true;
-							loadBackground({ url: imageUrl });
-
-							q("#remove-background").fadeInLeft();
-							q("#background-options").fadeInLeft();
-
-					});
-
-					bingImagesSlider = setInterval(function () {
-
-						MNTP.BGUtils.getNextBingImage().then(function (image) {
-
-							var imageUrl = image.url || dataURLtoObjectURL(image.data);
-							config.ReloadBackgroundImage = true;
-							loadBackground({ url: imageUrl }, config);
-
-							q("#remove-background").fadeInLeft();
-							q("#background-options").fadeInLeft();
-
-						});
-
-					}, 20000);
-
-
-				} else {
-
-					loadBackground(null, config);
-
-					q("#remove-background").fadeInLeft();
-					q("#background-options").fadeInLeft();
-
-				}
-
-			} else if (config.NoBackgroundImage) {
-
-				bingImagesSlider && clearInterval(bingImagesSlider);
-				bingImagesSlider = null;
-
-				q("#wallpaper").style.backgroundImage = "";
-
-				q(".tile .accentbg", true).forEach(function (tileNode) {
-
-					tileNode.style.backgroundImage = "";
-
-				});
-
-				q("#remove-background").fadeOutLeft();
-				q("#background-options").fadeOutLeft();
-
-			}
-			//<--
-
+			loadBackgroundConfig();
 
 			resize(config).then(success);
 
 		});
 
+	}
+
+	var loadBackgroundConfig = function (config) {
+
+	    var config = config || MNTP.Config;
+
+	    return new Promise(function (success, fail) {
+
+	        //q("body").style.backgroundColor = config.BackgroundColor;
+
+	        if (config.HasBackgroundImage && config.BackgroundImage && config.BackgroundImage.data) {
+
+	            bingImagesSlider && clearInterval(bingImagesSlider);
+	            bingImagesSlider = null;
+
+	            loadBackground(config.BackgroundImage, config);
+
+	            q("#remove-background").fadeInLeft();
+	            q("#background-options").fadeInLeft();
+
+	        } else if (config.HasBackgroundImage) {
+
+	            bingImagesSlider && clearInterval(bingImagesSlider);
+	            bingImagesSlider = null;
+
+	            Image.get(Image.Type.Background).then(function (image) {
+
+	                if (image) {
+
+	                    loadBackground(image, config);
+
+	                    q("#remove-background").fadeInLeft();
+	                    q("#background-options").fadeInLeft();
+
+	                } else {
+
+	                    q("#wallpaper").style.backgroundImage = "";
+
+	                    q(".tile .accentbg", true).forEach(function (tileNode) {
+	                        tileNode.style.backgroundImage = "";
+	                    });
+
+	                }
+
+	            });
+
+	        } else if (config.BingBackgroundImage) {
+
+	            if ((config.ReloadBackgroundImage || !wallpaper.style.backgroundImage) && !bingImagesSlider) {
+
+	                MNTP.BGUtils.getNextBingImage().then(function (image) {
+
+	                    var imageUrl = image.url || dataURLtoObjectURL(image.data);
+	                    MNTP.Config.ReloadBackgroundImage = true;
+	                    loadBackground({ url: imageUrl });
+
+	                    q("#remove-background").fadeInLeft();
+	                    q("#background-options").fadeInLeft();
+
+	                });
+
+	                bingImagesSlider = setInterval(function () {
+
+	                    MNTP.BGUtils.getNextBingImage().then(function (image) {
+
+	                        var imageUrl = image.url || dataURLtoObjectURL(image.data);
+	                        config.ReloadBackgroundImage = true;
+	                        loadBackground({ url: imageUrl }, config);
+
+	                        q("#remove-background").fadeInLeft();
+	                        q("#background-options").fadeInLeft();
+
+	                    });
+
+	                }, 20000);
+
+
+	            } else {
+
+	                loadBackground(null, config);
+
+	                q("#remove-background").fadeInLeft();
+	                q("#background-options").fadeInLeft();
+
+	            }
+
+	        } else if (config.NoBackgroundImage) {
+
+	            bingImagesSlider && clearInterval(bingImagesSlider);
+	            bingImagesSlider = null;
+
+	            q("#wallpaper").style.backgroundImage = "";
+
+	            q(".tile .accentbg", true).forEach(function (tileNode) {
+
+	                tileNode.style.backgroundImage = "";
+
+	            });
+
+	            q("#remove-background").fadeOutLeft();
+	            q("#background-options").fadeOutLeft();
+
+	        }
+
+	        success();
+
+	    });
 	}
 
 	var loadBackground = function (image, config) {
@@ -2109,6 +2119,8 @@ var MNTP;
 						bgNode.style.backgroundImage = "";
 
 				});
+
+			    q("body").style.backgroundColor = config.BackgroundColor;
 			}
 
 			img.src = backgroundUrl;
